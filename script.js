@@ -69,6 +69,7 @@ const PAGE_SIZE = 20;
 const TOTAL_PROJECTS = 88;
 const LIVE_PROJECTS = 55;
 const COLLAPSE_KEY = 'base.sidebarCollapsed';
+const THEME_KEY = 'base.theme';
 const MINUTE = 60 * 1000;
 const DAY = 24 * 60 * MINUTE;
 
@@ -264,11 +265,12 @@ const ACTIVITY_LABELS = {
 
 /* ---------- KPI cards ---------- */
 const KPI_CONFIG = [
-  { key: 'live', title: 'Projects Currently Live', sub: '', icon: 'bi-broadcast', accent: '#4f7cff', type: 'int' },
-  { key: 'c30', title: 'Completes', sub: 'past 30 days', icon: 'bi-check2-circle', accent: '#6366f1', type: 'int' },
-  { key: 'c24', title: 'Completes', sub: 'past 24 hours', icon: 'bi-clock-history', accent: '#8b5cf6', type: 'int' },
-  { key: 'conv30', title: 'Conversion', sub: 'past 30 days', icon: 'bi-arrow-repeat', accent: '#38bdf8', type: 'pct' },
-  { key: 'conv24', title: 'Conversion', sub: 'past 24 hours', icon: 'bi-lightning-charge', accent: '#a855f7', type: 'pct' },
+  // Accents come from the active theme (--kpi-1 … --kpi-5 in style.css).
+  { key: 'live', title: 'Projects Currently Live', sub: '', icon: 'bi-broadcast', accent: 'var(--kpi-1)', type: 'int' },
+  { key: 'c30', title: 'Completes', sub: 'past 30 days', icon: 'bi-check2-circle', accent: 'var(--kpi-2)', type: 'int' },
+  { key: 'c24', title: 'Completes', sub: 'past 24 hours', icon: 'bi-clock-history', accent: 'var(--kpi-3)', type: 'int' },
+  { key: 'conv30', title: 'Conversion', sub: 'past 30 days', icon: 'bi-arrow-repeat', accent: 'var(--kpi-4)', type: 'pct' },
+  { key: 'conv24', title: 'Conversion', sub: 'past 24 hours', icon: 'bi-lightning-charge', accent: 'var(--kpi-5)', type: 'pct' },
 ];
 
 function computeKpis() {
@@ -326,12 +328,12 @@ function sparklineSvg(values, id) {
     <svg class="kpi-spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">
       <defs>
         <linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="var(--accent)" stop-opacity=".55" />
-          <stop offset="1" stop-color="var(--accent)" stop-opacity="0" />
+          <stop offset="0" style="stop-color: var(--accent); stop-opacity: .55" />
+          <stop offset="1" style="stop-color: var(--accent); stop-opacity: 0" />
         </linearGradient>
       </defs>
       <path d="${area}" fill="url(#${id})" />
-      <path d="${line}" fill="none" stroke="var(--accent)" stroke-width="1.8" vector-effect="non-scaling-stroke" />
+      <path d="${line}" fill="none" style="stroke: var(--accent)" stroke-width="1.8" vector-effect="non-scaling-stroke" />
     </svg>`;
 }
 
@@ -626,7 +628,7 @@ function showToast(message, tone = 'success') {
     <div class="d-flex align-items-center gap-2 px-3 py-2">
       <i class="bi ${icon} toast-icon"></i>
       <div class="flex-grow-1">${escapeHtml(message)}</div>
-      <button type="button" class="btn-close btn-close-white ms-2" data-bs-dismiss="toast" aria-label="Close"></button>
+      <button type="button" class="btn-close ms-2" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>`;
   $('#toastStack').append(el);
   el.addEventListener('hidden.bs.toast', () => el.remove());
@@ -687,6 +689,49 @@ function syncStatusButtons() {
   });
 }
 
+/* ---------- Themes ---------- */
+// Ids and modes must match the inline script in index.html; colours live in style.css.
+// swatch = [page, sidebar, card, accent] for the preview in the picker.
+const THEMES = [
+  { id: 'midnight', name: 'Midnight', desc: 'Deep navy with a violet glow', mode: 'dark', swatch: ['#06070f', '#0b0d1b', '#2a2f5e', '#6d5cff'] },
+  { id: 'slate', name: 'Slate', desc: 'Softer blue-grey dark', mode: 'dark', swatch: ['#1a202c', '#232a3a', '#3a4560', '#7c8cff'] },
+  { id: 'daylight', name: 'Daylight', desc: 'Clean and bright with indigo', mode: 'light', swatch: ['#f3f5fb', '#ffffff', '#c9cee6', '#5b4bff'] },
+  { id: 'arctic', name: 'Arctic', desc: 'Cool light with a teal sidebar', mode: 'light', swatch: ['#edf3f7', '#0e2a3b', '#c3d4de', '#0891b2'] },
+  { id: 'sand', name: 'Sand', desc: 'Warm light with terracotta', mode: 'light', swatch: ['#f6f1e9', '#ece2d2', '#dccdb6', '#c2410c'] },
+];
+
+function saveTheme(id) {
+  try { localStorage.setItem(THEME_KEY, id); } catch { /* storage unavailable */ }
+}
+
+function renderThemeOptions() {
+  $('#themeOptions').innerHTML = THEMES.map((t) => {
+    const [bg, side, card, accent] = t.swatch;
+    return `
+      <button type="button" class="dropdown-item theme-option" role="menuitemradio" aria-checked="false" data-theme-id="${t.id}">
+        <span class="theme-swatch" style="--s-bg:${bg};--s-side:${side};--s-card:${card};--s-accent:${accent}" aria-hidden="true"></span>
+        <span class="theme-option-text">
+          <span class="theme-option-name">${t.name}</span>
+          <span class="theme-option-desc">${t.desc}</span>
+        </span>
+        <i class="bi bi-check2 theme-check" aria-hidden="true"></i>
+      </button>`;
+  }).join('');
+}
+
+function applyTheme(id) {
+  const theme = THEMES.find((t) => t.id === id) || THEMES[0];
+  const root = document.documentElement;
+  root.setAttribute('data-theme', theme.id);
+  root.setAttribute('data-bs-theme', theme.mode);
+  $('meta[name="theme-color"]').setAttribute('content', theme.swatch[0]);
+  $('#themeLabel').textContent = theme.name;
+  $$('#themeOptions [data-theme-id]').forEach((btn) => {
+    btn.setAttribute('aria-checked', String(btn.dataset.themeId === theme.id));
+  });
+  return theme;
+}
+
 /* ---------- Sidebar ---------- */
 const desktopMq = window.matchMedia('(min-width: 992px)');
 let navTips = [];
@@ -729,6 +774,15 @@ function init() {
   fillSelect($('#npCountry'), countryOpts);
   fillSelect($('#npClient'), clientOpts);
   fillSelect($('#npPm'), pmOpts);
+
+  // Theme (the inline script in <head> already applied the saved one)
+  renderThemeOptions();
+  applyTheme(document.documentElement.getAttribute('data-theme'));
+  $('#themeOptions').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-theme-id]');
+    if (!btn) return;
+    saveTheme(applyTheme(btn.dataset.themeId).id);
+  });
 
   // Sidebar
   navTips = $$('#sideNav .nav-link').map((el) => new bootstrap.Tooltip(el, {
