@@ -92,78 +92,226 @@ html[data-theme="midnight"] {
   --backdrop-opacity: .7;
 }
 
-/* 2. Slate — softer blue-grey dark */
-html[data-theme="slate"] {
+/* 2. Ocean — deep sea blues with cyan accents */
+html[data-theme="ocean"] {
   --color-scheme: dark;
-  --bg: #1a202c;
-  --glow-1: rgba(124, 140, 255, .12);
-  --glow-2: rgba(79, 163, 255, .08);
-  --glow-3: rgba(124, 140, 255, .05);
+  --bg: #071a26;
+  --glow-1: rgba(34, 211, 238, .16);
+  --glow-2: rgba(14, 116, 144, .22);
+  --glow-3: rgba(56, 189, 248, .08);
 
-  --text: #edf0f7;
-  --text-2: #c2c9d9;
-  --muted: #95a0b8;
-  --muted-2: #67728a;
+  --text: #e3f4fa;
+  --text-2: #a9cbd8;
+  --muted: #7aa3b3;
+  --muted-2: #4f7686;
   --text-strong: #ffffff;
-  --border: rgba(170, 185, 220, .15);
-  --border-strong: rgba(140, 155, 255, .5);
+  --border: rgba(120, 200, 225, .15);
+  --border-strong: rgba(34, 211, 238, .5);
   --overlay: #ffffff;
 
-  --primary: #7c8cff;
-  --primary-2: #4f9dff;
-  --primary-soft: #aab5ff;
-  --grad-primary: linear-gradient(135deg, #7c8cff 0%, #4f9dff 100%);
+  --primary: #06b6d4;
+  --primary-2: #3b82f6;
+  --primary-soft: #67e8f9;
+  --grad-primary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+
+  --success: #34d399;
+  --danger: #fb7185;
+  --danger-soft: #fda4af;
+  --live: #6ee7b7;
+  --fresh: #6ee7b7;
+  --warm: #fcd34d;
+
+  --sidebar-bg:
+    radial-gradient(260px 300px at 0% 100%, rgba(34, 211, 238, .14), transparent 70%),
+    linear-gradient(180deg, #0a2738 0%, #061823 100%);
+  --sidebar-fg: #a9cbd8;
+  --sidebar-fg-strong: #ffffff;
+  --sidebar-border: rgba(120, 200, 225, .12);
+  --sidebar-overlay: #ffffff;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(6, 182, 212, .34) 0%, rgba(59, 130, 246, .14) 100%);
+  --sidebar-active-border: rgba(103, 232, 249, .5);
+  --sidebar-active-fg: #ffffff;
+  --sidebar-active-shadow: 0 0 22px -6px rgba(6, 182, 212, .55), inset 0 1px 0 rgba(255, 255, 255, .06);
+  --sidebar-toggle-bg: #0b2a3b;
+
+  --topbar-bg: linear-gradient(100deg, #082030 0%, #0b2f45 45%, #0e3b57 72%, #08202f 100%);
+  --topbar-shadow: 0 8px 24px -16px rgba(0, 0, 0, .7);
+
+  --card-bg: linear-gradient(160deg, rgba(14, 59, 84, .9) 0%, rgba(8, 30, 44, .94) 100%);
+  --card-shadow: 0 12px 30px -18px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .05);
+  --card-glow: 22%;
+  --panel-bg: linear-gradient(180deg, rgba(10, 40, 58, .85) 0%, rgba(7, 27, 39, .9) 100%);
+  --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, .8);
+
+  --menu-bg: #0c2c3e;
+  --modal-bg: linear-gradient(180deg, #0e3247 0%, #0a2433 100%);
+  --float-shadow: 0 18px 40px -12px rgba(0, 0, 0, .7);
+  --input-bg: rgba(4, 16, 24, .6);
+  --option-bg: #0a2433;
+
+  --pm-bg: #03111a;
+  --pm-fg: #ffffff;
+  --pm-border: rgba(255, 255, 255, .14);
+  --icon-mix: #ffffff;
+
+  --kpi-1: #22d3ee;
+  --kpi-2: #3b82f6;
+  --kpi-3: #2dd4bf;
+  --kpi-4: #38bdf8;
+  --kpi-5: #818cf8;
+
+  --scrollbar: rgba(120, 200, 225, .25);
+  --backdrop: rgba(2, 10, 16, .6);
+  --backdrop-opacity: .7;
+}
+
+/* 3. Forest — deep greens with emerald and lime */
+html[data-theme="forest"] {
+  --color-scheme: dark;
+  --bg: #08140f;
+  --glow-1: rgba(52, 211, 153, .14);
+  --glow-2: rgba(132, 204, 22, .08);
+  --glow-3: rgba(16, 185, 129, .07);
+
+  --text: #e6f4ec;
+  --text-2: #b0cdbd;
+  --muted: #82a493;
+  --muted-2: #557563;
+  --text-strong: #ffffff;
+  --border: rgba(140, 210, 170, .14);
+  --border-strong: rgba(52, 211, 153, .5);
+  --overlay: #ffffff;
+
+  --primary: #10b981;
+  --primary-2: #65a30d;
+  --primary-soft: #6ee7b7;
+  --grad-primary: linear-gradient(135deg, #10b981 0%, #65a30d 100%);
 
   --success: #4ade80;
   --danger: #f87171;
   --danger-soft: #fca5a5;
   --live: #86efac;
   --fresh: #86efac;
-  --warm: #fcd34d;
+  --warm: #fde047;
 
-  --sidebar-bg: linear-gradient(180deg, #232a3a 0%, #1e2433 100%);
-  --sidebar-fg: #c2c9d9;
+  --sidebar-bg:
+    radial-gradient(260px 300px at 0% 100%, rgba(52, 211, 153, .12), transparent 70%),
+    linear-gradient(180deg, #0d2018 0%, #07120d 100%);
+  --sidebar-fg: #b0cdbd;
   --sidebar-fg-strong: #ffffff;
-  --sidebar-border: rgba(170, 185, 220, .12);
+  --sidebar-border: rgba(140, 210, 170, .12);
   --sidebar-overlay: #ffffff;
-  --sidebar-active-bg: linear-gradient(90deg, rgba(124, 140, 255, .32) 0%, rgba(79, 157, 255, .12) 100%);
-  --sidebar-active-border: rgba(140, 155, 255, .5);
+  --sidebar-active-bg: linear-gradient(90deg, rgba(16, 185, 129, .34) 0%, rgba(132, 204, 22, .12) 100%);
+  --sidebar-active-border: rgba(110, 231, 183, .5);
   --sidebar-active-fg: #ffffff;
-  --sidebar-active-shadow: 0 0 18px -8px rgba(124, 140, 255, .6);
-  --sidebar-toggle-bg: #2a3245;
+  --sidebar-active-shadow: 0 0 22px -6px rgba(16, 185, 129, .5), inset 0 1px 0 rgba(255, 255, 255, .06);
+  --sidebar-toggle-bg: #0f241b;
 
-  --topbar-bg: linear-gradient(100deg, #212838 0%, #262f44 55%, #2b3550 80%, #222939 100%);
-  --topbar-shadow: 0 8px 20px -16px rgba(0, 0, 0, .6);
+  --topbar-bg: linear-gradient(100deg, #0a1a13 0%, #0f2a1f 45%, #14372a 72%, #0a1a13 100%);
+  --topbar-shadow: 0 8px 24px -16px rgba(0, 0, 0, .7);
 
-  --card-bg: linear-gradient(160deg, #2b3449 0%, #232b3d 100%);
-  --card-shadow: 0 10px 24px -16px rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 255, 255, .05);
-  --card-glow: 18%;
-  --panel-bg: linear-gradient(180deg, #252d40 0%, #212839 100%);
-  --panel-shadow: 0 14px 30px -22px rgba(0, 0, 0, .7);
+  --card-bg: linear-gradient(160deg, rgba(22, 58, 43, .9) 0%, rgba(9, 24, 17, .94) 100%);
+  --card-shadow: 0 12px 30px -18px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .05);
+  --card-glow: 22%;
+  --panel-bg: linear-gradient(180deg, rgba(14, 38, 28, .85) 0%, rgba(9, 22, 16, .9) 100%);
+  --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, .8);
 
-  --menu-bg: #2a3247;
-  --modal-bg: linear-gradient(180deg, #2a3247 0%, #232a3c 100%);
-  --float-shadow: 0 18px 40px -14px rgba(0, 0, 0, .6);
-  --input-bg: #1b2130;
-  --option-bg: #232a3c;
+  --menu-bg: #0f2a1f;
+  --modal-bg: linear-gradient(180deg, #123224 0%, #0c2219 100%);
+  --float-shadow: 0 18px 40px -12px rgba(0, 0, 0, .7);
+  --input-bg: rgba(3, 12, 8, .6);
+  --option-bg: #0c2219;
 
-  --pm-bg: #121722;
+  --pm-bg: #030a07;
   --pm-fg: #ffffff;
   --pm-border: rgba(255, 255, 255, .14);
   --icon-mix: #ffffff;
 
-  --kpi-1: #60a5fa;
-  --kpi-2: #818cf8;
-  --kpi-3: #a78bfa;
-  --kpi-4: #22d3ee;
-  --kpi-5: #f472b6;
+  --kpi-1: #34d399;
+  --kpi-2: #84cc16;
+  --kpi-3: #2dd4bf;
+  --kpi-4: #a3e635;
+  --kpi-5: #22c55e;
 
-  --scrollbar: rgba(170, 185, 220, .28);
-  --backdrop: rgba(10, 12, 20, .55);
-  --backdrop-opacity: .6;
+  --scrollbar: rgba(140, 210, 170, .25);
+  --backdrop: rgba(2, 8, 5, .6);
+  --backdrop-opacity: .7;
 }
 
-/* 3. Daylight — clean light with indigo accents */
+/* 4. Sunset — plum backdrop with pink-to-orange accents */
+html[data-theme="sunset"] {
+  --color-scheme: dark;
+  --bg: #1a0b1f;
+  --glow-1: rgba(249, 115, 22, .16);
+  --glow-2: rgba(219, 39, 119, .18);
+  --glow-3: rgba(168, 85, 247, .10);
+
+  --text: #fbeef4;
+  --text-2: #dcb9cc;
+  --muted: #b08ba2;
+  --muted-2: #7c5a70;
+  --text-strong: #ffffff;
+  --border: rgba(240, 170, 210, .15);
+  --border-strong: rgba(251, 113, 133, .5);
+  --overlay: #ffffff;
+
+  --primary: #f43f5e;
+  --primary-2: #f97316;
+  --primary-soft: #fda4af;
+  --grad-primary: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+
+  --success: #4ade80;
+  --danger: #fb7185;
+  --danger-soft: #fda4af;
+  --live: #86efac;
+  --fresh: #86efac;
+  --warm: #fcd34d;
+
+  --sidebar-bg:
+    radial-gradient(260px 300px at 0% 100%, rgba(249, 115, 22, .14), transparent 70%),
+    linear-gradient(180deg, #2a1030 0%, #170818 100%);
+  --sidebar-fg: #dcb9cc;
+  --sidebar-fg-strong: #ffffff;
+  --sidebar-border: rgba(240, 170, 210, .12);
+  --sidebar-overlay: #ffffff;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(236, 72, 153, .38) 0%, rgba(249, 115, 22, .16) 100%);
+  --sidebar-active-border: rgba(251, 146, 160, .55);
+  --sidebar-active-fg: #ffffff;
+  --sidebar-active-shadow: 0 0 22px -6px rgba(236, 72, 153, .55), inset 0 1px 0 rgba(255, 255, 255, .06);
+  --sidebar-toggle-bg: #2a1030;
+
+  --topbar-bg: linear-gradient(100deg, #1f0c24 0%, #3a1238 45%, #521a3c 72%, #22102a 100%);
+  --topbar-shadow: 0 8px 24px -16px rgba(0, 0, 0, .7);
+
+  --card-bg: linear-gradient(160deg, rgba(74, 24, 72, .9) 0%, rgba(30, 11, 34, .94) 100%);
+  --card-shadow: 0 12px 30px -18px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .05);
+  --card-glow: 24%;
+  --panel-bg: linear-gradient(180deg, rgba(46, 16, 50, .85) 0%, rgba(28, 10, 32, .9) 100%);
+  --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, .8);
+
+  --menu-bg: #2e1233;
+  --modal-bg: linear-gradient(180deg, #36153b 0%, #251029 100%);
+  --float-shadow: 0 18px 40px -12px rgba(0, 0, 0, .7);
+  --input-bg: rgba(14, 4, 16, .6);
+  --option-bg: #251029;
+
+  --pm-bg: #0d0410;
+  --pm-fg: #ffffff;
+  --pm-border: rgba(255, 255, 255, .14);
+  --icon-mix: #ffffff;
+
+  --kpi-1: #f472b6;
+  --kpi-2: #fb923c;
+  --kpi-3: #f43f5e;
+  --kpi-4: #facc15;
+  --kpi-5: #c084fc;
+
+  --scrollbar: rgba(240, 170, 210, .25);
+  --backdrop: rgba(12, 3, 14, .6);
+  --backdrop-opacity: .7;
+}
+
+/* 5. Daylight — clean light with indigo accents */
 html[data-theme="daylight"] {
   --color-scheme: light;
   --bg: #f3f5fb;
@@ -234,7 +382,7 @@ html[data-theme="daylight"] {
   --backdrop-opacity: .4;
 }
 
-/* 4. Arctic — cool light content with a deep teal sidebar */
+/* 6. Arctic — cool light content with a deep teal sidebar */
 html[data-theme="arctic"] {
   --color-scheme: light;
   --bg: #edf3f7;
@@ -307,7 +455,7 @@ html[data-theme="arctic"] {
   --backdrop-opacity: .4;
 }
 
-/* 5. Sand — warm light with terracotta accents */
+/* 7. Sand — warm light with terracotta accents */
 html[data-theme="sand"] {
   --color-scheme: light;
   --bg: #f6f1e9;
@@ -375,6 +523,77 @@ html[data-theme="sand"] {
 
   --scrollbar: rgba(70, 50, 25, .22);
   --backdrop: rgba(40, 25, 10, .3);
+  --backdrop-opacity: .35;
+}
+
+/* 8. Rose — soft blush light with magenta accents */
+html[data-theme="rose"] {
+  --color-scheme: light;
+  --bg: #fdf2f6;
+  --glow-1: rgba(236, 72, 153, .10);
+  --glow-2: rgba(244, 63, 94, .07);
+  --glow-3: rgba(168, 85, 247, .05);
+
+  --text: #3a1426;
+  --text-2: #6b3a52;
+  --muted: #95687e;
+  --muted-2: #c9a3b5;
+  --text-strong: #2a0a1a;
+  --border: rgba(90, 20, 55, .10);
+  --border-strong: rgba(219, 39, 119, .45);
+  --overlay: #5a1437;
+
+  --primary: #db2777;
+  --primary-2: #e11d48;
+  --primary-soft: #be185d;
+  --grad-primary: linear-gradient(135deg, #db2777 0%, #e11d48 100%);
+
+  --success: #15803d;
+  --danger: #b91c1c;
+  --danger-soft: #be123c;
+  --live: #15803d;
+  --fresh: #15803d;
+  --warm: #b45309;
+
+  --sidebar-bg: linear-gradient(180deg, #fff7fa 0%, #fdeaf1 100%);
+  --sidebar-fg: #6b3a52;
+  --sidebar-fg-strong: #2a0a1a;
+  --sidebar-border: rgba(90, 20, 55, .08);
+  --sidebar-overlay: #5a1437;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(219, 39, 119, .15) 0%, rgba(244, 63, 94, .06) 100%);
+  --sidebar-active-border: rgba(219, 39, 119, .35);
+  --sidebar-active-fg: #9d174d;
+  --sidebar-active-shadow: 0 6px 16px -10px rgba(219, 39, 119, .45);
+  --sidebar-toggle-bg: #fff7fa;
+
+  --topbar-bg: linear-gradient(100deg, #ffffff 0%, #fff3f7 60%, #fde6ef 100%);
+  --topbar-shadow: 0 8px 20px -18px rgba(90, 20, 55, .3);
+
+  --card-bg: linear-gradient(160deg, #ffffff 0%, #fff8fb 100%);
+  --card-shadow: 0 1px 2px rgba(90, 20, 55, .04), 0 10px 24px -16px rgba(90, 20, 55, .18);
+  --card-glow: 10%;
+  --panel-bg: #ffffff;
+  --panel-shadow: 0 1px 2px rgba(90, 20, 55, .04), 0 16px 32px -24px rgba(90, 20, 55, .2);
+
+  --menu-bg: #ffffff;
+  --modal-bg: #ffffff;
+  --float-shadow: 0 18px 40px -16px rgba(90, 20, 55, .25);
+  --input-bg: #ffffff;
+  --option-bg: #ffffff;
+
+  --pm-bg: #3a1426;
+  --pm-fg: #ffffff;
+  --pm-border: transparent;
+  --icon-mix: #3a1426;
+
+  --kpi-1: #db2777;
+  --kpi-2: #e11d48;
+  --kpi-3: #a855f7;
+  --kpi-4: #f97316;
+  --kpi-5: #ec4899;
+
+  --scrollbar: rgba(90, 20, 55, .2);
+  --backdrop: rgba(40, 10, 25, .3);
   --backdrop-opacity: .35;
 }
 
@@ -648,9 +867,9 @@ body.no-transition * { transition: none !important; }
 }
 .theme-btn[aria-expanded="true"] .theme-caret { transform: rotate(180deg); }
 
-.theme-menu { width: 290px; margin-top: 6px !important; }
+.theme-menu { width: 336px; padding: 10px !important; margin-top: 6px !important; }
 .theme-menu-head {
-  padding: 6px 10px 8px;
+  padding: 2px 4px 10px;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .06em;
@@ -658,46 +877,56 @@ body.no-transition * { transition: none !important; }
   color: var(--muted);
 }
 
-.theme-option { gap: 12px !important; padding: 8px 10px !important; }
-.theme-option-text { display: flex; flex-direction: column; flex: 1; min-width: 0; line-height: 1.3; }
-.theme-option-name { font-weight: 600; color: var(--text); }
-.theme-option-desc { font-size: 11.5px; color: var(--muted); white-space: normal; }
-.theme-check { font-size: 16px; color: var(--primary); visibility: hidden; }
-.theme-option[aria-checked="true"] { background: color-mix(in srgb, var(--primary) 10%, transparent); }
-.theme-option[aria-checked="true"] .theme-check { visibility: visible; }
+.theme-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 
-/* Mini preview of a theme: sidebar strip, accent bar and card bar on the page colour. */
-.theme-swatch {
-  position: relative;
-  flex: 0 0 auto;
-  width: 46px;
-  height: 32px;
+/* .dropdown-item.theme-tile so these win over the generic .dropdown-item rules below. */
+.dropdown-item.theme-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 7px;
+  padding: 6px;
+  white-space: normal;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color .15s, background .15s, transform .15s;
+}
+.dropdown-item.theme-tile:hover { transform: translateY(-1px); border-color: var(--border-strong); }
+.dropdown-item.theme-tile[aria-checked="true"] {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.theme-tile-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+.theme-tile-name .bi { font-size: 13px; color: var(--primary); visibility: hidden; }
+.theme-tile[aria-checked="true"] .theme-tile-name .bi { visibility: visible; }
+
+/* Mini dashboard preview: sidebar, header, two cards and an accent button. */
+.theme-preview {
+  display: grid;
+  grid-template-columns: 24% 1fr;
+  grid-template-rows: 11px 1fr;
+  height: 58px;
   overflow: hidden;
-  background: var(--s-bg);
-  border: 1px solid color-mix(in srgb, var(--overlay) 16%, transparent);
+  background: var(--p-bg);
+  border: 1px solid rgba(128, 128, 128, .22);
   border-radius: 7px;
 }
-.theme-swatch::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 12px;
-  background: var(--s-side);
-  box-shadow: 1px 0 0 rgba(0, 0, 0, .06);
-}
-.theme-swatch::after {
-  content: '';
-  position: absolute;
-  left: 17px;
-  right: 6px;
-  top: 7px;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--s-accent);
-  box-shadow: 0 10px 0 0 var(--s-card);
-}
+.tp-side { grid-row: 1 / 3; background: var(--p-side); box-shadow: 1px 0 0 rgba(128, 128, 128, .18); }
+.tp-top { background: var(--p-top); box-shadow: 0 1px 0 rgba(128, 128, 128, .18); }
+.tp-body { display: flex; flex-direction: column; gap: 5px; padding: 6px; }
+.tp-cards { display: flex; gap: 4px; }
+.tp-cards span { flex: 1; height: 15px; border-radius: 3px; background: var(--p-card); }
+.tp-accent { width: 46%; height: 7px; border-radius: 4px; background: var(--p-accent); }
 
 .profile-btn {
   display: flex;
@@ -1326,7 +1555,7 @@ th.is-sorted .sort-icon { display: inline-block; color: var(--primary-soft); }
   .kpi-card { padding: 12px; }
   .kpi-icon { width: 30px; height: 30px; font-size: 14px; }
   .kpi-value { font-size: 20px; }
-  .theme-menu { width: min(290px, calc(100vw - 32px)); }
+  .theme-menu { width: min(336px, calc(100vw - 24px)); }
 }
 
 @media (max-width: 359.98px) {

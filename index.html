@@ -10,7 +10,10 @@
   <!-- Apply the saved theme before first paint to avoid a flash of the default theme. -->
   <script>
     (function () {
-      var modes = { midnight: 'dark', slate: 'dark', daylight: 'light', arctic: 'light', sand: 'light' };
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
       var theme = 'midnight';
       try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
       if (!modes[theme]) theme = 'midnight';
@@ -92,7 +95,7 @@
             </button>
             <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
               <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
-              <div id="themeOptions" role="group" aria-labelledby="themeMenuHead"></div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead"></div>
             </div>
           </div>
 

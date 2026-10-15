@@ -691,13 +691,24 @@ function syncStatusButtons() {
 
 /* ---------- Themes ---------- */
 // Ids and modes must match the inline script in index.html; colours live in style.css.
-// swatch = [page, sidebar, card, accent] for the preview in the picker.
+// preview = [page, sidebar, header, card, accent] for the mini dashboard in the picker.
 const THEMES = [
-  { id: 'midnight', name: 'Midnight', desc: 'Deep navy with a violet glow', mode: 'dark', swatch: ['#06070f', '#0b0d1b', '#2a2f5e', '#6d5cff'] },
-  { id: 'slate', name: 'Slate', desc: 'Softer blue-grey dark', mode: 'dark', swatch: ['#1a202c', '#232a3a', '#3a4560', '#7c8cff'] },
-  { id: 'daylight', name: 'Daylight', desc: 'Clean and bright with indigo', mode: 'light', swatch: ['#f3f5fb', '#ffffff', '#c9cee6', '#5b4bff'] },
-  { id: 'arctic', name: 'Arctic', desc: 'Cool light with a teal sidebar', mode: 'light', swatch: ['#edf3f7', '#0e2a3b', '#c3d4de', '#0891b2'] },
-  { id: 'sand', name: 'Sand', desc: 'Warm light with terracotta', mode: 'light', swatch: ['#f6f1e9', '#ece2d2', '#dccdb6', '#c2410c'] },
+  { id: 'midnight', name: 'Midnight', desc: 'Deep navy with a violet glow', mode: 'dark',
+    preview: ['#06070f', '#0b0d1b', '#121638', '#1f234c', '#6d5cff'] },
+  { id: 'ocean', name: 'Ocean', desc: 'Deep sea blues with cyan', mode: 'dark',
+    preview: ['#071a26', '#0a2738', '#0b2f45', '#0e3b54', '#06b6d4'] },
+  { id: 'forest', name: 'Forest', desc: 'Deep greens with emerald', mode: 'dark',
+    preview: ['#08140f', '#0d2018', '#0f2a1f', '#163a2b', '#10b981'] },
+  { id: 'sunset', name: 'Sunset', desc: 'Plum with pink-to-orange', mode: 'dark',
+    preview: ['#1a0b1f', '#2a1030', '#3a1238', '#4a1848', 'linear-gradient(90deg, #ec4899, #f97316)'] },
+  { id: 'daylight', name: 'Daylight', desc: 'Clean white with indigo', mode: 'light',
+    preview: ['#f3f5fb', '#ffffff', '#ffffff', '#dfe3f3', '#5b4bff'] },
+  { id: 'arctic', name: 'Arctic', desc: 'Ice blue with a teal sidebar', mode: 'light',
+    preview: ['#edf3f7', '#0e2a3b', '#ffffff', '#d5e3ea', '#0891b2'] },
+  { id: 'sand', name: 'Sand', desc: 'Warm cream with terracotta', mode: 'light',
+    preview: ['#f6f1e9', '#fbf7f1', '#fffdf9', '#e8dccb', '#c2410c'] },
+  { id: 'rose', name: 'Rose', desc: 'Soft blush with magenta', mode: 'light',
+    preview: ['#fdf2f6', '#fff7fa', '#ffffff', '#f6d5e2', '#db2777'] },
 ];
 
 function saveTheme(id) {
@@ -706,15 +717,19 @@ function saveTheme(id) {
 
 function renderThemeOptions() {
   $('#themeOptions').innerHTML = THEMES.map((t) => {
-    const [bg, side, card, accent] = t.swatch;
+    const [bg, side, top, card, accent] = t.preview;
     return `
-      <button type="button" class="dropdown-item theme-option" role="menuitemradio" aria-checked="false" data-theme-id="${t.id}">
-        <span class="theme-swatch" style="--s-bg:${bg};--s-side:${side};--s-card:${card};--s-accent:${accent}" aria-hidden="true"></span>
-        <span class="theme-option-text">
-          <span class="theme-option-name">${t.name}</span>
-          <span class="theme-option-desc">${t.desc}</span>
+      <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+              data-theme-id="${t.id}" title="${t.desc}">
+        <span class="theme-preview" style="--p-bg:${bg};--p-side:${side};--p-top:${top};--p-card:${card};--p-accent:${accent}" aria-hidden="true">
+          <span class="tp-side"></span>
+          <span class="tp-top"></span>
+          <span class="tp-body">
+            <span class="tp-cards"><span></span><span></span></span>
+            <span class="tp-accent"></span>
+          </span>
         </span>
-        <i class="bi bi-check2 theme-check" aria-hidden="true"></i>
+        <span class="theme-tile-name">${t.name}<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
       </button>`;
   }).join('');
 }
@@ -724,7 +739,7 @@ function applyTheme(id) {
   const root = document.documentElement;
   root.setAttribute('data-theme', theme.id);
   root.setAttribute('data-bs-theme', theme.mode);
-  $('meta[name="theme-color"]').setAttribute('content', theme.swatch[0]);
+  $('meta[name="theme-color"]').setAttribute('content', theme.preview[0]);
   $('#themeLabel').textContent = theme.name;
   $$('#themeOptions [data-theme-id]').forEach((btn) => {
     btn.setAttribute('aria-checked', String(btn.dataset.themeId === theme.id));
