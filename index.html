@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Base · Survey Projects</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- ============ Sidebar ============ -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="#" aria-label="Base home">
+          <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true">
+            <defs>
+              <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffd047" />
+                <stop offset="1" stop-color="#f59e0b" />
+              </linearGradient>
+            </defs>
+            <path d="M6 3v16a6 6 0 0 0 6 6h4a6 6 0 0 0 6-6v-2a6 6 0 0 0-6-6h-6" fill="none" stroke="url(#brandGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="14" cy="18" r="2.4" fill="url(#brandGrad)" />
+          </svg>
+          <span class="brand-text">base</span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link active" href="#" aria-current="page"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-download"></i><span>Exports</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-stack"></i><span>Vendors</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-person-gear"></i><span>Panel management</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-asterisk"></i><span>Framework</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-diagram-3"></i><span>External surveys</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- ============ Main ============ -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <span class="topbar-brand d-lg-none">base</span>
+
+        <div class="dropdown ms-auto">
+          <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="avatar">RA</span>
+            <span class="profile-meta">
+              <span class="profile-name">Ray</span>
+              <span class="profile-role">Administrator</span>
+            </span>
+            <i class="bi bi-chevron-down profile-caret"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end profile-menu">
+            <li class="profile-menu-head">
+              <span class="avatar avatar-sm">RA</span>
+              <div>
+                <div class="fw-semibold">Ray</div>
+                <div class="small text-muted-2">Administrator</div>
+              </div>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i>My profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i>Account settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+          </ul>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <!-- KPI row: New Project + 5 metric cards -->
+        <section class="kpi-row" aria-label="Key metrics">
+          <button class="btn btn-new-project" type="button" data-bs-toggle="modal" data-bs-target="#newProjectModal">
+            <i class="bi bi-plus-lg"></i> New Project
+          </button>
+          <div class="kpi-grid" id="kpiGrid"></div>
+        </section>
+
+        <!-- Toolbar -->
+        <section class="toolbar" aria-label="Project filters">
+          <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="search" id="searchInput" placeholder="Search by project name, ID, or any field..." aria-label="Search projects" autocomplete="off">
+            <kbd title="Press / to search">/</kbd>
+          </div>
+
+          <div class="segmented" role="group" aria-label="Project status">
+            <button type="button" class="active" data-status="Live" aria-pressed="true">Live</button>
+            <button type="button" data-status="Closed" aria-pressed="false">Closed</button>
+          </div>
+
+          <button class="btn btn-ghost" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtersCanvas" aria-controls="filtersCanvas">
+            <i class="bi bi-sliders2"></i> More filters
+            <span class="filter-count d-none" id="filterCount">0</span>
+          </button>
+
+          <button class="btn btn-export ms-md-auto" type="button" id="exportBtn">
+            <i class="bi bi-download"></i> Export list
+          </button>
+        </section>
+
+        <div class="active-filters" id="activeFilters"></div>
+
+        <!-- Project table -->
+        <section class="table-panel" aria-label="Projects">
+          <div class="table-responsive">
+            <table class="table table-hover project-table align-middle mb-0">
+              <thead>
+                <tr>
+                  <th data-sort="id"><button type="button" class="th-sort">ID<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="name"><button type="button" class="th-sort">Project name<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="pm" class="text-center"><button type="button" class="th-sort">PM<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="status" class="text-center"><button type="button" class="th-sort">Status<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="c1" class="text-center"><button type="button" class="th-sort" title="Completes">C1<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="ir" class="text-center"><button type="button" class="th-sort" title="Incidence rate / Conversion">IR/CONV<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="loi" class="text-center"><button type="button" class="th-sort" title="Length of interview in minutes (bid / real)">LOI<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="eb" class="text-center"><button type="button" class="th-sort">EB/EC<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="s1" class="text-center"><button type="button" class="th-sort" title="Screenouts / Quota fulls">S1/Q1<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="s2" class="text-center"><button type="button" class="th-sort" title="Screenouts / Quota fulls">S2/Q2<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="drops" class="text-center"><button type="button" class="th-sort">Drops<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="dups" class="text-center"><button type="button" class="th-sort" title="Duplicates">Dups<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="qfails" class="text-center"><button type="button" class="th-sort" title="Quality fails">QFails<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="others" class="text-center"><button type="button" class="th-sort">Others<i class="bi sort-icon"></i></button></th>
+                  <th data-sort="activity"><button type="button" class="th-sort">Activity<i class="bi sort-icon"></i></button></th>
+                </tr>
+              </thead>
+              <tbody id="projectTbody"></tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <span class="page-info" id="pageInfo"></span>
+            <nav aria-label="Project pages">
+              <ul class="pagination-dark" id="pagination"></ul>
+            </nav>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ============ More filters (offcanvas) ============ -->
+  <div class="offcanvas offcanvas-end panel-offcanvas" tabindex="-1" id="filtersCanvas" aria-labelledby="filtersTitle">
+    <div class="offcanvas-header">
+      <div>
+        <h5 class="offcanvas-title" id="filtersTitle">More filters</h5>
+        <p class="panel-subtitle">Narrow the project list.</p>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="mb-3">
+        <label class="form-label" for="fCountry">Country</label>
+        <select class="form-select" id="fCountry"><option value="">All countries</option></select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="fClient">Client</label>
+        <select class="form-select" id="fClient"><option value="">All clients</option></select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="fPm">Project manager</label>
+        <select class="form-select" id="fPm"><option value="">All project managers</option></select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="fActivity">Last entry</label>
+        <select class="form-select" id="fActivity">
+          <option value="">Any time</option>
+          <option value="hour">Within the last hour</option>
+          <option value="day">Within the last 24 hours</option>
+          <option value="idle">No entries for 24+ hours</option>
+        </select>
+      </div>
+    </div>
+    <div class="offcanvas-footer">
+      <button type="button" class="btn btn-ghost" id="resetFilters">Reset</button>
+      <button type="button" class="btn btn-primary-grad" id="applyFilters">Apply filters</button>
+    </div>
+  </div>
+
+  <!-- ============ New project (modal) ============ -->
+  <div class="modal fade" id="newProjectModal" tabindex="-1" aria-labelledby="newProjectTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <form class="modal-content" id="newProjectForm" novalidate>
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="newProjectTitle">New project</h5>
+            <p class="panel-subtitle">The project is created as Live and appears at the top of the list.</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label" for="npName">Project name</label>
+              <input class="form-control" id="npName" required maxlength="80" placeholder="e.g. Grocery delivery habits">
+              <div class="invalid-feedback">Enter a project name.</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="npJob">Job number</label>
+              <input class="form-control" id="npJob" readonly tabindex="-1">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="npCountry">Country</label>
+              <select class="form-select" id="npCountry" required><option value="">Select a country</option></select>
+              <div class="invalid-feedback">Select a country.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="npClient">Client</label>
+              <select class="form-select" id="npClient" required><option value="">Select a client</option></select>
+              <div class="invalid-feedback">Select a client.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="npPm">Project manager</label>
+              <select class="form-select" id="npPm" required><option value="">Select a project manager</option></select>
+              <div class="invalid-feedback">Select a project manager.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="npLoi">LOI bid (minutes)</label>
+              <input class="form-control" id="npLoi" type="number" min="1" max="90" step="1" required placeholder="10">
+              <div class="invalid-feedback">Enter a length between 1 and 90 minutes.</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Create project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
