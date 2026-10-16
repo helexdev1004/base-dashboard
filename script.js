@@ -114,6 +114,11 @@ function relativeTime(ts) {
   return `${days} day${days === 1 ? '' : 's'} ago`;
 }
 
+function startOfMonth(ts) {
+  const d = new Date(ts);
+  return new Date(d.getFullYear(), d.getMonth(), 1).getTime();
+}
+
 function freshness(ts) {
   const mins = (Date.now() - ts) / MINUTE;
   if (mins < 60) return 'fresh';
@@ -143,7 +148,7 @@ function makeMetrics(base, live, now) {
   const activeToday = live && minsAgo < 1440;
   const c24h = activeToday ? Math.round(c1 * rand(0.03, 0.2)) : 0;
   const eb24h = activeToday ? Math.max(c24h, Math.round(eb * rand(0.05, 0.2))) : 0;
-  const inLast30 = live || (lastCompleteAt && now - lastCompleteAt <= 30 * DAY);
+  const inThisMonth = live || (lastCompleteAt && lastCompleteAt >= startOfMonth(now));
 
   return {
     ...base,
@@ -163,8 +168,8 @@ function makeMetrics(base, live, now) {
     lastCompleteAt,
     c24h,
     eb24h,
-    c30: inLast30 ? c1 : 0,
-    eb30: inLast30 ? eb : 0,
+    cMonth: inThisMonth ? c1 : 0,
+    ebMonth: inThisMonth ? eb : 0,
   };
 }
 
@@ -213,7 +218,7 @@ function buildProjects() {
   Object.assign(first, {
     status: 'Live', c1: 55, ir: 11, conv: 10, loiBid: 10, loiReal: 11,
     eb: 472, ec: 333, s1: 280, q1: 115, s2: 0, q2: 0, drops: 31,
-    dupsA: 126, dupsB: 55, qfA: 1, qfB: 0, others: 15, c30: 55, eb30: 472,
+    dupsA: 126, dupsB: 55, qfA: 1, qfB: 0, others: 15, cMonth: 55, ebMonth: 472,
     lastEntryAt: now - 6 * MINUTE, lastCompleteAt: now - 14 * MINUTE,
   });
 
@@ -266,10 +271,10 @@ const ACTIVITY_LABELS = {
 /* ---------- KPI cards ---------- */
 const KPI_CONFIG = [
   // Accents come from the active theme (--kpi-1 … --kpi-5 in style.css).
-  { key: 'live', title: 'Projects Currently Live', sub: '', icon: 'bi-broadcast', accent: 'var(--kpi-1)', type: 'int' },
-  { key: 'c30', title: 'Completes', sub: 'past 30 days', icon: 'bi-check2-circle', accent: 'var(--kpi-2)', type: 'int' },
+  { key: 'live', title: 'Projects', sub: 'currently live', icon: 'bi-broadcast', accent: 'var(--kpi-1)', type: 'int' },
+  { key: 'cMonth', title: 'Completes', sub: 'this month', icon: 'bi-check2-circle', accent: 'var(--kpi-2)', type: 'int' },
   { key: 'c24', title: 'Completes', sub: 'past 24 hours', icon: 'bi-clock-history', accent: 'var(--kpi-3)', type: 'int' },
-  { key: 'conv30', title: 'Conversion', sub: 'past 30 days', icon: 'bi-arrow-repeat', accent: 'var(--kpi-4)', type: 'pct' },
+  { key: 'convMonth', title: 'Conversion', sub: 'this month', icon: 'bi-arrow-repeat', accent: 'var(--kpi-4)', type: 'pct' },
   { key: 'conv24', title: 'Conversion', sub: 'past 24 hours', icon: 'bi-lightning-charge', accent: 'var(--kpi-5)', type: 'pct' },
 ];
 
@@ -277,9 +282,9 @@ function computeKpis() {
   const sum = (key) => projects.reduce((total, p) => total + (p[key] || 0), 0);
   return {
     live: projects.filter((p) => p.status === 'Live').length,
-    c30: sum('c30'),
+    cMonth: sum('cMonth'),
     c24: sum('c24h'),
-    conv30: ratio(sum('c30'), sum('eb30')),
+    convMonth: ratio(sum('cMonth'), sum('ebMonth')),
     conv24: ratio(sum('c24h'), sum('eb24h')),
   };
 }
@@ -337,18 +342,6 @@ function sparklineSvg(values, id) {
     </svg>`;
 }
 
-function deltaHtml(series, type) {
-  const now = series[series.length - 1];
-  const prev = series[series.length - 8];
-  const diff = type === 'pct' ? now - prev : ratio(now - prev, prev);
-  if (!Number.isFinite(diff) || Math.abs(diff) < 0.05) return '';
-  const up = diff >= 0;
-  const text = type === 'pct' ? `${Math.abs(diff).toFixed(1)} pts` : `${Math.abs(Math.round(diff))}%`;
-  return `<span class="kpi-delta ${up ? 'up' : 'down'}" title="Compared with 7 days ago">
-            <i class="bi bi-arrow-${up ? 'up' : 'down'}-short"></i>${text}
-          </span>`;
-}
-
 function formatKpi(value, type) {
   return type === 'pct' ? fmtPct(value) : fmtInt(value);
 }
@@ -358,20 +351,15 @@ function renderKpis(animate = false) {
   $('#kpiGrid').innerHTML = KPI_CONFIG.map((cfg) => {
     const series = seriesFor(cfg.key, values[cfg.key]);
     return `
-      <article class="kpi-card" style="--accent:${cfg.accent}">
-        <div class="kpi-head">
-          <span class="kpi-icon"><i class="bi ${cfg.icon}"></i></span>
-          <div class="kpi-label">
-            <span class="kpi-title">${cfg.title}</span>
-            ${cfg.sub ? `<span class="kpi-sub">${cfg.sub}</span>` : ''}
-          </div>
+      <article class="kpi-card" style="--accent:${cfg.accent}" title="${cfg.title} ${cfg.sub}">
+        <span class="kpi-icon"><i class="bi ${cfg.icon}"></i></span>
+        <div class="kpi-label">
+          <span class="kpi-title">${cfg.title}</span>
+          <span class="kpi-sub">${cfg.sub}</span>
         </div>
-        <div class="kpi-value-row">
-          <span class="kpi-value" data-value="${values[cfg.key]}" data-type="${cfg.type}">
-            ${formatKpi(animate ? 0 : values[cfg.key], cfg.type)}
-          </span>
-          ${deltaHtml(series, cfg.type)}
-        </div>
+        <span class="kpi-value" data-value="${values[cfg.key]}" data-type="${cfg.type}">
+          ${formatKpi(animate ? 0 : values[cfg.key], cfg.type)}
+        </span>
         ${sparklineSvg(series, `spark-${cfg.key}`)}
       </article>`;
   }).join('');
@@ -656,7 +644,7 @@ function createProject() {
     loiReal: null,
     drops: 0, dupsA: 0, dupsB: 0, qfA: 0, qfB: 0, others: 0,
     lastEntryAt: null, lastCompleteAt: null,
-    c24h: 0, eb24h: 0, c30: 0, eb30: 0,
+    c24h: 0, eb24h: 0, cMonth: 0, ebMonth: 0,
     createdAt: now,
   };
   projects.unshift(project);
