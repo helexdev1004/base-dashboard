@@ -461,6 +461,7 @@ function rowHtml(p) {
           <span class="country">${p.country.name.toUpperCase()}</span>
         </div>
       </td>
+      <td class="activity">${activityHtml(p)}</td>
       <td class="text-center"><span class="pm-badge" title="${escapeHtml(p.pm.name)}">${p.pm.initials}</span></td>
       <td class="text-center">${status}</td>
       <td class="num num-strong${numCls(p.c1)}">${fmtInt(p.c1)}</td>
@@ -473,7 +474,6 @@ function rowHtml(p) {
       <td class="num">${stack(cellNum(p.dupsA), cellNum(p.dupsB))}</td>
       <td class="num">${stack(cellNum(p.qfA), cellNum(p.qfB))}</td>
       <td class="num">${cellNum(p.others)}</td>
-      <td class="activity">${activityHtml(p)}</td>
     </tr>`;
 }
 

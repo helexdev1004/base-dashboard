@@ -1314,6 +1314,8 @@ html[data-bs-theme="dark"] .search-box input::-webkit-search-cancel-button { fil
   border-bottom: 1px solid var(--border);
 }
 .project-table thead th:first-child { padding-left: 18px; }
+.project-table thead th:last-child { padding-right: 18px; }
+.project-table thead th[data-sort="activity"] { padding-left: 10px; }
 
 .th-sort {
   display: inline-flex;
@@ -1407,7 +1409,8 @@ th.is-sorted .sort-icon { display: inline-block; color: var(--primary-soft); }
 .stack > span:last-child { color: var(--text-2); }
 .stack small { font-size: 11px; color: var(--muted); margin-left: 2px; }
 
-.activity { font-size: 11px; line-height: 1.55; padding-right: 16px !important; }
+.activity { font-size: 11px; line-height: 1.55; padding-left: 12px !important; padding-right: 14px !important; }
+.project-table tbody td:last-child { padding-right: 18px; }
 .activity .act-label { color: var(--text-2); }
 .act-time.fresh { color: var(--fresh); }
 .act-time.warm { color: var(--warm); }
