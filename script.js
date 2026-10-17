@@ -38,6 +38,7 @@ const PMS = [
   { initials: 'MK', name: 'Mia Kovács' },
   { initials: 'JS', name: 'Jonas Schmidt' },
   { initials: 'TD', name: 'Tara Dubois' },
+  { initials: 'RA', name: 'Ray' },
 ];
 
 // The first few topics mirror the reference designs; the rest are sample data.
@@ -126,6 +127,51 @@ function freshness(ts) {
   return 'stale';
 }
 
+// Monotone cubic curve through [x, y] points: smooth, but never overshoots the data.
+function smoothPath(pts) {
+  const n = pts.length;
+  const f = (v) => v.toFixed(1);
+  if (!n) return '';
+  if (n < 3) return pts.map(([x, y], i) => `${i ? 'L' : 'M'}${f(x)},${f(y)}`).join(' ');
+  const dx = [];
+  const slope = [];
+  for (let i = 0; i < n - 1; i++) {
+    dx[i] = pts[i + 1][0] - pts[i][0];
+    slope[i] = (pts[i + 1][1] - pts[i][1]) / dx[i];
+  }
+  const tangent = [slope[0]];
+  for (let i = 1; i < n - 1; i++) {
+    tangent[i] = slope[i - 1] * slope[i] <= 0
+      ? 0
+      : (3 * (dx[i - 1] + dx[i])) / ((2 * dx[i] + dx[i - 1]) / slope[i - 1] + (dx[i] + 2 * dx[i - 1]) / slope[i]);
+  }
+  tangent[n - 1] = slope[n - 2];
+  let d = `M${f(pts[0][0])},${f(pts[0][1])}`;
+  for (let i = 0; i < n - 1; i++) {
+    const h = dx[i] / 3;
+    d += ` C${f(pts[i][0] + h)},${f(pts[i][1] + tangent[i] * h)} ${f(pts[i + 1][0] - h)},${f(pts[i + 1][1] - tangent[i + 1] * h)} ${f(pts[i + 1][0])},${f(pts[i + 1][1])}`;
+  }
+  return d;
+}
+
+function downloadCsv(filename, rows) {
+  const csv = rows
+    .map((cols) => cols.map((v) => `"${String(v ?? '').replace(/"/g, '""')}"`).join(','))
+    .join('\r\n');
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.append(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+const slugify = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const today = () => new Date().toISOString().slice(0, 10);
+
 /* ---------- Sample data ---------- */
 function makeMetrics(base, live, now) {
   const eb = randInt(40, 900);
@@ -194,7 +240,7 @@ function buildProjects() {
       name: preset ? preset.name : TOPICS[topicIndex % TOPICS.length] + (wave ? ` W${wave + 1}` : ''),
       country: preset ? countryByCode[preset.country] : pick(COUNTRIES),
       client: pick(CLIENTS),
-      pm: i < 6 ? PMS[0] : pick(PMS),
+      pms: [i < 6 ? PMS[0] : pick(PMS)],
     });
   }
 
@@ -240,7 +286,7 @@ const state = {
 const SORTERS = {
   id: (p) => p.id,
   name: (p) => p.name.toLowerCase(),
-  pm: (p) => p.pm.initials,
+  pm: (p) => p.pms[0]?.initials ?? '',
   status: (p) => p.status,
   c1: (p) => p.c1,
   ir: (p) => p.ir,
@@ -315,18 +361,7 @@ function sparklineSvg(values, id) {
     (i / (values.length - 1)) * w,
     h - pad - ((v - min) / (max - min || 1)) * (h - pad * 2.5),
   ]);
-
-  // Catmull-Rom → cubic Bézier for a smooth wave.
-  let line = `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
-  for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[i - 1] || pts[i];
-    const p1 = pts[i];
-    const p2 = pts[i + 1];
-    const p3 = pts[i + 2] || p2;
-    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
-    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
-    line += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
-  }
+  const line = smoothPath(pts);
   const area = `${line} L${w},${h} L0,${h} Z`;
 
   return `
@@ -400,10 +435,11 @@ function getVisibleProjects() {
     if (p.status !== state.status) return false;
     if (country && p.country.code !== country) return false;
     if (client && p.client !== client) return false;
-    if (pm && p.pm.initials !== pm) return false;
+    if (pm && !p.pms.some((x) => x.initials === pm)) return false;
     if (!matchesActivity(p, activity)) return false;
     if (!q) return true;
-    const haystack = `${p.id} #${p.jobNo} ${p.name} ${p.country.name} ${p.client} ${p.pm.name} ${p.pm.initials}`.toLowerCase();
+    const people = p.pms.map((x) => `${x.name} ${x.initials}`).join(' ');
+    const haystack = `${p.id} #${p.jobNo} ${p.name} ${p.country.name} ${p.client} ${people}`.toLowerCase();
     return haystack.includes(q);
   });
 
@@ -432,6 +468,13 @@ function activityHtml(p) {
   return line('Last entry', p.lastEntryAt) + line('Last complete', p.lastCompleteAt);
 }
 
+function pmBadgeHtml(p) {
+  const [first, ...rest] = p.pms;
+  if (!first) return '<span class="num-zero">—</span>';
+  const names = escapeHtml(p.pms.map((x) => x.name).join(', '));
+  return `<span class="pm-badge" title="${names}">${first.initials}</span>${rest.length ? `<span class="pm-more" title="${names}">+${rest.length}</span>` : ''}`;
+}
+
 function rowHtml(p) {
   const status = p.status === 'Live'
     ? '<span class="status-badge status-live">Live</span>'
@@ -442,7 +485,7 @@ function rowHtml(p) {
     <tr data-id="${p.id}">
       <td class="col-id">${p.id}</td>
       <td>
-        <div class="pname" title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</div>
+        <a class="pname" href="#/project/${p.id}" title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</a>
         <div class="pmeta">
           <span class="job">#${p.jobNo}</span>
           <span class="fi fi-${p.country.code}"></span>
@@ -450,7 +493,7 @@ function rowHtml(p) {
         </div>
       </td>
       <td class="activity">${activityHtml(p)}</td>
-      <td class="text-center"><span class="pm-badge" title="${escapeHtml(p.pm.name)}">${p.pm.initials}</span></td>
+      <td class="text-center">${pmBadgeHtml(p)}</td>
       <td class="text-center">${status}</td>
       <td class="num num-strong${numCls(p.c1)}">${fmtInt(p.c1)}</td>
       <td class="num">${stack(`${p.ir}%`, `${p.conv}%`)}</td>
@@ -585,23 +628,11 @@ function exportCsv() {
   ];
   const iso = (ts) => (ts ? new Date(ts).toISOString() : '');
   const lines = rows.map((p) => [
-    p.id, p.jobNo, p.name, p.country.name, p.client, p.pm.name, p.status, p.c1, p.ir, p.conv,
+    p.id, p.jobNo, p.name, p.country.name, p.client, p.pms.map((x) => x.name).join(', '), p.status, p.c1, p.ir, p.conv,
     p.loiBid, p.loiReal ?? '', p.eb, p.ec, p.s1, p.q1, p.s2, p.q2, p.drops, p.dupsA, p.dupsB,
     p.qfA, p.qfB, p.others, iso(p.lastEntryAt), iso(p.lastCompleteAt),
   ]);
-  const csv = [header, ...lines]
-    .map((cols) => cols.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(','))
-    .join('\r\n');
-
-  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `base-projects-${state.status.toLowerCase()}-${new Date().toISOString().slice(0, 10)}.csv`;
-  document.body.append(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+  downloadCsv(`base-projects-${state.status.toLowerCase()}-${today()}.csv`, [header, ...lines]);
   showToast(`Exported ${rows.length} ${state.status.toLowerCase()} project${rows.length === 1 ? '' : 's'}.`);
 }
 
@@ -624,48 +655,9 @@ function showToast(message, tone = 'success') {
 }
 
 /* ---------- New project ---------- */
+// Creating and editing projects lives in project.js (the Main tab).
 function nextJobNo() {
   return Math.max(...projects.map((p) => p.jobNo)) + 1;
-}
-
-function createProject() {
-  const now = Date.now();
-  const project = {
-    id: Math.max(...projects.map((p) => p.id)) + 1,
-    jobNo: nextJobNo(),
-    name: $('#npName').value.trim(),
-    country: COUNTRIES.find((c) => c.code === $('#npCountry').value),
-    client: $('#npClient').value,
-    pm: PMS.find((p) => p.initials === $('#npPm').value),
-    status: 'Live',
-    eb: 0, ec: 0, c1: 0, s1: 0, q1: 0, s2: 0, q2: 0,
-    ir: 0, conv: 0,
-    loiBid: Number($('#npLoi').value),
-    loiReal: null,
-    drops: 0, dupsA: 0, dupsB: 0, qfA: 0, qfB: 0, others: 0,
-    lastEntryAt: null, lastCompleteAt: null,
-    c24h: 0, eb24h: 0, cMonth: 0, ebMonth: 0,
-    createdAt: now,
-  };
-  projects.unshift(project);
-
-  // Show the new project: Live tab, no search/filters, newest first.
-  state.status = 'Live';
-  state.search = '';
-  state.sortKey = 'id';
-  state.sortDir = 'desc';
-  state.page = 1;
-  $('#searchInput').value = '';
-  syncStatusButtons();
-  applyFilters({ country: '', client: '', pm: '', activity: '' });
-  renderKpis();
-
-  const row = $(`#projectTbody tr[data-id="${project.id}"]`);
-  if (row) {
-    row.classList.add('row-flash');
-    row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  }
-  showToast(`Project #${project.jobNo} "${project.name}" created.`);
 }
 
 /* ---------- Status toggle ---------- */
@@ -774,9 +766,6 @@ function init() {
   fillSelect($('#fCountry'), countryOpts);
   fillSelect($('#fClient'), clientOpts);
   fillSelect($('#fPm'), pmOpts);
-  fillSelect($('#npCountry'), countryOpts);
-  fillSelect($('#npClient'), clientOpts);
-  fillSelect($('#npPm'), pmOpts);
 
   // Theme (the inline script in <head> already applied the saved one)
   renderThemeOptions();
@@ -809,7 +798,9 @@ function init() {
     const link = e.target.closest('.nav-link');
     if (!link) return;
     e.preventDefault();
-    if (!link.classList.contains('active')) {
+    if (link.classList.contains('active')) {
+      location.hash = '#/';
+    } else {
       showToast(`${$('span', link).textContent} isn't part of this preview.`, 'info');
     }
     setMobileOpen(false);
@@ -830,7 +821,7 @@ function init() {
 
   document.addEventListener('keydown', (e) => {
     const typing = e.target.closest('input, textarea, select, [contenteditable="true"]');
-    if (e.key === '/' && !typing && !document.querySelector('.modal.show, .offcanvas.show')) {
+    if (e.key === '/' && !typing && !$('#listView').hidden && !document.querySelector('.modal.show, .offcanvas.show')) {
       e.preventDefault();
       $('#searchInput').focus();
     }
@@ -860,6 +851,13 @@ function init() {
     }
     state.page = 1;
     renderTable();
+  });
+
+  // Open a project from anywhere on its row (the name itself is a link).
+  $('#projectTbody').addEventListener('click', (e) => {
+    if (e.target.closest('a, button')) return;
+    const row = e.target.closest('tr[data-id]');
+    if (row) location.hash = `#/project/${row.dataset.id}`;
   });
 
   // Pagination
@@ -899,23 +897,6 @@ function init() {
 
   // Export
   $('#exportBtn').addEventListener('click', exportCsv);
-
-  // New project
-  const modalEl = $('#newProjectModal');
-  const form = $('#newProjectForm');
-  modalEl.addEventListener('show.bs.modal', () => { $('#npJob').value = `#${nextJobNo()}`; });
-  modalEl.addEventListener('shown.bs.modal', () => $('#npName').focus());
-  modalEl.addEventListener('hidden.bs.modal', () => { form.reset(); form.classList.remove('was-validated'); });
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!form.checkValidity()) {
-      form.classList.add('was-validated');
-      form.querySelector(':invalid')?.focus();
-      return;
-    }
-    createProject();
-    bootstrap.Modal.getInstance(modalEl).hide();
-  });
 
   // First paint
   syncStatusButtons();
