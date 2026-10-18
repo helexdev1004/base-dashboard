@@ -17,6 +17,7 @@ const PANELS = [
 const PROJECT_TYPES = ['ad hoc', 'tracker', 'omnibus'];
 const ENTITY_STATUSES = ['active', 'paused', 'closed'];
 const LINK_VARIABLES = ['{MRID}', '{UNIQUE_CODES}', '{CUSTOM_LINK}'];
+const SURVEY_GROUP_HELP = 'Respondents that attempted in selected projects are not eligible for this project.';
 const POLL_TYPES = ['Rating (1–5)', 'Single choice', 'Multiple choice', 'Open text'];
 
 const SCREENER_LIBRARY = [
@@ -47,7 +48,7 @@ const TAB_IDS = new Set(TABS.map((t) => t.id));
 
 // [key, label, tooltip] — every response metric a project tracks.
 const STAT_COLS = [
-  ['eb', 'EB'], ['ec', 'EC'], ['incomplete', 'Incomplete'], ['c1', 'C1', 'Completes'],
+  ['eb', 'EB', 'Entry base'], ['ec', 'EC', 'Entry client'], ['incomplete', 'Incomplete'], ['c1', 'C1', 'Completes'],
   ['s1', 'S1', 'Screenouts'], ['s2', 'S2', 'Screenouts'], ['q1', 'Q1', 'Quota fulls'], ['q2', 'Q2', 'Quota fulls'],
   ['dup1', 'DUP1', 'Duplicates'], ['dup2', 'DUP2', 'Duplicates'], ['dup3', 'DUP3', 'Duplicates'],
   ['geo1', 'GEO1'], ['qfail1', 'QFAIL1', 'Quality fails'], ['qfail2', 'QFAIL2', 'Quality fails'],
@@ -59,7 +60,7 @@ const VENDOR_COLS = colsFor(['eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'incomple
   .map((col) => (col[0] === 'incomplete' ? ['incomplete', 'INC', 'Incomplete'] : col));
 const DAILY_COLS = colsFor(['eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'dup1', 'dup2', 'dup3', 'geo1', 'qfail1', 'qfail2', 'ex1', 'ex2', 'dev1']);
 const CAMPAIGN_COLS = [
-  ['inv', 'INV', 'Invitations sent'], ['eb', 'EB'], ['ec', 'EC'], ['rr', 'RR', 'Response rate (EB ÷ INV)'],
+  ['inv', 'INV', 'Invitations sent'], ['eb', 'EB', 'Entry base'], ['ec', 'EC', 'Entry client'], ['rr', 'RR', 'Response rate (EB ÷ INV)'],
   ['c1', 'C1', 'Completes'], ['s1', 'S1'], ['s2', 'S2'], ['q1', 'Q1'], ['q2', 'Q2'], ['inc', 'INC', 'Incomplete'], ['cth', 'CTH'],
 ];
 const CAMPAIGN_KEYS = ['inv', 'eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'inc', 'cth'];
@@ -437,16 +438,12 @@ function renderShell() {
 function renderHeader() {
   const el = $('#pvHeader');
   const p = pv.project;
-  const crumbs = (last) => `
-    <div class="pv-crumbs">
-      <a class="pv-back" href="#/"><i class="bi bi-arrow-left"></i> Projects</a>
-      <span class="sep">/</span><span>${last}</span>
-    </div>`;
+  const back = '<a class="pv-back-btn" href="#/" title="Back to projects" aria-label="Back to projects"><i class="bi bi-arrow-left"></i></a>';
   if (!p) {
     el.innerHTML = `
-      ${crumbs('New project')}
       <div class="pv-title-row">
-        <div>
+        ${back}
+        <div class="pv-title-block">
           <h1 class="pv-title">New project</h1>
           <div class="pv-meta"><span class="status-badge status-draft">Draft</span><span>Not saved yet</span></div>
         </div>
@@ -463,12 +460,13 @@ function renderHeader() {
     ['Last entry', p.lastEntryAt ? relativeTime(p.lastEntryAt) : '—'],
   ];
   el.innerHTML = `
-    ${crumbs(`#${p.jobNo}`)}
     <div class="pv-title-row">
+      ${back}
       <div class="pv-title-block">
         <h1 class="pv-title">${escapeHtml(p.name)}</h1>
         <div class="pv-meta">
           ${status}
+          <span class="pv-job">#${p.jobNo}</span>
           <span><span class="fi fi-${p.country.code}"></span> ${escapeHtml(p.country.name)}</span>
           <span><i class="bi bi-building"></i> ${escapeHtml(p.client)}</span>
           <span><i class="bi bi-tag"></i> ${escapeHtml(p.detail.type)}</span>
@@ -547,110 +545,125 @@ function renderMain(el) {
   const countryOpts = [['', 'Select a country'], ...COUNTRIES.map((c) => [c.code, c.name]).sort((a, b) => a[1].localeCompare(b[1]))];
   const clientOpts = [['', 'Select a client'], ...[...CLIENTS].sort().map((c) => [c, c])];
 
+  // Two columns: a compact form on the left (short fields share rows), fieldwork metrics on the right.
   el.innerHTML = `
-    <form class="pv-card" id="mainForm" novalidate autocomplete="off">
-      <div class="pv-card-head">
-        <div>
-          <h2 class="pv-card-title">${p ? 'Project details' : 'Project setup'}</h2>
-          <p class="pv-card-sub">${p ? 'Changes apply as soon as you save.' : 'Save to create the project. The other tabs unlock once it exists.'}</p>
-        </div>
-        <span class="dirty-flag" id="dirtyFlag" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
-      </div>
-
-      <div class="row g-3">
-        <div class="col-lg-6">
-          <label class="form-label" for="mfName">Name</label>
-          <input class="form-control" id="mfName" required maxlength="100" value="${escapeHtml(v.name)}" placeholder="e.g. Employed individuals">
-          <div class="invalid-feedback">Enter a project name.</div>
-        </div>
-        <div class="col-lg-6">
-          <label class="form-label" for="mfPm">PM</label>
-          <div id="mfPmSelect"></div>
-          <div class="invalid-feedback">Pick at least one project manager.</div>
-        </div>
-
-        <div class="col-md-4">
-          <label class="form-label" for="mfClient">Client</label>
-          <select class="form-select" id="mfClient" required>${optionsHtml(clientOpts, v.client)}</select>
-          <div class="invalid-feedback">Select a client.</div>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label" for="mfSurveyNo">Survey number</label>
-          <input class="form-control" id="mfSurveyNo" type="number" min="1" step="1" required value="${v.surveyNo}">
-          <div class="invalid-feedback" id="mfSurveyNoFeedback">Enter a survey number.</div>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label" for="mfPo">PO</label>
-          <input class="form-control" id="mfPo" maxlength="40" value="${escapeHtml(v.po)}" placeholder="Purchase order number">
-        </div>
-
-        <div class="col-md-4">
-          <label class="form-label" for="mfLength">Survey length</label>
-          <div class="input-group has-validation">
-            <input class="form-control" id="mfLength" type="number" min="1" max="90" step="1" required value="${v.length}" placeholder="10">
-            <span class="input-group-text">min</span>
-            <div class="invalid-feedback">Enter a length between 1 and 90 minutes.</div>
-          </div>
-        </div>
-        <div class="col-md-4">${toggleHtml('geoIp', 'Geo IP check', v.geoIp)}</div>
-        <div class="col-md-4">${toggleHtml('blockDupIp', 'Block duplicated IP', v.blockDupIp)}</div>
-
-        <div class="col-md-4">
-          <label class="form-label" for="mfCountry">Country</label>
-          <select class="form-select" id="mfCountry" required>${optionsHtml(countryOpts, v.country)}</select>
-          <div class="invalid-feedback">Select a country.</div>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label" for="mfStatus">Status</label>
-          <select class="form-select" id="mfStatus">${optionsHtml([['Live', 'Live'], ['Closed', 'Closed']], v.status)}</select>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label" for="mfType">Type</label>
-          <select class="form-select" id="mfType">${optionsHtml(PROJECT_TYPES.map((t) => [t, t]), v.type)}</select>
-        </div>
-
-        <div class="col-12">
-          <label class="form-label" for="mfGroup">Survey group</label>
-          <div id="mfGroupSelect"></div>
-          <div class="field-help">Respondents that attempted in selected projects are not eligible for this project.</div>
-        </div>
-
-        <div class="col-12">
-          <label class="form-label" for="mfNotes">Notes</label>
-          <textarea class="form-control" id="mfNotes" rows="3" maxlength="2000" placeholder="Anything the team should know about this project">${escapeHtml(v.notes)}</textarea>
-        </div>
-
-        <div class="col-12">
-          <label class="form-label" for="mfLink">Live link</label>
-          <div class="input-group has-validation">
-            <input class="form-control mono" id="mfLink" required value="${escapeHtml(v.liveLink)}" spellcheck="false">
-            <button class="btn btn-ghost" type="button" data-action="copy-link" title="Copy link" aria-label="Copy live link"><i class="bi bi-clipboard"></i></button>
-            <div class="invalid-feedback">Enter a full URL starting with http:// or https://.</div>
-          </div>
-          <div class="field-help">
-            Predefined variables (click to insert):
-            ${LINK_VARIABLES.map((x) => `<button type="button" class="var-chip" data-action="insert-var" data-value="${x}">${x}</button>`).join('')}
-          </div>
-        </div>
-      </div>
-
-      <div class="pv-form-actions">
-        <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> ${p ? 'Save' : 'Create project'}</button>
-        <button type="button" class="btn btn-ghost" data-action="cancel-main">Cancel</button>
-        ${p ? '<button type="button" class="btn btn-ghost ms-auto" data-action="export-main"><i class="bi bi-download"></i> Export data</button>' : ''}
-      </div>
-    </form>
-
-    ${p ? `
-      <section class="pv-card">
+    <div class="main-layout">
+      <form class="pv-card mf-compact" id="mainForm" novalidate autocomplete="off">
         <div class="pv-card-head">
           <div>
-            <h2 class="pv-card-title">Fieldwork totals</h2>
-            <p class="pv-card-sub">All vendors combined. C1 is completes.</p>
+            <h2 class="pv-card-title">${p ? 'Project details' : 'Project setup'}</h2>
+            ${p ? '' : '<p class="pv-card-sub">Save to create the project. The other tabs unlock once it exists.</p>'}
+          </div>
+          <span class="dirty-flag" id="dirtyFlag" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+        </div>
+
+        <div class="mf-rows">
+          <div class="mf-row">
+            <div class="mf-field mf-grow">
+              <label class="form-label" for="mfName">Name</label>
+              <input class="form-control" id="mfName" required maxlength="100" value="${escapeHtml(v.name)}" placeholder="e.g. Employed individuals">
+              <div class="invalid-feedback">Enter a project name.</div>
+            </div>
+            <div class="mf-field mf-grow mf-grow-lg">
+              <label class="form-label" for="mfPm">PM</label>
+              <div id="mfPmSelect"></div>
+              <div class="invalid-feedback">Pick at least one project manager.</div>
+            </div>
+          </div>
+
+          <div class="mf-row">
+            <div class="mf-field mf-grow">
+              <label class="form-label" for="mfClient">Client</label>
+              <select class="form-select" id="mfClient" required>${optionsHtml(clientOpts, v.client)}</select>
+              <div class="invalid-feedback">Select a client.</div>
+            </div>
+            <div class="mf-field mf-w-sm">
+              <label class="form-label" for="mfSurveyNo">Survey number</label>
+              <input class="form-control" id="mfSurveyNo" type="number" min="1" step="1" required value="${v.surveyNo}">
+              <div class="invalid-feedback" id="mfSurveyNoFeedback">Enter a survey number.</div>
+            </div>
+            <div class="mf-field mf-w-sm">
+              <label class="form-label" for="mfPo">PO</label>
+              <input class="form-control" id="mfPo" maxlength="40" value="${escapeHtml(v.po)}" placeholder="PO number">
+            </div>
+          </div>
+
+          <div class="mf-row">
+            <div class="mf-field mf-w-md">
+              <label class="form-label" for="mfCountry">Country</label>
+              <select class="form-select" id="mfCountry" required>${optionsHtml(countryOpts, v.country)}</select>
+              <div class="invalid-feedback">Select a country.</div>
+            </div>
+            <div class="mf-field mf-w-xs">
+              <label class="form-label" for="mfLength">Survey length</label>
+              <div class="input-group has-validation">
+                <input class="form-control" id="mfLength" type="number" min="1" max="90" step="1" required value="${v.length}" placeholder="10">
+                <span class="input-group-text">min</span>
+                <div class="invalid-feedback">1–90 minutes.</div>
+              </div>
+            </div>
+            <div class="mf-field">${toggleHtml('geoIp', 'Geo IP check', v.geoIp)}</div>
+            <div class="mf-field">${toggleHtml('blockDupIp', 'Block duplicated IP', v.blockDupIp)}</div>
+          </div>
+
+          <div class="mf-row">
+            <div class="mf-field mf-w-sm">
+              <label class="form-label" for="mfStatus">Status</label>
+              <select class="form-select" id="mfStatus">${optionsHtml([['Live', 'Live'], ['Closed', 'Closed']], v.status)}</select>
+            </div>
+            <div class="mf-field mf-w-sm">
+              <label class="form-label" for="mfType">Type</label>
+              <select class="form-select" id="mfType">${optionsHtml(PROJECT_TYPES.map((t) => [t, t]), v.type)}</select>
+            </div>
+            <div class="mf-field mf-grow">
+              <label class="form-label" for="mfGroup">
+                Survey group <i class="bi bi-info-circle mf-info" title="${SURVEY_GROUP_HELP}" aria-hidden="true"></i>
+              </label>
+              <div id="mfGroupSelect"></div>
+              <span class="visually-hidden" id="mfGroupHelp">${SURVEY_GROUP_HELP}</span>
+            </div>
+          </div>
+
+          <div class="mf-field">
+            <label class="form-label" for="mfNotes">Notes</label>
+            <textarea class="form-control" id="mfNotes" rows="2" maxlength="2000" placeholder="Anything the team should know about this project">${escapeHtml(v.notes)}</textarea>
+          </div>
+
+          <div class="mf-field">
+            <div class="mf-label-row">
+              <label class="form-label" for="mfLink">Live link</label>
+              <div class="field-help" role="group" aria-label="Predefined variables">
+                Insert variable:
+                ${LINK_VARIABLES.map((x) => `<button type="button" class="var-chip" data-action="insert-var" data-value="${x}">${x}</button>`).join('')}
+              </div>
+            </div>
+            <div class="input-group has-validation">
+              <input class="form-control mono" id="mfLink" required value="${escapeHtml(v.liveLink)}" spellcheck="false">
+              <button class="btn btn-ghost" type="button" data-action="copy-link" title="Copy link" aria-label="Copy live link"><i class="bi bi-clipboard"></i></button>
+              <div class="invalid-feedback">Enter a full URL starting with http:// or https://.</div>
+            </div>
           </div>
         </div>
-        ${statGridHtml(projectStats(p))}
-      </section>` : ''}`;
+
+        <div class="pv-form-actions">
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> ${p ? 'Save' : 'Create project'}</button>
+          <button type="button" class="btn btn-ghost" data-action="cancel-main">Cancel</button>
+        </div>
+      </form>
+
+      <section class="pv-card metrics-card" aria-labelledby="metricsTitle">
+        <div class="pv-card-head">
+          <h2 class="pv-card-title" id="metricsTitle">Fieldwork metrics <span class="pv-card-note">all vendors combined</span></h2>
+          ${p ? '<button type="button" class="btn btn-ghost btn-sm-h" data-action="export-main"><i class="bi bi-download"></i> Export data</button>' : ''}
+        </div>
+        ${p ? metricsHtml(p) : `
+          <div class="pv-empty-block">
+            <i class="bi bi-bar-chart-line"></i>
+            <div class="empty-title">No fieldwork yet</div>
+            <div class="empty-text">Metrics appear here once respondents start the survey.</div>
+          </div>`}
+      </section>
+    </div>`;
 
   pv.pmSelect = createMultiSelect($('#mfPmSelect', el), {
     id: 'mfPm',
@@ -667,18 +680,57 @@ function renderMain(el) {
     options: projects.filter((x) => x !== p).map((x) => ({ value: String(x.id), label: `#${x.jobNo} · ${x.name}` })),
     selected: v.surveyGroup,
     placeholder: 'Select projects…',
+    describedBy: 'mfGroupHelp',
     onChange: markDirty,
   });
   pv.dirty = false;
 }
 
-function statGridHtml(stats) {
+// Fieldwork metric boxes, one row per group: [key, label, tooltip].
+const METRIC_GROUPS = [
+  [['c1', 'Completes', 'Completes (C1)'], ['ir', 'Incidence', 'Incidence rate'], ['conv', 'Conversion'], ['lastEntry', 'Last entry']],
+  [['loiBid', 'LOI bid (min)', 'Length of interview quoted, in minutes'], ['loiReal', 'LOI actual (min)', 'Actual length of interview so far, in minutes']],
+  [['eb', 'Entry base (EB)'], ['ec', 'Entry client (EC)'], ['incomplete', 'Incomplete']],
+  [['q1', 'Q1', 'Quota fulls'], ['q2', 'Q2', 'Quota fulls'], ['s1', 'S1', 'Screenouts'], ['s2', 'S2', 'Screenouts']],
+  [['dup1', 'DUP1', 'Duplicates'], ['dup2', 'DUP2', 'Duplicates'], ['dup3', 'DUP3', 'Duplicates']],
+  [['qfail1', 'QFAIL1', 'Quality fails'], ['qfail2', 'QFAIL2', 'Quality fails'], ['geo1', 'GEO1']],
+  [['dev1', 'DEV1'], ['ex1', 'EX1'], ['ex2', 'EX2'], ['noUnique', 'No unique code']],
+];
+
+function shortAgo(ts) {
+  const mins = Math.max(0, Math.round((Date.now() - ts) / MINUTE));
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins} min ago`;
+  if (mins < 1440) return `${Math.round(mins / 60)} h ago`;
+  return `${Math.round(mins / 1440)} d ago`;
+}
+
+function metricsHtml(p) {
+  const s = projectStats(p);
+  const shown = {
+    ...Object.fromEntries(STAT_KEYS.map((k) => [k, { text: fmtInt(s[k]), zero: s[k] === 0 }])),
+    ir: { text: `${p.ir}%`, zero: !p.ir },
+    conv: { text: `${p.conv}%`, zero: !p.conv },
+    lastEntry: p.lastEntryAt
+      ? { text: shortAgo(p.lastEntryAt), isText: true, note: fmtStamp(p.lastEntryAt) }
+      : { text: '—', zero: true },
+    loiBid: { text: p.loiBid.toFixed(2) },
+    loiReal: p.loiReal == null ? { text: '—', zero: true } : { text: p.loiReal.toFixed(2) },
+  };
   return `
-    <div class="stat-grid">
-      ${STAT_COLS.map(([key, label, title]) => `
-        <div class="stat-cell${key === 'c1' ? ' is-key' : ''}${stats[key] === 0 ? ' is-zero' : ''}"${title ? ` title="${title}"` : ''}>
-          <div class="stat-label">${label}</div>
-          <div class="stat-value">${fmtInt(stats[key])}</div>
+    <div class="metric-rows">
+      ${METRIC_GROUPS.map((group, i) => `
+        <div class="metric-row${i === 0 ? ' is-headline' : ''}">
+          ${group.map(([key, label, title]) => {
+            const m = shown[key];
+            const cls = [key === 'c1' && 'is-key', m.zero && 'is-zero', m.isText && 'is-text'].filter(Boolean).join(' ');
+            const tip = [title, m.note].filter(Boolean).join(' · ');
+            return `
+              <div class="metric-box ${cls}"${tip ? ` title="${tip}"` : ''}>
+                <span class="metric-label">${label}</span>
+                <span class="metric-value">${m.text}</span>
+              </div>`;
+          }).join('')}
         </div>`).join('')}
     </div>`;
 }
@@ -697,7 +749,7 @@ function saveMain() {
   const surveyInput = $('#mfSurveyNo');
   const surveyNo = Number(surveyInput.value);
   const taken = surveyInput.value !== '' && projects.some((x) => x !== p && x.jobNo === surveyNo);
-  const takenMsg = 'That survey number is already used by another project.';
+  const takenMsg = 'Already used by another project.';
   surveyInput.setCustomValidity(taken ? takenMsg : '');
   $('#mfSurveyNoFeedback').textContent = taken ? takenMsg : 'Enter a survey number.';
 
@@ -1483,7 +1535,7 @@ function renderQuestions(el, kind) {
 }
 
 /* ---------- Multi-select (PM, Survey group) ---------- */
-function createMultiSelect(root, { id, options, selected = [], placeholder = '', onChange = () => {} }) {
+function createMultiSelect(root, { id, options, selected = [], placeholder = '', describedBy = '', onChange = () => {} }) {
   let value = selected.filter((v) => options.some((o) => o.value === v));
   let open = false;
   let active = -1;
@@ -1505,6 +1557,7 @@ function createMultiSelect(root, { id, options, selected = [], placeholder = '',
   const menu = $('.ms-menu', root);
   const clear = $('.ms-clear', root);
   const labelOf = (v) => options.find((o) => o.value === v)?.label ?? v;
+  if (describedBy) input.setAttribute('aria-describedby', describedBy);
 
   function renderChips() {
     chips.innerHTML = value.map((v) => `
