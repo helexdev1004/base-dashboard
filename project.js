@@ -18,19 +18,48 @@ const PROJECT_TYPES = ['ad hoc', 'tracker', 'omnibus'];
 const ENTITY_STATUSES = ['active', 'paused', 'closed'];
 const LINK_VARIABLES = ['{MRID}', '{UNIQUE_CODES}', '{CUSTOM_LINK}'];
 const SURVEY_GROUP_HELP = 'Respondents that attempted in selected projects are not eligible for this project.';
-const POLL_TYPES = ['Rating (1–5)', 'Single choice', 'Multiple choice', 'Open text'];
+const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
 
+// Screener / post poll question builder.
+const QUESTION_TYPES = ['Single dropdown', 'Single choice', 'Multiple choice', 'Numeric', 'Open text'];
+const TYPES_WITHOUT_ANSWERS = new Set(['Numeric', 'Open text']);
+const ANSWER_ACTIONS = [
+  ['none', 'No action'], ['S1', 'S1'], ['S2', 'S2'], ['Q2', 'Q2'], ['QFAIL1', 'QFAIL1'], ['Required', 'Required'], ['Qualify', 'Qualify'],
+];
+const SCREENOUT_ACTIONS = new Set(['S1', 'S2', 'Q2', 'QFAIL1']);
+const POLL_STATUSES = [
+  ['C1', 'Complete (C1)'], ['S1', 'Screenout (S1)'], ['S2', 'Screenout (S2)'], ['Q1', 'Quota full (Q1)'],
+  ['Q2', 'Quota full (Q2)'], ['QFAIL', 'Quality fail'], ['DUP', 'Duplicate'], ['GEO', 'Geo IP fail'],
+];
+
+// Library answers are [text, action]; the action defaults to "No action".
 const SCREENER_LIBRARY = [
-  { id: 'age', text: 'What is your age?', type: 'Numeric', qualify: '18–65' },
-  { id: 'gender', text: 'What is your gender?', type: 'Single choice', qualify: 'Any' },
-  { id: 'region', text: 'Which region do you live in?', type: 'Single choice', qualify: 'Any' },
-  { id: 'employment', text: 'What is your current employment status?', type: 'Single choice', qualify: 'Employed full or part time' },
-  { id: 'income', text: 'What is your annual household income?', type: 'Single choice', qualify: 'Any' },
-  { id: 'education', text: 'What is the highest level of education you have completed?', type: 'Single choice', qualify: 'Any' },
-  { id: 'parent', text: 'Are you a parent of a child under 18?', type: 'Yes / No', qualify: 'Yes' },
-  { id: 'car', text: 'Do you own or lease a car?', type: 'Yes / No', qualify: 'Yes' },
-  { id: 'decision', text: 'Are you involved in purchase decisions for your household?', type: 'Yes / No', qualify: 'Yes' },
-  { id: 'industry', text: 'Do you or anyone in your household work in market research?', type: 'Yes / No', qualify: 'No' },
+  { id: 'age', text: 'How old are you?', type: 'Single dropdown',
+    answers: [['Under 18', 'S1'], ['18–24'], ['25–34'], ['35–44'], ['45–54'], ['55–64'], ['65 or older', 'S1']] },
+  { id: 'gender', text: 'What is your gender?', type: 'Single choice',
+    answers: [['Female'], ['Male'], ['Non-binary'], ['Prefer not to say']] },
+  { id: 'region', text: 'Which region do you live in?', type: 'Single dropdown',
+    answers: [['Capital region'], ['North'], ['South'], ['East'], ['West']] },
+  { id: 'employment', text: 'What is your current employment status?', type: 'Single choice',
+    answers: [['Employed full time', 'Qualify'], ['Employed part time', 'Qualify'], ['Self-employed'], ['Unemployed', 'S1'], ['Student', 'S1'], ['Retired', 'S1']] },
+  { id: 'education', text: 'What is the highest level of education you have completed?', type: 'Single dropdown',
+    answers: [['No formal education'], ['Primary school'], ['Secondary school'], ['Vocational qualification'], ['Bachelor’s degree'], ['Master’s degree'], ['Doctorate']] },
+  { id: 'income', text: 'What is your annual household income?', type: 'Single dropdown',
+    answers: [['Under €20,000'], ['€20,000–39,999'], ['€40,000–59,999'], ['€60,000–99,999'], ['€100,000 or more'], ['Prefer not to say', 'S2']] },
+  { id: 'parent', text: 'Are you a parent of a child under 18?', type: 'Single choice',
+    answers: [['Yes', 'Qualify'], ['No', 'S1']] },
+  { id: 'car', text: 'Do you own or lease a car?', type: 'Single choice',
+    answers: [['Own', 'Qualify'], ['Lease', 'Qualify'], ['Neither', 'S1']] },
+  { id: 'industry', text: 'Do you or anyone in your household work in any of these industries?', type: 'Multiple choice',
+    answers: [['Market research', 'S1'], ['Advertising or PR', 'S1'], ['Journalism', 'S1'], ['None of these']] },
+];
+
+const POLL_LIBRARY = [
+  { id: 'rating', text: 'How would you rate this survey overall?', type: 'Single choice', answers: [['Very poor'], ['Poor'], ['Okay'], ['Good'], ['Excellent']] },
+  { id: 'length', text: 'How did you find the length of the survey?', type: 'Single choice', answers: [['Too short'], ['About right'], ['Too long']] },
+  { id: 'device', text: 'Did the survey work well on your device?', type: 'Single choice', answers: [['Yes'], ['Partly'], ['No']] },
+  { id: 'again', text: 'Would you take part in a similar survey again?', type: 'Single choice', answers: [['Yes'], ['Maybe'], ['No']] },
+  { id: 'feedback', text: 'Is there anything you would like to tell us about this survey?', type: 'Open text', answers: [] },
 ];
 
 const TABS = [
@@ -165,7 +194,18 @@ function newDetail() {
     po: '', type: 'ad hoc', geoIp: true, blockDupIp: true, surveyGroup: [], notes: '', liveLink: makeLiveLink(),
     dup3: 0, geo1: 0, ex1: 0, ex2: 0, dev1: 0, noUnique: 0,
     days: [], vendors: [], campaigns: [], codes: [], links: [], ips: [],
-    screener: [{ id: 'age', active: true }], poll: [],
+    screenerActive: true, screener: [], pollActive: false, pollStatuses: ['C1'], poll: [],
+  };
+}
+
+// A question copied from a library entry, with zeroed answer counts.
+function questionFromLibrary(lib, id) {
+  return {
+    id,
+    libId: lib.id,
+    text: lib.text,
+    type: lib.type,
+    answers: lib.answers.map(([text, action = 'none'], i) => ({ id: i + 1, text, action, counts: [0, 0, 0] })),
   };
 }
 
@@ -192,7 +232,9 @@ function ensureDetail(p) {
     dup3: r.chance(0.7) ? 0 : r.int(1, 5),
     geo1, ex1, ex2, dev1, noUnique,
     days,
-    vendors: [], campaigns: [], codes: [], links: [], ips: [], screener: [], poll: [],
+    vendors: [], campaigns: [], codes: [], links: [], ips: [],
+    screenerActive: r.chance(0.85), screener: [],
+    pollActive: r.chance(0.4), pollStatuses: r.chance(0.6) ? ['C1'] : ['C1', 'S1'], poll: [],
   };
   p.detail = d;
 
@@ -225,11 +267,28 @@ function ensureDetail(p) {
       addedAt: end - r.between(1, 20) * DAY,
     }));
   }
-  const extra = shuffle(SCREENER_LIBRARY.slice(1).map((q) => q.id), r.next).slice(0, r.int(1, 3));
-  d.screener = ['age', ...extra].map((id) => ({ id, active: true }));
-  if (r.chance(0.4)) {
-    d.poll = [{ id: 1, text: 'How would you rate this survey overall?', type: 'Rating (1–5)', active: true }];
-    if (r.chance(0.5)) d.poll.push({ id: 2, text: 'Was the length of the survey about right?', type: 'Single choice', active: true });
+  // Screener: "age" plus a few library questions. Counts per answer are
+  // [chose this answer, went on to complete, screened out here].
+  const picks = ['age', ...shuffle(SCREENER_LIBRARY.slice(1).map((q) => q.id), r.next).slice(0, r.int(1, 2))];
+  d.screener = picks.map((libId, i) => {
+    const q = questionFromLibrary(SCREENER_LIBRARY.find((l) => l.id === libId), i + 1);
+    const chose = splitInt(p.eb, q.answers.map(() => r.between(0.2, 1)));
+    const passing = q.answers.map((a, j) => (SCREENOUT_ACTIONS.has(a.action) ? 0 : chose[j]));
+    const completed = splitInt(p.c1, passing.some(Boolean) ? passing : passing.map(() => 1));
+    q.answers.forEach((a, j) => {
+      a.counts = [chose[j], SCREENOUT_ACTIONS.has(a.action) ? 0 : completed[j], SCREENOUT_ACTIONS.has(a.action) ? chose[j] : 0];
+    });
+    return q;
+  });
+
+  // Post poll: answer counts are responses from completes.
+  if (d.pollActive) {
+    d.poll = shuffle(POLL_LIBRARY.slice(0, 4), r.next).slice(0, r.int(1, 2)).map((lib, i) => {
+      const q = questionFromLibrary(lib, i + 1);
+      const responses = splitInt(Math.round(p.c1 * r.between(0.5, 0.9)), q.answers.map(() => r.between(0.2, 1)));
+      q.answers.forEach((a, j) => { a.counts = [responses[j]]; });
+      return q;
+    });
   }
   return d;
 }
@@ -346,10 +405,12 @@ const pv = {
   campPanel: '',
   campSort: 'desc',
   expanded: new Set(),
-  search: { codes: '', links: '' },
   chartIndex: -1,
+  ipDraft: null,         // Exclude IPs edits wait for Save
+  unsaved: new Set(),    // tabs other than Main with unsaved edits ('ips', 'screener', 'poll')
 };
 let listScrollY = 0;
+const UNSAVED_LABELS = { ips: 'Exclude IPs', screener: 'Screener', poll: 'Post Poll' };
 let chartObserver = null;
 
 /* ---------- Routing ---------- */
@@ -366,9 +427,10 @@ function route() {
   const r = currentRoute();
   const open = !$('#projectView').hidden;
   const sameTarget = r && (r.id === 'new' ? pv.creating : Number(r.id) === pv.project?.id);
-  if (open && pv.dirty && !sameTarget) {
+  const pending = [pv.dirty && 'Main', ...[...pv.unsaved].map((t) => UNSAVED_LABELS[t])].filter(Boolean);
+  if (open && pending.length && !sameTarget) {
     history.replaceState(null, '', projectHash(pv.project, pv.tab));
-    showToast('You have unsaved changes on the Main tab. Save or cancel them first.', 'info');
+    showToast(`You have unsaved changes on ${pending.join(', ')}. Save or cancel them first.`, 'info');
     return;
   }
   if (!r) {
@@ -394,7 +456,7 @@ function showList() {
   chartObserver?.disconnect();
   $('#projectView').hidden = true;
   $('#listView').hidden = false;
-  Object.assign(pv, { project: null, creating: false, dirty: false });
+  Object.assign(pv, { project: null, creating: false, dirty: false, unsaved: new Set(), ipDraft: null });
   document.title = 'Base · Survey Projects';
   renderKpis();
   renderTable();
@@ -410,7 +472,7 @@ function openProject(p, tab) {
     Object.assign(pv, {
       project: p, creating, dirty: false, rendered: new Set(), draftLink: null,
       vendorView: 'chart', vendorFilter: '', campStatus: 'Live', campPanel: '', campSort: 'desc',
-      expanded: new Set(), search: { codes: '', links: '' }, chartIndex: -1,
+      expanded: new Set(), chartIndex: -1, ipDraft: null, unsaved: new Set(),
     });
     renderShell();
     $('#listView').hidden = true;
@@ -1292,105 +1354,139 @@ function newCampaign() {
   });
 }
 
+/* ---------- File uploads (Unique codes, Custom link, Exclude IPs) ---------- */
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
+const HEADER_RE = /^(unique[\s_-]*)?codes?$|^(custom[\s_-]*)?links?$|^urls?$|^ip(s|[\s_-]*address(es)?)?$/i;
+let xlsxLoading = null;
+
+// The spreadsheet reader is only needed for .xlsx files, so it loads the first time one is uploaded.
+function loadXlsx() {
+  if (window.XLSX) return Promise.resolve(window.XLSX);
+  xlsxLoading = xlsxLoading || new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = XLSX_URL;
+    script.onload = () => resolve(window.XLSX);
+    script.onerror = () => {
+      xlsxLoading = null;
+      script.remove();
+      reject(new Error("Couldn't load the spreadsheet reader. Check your connection and try again."));
+    };
+    document.head.append(script);
+  });
+  return xlsxLoading;
+}
+
+function firstCsvField(line) {
+  const s = line.trim();
+  if (!s) return '';
+  if (s[0] !== '"') return s.split(/[,;\t]/)[0].trim();
+  let out = '';
+  for (let i = 1; i < s.length; i++) {
+    if (s[i] === '"') {
+      if (s[i + 1] !== '"') break; // closing quote
+      i += 1; // "" is an escaped quote
+    }
+    out += s[i];
+  }
+  return out.trim();
+}
+
+// First non-empty value of every row in a CSV or Excel file; a header row is dropped.
+async function readFileValues(file) {
+  if (file.size > MAX_UPLOAD_BYTES) throw new Error('That file is larger than 5 MB.');
+  let values;
+  if (/\.xlsx?$/i.test(file.name)) {
+    const XLSX = await loadXlsx();
+    const book = XLSX.read(await file.arrayBuffer(), { type: 'array' });
+    const rows = XLSX.utils.sheet_to_json(book.Sheets[book.SheetNames[0]], { header: 1, blankrows: false });
+    values = rows.map((row) => String(row.find((c) => c != null && String(c).trim() !== '') ?? '').trim());
+  } else {
+    values = (await file.text()).replace(/^﻿/, '').split(/\r?\n/).map(firstCsvField);
+  }
+  values = values.filter(Boolean);
+  if (values.length && HEADER_RE.test(values[0])) values.shift();
+  return values;
+}
+
+async function withBusyButton(form, task) {
+  const btn = form.querySelector('[type="submit"]');
+  const label = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Working…';
+  try {
+    await task();
+  } catch (err) {
+    showToast(err.message || 'Something went wrong reading that file.', 'info');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = label;
+  }
+}
+
+const listNotes = (dupes, invalid) => [
+  dupes && `${plural(dupes, 'duplicate')} skipped`,
+  invalid && `${fmtInt(invalid)} not valid`,
+].filter(Boolean).join(', ');
+
 /* ---------- Unique codes & Custom link tabs ---------- */
 const POOL_CFG = {
   codes: {
-    title: 'Unique codes', noun: 'code', nouns: 'codes', variable: '{UNIQUE_CODES}', valueLabel: 'Code',
-    placeholder: 'One code per line', generate: true,
-    valid: (v) => /^[\w-]{3,64}$/.test(v), split: /[\s,;]+/,
+    noun: 'code', nouns: 'codes', column: 'Code', slug: 'unique-codes',
+    variable: '{UNIQUE_CODES}', variableFor: 'the unique codes', showPct: true,
+    accept: '.csv,text/csv', fileHelp: 'Select a CSV file to upload, one code per row.',
+    valid: (v) => /^[\w-]{3,64}$/.test(v),
   },
   links: {
-    title: 'Custom links', noun: 'link', nouns: 'links', variable: '{CUSTOM_LINK}', valueLabel: 'Link',
-    placeholder: 'One URL per line, e.g. https://…', generate: false,
-    valid: (v) => /^https?:\/\/\S+$/i.test(v), split: /\r?\n/,
+    noun: 'link', nouns: 'links', column: 'Link', slug: 'custom-links',
+    variable: '{CUSTOM_LINK}', variableFor: 'the custom link', showPct: false,
+    accept: '.csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel',
+    fileHelp: 'Select a CSV or XLSX file to upload, one link per row.',
+    valid: (v) => /^https?:\/\/\S+$/i.test(v),
   },
 };
-const POOL_LIMIT = 100;
 
 function renderPool(el, kind) {
   const cfg = POOL_CFG[kind];
-  el.innerHTML = `
-    <div class="sum-tiles" id="poolTiles-${kind}"></div>
-    <div class="pv-grid">
-      <section class="pv-card">
-        <div class="pv-card-head">
-          <div>
-            <h2 class="pv-card-title">Add ${cfg.nouns}</h2>
-            <p class="pv-card-sub">Each respondent gets one unused ${cfg.noun} through <code class="var-inline">${cfg.variable}</code> in the live link.</p>
-          </div>
-        </div>
-        <form data-form="pool-add" data-kind="${kind}" novalidate>
-          <label class="form-label" for="poolInput-${kind}">Paste ${cfg.nouns}</label>
-          <textarea class="form-control mono" id="poolInput-${kind}" name="values" rows="6" placeholder="${cfg.placeholder}" spellcheck="false"></textarea>
-          <div class="pv-inline-actions">
-            <button type="submit" class="btn btn-primary-grad btn-sm-h"><i class="bi bi-plus-lg"></i> Add ${cfg.nouns}</button>
-          </div>
-        </form>
-        ${cfg.generate ? `
-          <div class="pv-divider"><span>or</span></div>
-          <form data-form="pool-generate" data-kind="${kind}" novalidate>
-            <label class="form-label" for="poolCount-${kind}">Generate random codes</label>
-            <div class="input-group">
-              <input class="form-control" type="number" id="poolCount-${kind}" name="count" min="1" max="5000" value="100" required>
-              <button class="btn btn-ghost" type="submit">Generate</button>
-            </div>
-          </form>` : ''}
-      </section>
-      <section class="pv-card flush">
-        <div class="pv-toolbar">
-          <div class="search-box pv-search">
-            <i class="bi bi-search"></i>
-            <input type="search" data-input="pool-search" data-kind="${kind}" value="${escapeHtml(pv.search[kind])}"
-                   placeholder="Search ${cfg.nouns} or MRID…" aria-label="Search ${cfg.nouns}">
-          </div>
-          <button type="button" class="btn btn-ghost btn-sm-h ms-auto" data-action="pool-export" data-kind="${kind}"><i class="bi bi-download"></i> Export</button>
-        </div>
-        <div class="table-responsive pool-table">
-          <table class="pv-table">
-            <thead><tr><th>${cfg.valueLabel}</th><th>Status</th><th>MRID</th><th>Used</th><th><span class="visually-hidden">Remove</span></th></tr></thead>
-            <tbody id="poolRows-${kind}"></tbody>
-          </table>
-        </div>
-        <div class="pv-table-note" id="poolNote-${kind}" hidden></div>
-      </section>
-    </div>`;
-  updatePool(kind);
-}
-
-// Refreshes the counts and rows without re-rendering the panel (keeps focus in the search box).
-function updatePool(kind) {
-  const cfg = POOL_CFG[kind];
   const items = pv.project.detail[kind];
   const used = items.filter((i) => i.usedAt).length;
-  const q = pv.search[kind].trim().toLowerCase();
-  const shown = q ? items.filter((i) => i.value.toLowerCase().includes(q) || (i.mrid || '').toLowerCase().includes(q)) : items;
-
-  $(`#poolTiles-${kind}`).innerHTML = [['Total', items.length], ['Used', used], ['Available', items.length - used]]
-    .map(([label, n]) => `<div class="sum-tile"><div class="sum-label">${label}</div><div class="sum-value">${fmtInt(n)}</div></div>`).join('');
-
-  $(`#poolRows-${kind}`).innerHTML = shown.length
-    ? shown.slice(0, POOL_LIMIT).map((i) => `
-        <tr>
-          <td class="mono">${escapeHtml(i.value)}</td>
-          <td>${i.usedAt ? '<span class="pill pill-used">Used</span>' : '<span class="pill pill-free">Available</span>'}</td>
-          <td class="mono">${i.mrid || '<span class="zero">—</span>'}</td>
-          <td class="t-muted">${i.usedAt ? relativeTime(i.usedAt) : '—'}</td>
-          <td>${i.usedAt ? '' : `<button type="button" class="icon-btn-sm danger" data-action="pool-remove" data-kind="${kind}" data-value="${escapeHtml(i.value)}" aria-label="Remove ${escapeHtml(i.value)}"><i class="bi bi-trash3"></i></button>`}</td>
-        </tr>`).join('')
-    : emptyRow(5, items.length ? 'No matches' : `No ${cfg.nouns} yet`, items.length ? 'Try a different search.' : `Paste ${cfg.nouns} on the left to get started.`);
-
-  const note = $(`#poolNote-${kind}`);
-  note.hidden = shown.length <= POOL_LIMIT;
-  note.textContent = `Showing ${POOL_LIMIT} of ${fmtInt(shown.length)} — search to narrow the list.`;
-  $(`[data-action="pool-export"][data-kind="${kind}"]`).disabled = !items.length;
+  const pct = items.length ? Math.round(ratio(used, items.length)) : 0;
+  el.innerHTML = `
+    <div class="pv-callout">
+      <i class="bi bi-info-circle-fill"></i>
+      <span>Variable to use for ${cfg.variableFor}: <strong class="mono">${cfg.variable}</strong></span>
+      <button type="button" class="btn btn-ghost btn-xs ms-auto" data-action="copy-var" data-value="${cfg.variable}"><i class="bi bi-clipboard"></i> Copy</button>
+    </div>
+    <div class="sum-tiles">
+      <div class="sum-tile"><div class="sum-label">Total</div><div class="sum-value">${fmtInt(items.length)}</div></div>
+      <div class="sum-tile">
+        <div class="sum-label">Used</div>
+        <div class="sum-value">${fmtInt(used)}${cfg.showPct ? `<span class="sum-pct">${pct}%</span>` : ''}</div>
+      </div>
+      <div class="sum-tile"><div class="sum-label">Left</div><div class="sum-value">${fmtInt(items.length - used)}</div></div>
+    </div>
+    <section class="pv-card">
+      <form data-form="pool-upload" data-kind="${kind}" novalidate>
+        <label class="form-label" for="file-${kind}">Upload ${cfg.nouns}</label>
+        <div class="upload-row">
+          <input class="form-control" type="file" id="file-${kind}" name="file" accept="${cfg.accept}">
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-upload"></i> Upload</button>
+        </div>
+        <div class="field-help">${cfg.fileHelp} Duplicates are skipped.</div>
+      </form>
+      ${items.length ? `
+        <div class="upload-foot">
+          <span>Download every ${cfg.noun} with its status and the respondent who used it.</span>
+          <button type="button" class="btn btn-ghost btn-sm-h" data-action="pool-export" data-kind="${kind}"><i class="bi bi-download"></i> Download list</button>
+        </div>` : ''}
+    </section>`;
 }
 
-function addToPool(kind, text) {
+function addToPool(kind, values) {
   const cfg = POOL_CFG[kind];
   const items = pv.project.detail[kind];
   const existing = new Set(items.map((i) => i.value));
   const result = { added: 0, dupes: 0, invalid: 0 };
-  text.split(cfg.split).map((s) => s.trim()).filter(Boolean).forEach((value) => {
+  values.forEach((value) => {
     if (!cfg.valid(value)) result.invalid += 1;
     else if (existing.has(value)) result.dupes += 1;
     else {
@@ -1402,30 +1498,39 @@ function addToPool(kind, text) {
   return result;
 }
 
-function generateCodes(count) {
-  const items = pv.project.detail.codes;
-  const existing = new Set(items.map((i) => i.value));
-  let added = 0;
-  while (added < count) {
-    const value = token(8, Math.random, CODE_CHARS);
-    if (existing.has(value)) continue;
-    existing.add(value);
-    items.push({ value, mrid: null, usedAt: null });
-    added += 1;
+async function uploadPool(form) {
+  const kind = form.dataset.kind;
+  const cfg = POOL_CFG[kind];
+  const file = form.elements.file.files[0];
+  if (!file) {
+    showToast('Choose a file first.', 'info');
+    return;
   }
+  await withBusyButton(form, async () => {
+    const { added, dupes, invalid } = addToPool(kind, await readFileValues(file));
+    if (!added && !dupes && !invalid) {
+      showToast(`No ${cfg.nouns} found in ${file.name}.`, 'info');
+      return;
+    }
+    renderPanel(kind);
+    const notes = listNotes(dupes, invalid);
+    showToast(`Uploaded ${plural(added, cfg.noun, cfg.nouns)} from ${file.name}.${notes ? ` (${notes})` : ''}`, added ? 'success' : 'info');
+  });
 }
 
 function exportPool(kind) {
   const p = pv.project;
   const cfg = POOL_CFG[kind];
-  downloadCsv(`project-${p.jobNo}-${slugify(cfg.title)}-${today()}.csv`, [
-    [cfg.valueLabel, 'Status', 'MRID', 'Used at'],
-    ...p.detail[kind].map((i) => [i.value, i.usedAt ? 'Used' : 'Available', i.mrid || '', i.usedAt ? new Date(i.usedAt).toISOString() : '']),
+  const items = p.detail[kind];
+  downloadCsv(`project-${p.jobNo}-${cfg.slug}-${today()}.csv`, [
+    [cfg.column, 'Status', 'MRID', 'Used at'],
+    ...items.map((i) => [i.value, i.usedAt ? 'Used' : 'Available', i.mrid || '', i.usedAt ? new Date(i.usedAt).toISOString() : '']),
   ]);
-  showToast(`${cfg.title} exported.`);
+  showToast(`Downloaded ${plural(items.length, cfg.noun, cfg.nouns)}.`);
 }
 
 /* ---------- Exclude IPs tab ---------- */
+// Edits go into a draft list and only apply to the project on Save.
 const IPV4 = /^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\/(3[0-2]|[12]?\d))?$/;
 function isValidIp(value) {
   if (IPV4.test(value)) return true;
@@ -1435,103 +1540,376 @@ function isValidIp(value) {
   return mask === undefined || (/^\d{1,3}$/.test(mask) && Number(mask) <= 128);
 }
 
+function ipsDirty() {
+  const saved = pv.project.detail.ips.map((x) => x.ip).join('\n');
+  return pv.ipDraft.map((x) => x.ip).join('\n') !== saved;
+}
+
+function addIps(values) {
+  const known = new Set(pv.ipDraft.map((x) => x.ip));
+  const result = { added: 0, dupes: 0, invalid: [] };
+  values.forEach((raw) => {
+    const ip = raw.trim();
+    if (!isValidIp(ip)) result.invalid.push(ip);
+    else if (known.has(ip)) result.dupes += 1;
+    else {
+      known.add(ip);
+      pv.ipDraft.unshift({ ip, addedAt: Date.now() });
+      result.added += 1;
+    }
+  });
+  return result;
+}
+
 function renderIps(el) {
-  const ips = pv.project.detail.ips;
+  if (!pv.ipDraft) pv.ipDraft = pv.project.detail.ips.map((x) => ({ ...x }));
+  const list = pv.ipDraft;
+  const dirty = ipsDirty();
+  if (dirty) pv.unsaved.add('ips');
+  else pv.unsaved.delete('ips');
+
   el.innerHTML = `
-    <div class="pv-grid">
-      <section class="pv-card">
-        <div class="pv-card-head">
-          <div>
-            <h2 class="pv-card-title">Exclude IP addresses</h2>
-            <p class="pv-card-sub">Respondents connecting from these addresses can't enter the survey.</p>
-          </div>
+    <section class="pv-card ips-card">
+      <form data-form="ips-file" novalidate>
+        <label class="form-label" for="ipFile">Import from a file</label>
+        <div class="upload-row">
+          <input class="form-control" type="file" id="ipFile" name="file" accept=".csv,text/csv">
+          <button type="submit" class="btn btn-ghost">Process</button>
         </div>
-        <form data-form="ips-add" novalidate>
-          <label class="form-label" for="ipInput">IP addresses or ranges</label>
-          <textarea class="form-control mono" id="ipInput" name="ips" rows="6" spellcheck="false" placeholder="One per line, e.g. 203.0.113.7 or 198.51.100.0/24"></textarea>
-          <div class="field-help">IPv4, IPv6 and CIDR ranges are supported.</div>
-          <div class="pv-inline-actions"><button type="submit" class="btn btn-primary-grad btn-sm-h"><i class="bi bi-plus-lg"></i> Add to exclusion list</button></div>
-        </form>
-      </section>
-      <section class="pv-card flush">
-        <div class="pv-toolbar">
-          <span class="pv-toolbar-title">${plural(ips.length, 'excluded address', 'excluded addresses')}</span>
-          <button type="button" class="btn btn-ghost btn-sm-h ms-auto text-danger-soft" data-action="ips-clear" ${ips.length ? '' : 'disabled'}><i class="bi bi-trash3"></i> Clear all</button>
+        <div class="field-help">Select a CSV file to process, one IP address or range per row.</div>
+      </form>
+
+      <form class="ips-add" data-form="ips-add" novalidate>
+        <label class="form-label" for="ipInput">Add an address</label>
+        <div class="input-group">
+          <input class="form-control mono" id="ipInput" name="ip" placeholder="IPv4 or IPv6 address" autocomplete="off" spellcheck="false">
+          <button class="btn btn-ghost" type="submit" title="Add address" aria-label="Add address"><i class="bi bi-plus-circle"></i></button>
         </div>
-        <div class="table-responsive">
-          <table class="pv-table">
-            <thead><tr><th>IP / range</th><th>Type</th><th>Added</th><th><span class="visually-hidden">Remove</span></th></tr></thead>
-            <tbody>
-              ${ips.length ? ips.map((x, i) => `
-                <tr>
-                  <td class="mono">${escapeHtml(x.ip)}</td>
-                  <td>${x.ip.includes('/') ? 'Range' : 'Single address'}</td>
-                  <td class="t-muted">${relativeTime(x.addedAt)}</td>
-                  <td><button type="button" class="icon-btn-sm danger" data-action="ips-remove" data-index="${i}" aria-label="Remove ${escapeHtml(x.ip)}"><i class="bi bi-trash3"></i></button></td>
-                </tr>`).join('') : emptyRow(4, 'No exclusions', 'Add addresses on the left to block them.')}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>`;
+        <div class="field-help">Ranges in CIDR form, such as 198.51.100.0/24, work too.</div>
+      </form>
+
+      <div class="ips-table">
+        <table class="pv-table">
+          <thead><tr><th>IPs</th><th><span class="visually-hidden">Remove</span></th></tr></thead>
+          <tbody>
+            ${list.length ? list.map((x, i) => `
+              <tr>
+                <td class="mono">${escapeHtml(x.ip)}${x.ip.includes('/') ? ' <span class="pill pill-muted">range</span>' : ''}</td>
+                <td><button type="button" class="icon-btn-sm danger" data-action="ips-remove" data-index="${i}" aria-label="Remove ${escapeHtml(x.ip)}"><i class="bi bi-trash3"></i></button></td>
+              </tr>`).join('') : emptyRow(2, 'No excluded IPs', 'Add addresses above or import a CSV file.')}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pv-form-actions">
+        <button type="button" class="btn btn-primary-grad" data-action="ips-save" ${dirty ? '' : 'disabled'}><i class="bi bi-check2"></i> Save</button>
+        ${dirty ? `
+          <button type="button" class="btn btn-ghost" data-action="ips-discard">Discard changes</button>
+          <span class="dirty-flag"><i class="bi bi-circle-fill"></i> Unsaved changes</span>` : ''}
+        <span class="pv-toolbar-note ms-auto">${plural(list.length, 'address', 'addresses')} excluded</span>
+      </div>
+    </section>`;
+}
+
+async function processIpFile(form) {
+  const file = form.elements.file.files[0];
+  if (!file) {
+    showToast('Choose a CSV file first.', 'info');
+    return;
+  }
+  await withBusyButton(form, async () => {
+    const { added, dupes, invalid } = addIps(await readFileValues(file));
+    renderPanel('ips');
+    const notes = listNotes(dupes, invalid.length);
+    showToast(`Added ${plural(added, 'address', 'addresses')} from ${file.name}.${notes ? ` (${notes})` : ''}${added ? ' Save to apply.' : ''}`, added ? 'success' : 'info');
+  });
+}
+
+function addOneIp(form) {
+  const input = form.elements.ip;
+  const ip = input.value.trim();
+  if (!ip) {
+    input.focus();
+    return;
+  }
+  const { dupes, invalid } = addIps([ip]);
+  if (invalid.length) {
+    input.classList.add('is-invalid');
+    input.focus();
+    showToast(`${ip} isn't a valid IPv4 or IPv6 address.`, 'info');
+    return;
+  }
+  if (dupes) {
+    input.select();
+    showToast(`${ip} is already on the list.`, 'info');
+    return;
+  }
+  renderPanel('ips');
+  $('#ipInput').focus();
 }
 
 /* ---------- Screener & Post Poll tabs ---------- */
+// Each question is its own form: edits stay in the card until its Save button is pressed.
+const QUESTION_KINDS = {
+  screener: {
+    library: SCREENER_LIBRARY, statusKey: 'screenerActive', statusLabel: 'Screener status',
+    exportLabel: 'Export screener data', slug: 'screener', actions: true,
+  },
+  poll: {
+    library: POLL_LIBRARY, statusKey: 'pollActive', statusLabel: 'Post poll status',
+    exportLabel: 'Export poll data', slug: 'post-poll', actions: false,
+  },
+};
+
 function renderQuestions(el, kind) {
-  const items = pv.project.detail[kind];
-  const isScreener = kind === 'screener';
-  const resolved = items.map((q) => (isScreener ? { ...SCREENER_LIBRARY.find((l) => l.id === q.id), active: q.active } : q));
-  const available = isScreener ? SCREENER_LIBRARY.filter((l) => !items.some((q) => q.id === l.id)) : [];
-  const activeCount = items.filter((q) => q.active).length;
-
-  const addForm = isScreener
-    ? `
-      <select class="form-select" name="question" aria-label="Question from the Screener Library" ${available.length ? '' : 'disabled'}>
-        ${available.length ? available.map((l) => `<option value="${l.id}">${escapeHtml(l.text)}</option>`).join('') : '<option>All library questions are added</option>'}
-      </select>
-      <button type="submit" class="btn btn-primary-grad" ${available.length ? '' : 'disabled'}><i class="bi bi-plus-lg"></i> Add from library</button>`
-    : `
-      <input class="form-control" name="text" maxlength="200" required placeholder="Question text, e.g. How easy was this survey to complete?" aria-label="Question text">
-      <select class="form-select q-type" name="type" aria-label="Answer type">${POLL_TYPES.map((t) => `<option>${t}</option>`).join('')}</select>
-      <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Add question</button>`;
-
+  const cfg = QUESTION_KINDS[kind];
+  const d = pv.project.detail;
+  const on = d[cfg.statusKey];
   el.innerHTML = `
     <section class="pv-card">
-      <div class="pv-card-head">
-        <div>
-          <h2 class="pv-card-title">${isScreener ? 'Screener questions' : 'Post poll'}</h2>
-          <p class="pv-card-sub">${isScreener
-            ? 'Asked before the survey, in this order. Respondents who don’t qualify are screened out.'
-            : 'Optional questions shown to respondents after they complete the survey.'}</p>
+      <div class="q-settings">
+        <div class="q-setting">
+          <span class="form-label" id="lbl-${kind}-status">${cfg.statusLabel}</span>
+          <div class="segmented seg-field" role="group" aria-labelledby="lbl-${kind}-status">
+            <button type="button" data-action="q-status" data-kind="${kind}" data-value="1" class="${on ? 'active' : ''}" aria-pressed="${on}">Active</button>
+            <button type="button" data-action="q-status" data-kind="${kind}" data-value="0" class="${on ? '' : 'active'}" aria-pressed="${!on}">Inactive</button>
+          </div>
         </div>
-        <span class="pv-count">${fmtInt(activeCount)} active</span>
+        ${kind === 'poll' ? `
+          <div class="q-setting q-setting-grow">
+            <label class="form-label" for="pollStatuses">Show to statuses</label>
+            <div id="pollStatusSelect"></div>
+          </div>` : ''}
+        <button type="button" class="btn btn-ghost btn-sm-h q-export" data-action="q-export" data-kind="${kind}"><i class="bi bi-download"></i> ${cfg.exportLabel}</button>
       </div>
-      <form class="q-add" data-form="q-add" data-kind="${kind}" novalidate>${addForm}</form>
-      ${resolved.length ? `
-        <ol class="q-list">
-          ${resolved.map((q, i) => `
-            <li class="q-item${q.active ? '' : ' is-off'}">
-              <span class="q-num">${i + 1}</span>
-              <div class="q-text">
-                <div class="q-title">${escapeHtml(q.text)}</div>
-                <div class="q-meta">${escapeHtml(q.type)}${isScreener ? ` · Qualifies: ${escapeHtml(q.qualify)}` : ''}</div>
-              </div>
-              <div class="q-actions">
-                <div class="form-check form-switch m-0" title="${q.active ? 'Active' : 'Inactive'}">
-                  <input class="form-check-input" type="checkbox" role="switch" data-change="q-active" data-kind="${kind}" data-index="${i}" ${q.active ? 'checked' : ''} aria-label="Question ${i + 1} active">
-                </div>
-                <button type="button" class="icon-btn-sm" data-action="q-move" data-kind="${kind}" data-index="${i}" data-dir="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up"><i class="bi bi-arrow-up"></i></button>
-                <button type="button" class="icon-btn-sm" data-action="q-move" data-kind="${kind}" data-index="${i}" data-dir="1" ${i === resolved.length - 1 ? 'disabled' : ''} aria-label="Move down"><i class="bi bi-arrow-down"></i></button>
-                <button type="button" class="icon-btn-sm danger" data-action="q-remove" data-kind="${kind}" data-index="${i}" aria-label="Remove question ${i + 1}"><i class="bi bi-trash3"></i></button>
-              </div>
-            </li>`).join('')}
-        </ol>` : `
-        <div class="pv-empty-block">
-          <i class="bi bi-ui-checks"></i>
-          <div class="empty-title">No questions yet</div>
-          <div class="empty-text">${isScreener ? 'Add questions from the Screener Library above.' : 'Add a question above to collect feedback after completion.'}</div>
-        </div>`}
-    </section>`;
+      <div class="q-toolbar">
+        <button type="button" class="btn btn-ghost btn-sm-h" data-action="q-new" data-kind="${kind}"><i class="bi bi-plus-circle"></i> Add question</button>
+        <button type="button" class="btn btn-ghost btn-sm-h" data-action="q-library" data-kind="${kind}"><i class="bi bi-plus-circle"></i> Add Library question</button>
+      </div>
+    </section>
+    <div class="q-cards" id="qCards-${kind}">
+      ${d[kind].map((q, i) => questionCardHtml(kind, q, i)).join('')}
+    </div>
+    <div class="pv-card pv-empty-block" id="qEmpty-${kind}" ${d[kind].length ? 'hidden' : ''}>
+      <i class="bi bi-ui-checks"></i>
+      <div class="empty-title">No questions yet</div>
+      <div class="empty-text">Add a question, or pick one from the library.</div>
+    </div>`;
+
+  if (kind === 'poll') {
+    createMultiSelect($('#pollStatusSelect', el), {
+      id: 'pollStatuses',
+      options: POLL_STATUSES.map(([value, label]) => ({ value, label })),
+      selected: d.pollStatuses,
+      placeholder: 'Select…',
+      onChange: (value) => { d.pollStatuses = value; },
+    });
+  }
+}
+
+function questionCardHtml(kind, q, index) {
+  const cfg = QUESTION_KINDS[kind];
+  const legend = cfg.actions
+    ? '<span class="count-badge c-chose">Chose</span><span class="count-badge c-done">Completed</span><span class="count-badge c-out">Screened out</span>'
+    : '<span class="count-badge c-chose">Responses</span>';
+  return `
+    <form class="pv-card q-card" data-form="q-save" data-kind="${kind}" data-id="${q.id}" novalidate>
+      <div class="q-row">
+        <span class="q-num">${index + 1}</span>
+        <label class="q-label" for="qt-${kind}-${q.id}">Question text</label>
+        <input class="form-control q-text-input" id="qt-${kind}-${q.id}" name="text" required maxlength="300"
+               value="${escapeHtml(q.text)}" placeholder="Type the question">
+        <select class="form-select q-type-select" name="type" aria-label="Question type">${optionsHtml(QUESTION_TYPES.map((t) => [t, t]), q.type)}</select>
+        <button type="button" class="icon-btn-sm danger" data-action="q-delete" data-kind="${kind}" data-id="${q.id}"
+                title="Delete question" aria-label="Delete question ${index + 1}"><i class="bi bi-trash3"></i></button>
+      </div>
+      <div class="q-save-row">
+        <button type="submit" class="btn btn-primary-grad btn-sm-h"><i class="bi bi-check2"></i> Save</button>
+        <button type="button" class="btn btn-ghost btn-sm-h q-cancel" data-action="q-cancel" data-kind="${kind}" data-id="${q.id}" ${q.isNew ? '' : 'hidden'}>Cancel</button>
+        <span class="dirty-flag q-dirty" ${q.isNew ? '' : 'hidden'}><i class="bi bi-circle-fill"></i> ${q.isNew ? 'Not saved yet' : 'Unsaved changes'}</span>
+      </div>
+      <div class="ans-block" ${TYPES_WITHOUT_ANSWERS.has(q.type) ? 'hidden' : ''}>
+        <div class="ans-toolbar">
+          <button type="button" class="btn btn-ghost btn-xs" data-action="ans-add"><i class="bi bi-plus-circle"></i> Add answer</button>
+          <span class="ans-legend" aria-hidden="true">${legend}</span>
+          <button type="button" class="icon-btn-sm ms-auto" data-action="ans-refresh" title="Refresh counts" aria-label="Refresh counts"><i class="bi bi-arrow-clockwise"></i></button>
+        </div>
+        <div class="ans-list">${q.answers.map((a) => answerRowHtml(kind, a)).join('')}</div>
+      </div>
+    </form>`;
+}
+
+function answerRowHtml(kind, a) {
+  const withActions = QUESTION_KINDS[kind].actions;
+  const c = a.counts || [0, 0, 0];
+  return `
+    <div class="ans-row" data-aid="${a.id ?? ''}">
+      <input class="form-control ans-text" name="answer" value="${escapeHtml(a.text)}" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+      ${withActions ? `
+        <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+          ${ANSWER_ACTIONS.map(([value, label]) => `
+            <button type="button" role="radio" data-action="ans-action" data-value="${value}"
+                    class="${a.action === value ? 'active' : ''}" aria-checked="${a.action === value}">${label}</button>`).join('')}
+        </div>` : ''}
+      <div class="ans-counts">
+        ${withActions
+          ? `<span class="count-badge c-chose" title="Chose this answer">${fmtInt(c[0])}</span>
+             <span class="count-badge c-done" title="Went on to complete">${fmtInt(c[1])}</span>
+             <span class="count-badge c-out" title="Screened out on this answer">${fmtInt(c[2])}</span>`
+          : `<span class="count-badge c-chose" title="Responses">${fmtInt(c[0])}</span>`}
+      </div>
+      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer"><i class="bi bi-trash3"></i></button>
+    </div>`;
+}
+
+const findQuestion = (kind, id) => pv.project.detail[kind].find((q) => q.id === Number(id));
+
+function markCardDirty(card) {
+  if (!card.classList.contains('is-dirty')) {
+    card.classList.add('is-dirty');
+    $('.q-dirty', card).hidden = false;
+    $('.q-cancel', card).hidden = false;
+  }
+  pv.unsaved.add(card.dataset.kind);
+}
+
+function syncQuestionsUnsaved(kind) {
+  if ($$(`#qCards-${kind} .q-card.is-dirty`).length) pv.unsaved.add(kind);
+  else pv.unsaved.delete(kind);
+}
+
+function refreshQuestionList(kind) {
+  const cards = $$(`#qCards-${kind} .q-card`);
+  cards.forEach((card, i) => {
+    $('.q-num', card).textContent = i + 1;
+    $('[data-action="q-delete"]', card).setAttribute('aria-label', `Delete question ${i + 1}`);
+  });
+  $(`#qEmpty-${kind}`).hidden = cards.length > 0;
+  syncQuestionsUnsaved(kind);
+}
+
+function replaceQuestionCard(kind, q) {
+  const card = $(`#qCards-${kind} .q-card[data-id="${q.id}"]`);
+  card.outerHTML = questionCardHtml(kind, q, pv.project.detail[kind].indexOf(q));
+}
+
+function appendQuestionCard(kind, q) {
+  $(`#qCards-${kind}`).insertAdjacentHTML('beforeend', questionCardHtml(kind, q, pv.project.detail[kind].length - 1));
+  refreshQuestionList(kind);
+  const card = $(`#qCards-${kind} .q-card[data-id="${q.id}"]`);
+  card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  return card;
+}
+
+function saveQuestion(form) {
+  const kind = form.dataset.kind;
+  const q = findQuestion(kind, form.dataset.id);
+  const text = form.elements.text.value.trim();
+  const type = form.elements.type.value;
+  form.classList.add('was-validated');
+  if (!text) {
+    form.elements.text.focus();
+    showToast('Enter the question text first.', 'info');
+    return;
+  }
+  const rows = $$('.ans-row', form)
+    .map((row) => ({ row, text: $('.ans-text', row).value.trim() }))
+    .filter((x) => x.text);
+  if (!TYPES_WITHOUT_ANSWERS.has(type) && !rows.length) {
+    showToast('Add at least one answer.', 'info');
+    return;
+  }
+  const withActions = QUESTION_KINDS[kind].actions;
+  let nextId = Math.max(0, ...q.answers.map((a) => a.id)) + 1;
+  const answers = rows.map(({ row, text: answerText }) => {
+    const existing = q.answers.find((a) => String(a.id) === row.dataset.aid);
+    return {
+      id: existing ? existing.id : nextId++,
+      text: answerText,
+      action: withActions ? ($('.ans-actions .active', row)?.dataset.value || 'none') : 'none',
+      counts: existing ? existing.counts : (withActions ? [0, 0, 0] : [0]),
+    };
+  });
+  Object.assign(q, { text, type, answers });
+  delete q.isNew;
+  replaceQuestionCard(kind, q);
+  syncQuestionsUnsaved(kind);
+  showToast('Question saved.');
+}
+
+function removeQuestion(kind, q) {
+  const list = pv.project.detail[kind];
+  list.splice(list.indexOf(q), 1);
+  $(`#qCards-${kind} .q-card[data-id="${q.id}"]`).remove();
+  refreshQuestionList(kind);
+}
+
+function addLibraryQuestion(kind) {
+  const cfg = QUESTION_KINDS[kind];
+  const list = pv.project.detail[kind];
+  const available = cfg.library.filter((lib) => !list.some((q) => q.libId === lib.id));
+  if (!available.length) {
+    showToast('Every library question is already on this project.', 'info');
+    return;
+  }
+  openFormModal({
+    title: 'Add Library question',
+    subtitle: kind === 'screener' ? 'From the Screener Library, with its answers and actions.' : 'A ready-made post poll question with its answers.',
+    body: `
+      <label class="form-label" for="mqLibrary">Question</label>
+      <select class="form-select" id="mqLibrary" name="question" required>${optionsHtml(available.map((lib) => [lib.id, lib.text]))}</select>`,
+    submitLabel: '<i class="bi bi-plus-lg"></i> Add question',
+    onSubmit: (form) => {
+      const lib = cfg.library.find((x) => x.id === form.elements.question.value);
+      const q = questionFromLibrary(lib, Math.max(0, ...list.map((x) => x.id)) + 1);
+      if (!cfg.actions) q.answers.forEach((a) => { a.counts = [0]; });
+      list.push(q);
+      appendQuestionCard(kind, q);
+      showToast('Library question added.');
+    },
+  });
+}
+
+function exportQuestions(kind) {
+  const p = pv.project;
+  const d = p.detail;
+  const cfg = QUESTION_KINDS[kind];
+  const saved = d[kind].filter((q) => !q.isNew);
+  const head = [
+    [cfg.statusLabel, d[cfg.statusKey] ? 'Active' : 'Inactive'],
+    ...(kind === 'poll' ? [['Show to statuses', d.pollStatuses.map((s) => POLL_STATUSES.find(([v]) => v === s)?.[1] ?? s).join(', ')]] : []),
+    [],
+  ];
+  const rows = saved.flatMap((q, i) => {
+    const answers = TYPES_WITHOUT_ANSWERS.has(q.type) || !q.answers.length ? [null] : q.answers;
+    return answers.map((a) => (cfg.actions
+      ? [i + 1, q.text, q.type, a?.text ?? '', a ? ANSWER_ACTIONS.find(([v]) => v === a.action)[1] : '', a?.counts[0] ?? '', a?.counts[1] ?? '', a?.counts[2] ?? '']
+      : [i + 1, q.text, q.type, a?.text ?? '', a?.counts[0] ?? '']));
+  });
+  downloadCsv(`project-${p.jobNo}-${cfg.slug}-${today()}.csv`, [
+    ...head,
+    cfg.actions
+      ? ['#', 'Question', 'Type', 'Answer', 'Action', 'Chose', 'Completed', 'Screened out']
+      : ['#', 'Question', 'Type', 'Answer', 'Responses'],
+    ...rows,
+  ]);
+  showToast(`${cfg.exportLabel.replace('Export ', '').replace(/^./, (ch) => ch.toUpperCase())} exported.`);
+}
+
+// Destructive buttons ask once: the first click arms them, a second click within 3 s confirms.
+function confirmClick(el, label = 'Delete?') {
+  if (el.dataset.armed) return true;
+  const original = el.innerHTML;
+  el.dataset.armed = '1';
+  el.classList.add('is-armed');
+  el.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${label}`;
+  setTimeout(() => {
+    if (!el.isConnected) return;
+    delete el.dataset.armed;
+    el.classList.remove('is-armed');
+    el.innerHTML = original;
+  }, 3000);
+  return false;
 }
 
 /* ---------- Multi-select (PM, Survey group) ---------- */
@@ -1680,6 +2058,7 @@ const ACTIONS = {
     markDirty();
   },
   'copy-link'() { copyText($('#mfLink').value.trim(), 'Live link copied.'); },
+  'copy-var'(el) { copyText(el.dataset.value, `${el.dataset.value} copied.`); },
   'add-vendor': addVendor,
   refresh(el) {
     renderPanel(el.dataset.tab);
@@ -1727,42 +2106,84 @@ const ACTIONS = {
     renderPanel('campaigns');
     showToast(`${src.name} duplicated as Campaign ${pad2(id)}.`);
   },
+
+  // Unique codes / Custom link
   'pool-export'(el) { exportPool(el.dataset.kind); },
-  'pool-remove'(el) {
-    const { kind, value } = el.dataset;
-    const d = pv.project.detail;
-    d[kind] = d[kind].filter((i) => i.value !== value);
-    updatePool(kind);
-    showToast(`Removed ${value}.`, 'info');
-  },
+
+  // Exclude IPs (draft until Save)
   'ips-remove'(el) {
-    const [removed] = pv.project.detail.ips.splice(Number(el.dataset.index), 1);
+    pv.ipDraft.splice(Number(el.dataset.index), 1);
     renderPanel('ips');
-    showToast(`${removed.ip} removed from the exclusion list.`, 'info');
   },
-  'ips-clear'(el) {
-    // Two-step: the first click arms the button, a second click within 3 s clears the list.
-    if (!el.dataset.armed) {
-      el.dataset.armed = '1';
-      el.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Click again to clear';
-      setTimeout(() => { if (el.isConnected) renderPanel('ips'); }, 3000);
-      return;
+  'ips-save'() {
+    pv.project.detail.ips = pv.ipDraft.map((x) => ({ ...x }));
+    renderPanel('ips');
+    showToast(`Exclusion list saved (${plural(pv.ipDraft.length, 'address', 'addresses')}).`);
+  },
+  'ips-discard'() {
+    pv.ipDraft = null;
+    renderPanel('ips');
+    showToast('Changes discarded.', 'info');
+  },
+
+  // Screener / Post poll
+  'q-status'(el) {
+    const { kind } = el.dataset;
+    const cfg = QUESTION_KINDS[kind];
+    const on = el.dataset.value === '1';
+    pv.project.detail[cfg.statusKey] = on;
+    $$('button', el.parentElement).forEach((b) => {
+      b.classList.toggle('active', b === el);
+      b.setAttribute('aria-pressed', String(b === el));
+    });
+    showToast(`${kind === 'screener' ? 'Screener' : 'Post poll'} is now ${on ? 'active' : 'inactive'}.`, 'info');
+  },
+  'q-export'(el) { exportQuestions(el.dataset.kind); },
+  'q-new'(el) {
+    const { kind } = el.dataset;
+    const list = pv.project.detail[kind];
+    const blank = (id) => ({ id, text: '', action: 'none', counts: QUESTION_KINDS[kind].actions ? [0, 0, 0] : [0] });
+    const q = { id: Math.max(0, ...list.map((x) => x.id)) + 1, text: '', type: 'Single dropdown', answers: [blank(1), blank(2)], isNew: true };
+    list.push(q);
+    const card = appendQuestionCard(kind, q);
+    markCardDirty(card);
+    card.elements.text.focus();
+  },
+  'q-library'(el) { addLibraryQuestion(el.dataset.kind); },
+  'q-delete'(el) {
+    if (!confirmClick(el)) return;
+    const { kind, id } = el.dataset;
+    removeQuestion(kind, findQuestion(kind, id));
+    showToast('Question deleted.', 'info');
+  },
+  'q-cancel'(el) {
+    const { kind, id } = el.dataset;
+    const q = findQuestion(kind, id);
+    if (q.isNew) removeQuestion(kind, q);
+    else {
+      replaceQuestionCard(kind, q);
+      syncQuestionsUnsaved(kind);
     }
-    pv.project.detail.ips = [];
-    renderPanel('ips');
-    showToast('Exclusion list cleared.', 'info');
   },
-  'q-move'(el) {
-    const items = pv.project.detail[el.dataset.kind];
-    const i = Number(el.dataset.index);
-    const j = i + Number(el.dataset.dir);
-    [items[i], items[j]] = [items[j], items[i]];
-    renderPanel(el.dataset.kind);
+  'ans-add'(el) {
+    const card = el.closest('.q-card');
+    $('.ans-list', card).insertAdjacentHTML('beforeend', answerRowHtml(card.dataset.kind, { id: null, text: '', action: 'none' }));
+    markCardDirty(card);
+    $('.ans-row:last-child .ans-text', card).focus();
   },
-  'q-remove'(el) {
-    pv.project.detail[el.dataset.kind].splice(Number(el.dataset.index), 1);
-    renderPanel(el.dataset.kind);
+  'ans-remove'(el) {
+    const card = el.closest('.q-card');
+    el.closest('.ans-row').remove();
+    markCardDirty(card);
   },
+  'ans-action'(el) {
+    $$('button', el.parentElement).forEach((b) => {
+      b.classList.toggle('active', b === el);
+      b.setAttribute('aria-checked', String(b === el));
+    });
+    markCardDirty(el.closest('.q-card'));
+  },
+  'ans-refresh'() { showToast('Answer counts are up to date.', 'info'); },
 };
 
 function onClick(e) {
@@ -1777,9 +2198,15 @@ function onClick(e) {
 
 function onChange(e) {
   const el = e.target;
-  if (el.classList.contains('ms-input')) return; // typing a filter isn't a change; picks call onChange themselves
+  if (el.classList.contains('ms-input') || el.type === 'file') return;
   if (el.closest('#mainForm')) {
     markDirty();
+    return;
+  }
+  const card = el.closest('.q-card');
+  if (card) {
+    markCardDirty(card);
+    if (el.name === 'type') $('.ans-block', card).hidden = TYPES_WITHOUT_ANSWERS.has(el.value);
     return;
   }
   const d = pv.project?.detail;
@@ -1808,27 +2235,16 @@ function onChange(e) {
       pv.campPanel = el.value;
       renderPanel('campaigns');
       break;
-    case 'q-active':
-      d[el.dataset.kind][Number(el.dataset.index)].active = el.checked;
-      renderPanel(el.dataset.kind);
-      break;
     default:
   }
 }
 
-let poolSearchTimer;
 function onInput(e) {
   const el = e.target;
   if (el.classList.contains('ms-input')) return;
-  if (el.closest('#mainForm')) {
-    markDirty();
-  } else if (el.dataset.input === 'pool-search') {
-    clearTimeout(poolSearchTimer);
-    poolSearchTimer = setTimeout(() => {
-      pv.search[el.dataset.kind] = el.value;
-      updatePool(el.dataset.kind);
-    }, 120);
-  }
+  if (el.closest('#mainForm')) markDirty();
+  else if (el.closest('.q-card')) markCardDirty(el.closest('.q-card'));
+  else if (el.id === 'ipInput') el.classList.remove('is-invalid');
 }
 
 function onSubmit(e) {
@@ -1838,67 +2254,16 @@ function onSubmit(e) {
     saveMain();
     return;
   }
-  const type = form.dataset.form;
-  if (!type) return;
+  const handlers = {
+    'pool-upload': uploadPool,
+    'ips-file': processIpFile,
+    'ips-add': addOneIp,
+    'q-save': saveQuestion,
+  };
+  const handler = handlers[form.dataset.form];
+  if (!handler) return;
   e.preventDefault();
-  const d = pv.project.detail;
-  const kind = form.dataset.kind;
-
-  if (type === 'pool-add') {
-    const cfg = POOL_CFG[kind];
-    const { added, dupes, invalid } = addToPool(kind, form.elements.values.value);
-    if (!added && !dupes && !invalid) {
-      showToast(`Paste at least one ${cfg.noun} first.`, 'info');
-      return;
-    }
-    form.reset();
-    updatePool(kind);
-    const notes = [dupes && `${plural(dupes, 'duplicate')} skipped`, invalid && `${fmtInt(invalid)} invalid`].filter(Boolean).join(', ');
-    showToast(`Added ${plural(added, cfg.noun, cfg.nouns)}.${notes ? ` (${notes})` : ''}`, added ? 'success' : 'info');
-  } else if (type === 'pool-generate') {
-    const count = Number(form.elements.count.value);
-    if (!form.checkValidity() || !Number.isInteger(count)) {
-      form.classList.add('was-validated');
-      showToast('Enter a number between 1 and 5,000.', 'info');
-      return;
-    }
-    generateCodes(count);
-    updatePool('codes');
-    showToast(`Generated ${plural(count, 'code')}.`);
-  } else if (type === 'ips-add') {
-    const existing = new Set(d.ips.map((x) => x.ip));
-    const entries = form.elements.ips.value.split(/[\s,;]+/).map((s) => s.trim()).filter(Boolean);
-    const invalid = entries.filter((ip) => !isValidIp(ip));
-    const fresh = [...new Set(entries.filter((ip) => isValidIp(ip) && !existing.has(ip)))];
-    if (!entries.length) {
-      showToast('Enter at least one IP address.', 'info');
-      return;
-    }
-    fresh.forEach((ip) => d.ips.unshift({ ip, addedAt: Date.now() }));
-    renderPanel('ips');
-    if (invalid.length) {
-      // Put the rejected entries back so they can be fixed.
-      $('#ipInput').value = invalid.join('\n');
-      showToast(`Added ${plural(fresh.length, 'address', 'addresses')}. ${plural(invalid.length, 'entry', 'entries')} not valid: ${invalid.slice(0, 3).join(', ')}${invalid.length > 3 ? '…' : ''}`, 'info');
-    } else {
-      showToast(`Added ${plural(fresh.length, 'address', 'addresses')} to the exclusion list.`);
-    }
-  } else if (type === 'q-add') {
-    if (kind === 'screener') {
-      const id = form.elements.question.value;
-      if (!SCREENER_LIBRARY.some((q) => q.id === id)) return;
-      d.screener.push({ id, active: true });
-    } else {
-      const text = form.elements.text.value.trim();
-      if (!text) {
-        form.classList.add('was-validated');
-        form.elements.text.focus();
-        return;
-      }
-      d.poll.push({ id: Math.max(0, ...d.poll.map((q) => q.id)) + 1, text, type: form.elements.type.value, active: true });
-    }
-    renderPanel(kind);
-  }
+  handler(form);
 }
 
 function onTabKeys(e) {
