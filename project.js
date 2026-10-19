@@ -409,14 +409,22 @@ const pv = {
   ipDraft: null,         // Exclude IPs edits wait for Save
   unsaved: new Set(),    // tabs other than Main with unsaved edits ('ips', 'screener', 'poll')
 };
-let listScrollY = 0;
 const UNSAVED_LABELS = { ips: 'Exclude IPs', screener: 'Screener', poll: 'Post Poll' };
 let chartObserver = null;
 
 /* ---------- Routing ---------- */
+// #/ → project list · #/project/<id|new>[/<tab>] → project · #/feasibility, #/exports → pages
+const PAGE_RENDERERS = {
+  feasibility: () => renderFeasibility(), // feasibility.js
+  exports: () => renderExports(),         // exports.js
+};
+
 function currentRoute() {
-  const m = location.hash.match(/^#\/project\/(new|\d+)(?:\/([a-z]+))?$/);
-  return m ? { id: m[1], tab: m[2] } : null;
+  const project = location.hash.match(/^#\/project\/(new|\d+)(?:\/([a-z]+))?$/);
+  if (project) return { view: 'project', id: project[1], tab: project[2] };
+  const page = location.hash.match(/^#\/([a-z]+)$/);
+  if (page && PAGE_RENDERERS[page[1]]) return { view: page[1] };
+  return { view: 'list' };
 }
 
 function projectHash(p, tab) {
@@ -425,16 +433,20 @@ function projectHash(p, tab) {
 
 function route() {
   const r = currentRoute();
-  const open = !$('#projectView').hidden;
-  const sameTarget = r && (r.id === 'new' ? pv.creating : Number(r.id) === pv.project?.id);
+  const open = currentView === 'project';
+  const sameTarget = r.view === 'project' && (r.id === 'new' ? pv.creating : Number(r.id) === pv.project?.id);
   const pending = [pv.dirty && 'Main', ...[...pv.unsaved].map((t) => UNSAVED_LABELS[t])].filter(Boolean);
   if (open && pending.length && !sameTarget) {
     history.replaceState(null, '', projectHash(pv.project, pv.tab));
     showToast(`You have unsaved changes on ${pending.join(', ')}. Save or cancel them first.`, 'info');
     return;
   }
-  if (!r) {
+  if (r.view === 'list') {
     showList();
+    return;
+  }
+  if (r.view !== 'project') {
+    showPage(r.view);
     return;
   }
   if (r.id === 'new') {
@@ -451,23 +463,30 @@ function route() {
   openProject(p, TAB_IDS.has(r.tab) ? r.tab : 'main');
 }
 
-function showList() {
-  if ($('#projectView').hidden) return; // the list is already showing (e.g. first load)
+function leaveProject() {
   chartObserver?.disconnect();
-  $('#projectView').hidden = true;
-  $('#listView').hidden = false;
   Object.assign(pv, { project: null, creating: false, dirty: false, unsaved: new Set(), ipDraft: null });
+}
+
+function showList() {
+  leaveProject();
+  if (currentView === 'list') return; // already showing (e.g. first load)
+  setView('list');
   document.title = 'Base · Survey Projects';
   renderKpis();
   renderTable();
-  window.scrollTo(0, listScrollY);
+}
+
+function showPage(name) {
+  leaveProject();
+  setView(name);
+  PAGE_RENDERERS[name]();
 }
 
 function openProject(p, tab) {
   const creating = !p;
-  const same = !$('#projectView').hidden && pv.creating === creating && pv.project === p;
+  const same = currentView === 'project' && pv.creating === creating && pv.project === p;
   if (!same) {
-    if ($('#projectView').hidden) listScrollY = window.scrollY;
     if (p) ensureDetail(p);
     Object.assign(pv, {
       project: p, creating, dirty: false, rendered: new Set(), draftLink: null,
@@ -475,9 +494,7 @@ function openProject(p, tab) {
       expanded: new Set(), chartIndex: -1, ipDraft: null, unsaved: new Set(),
     });
     renderShell();
-    $('#listView').hidden = true;
-    $('#projectView').hidden = false;
-    window.scrollTo(0, 0);
+    setView('project');
   }
   selectTab(creating ? 'main' : tab, { updateUrl: false });
 }
@@ -1870,9 +1887,9 @@ function addLibraryQuestion(kind) {
   });
 }
 
-function exportQuestions(kind) {
-  const p = pv.project;
-  const d = p.detail;
+// Spreadsheet rows for a project's screener or post poll (used by the Exports page).
+function questionExportRows(p, kind) {
+  const d = ensureDetail(p);
   const cfg = QUESTION_KINDS[kind];
   const saved = d[kind].filter((q) => !q.isNew);
   const head = [
@@ -1886,14 +1903,14 @@ function exportQuestions(kind) {
       ? [i + 1, q.text, q.type, a?.text ?? '', a ? ANSWER_ACTIONS.find(([v]) => v === a.action)[1] : '', a?.counts[0] ?? '', a?.counts[1] ?? '', a?.counts[2] ?? '']
       : [i + 1, q.text, q.type, a?.text ?? '', a?.counts[0] ?? '']));
   });
-  downloadCsv(`project-${p.jobNo}-${cfg.slug}-${today()}.csv`, [
+  return [
+    ['Project', `#${p.jobNo} ${p.name}`],
     ...head,
     cfg.actions
       ? ['#', 'Question', 'Type', 'Answer', 'Action', 'Chose', 'Completed', 'Screened out']
       : ['#', 'Question', 'Type', 'Answer', 'Responses'],
     ...rows,
-  ]);
-  showToast(`${cfg.exportLabel.replace('Export ', '').replace(/^./, (ch) => ch.toUpperCase())} exported.`);
+  ];
 }
 
 // Destructive buttons ask once: the first click arms them, a second click within 3 s confirms.
@@ -2138,7 +2155,10 @@ const ACTIONS = {
     });
     showToast(`${kind === 'screener' ? 'Screener' : 'Post poll'} is now ${on ? 'active' : 'inactive'}.`, 'info');
   },
-  'q-export'(el) { exportQuestions(el.dataset.kind); },
+  'q-export'(el) {
+    const job = queueExport(pv.project, el.dataset.kind); // exports.js
+    showToast(`Preparing ${job.fileName}. You'll find it on the Exports page.`, 'info');
+  },
   'q-new'(el) {
     const { kind } = el.dataset;
     const list = pv.project.detail[kind];

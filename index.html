@@ -57,9 +57,9 @@
 
       <nav class="sidebar-nav">
         <ul class="nav flex-column" id="sideNav">
-          <li><a class="nav-link active" href="#" aria-current="page"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-download"></i><span>Exports</span></a></li>
+          <li><a class="nav-link active" href="#/" data-view="list" aria-current="page"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="#/feasibility" data-view="feasibility"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="#/exports" data-view="exports"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" hidden></span></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-people"></i><span>Clients</span></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-stack"></i><span>Vendors</span></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
@@ -205,6 +205,10 @@
         <!-- ============ Project detail (rendered by project.js) ============ -->
         <div class="project-view" id="projectView" hidden></div>
 
+        <!-- ============ Pages (rendered by feasibility.js / exports.js) ============ -->
+        <div class="page-view" id="feasibilityView" hidden></div>
+        <div class="page-view" id="exportsView" hidden></div>
+
       </main>
     </div>
   </div>
@@ -272,5 +276,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js"></script>
   <script src="project.js"></script>
+  <script src="feasibility.js"></script>
+  <script src="exports.js"></script>
 </body>
 </html>

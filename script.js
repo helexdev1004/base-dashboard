@@ -731,6 +731,27 @@ function applyTheme(id) {
   return theme;
 }
 
+/* ---------- Views ---------- */
+// One view shows at a time; the router in project.js decides which.
+const VIEWS = { list: '#listView', project: '#projectView', feasibility: '#feasibilityView', exports: '#exportsView' };
+let currentView = 'list';
+let listScrollY = 0;
+
+function setView(name) {
+  if (name === currentView) return;
+  if (currentView === 'list') listScrollY = window.scrollY;
+  Object.entries(VIEWS).forEach(([key, sel]) => { $(sel).hidden = key !== name; });
+  const navView = name === 'project' ? 'list' : name;
+  $$('#sideNav .nav-link').forEach((link) => {
+    const on = link.dataset.view === navView;
+    link.classList.toggle('active', on);
+    if (on) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+  currentView = name;
+  window.scrollTo(0, name === 'list' ? listScrollY : 0);
+}
+
 /* ---------- Sidebar ---------- */
 const desktopMq = window.matchMedia('(min-width: 992px)');
 let navTips = [];
@@ -801,13 +822,10 @@ function init() {
   $('#sideNav').addEventListener('click', (e) => {
     const link = e.target.closest('.nav-link');
     if (!link) return;
-    e.preventDefault();
-    if (link.classList.contains('active')) {
-      location.hash = '#/';
-    } else {
-      showToast(`${$('span', link).textContent} isn't part of this preview.`, 'info');
-    }
     setMobileOpen(false);
+    if (link.dataset.view) return; // a real page: let the link change the URL
+    e.preventDefault();
+    showToast(`${$('span', link).textContent} isn't part of this preview.`, 'info');
   });
 
   $$('.profile-menu .dropdown-item').forEach((item) => item.addEventListener('click', (e) => e.preventDefault()));
@@ -825,7 +843,7 @@ function init() {
 
   document.addEventListener('keydown', (e) => {
     const typing = e.target.closest('input, textarea, select, [contenteditable="true"]');
-    if (e.key === '/' && !typing && !$('#listView').hidden && !document.querySelector('.modal.show, .offcanvas.show')) {
+    if (e.key === '/' && !typing && currentView === 'list' && !document.querySelector('.modal.show, .offcanvas.show')) {
       e.preventDefault();
       $('#searchInput').focus();
     }

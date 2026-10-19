@@ -2252,6 +2252,137 @@ a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; 
   .pv-form-actions .ms-auto { margin-left: 0 !important; }
 }
 
+/* ---------- Pages (MF+A Feasibility, Exports) ---------- */
+.page-view { display: flex; flex-direction: column; gap: 16px; }
+.page-head { display: flex; flex-direction: column; gap: 4px; }
+.page-title { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: var(--text-strong); }
+.page-sub { margin: 0; font-size: 13px; color: var(--muted); }
+
+.nav-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 18px;
+  margin-left: auto;
+  padding: 0 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 9px;
+}
+.nav-badge[hidden] { display: none; }
+
+/* Feasibility settings */
+.fz-filter-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 16px; }
+.fz-field { flex: 0 0 auto; min-width: 0; }
+.fz-field .form-label { margin-bottom: 4px; font-size: 12px; }
+.fz-grow { flex: 1 1 280px; }
+.fz-w-client { width: 180px; }
+.fz-w-break { width: 150px; }
+.fz-field .segmented.seg-field button { min-width: 64px; }
+
+.btn-dark-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--bg);
+  background: var(--text-strong);
+  border: 1px solid var(--text-strong);
+}
+.btn-dark-chip:hover,
+.btn-dark-chip:focus-visible,
+.btn-dark-chip[aria-expanded="true"] { color: var(--bg); background: var(--text-2); border-color: var(--text-2); }
+.fz-caret { font-size: 9px; }
+.fz-templates { min-width: 260px; }
+.fz-template { display: flex; align-items: center; gap: 6px; padding-right: 4px; }
+.fz-template .dropdown-item { flex: 1; justify-content: space-between; }
+.fz-template-meta { font-size: 11px; color: var(--muted); }
+.fz-template .icon-btn-sm.is-armed { padding: 0 8px; }
+
+/* Quotas table */
+.fz-table thead th { height: auto; padding: 6px 10px; background: none; border-bottom: 0; }
+.fz-head-countries th { padding-top: 14px; }
+.fz-table th.fz-country { font-size: 13.5px; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--text-strong); white-space: nowrap; }
+.fz-filters .ms-input { min-width: 24px; }
+.fz-country .fi { margin-right: 4px; border-radius: 2px; box-shadow: 0 0 0 1px color-mix(in srgb, var(--overlay) 14%, transparent); }
+.fz-cpi-label { font-size: 12.5px !important; font-weight: 700 !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--text-strong) !important; }
+.fz-cpi { width: 112px; margin: 0 auto; flex-wrap: nowrap; }
+.fz-cpi .form-control { height: 32px; padding: 0 8px; font-size: 13px; text-align: right; }
+.fz-cpi .input-group-text { padding: 0 8px; }
+.fz-cpi .form-control.is-edited { border-color: var(--warm); box-shadow: 0 0 0 2px color-mix(in srgb, var(--warm) 25%, transparent); }
+.fz-head-cols th { padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.fz-table tbody td { padding: 6px 10px; }
+.fz-table tbody tr:hover > td { background: color-mix(in srgb, var(--primary) 4%, transparent); }
+.fz-gender { width: 140px; height: 34px; font-size: 13px; }
+.fz-age { display: inline-flex; align-items: center; gap: 6px; }
+.fz-age .form-control { width: 64px; height: 34px; padding: 0 8px; font-size: 13px; text-align: center; }
+.fz-age span { color: var(--muted); }
+.fz-recalc-cell { width: 56px; text-align: center !important; vertical-align: middle !important; background: none !important; }
+.fz-recalc { width: 34px; height: 34px; border-radius: 50%; font-size: 15px; }
+.fz-recalc.spin i { animation: fz-spin .6s ease; }
+@keyframes fz-spin { to { transform: rotate(360deg); } }
+
+.fz-avail,
+.fz-total {
+  display: inline-grid;
+  place-items: center;
+  min-width: 58px;
+  height: 22px;
+  padding: 0 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  border-radius: 11px;
+}
+.fz-avail { color: #fff; background: #15803d; }
+.fz-avail.is-low { background: #b45309; }
+.fz-avail.is-none { color: var(--muted); background: color-mix(in srgb, var(--overlay) 8%, transparent); }
+.fz-total { color: var(--bg); background: var(--text-strong); }
+.fz-total-label { font-weight: 600; color: var(--text-2); text-align: right !important; }
+.fz-table tfoot td { background: none; }
+.icon-btn-sm.success { color: var(--success); }
+.icon-btn-sm.success:hover:not(:disabled) { border-color: color-mix(in srgb, var(--success) 50%, transparent); }
+
+/* Exports */
+.alert-attention {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger) 35%, transparent);
+  border-radius: 10px;
+}
+.alert-attention > .bi { color: var(--danger); font-size: 16px; }
+.alert-attention strong { color: var(--text-strong); }
+.exports-table td:first-child,
+.exports-table th:first-child { width: 90px; }
+.exports-table td:nth-child(2),
+.exports-table th:nth-child(2) { text-align: left; }
+.file-link,
+.file-pending { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
+.file-link {
+  padding: 0;
+  font-weight: 500;
+  color: var(--primary-soft);
+  background: none;
+  border: 0;
+  text-align: left;
+}
+.file-link:hover { color: var(--primary-2); text-decoration: underline; text-underline-offset: 3px; }
+.file-link:focus-visible { outline: 2px solid color-mix(in srgb, var(--primary) 90%, transparent); outline-offset: 2px; border-radius: 4px; }
+.file-link-dl { font-size: 12px; opacity: 0; transition: opacity .15s; }
+.file-link:hover .file-link-dl,
+.file-link:focus-visible .file-link-dl { opacity: 1; }
+.file-pending { color: var(--muted); }
+.ex-status { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; }
+.ex-status.is-done { color: var(--live); }
+.ex-status.is-busy { color: var(--warm); }
+.ex-status .spinner-border { width: 12px; height: 12px; border-width: 2px; }
+
 /* ---------- Responsive ---------- */
 /* Below 1280px the button moves above the cards so all five stay on one row. */
 @media (max-width: 1279.98px) {
