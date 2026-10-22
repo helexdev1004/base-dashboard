@@ -61,14 +61,23 @@
           <li><a class="nav-link" href="#/feasibility" data-view="feasibility"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
           <li><a class="nav-link" href="#/exports" data-view="exports"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" hidden></span></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-people"></i><span>Clients</span></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-stack"></i><span>Vendors</span></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="#/vendors" data-view="vendors"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="#/vendor-groups" data-view="vendor-groups"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="#/blacklist" data-view="blacklist"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-person-gear"></i><span>Panel management</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-asterisk"></i><span>Framework</span></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-diagram-3"></i><span>External surveys</span></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
         </ul>
       </nav>
@@ -208,6 +217,10 @@
         <!-- ============ Pages (rendered by feasibility.js / exports.js) ============ -->
         <div class="page-view" id="feasibilityView" hidden></div>
         <div class="page-view" id="exportsView" hidden></div>
+        <div class="page-view" id="vendorsView" hidden></div>
+        <div class="page-view" id="vendorFormView" hidden></div>
+        <div class="page-view" id="vendorGroupsView" hidden></div>
+        <div class="page-view" id="blacklistView" hidden></div>
 
       </main>
     </div>
@@ -278,5 +291,7 @@
   <script src="project.js"></script>
   <script src="feasibility.js"></script>
   <script src="exports.js"></script>
+  <script src="vendors.js"></script>
+  <script src="blacklist.js"></script>
 </body>
 </html>

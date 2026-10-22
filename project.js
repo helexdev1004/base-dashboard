@@ -413,17 +413,24 @@ const UNSAVED_LABELS = { ips: 'Exclude IPs', screener: 'Screener', poll: 'Post P
 let chartObserver = null;
 
 /* ---------- Routing ---------- */
-// #/ → project list · #/project/<id|new>[/<tab>] → project · #/feasibility, #/exports → pages
+// #/ → project list · #/project/<id|new>[/<tab>] → project · #/vendors/<id|new> → vendor form
+// #/feasibility, #/exports, #/vendors, #/vendor-groups, #/blacklist → pages
 const PAGE_RENDERERS = {
-  feasibility: () => renderFeasibility(), // feasibility.js
-  exports: () => renderExports(),         // exports.js
+  feasibility: () => renderFeasibility(),       // feasibility.js
+  exports: () => renderExports(),               // exports.js
+  vendors: () => renderVendorsList(),           // vendors.js
+  'vendor-form': (r) => renderVendorForm(r.id), // vendors.js
+  'vendor-groups': () => renderVendorGroups(),  // vendors.js
+  blacklist: () => renderBlacklist(),           // blacklist.js
 };
 
 function currentRoute() {
   const project = location.hash.match(/^#\/project\/(new|\d+)(?:\/([a-z]+))?$/);
   if (project) return { view: 'project', id: project[1], tab: project[2] };
-  const page = location.hash.match(/^#\/([a-z]+)$/);
-  if (page && PAGE_RENDERERS[page[1]]) return { view: page[1] };
+  const vendor = location.hash.match(/^#\/vendors\/(new|\d+)$/);
+  if (vendor) return { view: 'vendor-form', id: vendor[1] };
+  const page = location.hash.match(/^#\/([a-z-]+)$/);
+  if (page && PAGE_RENDERERS[page[1]] && page[1] !== 'vendor-form') return { view: page[1] };
   return { view: 'list' };
 }
 
@@ -441,12 +448,18 @@ function route() {
     showToast(`You have unsaved changes on ${pending.join(', ')}. Save or cancel them first.`, 'info');
     return;
   }
+  // vendorForm lives in vendors.js
+  if (currentView === 'vendor-form' && vendorForm.dirty && !(r.view === 'vendor-form' && r.id === vendorForm.routeId)) {
+    history.replaceState(null, '', `#/vendors/${vendorForm.routeId}`);
+    showToast('You have unsaved changes on this vendor. Save or cancel them first.', 'info');
+    return;
+  }
   if (r.view === 'list') {
     showList();
     return;
   }
   if (r.view !== 'project') {
-    showPage(r.view);
+    showPage(r.view, r);
     return;
   }
   if (r.id === 'new') {
@@ -477,10 +490,10 @@ function showList() {
   renderTable();
 }
 
-function showPage(name) {
+function showPage(name, r = {}) {
   leaveProject();
   setView(name);
-  PAGE_RENDERERS[name]();
+  PAGE_RENDERERS[name](r);
 }
 
 function openProject(p, tab) {
@@ -1152,7 +1165,9 @@ function drawProgressChart() {
 
 function addVendor() {
   const d = pv.project.detail;
-  const available = VENDORS.filter((name) => !d.vendors.some((v) => v.name === name));
+  // Every vendor in the Vendors list (vendors.js) that isn't on this project yet.
+  const available = vendorRegistry.map((v) => v.name).sort((a, b) => a.localeCompare(b))
+    .filter((name) => !d.vendors.some((v) => v.name === name));
   if (!available.length) {
     showToast('All vendors are already on this project.', 'info');
     return;
@@ -1373,7 +1388,7 @@ function newCampaign() {
 
 /* ---------- File uploads (Unique codes, Custom link, Exclude IPs) ---------- */
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
-const HEADER_RE = /^(unique[\s_-]*)?codes?$|^(custom[\s_-]*)?links?$|^urls?$|^ip(s|[\s_-]*address(es)?)?$/i;
+const HEADER_RE = /^(unique[\s_-]*)?codes?$|^(custom[\s_-]*)?links?$|^urls?$|^ip(s|[\s_-]*address(es)?)?$|^resp(ondent)?[\s_-]*ids?$/i;
 let xlsxLoading = null;
 
 // The spreadsheet reader is only needed for .xlsx files, so it loads the first time one is uploaded.
@@ -2046,6 +2061,7 @@ function openFormModal({ title, subtitle = '', body, submitLabel, onSubmit }) {
   $('#pvModalTitle').textContent = title;
   $('#pvModalSub').textContent = subtitle;
   $('#pvModalBody').innerHTML = body;
+  $('#pvModalBody').onclick = null; // callers that need clicks inside the body set this after opening
   $('#pvModalSubmit').innerHTML = submitLabel;
   $('#pvModalForm').classList.remove('was-validated');
   modalSubmit = onSubmit;

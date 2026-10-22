@@ -733,7 +733,18 @@ function applyTheme(id) {
 
 /* ---------- Views ---------- */
 // One view shows at a time; the router in project.js decides which.
-const VIEWS = { list: '#listView', project: '#projectView', feasibility: '#feasibilityView', exports: '#exportsView' };
+const VIEWS = {
+  list: '#listView',
+  project: '#projectView',
+  feasibility: '#feasibilityView',
+  exports: '#exportsView',
+  vendors: '#vendorsView',
+  'vendor-form': '#vendorFormView',
+  'vendor-groups': '#vendorGroupsView',
+  blacklist: '#blacklistView',
+};
+// Views that highlight another view's menu item.
+const NAV_PARENT = { project: 'list', 'vendor-form': 'vendors' };
 let currentView = 'list';
 let listScrollY = 0;
 
@@ -741,16 +752,65 @@ function setView(name) {
   if (name === currentView) return;
   if (currentView === 'list') listScrollY = window.scrollY;
   Object.entries(VIEWS).forEach(([key, sel]) => { $(sel).hidden = key !== name; });
-  const navView = name === 'project' ? 'list' : name;
+  const navView = NAV_PARENT[name] || name;
   $$('#sideNav .nav-link').forEach((link) => {
     const on = link.dataset.view === navView;
     link.classList.toggle('active', on);
     if (on) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
   });
+  // A group whose page is open is marked and kept expanded.
+  $$('#sideNav .nav-group').forEach((group) => {
+    const hasActive = Boolean($('.nav-sub .nav-link.active', group));
+    group.classList.toggle('has-active', hasActive);
+    if (hasActive) setNavGroupOpen($('.nav-toggle', group), true);
+  });
   currentView = name;
   window.scrollTo(0, name === 'list' ? listScrollY : 0);
 }
+
+function setNavGroupOpen(toggle, open) {
+  toggle.setAttribute('aria-expanded', String(open));
+  $(`#${toggle.getAttribute('aria-controls')}`).hidden = !open;
+}
+
+/* ---------- Shared list helpers (pagination + search) ---------- */
+// « ‹ 1 2 3 › » — buttons carry data-<attr>="<page>".
+function pagerHtml(cur, pages, attr) {
+  const btn = (page, label, aria, disabled) => `
+    <li><button type="button" data-${attr}="${page}" ${disabled ? 'disabled' : ''} aria-label="${aria}">${label}</button></li>`;
+  return `
+    <ul class="pagination-dark">
+      ${btn(1, '«', 'First page', cur === 1)}
+      ${btn(cur - 1, '‹', 'Previous page', cur === 1)}
+      ${pageList(cur, pages).map((p) => (p === '…'
+        ? '<li><span class="ellipsis">…</span></li>'
+        : `<li><button type="button" data-${attr}="${p}" class="${p === cur ? 'active' : ''}" ${p === cur ? 'aria-current="page"' : ''}>${p}</button></li>`)).join('')}
+      ${btn(cur + 1, '›', 'Next page', cur === pages)}
+      ${btn(pages, '»', 'Last page', cur === pages)}
+    </ul>`;
+}
+
+// Search field with a search button and a clear button (inputs carry data-search="<key>").
+function searchGroupHtml(key, placeholder, value = '') {
+  return `
+    <div class="input-group search-group" role="search">
+      <input class="form-control" type="search" data-search="${key}" value="${escapeHtml(value)}" placeholder="${placeholder}" aria-label="${placeholder}" autocomplete="off">
+      <button type="button" class="btn btn-ghost" data-search-go="${key}" title="Search" aria-label="Search"><i class="bi bi-search"></i></button>
+      <button type="button" class="btn btn-ghost" data-search-clear="${key}" title="Clear search" aria-label="Clear search"><i class="bi bi-x-circle"></i></button>
+    </div>`;
+}
+
+// Page slice for a sorted list: { rows, page, pages, start }.
+function paginate(list, page, size) {
+  const pages = Math.max(1, Math.ceil(list.length / size));
+  const cur = Math.min(Math.max(1, page), pages);
+  const start = (cur - 1) * size;
+  return { rows: list.slice(start, start + size), page: cur, pages, start };
+}
+
+const fmtDate = (ts) => new Date(ts).toLocaleDateString('en-US');
+const fmtDateTime = (ts) => new Date(ts).toLocaleString('en-US');
 
 /* ---------- Sidebar ---------- */
 const desktopMq = window.matchMedia('(min-width: 992px)');
@@ -820,6 +880,11 @@ function init() {
   desktopMq.addEventListener('change', () => { setMobileOpen(false); syncNavTips(); });
 
   $('#sideNav').addEventListener('click', (e) => {
+    const toggle = e.target.closest('.nav-toggle');
+    if (toggle) {
+      setNavGroupOpen(toggle, toggle.getAttribute('aria-expanded') !== 'true');
+      return;
+    }
     const link = e.target.closest('.nav-link');
     if (!link) return;
     setMobileOpen(false);

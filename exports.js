@@ -65,20 +65,13 @@ function refreshExports() {
   if (currentView === 'exports') renderExports();
 }
 
-const fmtExportDate = (ts) => new Date(ts).toLocaleString('en-US');
-
 function renderExports() {
   document.title = 'Exports · Base';
   const root = $('#exportsView');
   const sorted = [...exportJobs].sort((a, b) => (exportsState.sortDir === 'desc' ? b.id - a.id : a.id - b.id));
-  const pages = Math.max(1, Math.ceil(sorted.length / EXPORTS_PAGE_SIZE));
-  exportsState.page = Math.min(exportsState.page, pages);
-  const start = (exportsState.page - 1) * EXPORTS_PAGE_SIZE;
-  const rows = sorted.slice(start, start + EXPORTS_PAGE_SIZE);
+  const { rows, page, pages, start } = paginate(sorted, exportsState.page, EXPORTS_PAGE_SIZE);
+  exportsState.page = page;
   const desc = exportsState.sortDir === 'desc';
-  const cur = exportsState.page;
-  const pageBtn = (page, label, aria, disabled) => `
-    <li><button type="button" data-ex-page="${page}" ${disabled ? 'disabled' : ''} aria-label="${aria}">${label}</button></li>`;
 
   root.innerHTML = `
     <header class="page-head">
@@ -121,25 +114,15 @@ function renderExports() {
                     ? '<span class="ex-status is-done"><i class="bi bi-check-circle-fill"></i> finished</span>'
                     : '<span class="ex-status is-busy"><span class="spinner-border spinner-border-sm" aria-hidden="true"></span> processing</span>'}
                 </td>
-                <td class="t-muted">${fmtExportDate(job.createdAt)}</td>
-                <td class="t-muted">${job.finishedAt ? fmtExportDate(job.finishedAt) : '—'}</td>
+                <td class="t-muted">${fmtDateTime(job.createdAt)}</td>
+                <td class="t-muted">${job.finishedAt ? fmtDateTime(job.finishedAt) : '—'}</td>
               </tr>`).join('') : emptyRow(5, 'No exports waiting', 'Exported files show up here until you download them.')}
           </tbody>
         </table>
       </div>
       <div class="table-footer">
         <span class="page-info">${sorted.length ? `Showing <strong>${start + 1}–${start + rows.length}</strong> of <strong>${sorted.length}</strong> files` : 'Nothing to download'}</span>
-        <nav aria-label="Export pages">
-          <ul class="pagination-dark">
-            ${pageBtn(1, '«', 'First page', cur === 1)}
-            ${pageBtn(cur - 1, '‹', 'Previous page', cur === 1)}
-            ${pageList(cur, pages).map((p) => (p === '…'
-              ? '<li><span class="ellipsis">…</span></li>'
-              : `<li><button type="button" data-ex-page="${p}" class="${p === cur ? 'active' : ''}" ${p === cur ? 'aria-current="page"' : ''}>${p}</button></li>`)).join('')}
-            ${pageBtn(cur + 1, '›', 'Next page', cur === pages)}
-            ${pageBtn(pages, '»', 'Last page', cur === pages)}
-          </ul>
-        </nav>
+        <nav aria-label="Export pages">${pagerHtml(page, pages, 'ex-page')}</nav>
       </div>
     </section>`;
 }

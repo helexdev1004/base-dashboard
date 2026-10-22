@@ -2383,6 +2383,114 @@ a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; 
 .ex-status.is-busy { color: var(--warm); }
 .ex-status .spinner-border { width: 12px; height: 12px; border-width: 2px; }
 
+/* ---------- Sidebar groups (Vendors ▸ Vendors list, Vendor groups) ---------- */
+.sidebar button.nav-link { width: 100%; text-align: left; background: none; }
+.sidebar .nav-link .nav-caret {
+  width: auto;
+  margin-left: auto;
+  font-size: 11px;
+  opacity: .65;
+  transition: transform .2s ease;
+}
+.nav-toggle[aria-expanded="false"] .nav-caret { transform: rotate(-90deg); }
+.nav-group.has-active > .nav-toggle { color: var(--sidebar-fg-strong); }
+.nav-sub { gap: 2px; margin: 2px 0 4px; padding-left: 18px; }
+.sidebar .nav-sub .nav-link { padding-top: 7px; padding-bottom: 7px; font-size: 13px; }
+.sidebar .nav-sub .nav-link i { font-size: 14px; }
+@media (min-width: 992px) {
+  body.sidebar-collapsed .nav-caret { display: none; }
+  body.sidebar-collapsed .nav-sub { padding-left: 0; }
+}
+
+/* ---------- List pages (Vendors, Vendor groups, Blacklisted RESPIDs) ---------- */
+.list-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.search-group { flex: 0 1 440px; min-width: 240px; flex-wrap: nowrap; }
+.search-group .form-control { height: 36px; font-size: 13px; }
+.search-group .btn { height: 36px; padding: 0 11px; border-color: var(--border); }
+.search-group .form-control::-webkit-search-cancel-button { display: none; }
+.list-filters .pv-filter { height: 36px; min-width: 200px; }
+.list-table th,
+.list-table td { text-align: left; }
+.list-table .t-end { text-align: right; }
+.row-link { cursor: pointer; }
+.cell-link {
+  padding: 0;
+  font-weight: 600;
+  color: var(--text-strong);
+  text-align: left;
+  text-decoration: none;
+  background: none;
+  border: 0;
+}
+.cell-link:hover,
+.cell-link:focus-visible { color: var(--primary-soft); text-decoration: underline; text-underline-offset: 3px; }
+.api-yes { font-size: 16px; color: var(--success); }
+.btn-danger-solid { color: #fff; background: var(--danger); border: 1px solid var(--danger); font-weight: 600; }
+.btn-danger-solid:hover,
+.btn-danger-solid:focus-visible { color: #fff; filter: brightness(1.08); }
+.btn-danger-solid.is-armed { box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 30%, transparent); }
+
+/* Vendor form */
+.page-head-back { flex-direction: row; align-items: flex-start; gap: 12px; }
+.vendor-form { display: flex; flex-direction: column; gap: 16px; }
+.hf-rows { display: flex; flex-direction: column; gap: 12px; }
+.hf-row { display: grid; grid-template-columns: 250px minmax(0, 1fr); align-items: start; gap: 4px 16px; }
+.hf-row > .form-label { margin: 0; padding-top: 9px; font-size: 13px; }
+.hf-field { min-width: 0; }
+.hf-md { max-width: 620px; }
+.hf-sm { max-width: 400px; }
+.hf-field .form-check { padding-top: 8px; }
+.form-check-label { font-size: 13px; color: var(--text-2); }
+.form-actions-bar {
+  position: sticky;
+  bottom: 12px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--menu-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--float-shadow);
+}
+.form-actions-bar .btn { height: 38px; padding: 0 18px; }
+
+/* Vendor group modal */
+.vg-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.vg-chip {
+  padding: 4px 10px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  border-radius: 14px;
+}
+.vg-chip:hover { color: var(--text-strong); border-color: var(--primary); }
+
+/* Blacklisted RESPIDs */
+.bl-tools { display: flex; flex-direction: column; gap: 16px; }
+.bl-row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px 20px; }
+.bl-mode .field-help { max-width: 220px; }
+.bl-file { flex: 1 1 420px; }
+.bl-one { flex: 0 1 560px; min-width: 260px; }
+.bl-one .btn { padding: 0 16px; border-color: var(--border); }
+
+@media (max-width: 767.98px) {
+  .hf-row { grid-template-columns: minmax(0, 1fr); }
+  .hf-row > .form-label { padding-top: 0; }
+}
+
 /* ---------- Responsive ---------- */
 /* Below 1280px the button moves above the cards so all five stay on one row. */
 @media (max-width: 1279.98px) {
