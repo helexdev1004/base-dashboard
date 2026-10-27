@@ -1395,7 +1395,12 @@ th.is-sorted .sort-icon { display: inline-block; color: var(--primary-soft); }
 a.pname:hover,
 a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; text-underline-offset: 3px; }
 .project-table tbody tr[data-id] { cursor: pointer; }
-.pmeta { display: flex; align-items: center; gap: 6px; margin-top: 3px; font-size: 11px; color: var(--muted); }
+/* Job number, PO, country, client: the client moves to a second line when the table is tight. */
+.pmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; margin-top: 3px; font-size: 11px; color: var(--muted); }
+.pmeta-break { display: none; flex-basis: 100%; height: 0; }
+@media (max-width: 1599.98px) {
+  .pmeta-break { display: block; } /* same row height for every project on smaller screens */
+}
 .pmeta .job { color: var(--text-2); font-variant-numeric: tabular-nums; margin-right: 4px; }
 .pmeta .fi {
   width: 16px;
@@ -1405,6 +1410,16 @@ a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; 
   background-size: cover;
 }
 .pmeta .country { letter-spacing: .03em; }
+.pmeta-ids { display: inline-flex; align-items: center; gap: 6px; margin-right: 4px; white-space: nowrap; }
+.pmeta .client {
+  display: inline-block;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-2);
+  vertical-align: middle;
+}
+.pmeta .client .bi { margin-right: 4px; font-size: 11px; color: var(--muted); }
 
 .pm-badge {
   display: inline-grid;

@@ -198,7 +198,7 @@ function projectStats(p) {
 
 function newDetail() {
   return {
-    po: '', type: 'ad hoc', geoIp: true, blockDupIp: true, surveyGroup: [], notes: '', liveLink: makeLiveLink(),
+    type: 'ad hoc', geoIp: true, blockDupIp: true, surveyGroup: [], notes: '', liveLink: makeLiveLink(),
     dup3: 0, geo1: 0, ex1: 0, ex2: 0, dev1: 0, noUnique: 0,
     days: [], vendors: [], campaigns: [], codes: [], links: [], ips: [],
     screenerActive: true, screener: [], pollActive: false, pollStatuses: ['C1'], poll: [],
@@ -229,7 +229,6 @@ function ensureDetail(p) {
     [r.between(2, 5), r.between(0, 1), r.between(0, 1), r.between(0, 1), r.between(0, 1.5)]);
 
   const d = {
-    po: String(p.jobNo),
     type: r.chance(0.7) ? 'ad hoc' : r.pick(PROJECT_TYPES),
     geoIp: r.chance(0.8),
     blockDupIp: r.chance(0.75),
@@ -373,6 +372,7 @@ function createProject(v) {
   const p = {
     id: Math.max(...projects.map((x) => x.id)) + 1,
     jobNo: v.jobNo,
+    po: v.po,
     name: v.name,
     country: v.country,
     client: v.client,
@@ -389,7 +389,7 @@ function createProject(v) {
   };
   p.detail = {
     ...newDetail(),
-    po: v.po, type: v.type, geoIp: v.geoIp, blockDupIp: v.blockDupIp,
+    type: v.type, geoIp: v.geoIp, blockDupIp: v.blockDupIp,
     surveyGroup: v.surveyGroup, notes: v.notes, liveLink: v.liveLink,
   };
   // Library questions marked "Project default" for this country start the screener.
@@ -609,7 +609,8 @@ function renderHeader() {
         <h1 class="pv-title">${escapeHtml(p.name)}</h1>
         <div class="pv-meta">
           ${status}
-          <span class="pv-job">#${p.jobNo}</span>
+          <span class="pv-job" title="MFJN">#${p.jobNo}</span>
+          ${p.po ? `<span class="pv-job" title="MFPO">#${escapeHtml(p.po)}</span>` : ''}
           <span><span class="fi fi-${p.country.code}"></span> ${escapeHtml(p.country.name)}</span>
           <span><i class="bi bi-building"></i> ${escapeHtml(p.client)}</span>
           <span><i class="bi bi-tag"></i> ${escapeHtml(p.detail.type)}</span>
@@ -667,7 +668,7 @@ function mainValues() {
   }
   const d = p.detail;
   return {
-    name: p.name, pms: p.pms.map((x) => x.initials), client: p.client, surveyNo: p.jobNo, po: d.po,
+    name: p.name, pms: p.pms.map((x) => x.initials), client: p.client, surveyNo: p.jobNo, po: p.po,
     length: p.loiBid, geoIp: d.geoIp, blockDupIp: d.blockDupIp, country: p.country.code, status: p.status,
     type: d.type, surveyGroup: d.surveyGroup.map(String), notes: d.notes, liveLink: d.liveLink,
   };
@@ -721,13 +722,13 @@ function renderMain(el) {
               <div class="invalid-feedback">Select a client.</div>
             </div>
             <div class="mf-field mf-w-sm">
-              <label class="form-label" for="mfSurveyNo">Survey number</label>
+              <label class="form-label" for="mfSurveyNo">MFJN</label>
               <input class="form-control" id="mfSurveyNo" type="number" min="1" step="1" required value="${v.surveyNo}">
-              <div class="invalid-feedback" id="mfSurveyNoFeedback">Enter a survey number.</div>
+              <div class="invalid-feedback" id="mfSurveyNoFeedback">Enter the MFJN.</div>
             </div>
             <div class="mf-field mf-w-sm">
-              <label class="form-label" for="mfPo">PO</label>
-              <input class="form-control" id="mfPo" maxlength="40" value="${escapeHtml(v.po)}" placeholder="PO number">
+              <label class="form-label" for="mfPo">MFPO</label>
+              <input class="form-control" id="mfPo" maxlength="40" value="${escapeHtml(v.po)}" placeholder="MFPO">
             </div>
           </div>
 
@@ -894,7 +895,7 @@ function saveMain() {
   const taken = surveyInput.value !== '' && projects.some((x) => x !== p && x.jobNo === surveyNo);
   const takenMsg = 'Already used by another project.';
   surveyInput.setCustomValidity(taken ? takenMsg : '');
-  $('#mfSurveyNoFeedback').textContent = taken ? takenMsg : 'Enter a survey number.';
+  $('#mfSurveyNoFeedback').textContent = taken ? takenMsg : 'Enter the MFJN.';
 
   const link = $('#mfLink');
   link.setCustomValidity(/^https?:\/\/\S+$/i.test(link.value.trim()) ? '' : 'invalid');
@@ -933,11 +934,11 @@ function saveMain() {
   }
 
   Object.assign(p, {
-    name: values.name, pms: values.pms, client: values.client, jobNo: values.jobNo,
+    name: values.name, pms: values.pms, client: values.client, jobNo: values.jobNo, po: values.po,
     loiBid: values.loiBid, country: values.country, status: values.status,
   });
   Object.assign(p.detail, {
-    po: values.po, type: values.type, geoIp: values.geoIp, blockDupIp: values.blockDupIp,
+    type: values.type, geoIp: values.geoIp, blockDupIp: values.blockDupIp,
     surveyGroup: values.surveyGroup, notes: values.notes, liveLink: values.liveLink,
   });
   pv.rendered.clear();
@@ -953,7 +954,7 @@ function exportMain() {
   const onOff = (b) => (b ? 'Active' : 'Inactive');
   downloadCsv(`project-${p.jobNo}-summary-${today()}.csv`, [
     ['Field', 'Value'],
-    ['Name', p.name], ['Survey number', p.jobNo], ['PO', d.po], ['Client', p.client],
+    ['Name', p.name], ['MFJN', p.jobNo], ['MFPO', p.po], ['Client', p.client],
     ['PM', pmNames(p)], ['Country', p.country.name], ['Status', p.status], ['Type', d.type],
     ['Survey length (min)', p.loiBid], ['Geo IP check', onOff(d.geoIp)], ['Block duplicated IP', onOff(d.blockDupIp)],
     ['Live link', d.liveLink], ['Notes', d.notes],

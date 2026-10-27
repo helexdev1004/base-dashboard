@@ -282,6 +282,7 @@ function buildProjects() {
     bases.push({
       id,
       jobNo,
+      po: String(jobNo), // the client's PO; sample projects use the job number
       name: preset ? preset.name : TOPICS[topicIndex % TOPICS.length] + (wave ? ` W${wave + 1}` : ''),
       country: preset ? countryByCode[preset.country] : pick(COUNTRIES),
       client: pick(CLIENTS),
@@ -484,7 +485,7 @@ function getVisibleProjects() {
     if (!matchesActivity(p, activity)) return false;
     if (!q) return true;
     const people = p.pms.map((x) => `${x.name} ${x.initials}`).join(' ');
-    const haystack = `${p.id} #${p.jobNo} ${p.name} ${p.country.name} ${p.client} ${people}`.toLowerCase();
+    const haystack = `${p.id} #${p.jobNo} #${p.po} ${p.name} ${p.country.name} ${p.client} ${people}`.toLowerCase();
     return haystack.includes(q);
   });
 
@@ -532,9 +533,13 @@ function rowHtml(p) {
       <td>
         <a class="pname" href="#/project/${p.id}" title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</a>
         <div class="pmeta">
-          <span class="job">#${p.jobNo}</span>
-          <span class="fi fi-${p.country.code}"></span>
-          <span class="country">${p.country.name.toUpperCase()}</span>
+          <span class="pmeta-ids">
+            <span class="job" title="MFJN">#${p.jobNo}</span>
+            ${p.po ? `<span class="job" title="MFPO">#${escapeHtml(p.po)}</span>` : ''}
+            <span class="fi fi-${p.country.code}"></span><span class="country">${p.country.name.toUpperCase()}</span>
+          </span>
+          <span class="pmeta-break" aria-hidden="true"></span>
+          ${p.client ? `<span class="client" title="Client"><i class="bi bi-building"></i>${escapeHtml(p.client)}</span>` : ''}
         </div>
       </td>
       <td class="activity">${activityHtml(p)}</td>
@@ -667,13 +672,13 @@ function exportCsv() {
     return;
   }
   const header = [
-    'ID', 'Job number', 'Project name', 'Country', 'Client', 'PM', 'Status', 'C1', 'IR %', 'CONV %',
+    'ID', 'MFJN', 'MFPO', 'Project name', 'Country', 'Client', 'PM', 'Status', 'C1', 'IR %', 'CONV %',
     'LOI bid', 'LOI real', 'EB', 'EC', 'S1', 'Q1', 'S2', 'Q2', 'Drops', 'Dups 1', 'Dups 2',
     'QFails 1', 'QFails 2', 'Others', 'Last entry', 'Last complete',
   ];
   const iso = (ts) => (ts ? new Date(ts).toISOString() : '');
   const lines = rows.map((p) => [
-    p.id, p.jobNo, p.name, p.country.name, p.client, p.pms.map((x) => x.name).join(', '), p.status, p.c1, p.ir, p.conv,
+    p.id, p.jobNo, p.po, p.name, p.country.name, p.client, p.pms.map((x) => x.name).join(', '), p.status, p.c1, p.ir, p.conv,
     p.loiBid, p.loiReal ?? '', p.eb, p.ec, p.s1, p.q1, p.s2, p.q2, p.drops, p.dupsA, p.dupsB,
     p.qfA, p.qfB, p.others, iso(p.lastEntryAt), iso(p.lastCompleteAt),
   ]);
