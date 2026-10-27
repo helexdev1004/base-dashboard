@@ -9,9 +9,6 @@
    ========================================================= */
 
 const LIBRARY_PAGE_SIZE = 10;
-const LIBRARY_ACTIONS = [
-  ['none', 'No action'], ['S1', 'S1'], ['S2', 'S2'], ['Q2', 'Q2'], ['QFAIL2', 'QFAIL2'], ['Required', 'Required'], ['Qualify', 'Qualify'],
-];
 
 // { id, name, country ('AT'), text, type, projectDefault, answers: [[text, action]] }
 const SCREENER_LIBRARY = [];
@@ -66,7 +63,7 @@ const SCREENER_LIBRARY = [];
         text: t.text,
         type: t.type,
         projectDefault,
-        answers: t.answers.map(([answer, action = 'none']) => [answer, action === 'QFAIL1' ? 'QFAIL2' : action]),
+        answers: t.answers.map(([answer, action = 'none']) => [answer, action]),
       });
     });
   });
@@ -175,7 +172,7 @@ function libraryAnswerRow(answer = '', action = 'none') {
     <div class="ans-row">
       <input class="form-control ans-text" value="${escapeHtml(answer)}" maxlength="200" placeholder="Answer text" aria-label="Answer text">
       <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
-        ${LIBRARY_ACTIONS.map(([value, label]) => `
+        ${ANSWER_ACTIONS.map(([value, label]) => `
           <button type="button" role="radio" data-lib-action="answer-action" data-value="${value}"
                   class="${action === value ? 'active' : ''}" aria-checked="${action === value}">${label}</button>`).join('')}
       </div>

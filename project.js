@@ -28,10 +28,11 @@ const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js
 // Screener / post poll question builder.
 const QUESTION_TYPES = ['Single radio', 'Single dropdown', 'Multiple choice', 'Numeric', 'Open text'];
 const TYPES_WITHOUT_ANSWERS = new Set(['Numeric', 'Open text']);
+// QFAIL2 is a quality fail in the screener (QFAIL1 is reported from the survey itself).
 const ANSWER_ACTIONS = [
-  ['none', 'No action'], ['S1', 'S1'], ['S2', 'S2'], ['Q2', 'Q2'], ['QFAIL1', 'QFAIL1'], ['Required', 'Required'], ['Qualify', 'Qualify'],
+  ['none', 'No action'], ['S1', 'S1'], ['S2', 'S2'], ['Q2', 'Q2'], ['QFAIL2', 'QFAIL2'], ['Required', 'Required'], ['Qualify', 'Qualify'],
 ];
-const SCREENOUT_ACTIONS = new Set(['S1', 'S2', 'Q2', 'QFAIL1']);
+const SCREENOUT_ACTIONS = new Set(['S1', 'S2', 'Q2', 'QFAIL2']);
 const POLL_STATUSES = [
   ['C1', 'Complete (C1)'], ['S1', 'Screenout (S1)'], ['S2', 'Screenout (S2)'], ['Q1', 'Quota full (Q1)'],
   ['Q2', 'Quota full (Q2)'], ['QFAIL', 'Quality fail'], ['DUP', 'Duplicate'], ['GEO', 'Geo IP fail'],
@@ -205,16 +206,13 @@ function newDetail() {
 }
 
 // A question copied from a library entry, with zeroed answer counts.
-// The Screener Library marks screener quality fails as QFAIL2; a project screener shows them as QFAIL1.
 function questionFromLibrary(lib, id) {
   return {
     id,
     libId: lib.id,
     text: lib.text,
     type: lib.type,
-    answers: lib.answers.map(([text, action = 'none'], i) => ({
-      id: i + 1, text, action: action === 'QFAIL2' ? 'QFAIL1' : action, counts: [0, 0, 0],
-    })),
+    answers: lib.answers.map(([text, action = 'none'], i) => ({ id: i + 1, text, action, counts: [0, 0, 0] })),
   };
 }
 
@@ -443,7 +441,13 @@ const PAGE_RENDERERS = {
   redeem: () => renderRedeem(),                        // rewards.js
   recruiters: () => renderRecruiters(),                // recruiters.js
   recruiter: (r) => renderRecruiter(r.id),             // recruiters.js
+  ...Object.fromEntries(Object.keys(SOON_PAGES).map((key) => [key, () => renderSoon(key)])),
 };
+// Pages opened by a plain #/<name> address.
+const SIMPLE_PAGES = [
+  'feasibility', 'exports', 'vendors', 'vendor-groups', 'blacklist', 'screener-library', 'panels', 'rewards', 'redeem', 'recruiters',
+  ...Object.keys(SOON_PAGES),
+];
 
 // [pattern, route] — the first match wins.
 const ROUTES = [
@@ -453,7 +457,7 @@ const ROUTES = [
   [/^#\/panels\/([a-z]+)\/(\d+)$/, (m) => ({ view: 'panelist', panel: m[1], id: m[2] })],
   [/^#\/panels\/([a-z]+)$/, (m) => ({ view: 'panel', panel: m[1] })],
   [/^#\/recruiters\/(new|\d+)$/, (m) => ({ view: 'recruiter', id: m[1] })],
-  [/^#\/(feasibility|exports|vendors|vendor-groups|blacklist|screener-library|panels|rewards|redeem|recruiters)$/, (m) => ({ view: m[1] })],
+  [new RegExp(`^#/(${SIMPLE_PAGES.join('|')})$`), (m) => ({ view: m[1] })],
 ];
 
 function currentRoute() {
@@ -525,6 +529,22 @@ function showPage(name, r = {}) {
   leaveProject();
   setView(name);
   PAGE_RENDERERS[name](r);
+}
+
+// Menu items without a design yet (SOON_PAGES in script.js) share one placeholder page.
+function renderSoon(key) {
+  const [title, icon] = SOON_PAGES[key];
+  document.title = `${title} · Base`;
+  $('#soonView').innerHTML = `
+    <header class="page-head">
+      <h1 class="page-title">${title}</h1>
+    </header>
+    <section class="pv-card soon-card">
+      <span class="soon-icon" aria-hidden="true"><i class="bi ${icon}"></i></span>
+      <h2 class="soon-title">Coming soon</h2>
+      <p class="soon-text">This section isn't available yet. It will open here once it's built.</p>
+      <a class="btn btn-ghost" href="#/"><i class="bi bi-arrow-left"></i> Back to projects</a>
+    </section>`;
 }
 
 function openProject(p, tab) {

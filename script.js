@@ -773,8 +773,22 @@ function applyTheme(id) {
 }
 
 /* ---------- Views ---------- */
+// Menu items that have no design yet: [title, icon]. Each opens the shared "Coming soon" page.
+const SOON_PAGES = {
+  clients: ['Clients', 'bi-people'],
+  'first-surveys': ['First surveys', 'bi-globe2'],
+  translations: ['Translations', 'bi-translate'],
+  'survey-points': ['Survey points', 'bi-arrow-down-up'],
+  profiling: ['Profiling', 'bi-window-sidebar'],
+  framework: ['Framework', 'bi-asterisk'],
+  'external-surveys': ['External surveys', 'bi-diagram-3'],
+  statistics: ['Statistics', 'bi-bar-chart-line'],
+  users: ['Users', 'bi-person-lines-fill'],
+};
+
 // One view shows at a time; the router in project.js decides which.
 const VIEWS = {
+  ...Object.fromEntries(Object.keys(SOON_PAGES).map((key) => [key, '#soonView'])),
   list: '#listView',
   project: '#projectView',
   feasibility: '#feasibilityView',
@@ -806,7 +820,7 @@ let listScrollY = 0;
 function setView(name) {
   if (name === currentView) return;
   if (currentView === 'list') listScrollY = window.scrollY;
-  Object.entries(VIEWS).forEach(([key, sel]) => { $(sel).hidden = key !== name; });
+  new Set(Object.values(VIEWS)).forEach((sel) => { $(sel).hidden = sel !== VIEWS[name]; }); // some views share a container
   const navView = NAV_PARENT[name] || name;
   $$('#sideNav .nav-link').forEach((link) => {
     const on = link.dataset.view === navView;
@@ -940,12 +954,7 @@ function init() {
       setNavGroupOpen(toggle, toggle.getAttribute('aria-expanded') !== 'true');
       return;
     }
-    const link = e.target.closest('.nav-link');
-    if (!link) return;
-    setMobileOpen(false);
-    if (link.dataset.view) return; // a real page: let the link change the URL
-    e.preventDefault();
-    showToast(`${$('span', link).textContent} isn't part of this preview.`, 'info');
+    if (e.target.closest('.nav-link')) setMobileOpen(false); // the link itself changes the URL
   });
 
   $$('.profile-menu .dropdown-item').forEach((item) => item.addEventListener('click', (e) => e.preventDefault()));
