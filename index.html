@@ -71,10 +71,22 @@
             </ul>
           </li>
           <li><a class="nav-link" href="#/blacklist" data-view="blacklist"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="#/screener-library" data-view="screener-library"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels" hidden>
+              <li><a class="nav-link" href="#/panels" data-view="panels"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="#/rewards" data-view="rewards"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="#/redeem" data-view="redeem"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="#"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="#"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="#"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="#/recruiters" data-view="recruiters"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
@@ -221,6 +233,15 @@
         <div class="page-view" id="vendorFormView" hidden></div>
         <div class="page-view" id="vendorGroupsView" hidden></div>
         <div class="page-view" id="blacklistView" hidden></div>
+        <div class="page-view" id="libraryView" hidden></div>
+        <div class="page-view" id="libraryFormView" hidden></div>
+        <div class="page-view" id="panelsView" hidden></div>
+        <div class="page-view" id="panelView" hidden></div>
+        <div class="page-view" id="panelistView" hidden></div>
+        <div class="page-view" id="rewardsView" hidden></div>
+        <div class="page-view" id="redeemView" hidden></div>
+        <div class="page-view" id="recruitersView" hidden></div>
+        <div class="page-view" id="recruiterView" hidden></div>
 
       </main>
     </div>
@@ -277,7 +298,7 @@
         </div>
         <div class="modal-body" id="pvModalBody"></div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal" id="pvModalCancel">Cancel</button>
           <button type="submit" class="btn btn-primary-grad" id="pvModalSubmit"></button>
         </div>
       </form>
@@ -293,5 +314,9 @@
   <script src="exports.js"></script>
   <script src="vendors.js"></script>
   <script src="blacklist.js"></script>
+  <script src="library.js"></script>
+  <script src="panels.js"></script>
+  <script src="rewards.js"></script>
+  <script src="recruiters.js"></script>
 </body>
 </html>

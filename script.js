@@ -66,6 +66,47 @@ const TOPICS = [
   'Frozen meals concept screen', 'Home improvement DIYers', 'Sports betting attitudes',
 ];
 
+// Every country used by panels, rewards, recruiters and the Screener Library.
+const WORLD_COUNTRIES = [
+  ['ae', 'United Arab Emirates'], ['ar', 'Argentina'], ['at', 'Austria'], ['au', 'Australia'], ['be', 'Belgium'],
+  ['bg', 'Bulgaria'], ['bo', 'Bolivia'], ['br', 'Brazil'], ['ca', 'Canada'], ['ch', 'Switzerland'], ['cl', 'Chile'],
+  ['co', 'Colombia'], ['cz', 'Czech Republic'], ['de', 'Germany'], ['ee', 'Estonia'], ['eg', 'Egypt'], ['es', 'Spain'],
+  ['fr', 'France'], ['gb', 'United Kingdom'], ['gr', 'Greece'], ['hr', 'Croatia'], ['hu', 'Hungary'], ['ie', 'Ireland'],
+  ['it', 'Italy'], ['ma', 'Morocco'], ['mx', 'Mexico'], ['nl', 'Netherlands'], ['pe', 'Peru'], ['pl', 'Poland'],
+  ['pt', 'Portugal'], ['ro', 'Romania'], ['sa', 'Saudi Arabia'], ['se', 'Sweden'], ['si', 'Slovenia'], ['sk', 'Slovakia'],
+  ['us', 'United States'],
+].map(([code, name]) => ({ code, name }));
+const countryName = (code) => WORLD_COUNTRIES.find((c) => c.code === String(code).toLowerCase())?.name ?? code;
+const countryOptions = () => [...WORLD_COUNTRIES].sort((a, b) => a.name.localeCompare(b.name)).map((c) => [c.code, c.name]);
+
+// A few regions per country (panelist profiles, Screener Library region questions).
+const DEFAULT_REGIONS = ['Capital region', 'North', 'South', 'East', 'West'];
+const REGIONS = {
+  at: ['Burgenland', 'Kärnten', 'Niederösterreich', 'Oberösterreich', 'Salzburg', 'Steiermark', 'Tirol', 'Vorarlberg', 'Wien'],
+  be: ['Brussels', 'Flanders', 'Wallonia'],
+  bg: ['Sofia', 'Plovdiv', 'Varna', 'Burgas', 'Ruse'],
+  br: ['Amazonas', 'Bahia', 'Minas Gerais', 'Rio de Janeiro', 'São Paulo'],
+  cz: ['Prague', 'Central Bohemia', 'South Moravia', 'Moravia-Silesia', 'Plzeň'],
+  de: ['Bayern', 'Baden-Württemberg', 'Berlin', 'Hamburg', 'Hessen', 'Nordrhein-Westfalen', 'Sachsen'],
+  ee: ['Harju', 'Tartu', 'Ida-Viru', 'Pärnu'],
+  es: ['Andalucía', 'Cataluña', 'Comunidad de Madrid', 'Comunidad Valenciana', 'Galicia', 'País Vasco'],
+  fr: ['Auvergne-Rhône-Alpes', 'Île-de-France', 'Nouvelle-Aquitaine', 'Occitanie', 'Provence-Alpes-Côte d’Azur', 'Hauts-de-France'],
+  gb: ['London', 'South East', 'North West', 'West Midlands', 'Scotland', 'Wales', 'Northern Ireland'],
+  gr: ['Attica', 'Central Macedonia', 'Crete', 'Thessaly'],
+  hr: ['Zagreb', 'Split-Dalmatia', 'Primorje-Gorski Kotar', 'Osijek-Baranja'],
+  hu: ['Budapest', 'Pest', 'Győr-Moson-Sopron', 'Hajdú-Bihar', 'Baranya', 'Csongrád-Csanád'],
+  it: ['Lombardia', 'Lazio', 'Campania', 'Sicilia', 'Veneto', 'Piemonte'],
+  nl: ['Noord-Holland', 'Zuid-Holland', 'Utrecht', 'Noord-Brabant', 'Gelderland'],
+  pl: ['Mazowieckie', 'Małopolskie', 'Śląskie', 'Wielkopolskie', 'Dolnośląskie', 'Pomorskie'],
+  pt: ['Lisboa', 'Norte', 'Centro', 'Alentejo', 'Algarve'],
+  ro: ['București', 'Cluj', 'Timiș', 'Iași', 'Constanța', 'Brașov'],
+  se: ['Stockholm', 'Västra Götaland', 'Skåne', 'Uppsala'],
+  si: ['Osrednjeslovenska', 'Podravska', 'Savinjska', 'Gorenjska'],
+  sk: ['Bratislava', 'Košice', 'Žilina', 'Prešov'],
+  us: ['Northeast', 'Midwest', 'South', 'West'],
+};
+const regionsFor = (code) => REGIONS[String(code).toLowerCase()] || DEFAULT_REGIONS;
+
 const PAGE_SIZE = 20;
 const TOTAL_PROJECTS = 88;
 const LIVE_PROJECTS = 55;
@@ -742,9 +783,23 @@ const VIEWS = {
   'vendor-form': '#vendorFormView',
   'vendor-groups': '#vendorGroupsView',
   blacklist: '#blacklistView',
+  'screener-library': '#libraryView',
+  'library-form': '#libraryFormView',
+  panels: '#panelsView',
+  panel: '#panelView',
+  panelist: '#panelistView',
+  rewards: '#rewardsView',
+  redeem: '#redeemView',
+  recruiters: '#recruitersView',
+  recruiter: '#recruiterView',
 };
 // Views that highlight another view's menu item.
-const NAV_PARENT = { project: 'list', 'vendor-form': 'vendors' };
+const NAV_PARENT = {
+  project: 'list', 'vendor-form': 'vendors', 'library-form': 'screener-library',
+  panel: 'panels', panelist: 'panels', recruiter: 'recruiters',
+};
+// Edit pages register { dirty, hash, label } here so the router can stop you leaving with unsaved changes.
+const formGuards = {};
 let currentView = 'list';
 let listScrollY = 0;
 

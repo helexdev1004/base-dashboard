@@ -281,7 +281,8 @@ function exportVendorStats() {
 }
 
 /* ---------- Vendor form ---------- */
-const vendorForm = { routeId: null, dirty: false };
+const vendorForm = { routeId: null, dirty: false, hash: '', label: 'on this vendor' };
+formGuards['vendor-form'] = vendorForm;
 
 function renderVendorForm(id) {
   const v = id === 'new' ? null : vendorRegistry.find((x) => x.id === Number(id));
@@ -292,7 +293,7 @@ function renderVendorForm(id) {
     showPage('vendors');
     return;
   }
-  Object.assign(vendorForm, { routeId: id, dirty: false });
+  Object.assign(vendorForm, { routeId: id, dirty: false, hash: `#/vendors/${id}` });
   document.title = `${v ? v.name : 'New vendor'} · Base`;
   const groupOpts = [['', 'Select group…'], ...[...vendorGroups].sort((a, b) => a.name.localeCompare(b.name)).map((g) => [g.id, g.name])];
   const panelOpts = [['', 'No panel'], ...VENDOR_PANELS.map((p) => [p, p])];

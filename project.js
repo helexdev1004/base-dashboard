@@ -9,10 +9,15 @@
 
 /* ---------- Reference data ---------- */
 const VENDORS = ['Gavenze', 'Panelwise', 'Northfield Sample', 'Opinion Bridge', 'SurveyHub Direct', 'Quickpoll Panels'];
+// Panels (Panel management ▸ Panels has the details).
 const PANELS = [
   { code: 'GAV', name: 'Gavenze' },
-  { code: 'PWS', name: 'Panelwise' },
-  { code: 'NFS', name: 'Northfield Sample' },
+  { code: 'JAF', name: 'Jafenzi' },
+  { code: 'ENC', name: 'Encuestat' },
+  { code: 'SDD', name: 'Sondage Direct' },
+  { code: 'MVD', name: 'Mening Vandaag' },
+  { code: 'OPT', name: 'Opinion Today' },
+  { code: 'SEP', name: 'Sondaggi & premi' },
 ];
 const PROJECT_TYPES = ['ad hoc', 'tracker', 'omnibus'];
 const ENTITY_STATUSES = ['active', 'paused', 'closed'];
@@ -21,7 +26,7 @@ const SURVEY_GROUP_HELP = 'Respondents that attempted in selected projects are n
 const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
 
 // Screener / post poll question builder.
-const QUESTION_TYPES = ['Single dropdown', 'Single choice', 'Multiple choice', 'Numeric', 'Open text'];
+const QUESTION_TYPES = ['Single radio', 'Single dropdown', 'Multiple choice', 'Numeric', 'Open text'];
 const TYPES_WITHOUT_ANSWERS = new Set(['Numeric', 'Open text']);
 const ANSWER_ACTIONS = [
   ['none', 'No action'], ['S1', 'S1'], ['S2', 'S2'], ['Q2', 'Q2'], ['QFAIL1', 'QFAIL1'], ['Required', 'Required'], ['Qualify', 'Qualify'],
@@ -33,32 +38,33 @@ const POLL_STATUSES = [
 ];
 
 // Library answers are [text, action]; the action defaults to "No action".
-const SCREENER_LIBRARY = [
+// Generic screener questions, used for sample project screeners and to build the per-country Screener Library.
+const SCREENER_TEMPLATES = [
   { id: 'age', text: 'How old are you?', type: 'Single dropdown',
     answers: [['Under 18', 'S1'], ['18–24'], ['25–34'], ['35–44'], ['45–54'], ['55–64'], ['65 or older', 'S1']] },
-  { id: 'gender', text: 'What is your gender?', type: 'Single choice',
+  { id: 'gender', text: 'What is your gender?', type: 'Single radio',
     answers: [['Female'], ['Male'], ['Non-binary'], ['Prefer not to say']] },
   { id: 'region', text: 'Which region do you live in?', type: 'Single dropdown',
     answers: [['Capital region'], ['North'], ['South'], ['East'], ['West']] },
-  { id: 'employment', text: 'What is your current employment status?', type: 'Single choice',
+  { id: 'employment', text: 'What is your current employment status?', type: 'Single radio',
     answers: [['Employed full time', 'Qualify'], ['Employed part time', 'Qualify'], ['Self-employed'], ['Unemployed', 'S1'], ['Student', 'S1'], ['Retired', 'S1']] },
   { id: 'education', text: 'What is the highest level of education you have completed?', type: 'Single dropdown',
     answers: [['No formal education'], ['Primary school'], ['Secondary school'], ['Vocational qualification'], ['Bachelor’s degree'], ['Master’s degree'], ['Doctorate']] },
   { id: 'income', text: 'What is your annual household income?', type: 'Single dropdown',
     answers: [['Under €20,000'], ['€20,000–39,999'], ['€40,000–59,999'], ['€60,000–99,999'], ['€100,000 or more'], ['Prefer not to say', 'S2']] },
-  { id: 'parent', text: 'Are you a parent of a child under 18?', type: 'Single choice',
+  { id: 'parent', text: 'Are you a parent of a child under 18?', type: 'Single radio',
     answers: [['Yes', 'Qualify'], ['No', 'S1']] },
-  { id: 'car', text: 'Do you own or lease a car?', type: 'Single choice',
+  { id: 'car', text: 'Do you own or lease a car?', type: 'Single radio',
     answers: [['Own', 'Qualify'], ['Lease', 'Qualify'], ['Neither', 'S1']] },
   { id: 'industry', text: 'Do you or anyone in your household work in any of these industries?', type: 'Multiple choice',
     answers: [['Market research', 'S1'], ['Advertising or PR', 'S1'], ['Journalism', 'S1'], ['None of these']] },
 ];
 
 const POLL_LIBRARY = [
-  { id: 'rating', text: 'How would you rate this survey overall?', type: 'Single choice', answers: [['Very poor'], ['Poor'], ['Okay'], ['Good'], ['Excellent']] },
-  { id: 'length', text: 'How did you find the length of the survey?', type: 'Single choice', answers: [['Too short'], ['About right'], ['Too long']] },
-  { id: 'device', text: 'Did the survey work well on your device?', type: 'Single choice', answers: [['Yes'], ['Partly'], ['No']] },
-  { id: 'again', text: 'Would you take part in a similar survey again?', type: 'Single choice', answers: [['Yes'], ['Maybe'], ['No']] },
+  { id: 'rating', text: 'How would you rate this survey overall?', type: 'Single radio', answers: [['Very poor'], ['Poor'], ['Okay'], ['Good'], ['Excellent']] },
+  { id: 'length', text: 'How did you find the length of the survey?', type: 'Single radio', answers: [['Too short'], ['About right'], ['Too long']] },
+  { id: 'device', text: 'Did the survey work well on your device?', type: 'Single radio', answers: [['Yes'], ['Partly'], ['No']] },
+  { id: 'again', text: 'Would you take part in a similar survey again?', type: 'Single radio', answers: [['Yes'], ['Maybe'], ['No']] },
   { id: 'feedback', text: 'Is there anything you would like to tell us about this survey?', type: 'Open text', answers: [] },
 ];
 
@@ -199,13 +205,16 @@ function newDetail() {
 }
 
 // A question copied from a library entry, with zeroed answer counts.
+// The Screener Library marks screener quality fails as QFAIL2; a project screener shows them as QFAIL1.
 function questionFromLibrary(lib, id) {
   return {
     id,
     libId: lib.id,
     text: lib.text,
     type: lib.type,
-    answers: lib.answers.map(([text, action = 'none'], i) => ({ id: i + 1, text, action, counts: [0, 0, 0] })),
+    answers: lib.answers.map(([text, action = 'none'], i) => ({
+      id: i + 1, text, action: action === 'QFAIL2' ? 'QFAIL1' : action, counts: [0, 0, 0],
+    })),
   };
 }
 
@@ -269,9 +278,9 @@ function ensureDetail(p) {
   }
   // Screener: "age" plus a few library questions. Counts per answer are
   // [chose this answer, went on to complete, screened out here].
-  const picks = ['age', ...shuffle(SCREENER_LIBRARY.slice(1).map((q) => q.id), r.next).slice(0, r.int(1, 2))];
+  const picks = ['age', ...shuffle(SCREENER_TEMPLATES.slice(1).map((q) => q.id), r.next).slice(0, r.int(1, 2))];
   d.screener = picks.map((libId, i) => {
-    const q = questionFromLibrary(SCREENER_LIBRARY.find((l) => l.id === libId), i + 1);
+    const q = questionFromLibrary(SCREENER_TEMPLATES.find((l) => l.id === libId), i + 1);
     const chose = splitInt(p.eb, q.answers.map(() => r.between(0.2, 1)));
     const passing = q.answers.map((a, j) => (SCREENOUT_ACTIONS.has(a.action) ? 0 : chose[j]));
     const completed = splitInt(p.c1, passing.some(Boolean) ? passing : passing.map(() => 1));
@@ -385,6 +394,10 @@ function createProject(v) {
     po: v.po, type: v.type, geoIp: v.geoIp, blockDupIp: v.blockDupIp,
     surveyGroup: v.surveyGroup, notes: v.notes, liveLink: v.liveLink,
   };
+  // Library questions marked "Project default" for this country start the screener.
+  p.detail.screener = SCREENER_LIBRARY
+    .filter((lib) => lib.projectDefault && lib.country === v.country.code.toUpperCase())
+    .map((lib, i) => questionFromLibrary(lib, i + 1));
   projects.unshift(p);
   return p;
 }
@@ -413,24 +426,41 @@ const UNSAVED_LABELS = { ips: 'Exclude IPs', screener: 'Screener', poll: 'Post P
 let chartObserver = null;
 
 /* ---------- Routing ---------- */
-// #/ → project list · #/project/<id|new>[/<tab>] → project · #/vendors/<id|new> → vendor form
-// #/feasibility, #/exports, #/vendors, #/vendor-groups, #/blacklist → pages
+// Every page other than the project list and a project.
 const PAGE_RENDERERS = {
-  feasibility: () => renderFeasibility(),       // feasibility.js
-  exports: () => renderExports(),               // exports.js
-  vendors: () => renderVendorsList(),           // vendors.js
-  'vendor-form': (r) => renderVendorForm(r.id), // vendors.js
-  'vendor-groups': () => renderVendorGroups(),  // vendors.js
-  blacklist: () => renderBlacklist(),           // blacklist.js
+  feasibility: () => renderFeasibility(),              // feasibility.js
+  exports: () => renderExports(),                      // exports.js
+  vendors: () => renderVendorsList(),                  // vendors.js
+  'vendor-form': (r) => renderVendorForm(r.id),        // vendors.js
+  'vendor-groups': () => renderVendorGroups(),         // vendors.js
+  blacklist: () => renderBlacklist(),                  // blacklist.js
+  'screener-library': () => renderLibrary(),           // library.js
+  'library-form': (r) => renderLibraryForm(r.id),      // library.js
+  panels: () => renderPanels(),                        // panels.js
+  panel: (r) => renderPanelPage(r.panel),              // panels.js
+  panelist: (r) => renderPanelist(r.panel, r.id),      // panels.js
+  rewards: () => renderRewards(),                      // rewards.js
+  redeem: () => renderRedeem(),                        // rewards.js
+  recruiters: () => renderRecruiters(),                // recruiters.js
+  recruiter: (r) => renderRecruiter(r.id),             // recruiters.js
 };
 
+// [pattern, route] — the first match wins.
+const ROUTES = [
+  [/^#\/project\/(new|\d+)(?:\/([a-z]+))?$/, (m) => ({ view: 'project', id: m[1], tab: m[2] })],
+  [/^#\/vendors\/(new|\d+)$/, (m) => ({ view: 'vendor-form', id: m[1] })],
+  [/^#\/screener-library\/(new|\d+)$/, (m) => ({ view: 'library-form', id: m[1] })],
+  [/^#\/panels\/([a-z]+)\/(\d+)$/, (m) => ({ view: 'panelist', panel: m[1], id: m[2] })],
+  [/^#\/panels\/([a-z]+)$/, (m) => ({ view: 'panel', panel: m[1] })],
+  [/^#\/recruiters\/(new|\d+)$/, (m) => ({ view: 'recruiter', id: m[1] })],
+  [/^#\/(feasibility|exports|vendors|vendor-groups|blacklist|screener-library|panels|rewards|redeem|recruiters)$/, (m) => ({ view: m[1] })],
+];
+
 function currentRoute() {
-  const project = location.hash.match(/^#\/project\/(new|\d+)(?:\/([a-z]+))?$/);
-  if (project) return { view: 'project', id: project[1], tab: project[2] };
-  const vendor = location.hash.match(/^#\/vendors\/(new|\d+)$/);
-  if (vendor) return { view: 'vendor-form', id: vendor[1] };
-  const page = location.hash.match(/^#\/([a-z-]+)$/);
-  if (page && PAGE_RENDERERS[page[1]] && page[1] !== 'vendor-form') return { view: page[1] };
+  for (const [pattern, toRoute] of ROUTES) {
+    const m = location.hash.match(pattern);
+    if (m) return toRoute(m);
+  }
   return { view: 'list' };
 }
 
@@ -448,10 +478,11 @@ function route() {
     showToast(`You have unsaved changes on ${pending.join(', ')}. Save or cancel them first.`, 'info');
     return;
   }
-  // vendorForm lives in vendors.js
-  if (currentView === 'vendor-form' && vendorForm.dirty && !(r.view === 'vendor-form' && r.id === vendorForm.routeId)) {
-    history.replaceState(null, '', `#/vendors/${vendorForm.routeId}`);
-    showToast('You have unsaved changes on this vendor. Save or cancel them first.', 'info');
+  // Edit pages (vendor, library question, panelist, recruiter) register in formGuards (script.js).
+  const guard = formGuards[currentView];
+  if (guard?.dirty && location.hash !== guard.hash) {
+    history.replaceState(null, '', guard.hash);
+    showToast(`You have unsaved changes ${guard.label}. Save or cancel them first.`, 'info');
     return;
   }
   if (r.view === 'list') {
@@ -1684,7 +1715,8 @@ function addOneIp(form) {
 // Each question is its own form: edits stay in the card until its Save button is pressed.
 const QUESTION_KINDS = {
   screener: {
-    library: SCREENER_LIBRARY, statusKey: 'screenerActive', statusLabel: 'Screener status',
+    get library() { return SCREENER_LIBRARY; }, // library.js
+    statusKey: 'screenerActive', statusLabel: 'Screener status',
     exportLabel: 'Export screener data', slug: 'screener', actions: true,
   },
   poll: {
@@ -1879,20 +1911,27 @@ function removeQuestion(kind, q) {
 function addLibraryQuestion(kind) {
   const cfg = QUESTION_KINDS[kind];
   const list = pv.project.detail[kind];
-  const available = cfg.library.filter((lib) => !list.some((q) => q.libId === lib.id));
+  const country = pv.project.country;
+  // Screener questions come from the Screener Library for the project's country.
+  const pool = kind === 'screener' ? cfg.library.filter((lib) => lib.country === country.code.toUpperCase()) : cfg.library;
+  const available = pool.filter((lib) => !list.some((q) => q.libId === lib.id));
   if (!available.length) {
-    showToast('Every library question is already on this project.', 'info');
+    showToast(kind === 'screener' && !pool.length
+      ? `The Screener Library has no questions for ${country.name} yet.`
+      : 'Every library question is already on this project.', 'info');
     return;
   }
   openFormModal({
     title: 'Add Library question',
-    subtitle: kind === 'screener' ? 'From the Screener Library, with its answers and actions.' : 'A ready-made post poll question with its answers.',
+    subtitle: kind === 'screener'
+      ? `From the Screener Library for ${country.name}, with its answers and actions.`
+      : 'A ready-made post poll question with its answers.',
     body: `
       <label class="form-label" for="mqLibrary">Question</label>
-      <select class="form-select" id="mqLibrary" name="question" required>${optionsHtml(available.map((lib) => [lib.id, lib.text]))}</select>`,
+      <select class="form-select" id="mqLibrary" name="question" required>${optionsHtml(available.map((lib) => [lib.id, lib.name || lib.text]))}</select>`,
     submitLabel: '<i class="bi bi-plus-lg"></i> Add question',
     onSubmit: (form) => {
-      const lib = cfg.library.find((x) => x.id === form.elements.question.value);
+      const lib = cfg.library.find((x) => String(x.id) === form.elements.question.value);
       const q = questionFromLibrary(lib, Math.max(0, ...list.map((x) => x.id)) + 1);
       if (!cfg.actions) q.answers.forEach((a) => { a.counts = [0]; });
       list.push(q);
@@ -2057,12 +2096,16 @@ function createMultiSelect(root, { id, options, selected = [], placeholder = '',
 
 /* ---------- Form modal ---------- */
 let modalSubmit = null;
-function openFormModal({ title, subtitle = '', body, submitLabel, onSubmit }) {
+// Without a submitLabel the modal is read-only: no submit button, and Cancel reads "Close".
+function openFormModal({ title, subtitle = '', body, submitLabel, onSubmit, wide = false }) {
   $('#pvModalTitle').textContent = title;
   $('#pvModalSub').textContent = subtitle;
   $('#pvModalBody').innerHTML = body;
   $('#pvModalBody').onclick = null; // callers that need clicks inside the body set this after opening
-  $('#pvModalSubmit').innerHTML = submitLabel;
+  $('#pvModalSubmit').innerHTML = submitLabel || '';
+  $('#pvModalSubmit').hidden = !submitLabel;
+  $('#pvModalCancel').textContent = submitLabel ? 'Cancel' : 'Close';
+  $('#pvModal .modal-dialog').classList.toggle('modal-lg', wide);
   $('#pvModalForm').classList.remove('was-validated');
   modalSubmit = onSubmit;
   bootstrap.Modal.getOrCreateInstance('#pvModal').show();
