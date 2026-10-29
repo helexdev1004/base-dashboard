@@ -323,6 +323,8 @@ let projects = buildProjects();
 const state = {
   status: 'Live',
   search: '',
+  searchJob: '', // MFJN
+  searchPo: '', // MFPO
   filters: { country: '', client: '', pm: '', activity: '' },
   sortKey: 'id',
   sortDir: 'desc',
@@ -341,7 +343,7 @@ const SORTERS = {
   s1: (p) => p.s1,
   s2: (p) => p.s2,
   drops: (p) => p.drops,
-  dups: (p) => p.dupsA,
+  dups: (p) => p.dupsA + p.dupsB,
   qfails: (p) => p.qfA,
   others: (p) => p.others,
   activity: (p) => p.lastEntryAt || 0,
@@ -475,6 +477,8 @@ function matchesActivity(p, mode) {
 
 function getVisibleProjects() {
   const q = state.search.trim().toLowerCase();
+  const job = state.searchJob.trim().replace(/^#/, '');
+  const po = state.searchPo.trim().replace(/^#/, '').toLowerCase();
   const { country, client, pm, activity } = state.filters;
 
   const rows = projects.filter((p) => {
@@ -483,6 +487,8 @@ function getVisibleProjects() {
     if (client && p.client !== client) return false;
     if (pm && !p.pms.some((x) => x.initials === pm)) return false;
     if (!matchesActivity(p, activity)) return false;
+    if (job && !String(p.jobNo).includes(job)) return false;
+    if (po && !String(p.po || '').toLowerCase().includes(po)) return false;
     if (!q) return true;
     const people = p.pms.map((x) => `${x.name} ${x.initials}`).join(' ');
     const haystack = `${p.id} #${p.jobNo} #${p.po} ${p.name} ${p.country.name} ${p.client} ${people}`.toLowerCase();
@@ -552,14 +558,14 @@ function rowHtml(p) {
       <td class="num">${stack(cellNum(p.s1), cellNum(p.q1))}</td>
       <td class="num">${stack(cellNum(p.s2), cellNum(p.q2))}</td>
       <td class="num">${cellNum(p.drops)}</td>
-      <td class="num">${stack(cellNum(p.dupsA), cellNum(p.dupsB))}</td>
+      <td class="num" title="DUP1 ${fmtInt(p.dupsA)} · DUP2 ${fmtInt(p.dupsB)}">${cellNum(p.dupsA + p.dupsB)}</td>
       <td class="num">${stack(cellNum(p.qfA), cellNum(p.qfB))}</td>
       <td class="num">${cellNum(p.others)}</td>
     </tr>`;
 }
 
 function emptyRowHtml() {
-  const hasFilters = state.search || Object.values(state.filters).some(Boolean);
+  const hasFilters = state.search || state.searchJob || state.searchPo || Object.values(state.filters).some(Boolean);
   return `
     <tr class="empty-state">
       <td colspan="15">
@@ -781,14 +787,9 @@ function applyTheme(id) {
 // Menu items that have no design yet: [title, icon]. Each opens the shared "Coming soon" page.
 const SOON_PAGES = {
   clients: ['Clients', 'bi-people'],
-  'first-surveys': ['First surveys', 'bi-globe2'],
-  translations: ['Translations', 'bi-translate'],
-  'survey-points': ['Survey points', 'bi-arrow-down-up'],
   profiling: ['Profiling', 'bi-window-sidebar'],
   framework: ['Framework', 'bi-asterisk'],
   'external-surveys': ['External surveys', 'bi-diagram-3'],
-  statistics: ['Statistics', 'bi-bar-chart-line'],
-  users: ['Users', 'bi-person-lines-fill'],
 };
 
 // One view shows at a time; the router in project.js decides which.
@@ -811,11 +812,17 @@ const VIEWS = {
   redeem: '#redeemView',
   recruiters: '#recruitersView',
   recruiter: '#recruiterView',
+  users: '#usersView',
+  user: '#userView',
+  statistics: '#statisticsView',
+  translations: '#translationsView',
+  'survey-points': '#surveyPointsView',
+  'first-surveys': '#firstSurveysView',
 };
 // Views that highlight another view's menu item.
 const NAV_PARENT = {
   project: 'list', 'vendor-form': 'vendors', 'library-form': 'screener-library',
-  panel: 'panels', panelist: 'panels', recruiter: 'recruiters',
+  panel: 'panels', panelist: 'panels', recruiter: 'recruiters', user: 'users',
 };
 // Edit pages register { dirty, hash, label } here so the router can stop you leaving with unsaved changes.
 const formGuards = {};
@@ -964,22 +971,25 @@ function init() {
 
   $$('.profile-menu .dropdown-item').forEach((item) => item.addEventListener('click', (e) => e.preventDefault()));
 
-  // Search
+  // Search: MFJN, MFPO, and project name / any other field
+  const SEARCH_FIELDS = { searchJob: 'searchJob', searchPo: 'searchPo', searchInput: 'search' };
   let searchTimer;
-  $('#searchInput').addEventListener('input', (e) => {
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => {
-      state.search = e.target.value;
-      state.page = 1;
-      renderTable();
-    }, 150);
+  Object.entries(SEARCH_FIELDS).forEach(([id, key]) => {
+    $(`#${id}`).addEventListener('input', (e) => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        state[key] = e.target.value;
+        state.page = 1;
+        renderTable();
+      }, 150);
+    });
   });
 
   document.addEventListener('keydown', (e) => {
-    const typing = e.target.closest('input, textarea, select, [contenteditable="true"]');
+    const typing = e.target instanceof Element && e.target.closest('input, textarea, select, [contenteditable="true"]');
     if (e.key === '/' && !typing && currentView === 'list' && !document.querySelector('.modal.show, .offcanvas.show')) {
       e.preventDefault();
-      $('#searchInput').focus();
+      $('#searchJob').focus(); // Tab moves on to MFPO and the name search
     }
     if (e.key === 'Escape' && document.body.classList.contains('sidebar-open')) setMobileOpen(false);
   });

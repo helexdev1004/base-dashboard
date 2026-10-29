@@ -163,10 +163,22 @@
 
           <!-- Toolbar -->
           <section class="toolbar" aria-label="Project filters">
-            <div class="search-box">
-              <i class="bi bi-search"></i>
-              <input type="search" id="searchInput" placeholder="Search by project name, ID, or any field..." aria-label="Search projects" autocomplete="off">
-              <kbd title="Press / to search">/</kbd>
+            <div class="search-trio" role="search" aria-label="Search projects">
+              <div class="search-box search-sm">
+                <i class="bi bi-search"></i>
+                <input type="search" id="searchJob" inputmode="numeric" placeholder="Search by MFJN" aria-label="Search by MFJN" autocomplete="off">
+                <kbd title="Press / to search">/</kbd>
+              </div>
+              <div class="search-box search-sm">
+                <i class="bi bi-search"></i>
+                <input type="search" id="searchPo" placeholder="Search by MFPO" aria-label="Search by MFPO" autocomplete="off">
+                <kbd title="Press / to search">/</kbd>
+              </div>
+              <div class="search-box search-main">
+                <i class="bi bi-search"></i>
+                <input type="search" id="searchInput" placeholder="Search by project name or any other field..." aria-label="Search by project name or any other field" autocomplete="off">
+                <kbd title="Press / to search">/</kbd>
+              </div>
             </div>
 
             <button class="btn btn-ghost btn-square" type="button" id="refreshBtn" title="Refresh the list and counts" aria-label="Refresh the list and counts">
@@ -250,6 +262,12 @@
         <div class="page-view" id="redeemView" hidden></div>
         <div class="page-view" id="recruitersView" hidden></div>
         <div class="page-view" id="recruiterView" hidden></div>
+        <div class="page-view" id="usersView" hidden></div>
+        <div class="page-view" id="userView" hidden></div>
+        <div class="page-view" id="statisticsView" hidden></div>
+        <div class="page-view" id="translationsView" hidden></div>
+        <div class="page-view" id="surveyPointsView" hidden></div>
+        <div class="page-view" id="firstSurveysView" hidden></div>
         <div class="page-view" id="soonView" hidden></div>
 
       </main>
@@ -327,5 +345,7 @@
   <script src="panels.js"></script>
   <script src="rewards.js"></script>
   <script src="recruiters.js"></script>
+  <script src="users.js"></script>
+  <script src="panel-tools.js"></script>
 </body>
 </html>

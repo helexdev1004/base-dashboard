@@ -21,7 +21,7 @@ const PANELS = [
 ];
 const PROJECT_TYPES = ['ad hoc', 'tracker', 'omnibus'];
 const ENTITY_STATUSES = ['active', 'paused', 'closed'];
-const LINK_VARIABLES = ['{MRID}', '{UNIQUE_CODES}', '{CUSTOM_LINK}'];
+const LINK_VARIABLES = ['{MFID}', '{UNIQUE_CODES}', '{CUSTOM_LINK}'];
 const SURVEY_GROUP_HELP = 'Respondents that attempted in selected projects are not eligible for this project.';
 const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
 
@@ -92,7 +92,7 @@ const STAT_COLS = [
 ];
 const STAT_KEYS = STAT_COLS.map(([key]) => key);
 const colsFor = (keys) => keys.map((k) => STAT_COLS.find(([key]) => key === k));
-const VENDOR_COLS = colsFor(['eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'incomplete', 'dup1', 'dup2', 'geo1', 'qfail1', 'qfail2', 'dev1'])
+const VENDOR_COLS = colsFor(['eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'incomplete', 'dup1', 'dup2', 'dup3', 'geo1', 'qfail1', 'qfail2', 'dev1', 'ex1', 'ex2'])
   .map((col) => (col[0] === 'incomplete' ? ['incomplete', 'INC', 'Incomplete'] : col));
 const DAILY_COLS = colsFor(['eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'dup1', 'dup2', 'dup3', 'geo1', 'qfail1', 'qfail2', 'ex1', 'ex2', 'dev1']);
 const CAMPAIGN_COLS = [
@@ -176,7 +176,7 @@ const emptyRow = (span, title, text) => `
     <i class="bi bi-inboxes"></i><div class="empty-title">${title}</div><div class="empty-text">${text}</div>
   </td></tr>`;
 const pmNames = (p) => p.pms.map((x) => x.name).join(', ');
-const makeLiveLink = (next = Math.random) => `https://fwredirect.com/start/${token(15, next)}/{MRID}`;
+const makeLiveLink = (next = Math.random) => `https://fwredirect.com/start/${token(15, next)}/{MFID}`;
 
 function copyText(text, message) {
   navigator.clipboard.writeText(text)
@@ -441,11 +441,18 @@ const PAGE_RENDERERS = {
   redeem: () => renderRedeem(),                        // rewards.js
   recruiters: () => renderRecruiters(),                // recruiters.js
   recruiter: (r) => renderRecruiter(r.id),             // recruiters.js
+  users: () => renderUsers(),                          // users.js
+  user: (r) => renderUser(r.id),                       // users.js
+  statistics: () => renderStatistics(),                // users.js
+  translations: () => renderTranslations(),            // panel-tools.js
+  'survey-points': () => renderSurveyPoints(),         // panel-tools.js
+  'first-surveys': () => renderFirstSurveys(),         // panel-tools.js
   ...Object.fromEntries(Object.keys(SOON_PAGES).map((key) => [key, () => renderSoon(key)])),
 };
 // Pages opened by a plain #/<name> address.
 const SIMPLE_PAGES = [
   'feasibility', 'exports', 'vendors', 'vendor-groups', 'blacklist', 'screener-library', 'panels', 'rewards', 'redeem', 'recruiters',
+  'users', 'statistics', 'translations', 'survey-points', 'first-surveys',
   ...Object.keys(SOON_PAGES),
 ];
 
@@ -457,6 +464,7 @@ const ROUTES = [
   [/^#\/panels\/([a-z]+)\/(\d+)$/, (m) => ({ view: 'panelist', panel: m[1], id: m[2] })],
   [/^#\/panels\/([a-z]+)$/, (m) => ({ view: 'panel', panel: m[1] })],
   [/^#\/recruiters\/(new|\d+)$/, (m) => ({ view: 'recruiter', id: m[1] })],
+  [/^#\/users\/(new|\d+)$/, (m) => ({ view: 'user', id: m[1] })],
   [new RegExp(`^#/(${SIMPLE_PAGES.join('|')})$`), (m) => ({ view: m[1] })],
 ];
 
@@ -761,7 +769,7 @@ function renderMain(el) {
             </div>
             <div class="mf-field mf-grow">
               <label class="form-label" for="mfGroup">
-                Survey group <i class="bi bi-info-circle mf-info" title="${SURVEY_GROUP_HELP}" aria-hidden="true"></i>
+                Exclude a project <i class="bi bi-info-circle mf-info" title="${SURVEY_GROUP_HELP}" aria-hidden="true"></i>
               </label>
               <div id="mfGroupSelect"></div>
               <span class="visually-hidden" id="mfGroupHelp">${SURVEY_GROUP_HELP}</span>
@@ -770,7 +778,7 @@ function renderMain(el) {
 
           <div class="mf-field">
             <label class="form-label" for="mfNotes">Notes</label>
-            <textarea class="form-control" id="mfNotes" rows="2" maxlength="2000" placeholder="Anything the team should know about this project">${escapeHtml(v.notes)}</textarea>
+            <textarea class="form-control" id="mfNotes" rows="3" maxlength="2000" placeholder="Anything the team should know about this project">${escapeHtml(v.notes)}</textarea>
           </div>
 
           <div class="mf-field">
@@ -1026,7 +1034,7 @@ function renderVendors(el) {
           <tbody>
             ${d.vendors.length ? d.vendors.map((v) => `
               <tr>
-                <td class="cell-name">${escapeHtml(v.name)}</td>
+                <td class="cell-name"><button type="button" class="cell-link" data-action="vendor-info" data-id="${v.id}" title="Vendor info">${escapeHtml(v.name)}</button></td>
                 <td><button type="button" class="btn btn-ghost btn-xs" data-action="export-vendor" data-id="${v.id}"><i class="bi bi-download"></i> Export data</button></td>
                 <td class="activity col-progress">${activityHtml(vendorActivity(pv.project, v, busiest))}</td>
                 ${cells(v.stats)}
@@ -1063,6 +1071,119 @@ function renderVendors(el) {
     chartObserver.observe($('#progressChart'));
     drawProgressChart();
   }
+}
+
+/* ---------- Vendor info (click a vendor name) ---------- */
+// [key, label, default]: Yes / No settings.
+const VENDOR_SWITCHES = [
+  ['recaptcha', 'reCAPTCHA enabled', false], ['screener', 'Show screener', true], ['poll', 'Show post poll', true],
+  ['s2s', 'Server to server call', false], ['redirect', 'Auto redirect', true],
+];
+// [key, label, ticked by default, default text]: ticking opens a text box.
+const VENDOR_TEXTS = [
+  ['intro', 'Intro screen text', false, ''], ['terminate', 'Terminate & quotafull screen text', false, ''],
+  ['complete', 'Complete screen text', true, 'Thank you for completing this survey!'], ['closed', 'Closed screen text', false, ''],
+];
+
+function vendorInfo(v) {
+  v.info = v.info || {
+    ...Object.fromEntries(VENDOR_SWITCHES.map(([key, , on]) => [key, on])),
+    texts: Object.fromEntries(VENDOR_TEXTS.map(([key, , on, text]) => [key, { on, text }])),
+  };
+  return v.info;
+}
+
+// The vendor's entry link, and the same link in the vendor's format (from the Vendors list, when it has one).
+function vendorLinks(p, v) {
+  const link = `https://fwredirect.com/v/${token(15, seeded(p.id * 977 + v.id).next)}`;
+  const format = vendorRegistry.find((x) => x.name === v.name)?.liveLink || `{LIVE_LINK}?vid=${v.id}&rid={RID}`;
+  return { link, formatted: format.replace('{LIVE_LINK}', link) };
+}
+
+function openVendorInfo(id) {
+  const p = pv.project;
+  const v = p.detail.vendors.find((x) => x.id === id);
+  const info = vendorInfo(v);
+  const { link, formatted } = vendorLinks(p, v);
+  const yesNo = (key, label) => `
+    <div class="vi-row">
+      <span class="vi-label" id="vi-${key}-label">${label}</span>
+      <div class="segmented seg-sm" role="group" aria-labelledby="vi-${key}-label" data-vi-switch="${key}">
+        <button type="button" data-value="1" class="${info[key] ? 'active' : ''}" aria-pressed="${info[key]}">Yes</button>
+        <button type="button" data-value="0" class="${info[key] ? '' : 'active'}" aria-pressed="${!info[key]}">No</button>
+      </div>
+    </div>`;
+  const textBox = (key, label) => {
+    const { on, text } = info.texts[key];
+    return `
+      <div class="vi-text">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="vi-${key}" data-vi-text="${key}" ${on ? 'checked' : ''}>
+          <label class="form-check-label" for="vi-${key}">${label}</label>
+        </div>
+        <textarea class="form-control" id="vi-${key}-text" rows="3" maxlength="2000" aria-label="${label}"
+                  placeholder="Enter the ${label.toLowerCase()}" ${on ? '' : 'hidden'}>${escapeHtml(text)}</textarea>
+      </div>`;
+  };
+  const linkRow = (label, value) => `
+    <div class="vi-row">
+      <span class="vi-label">${label}</span>
+      <div class="vi-link">
+        <span class="mono">${escapeHtml(value)}</span>
+        <button type="button" class="icon-btn-sm" data-vi-copy="${escapeHtml(value)}" title="Copy" aria-label="Copy ${label.toLowerCase()}"><i class="bi bi-copy"></i></button>
+      </div>
+    </div>`;
+
+  openFormModal({
+    title: 'Vendor info',
+    subtitle: `${v.name} · ${p.name}`,
+    wide: true,
+    body: `
+      <div class="vi-form">
+        <div class="vi-row">
+          <label class="vi-label" for="viVendor">Vendor</label>
+          <select class="form-select vi-vendor" id="viVendor" disabled><option>${escapeHtml(v.name)}</option></select>
+        </div>
+        <div class="vi-switches">${VENDOR_SWITCHES.map(([key, label]) => yesNo(key, label)).join('')}</div>
+        <div class="vi-texts">${VENDOR_TEXTS.map(([key, label]) => textBox(key, label)).join('')}</div>
+        <div class="vi-row">
+          <label class="vi-label" for="viStatus">Status</label>
+          <select class="form-select vi-status" id="viStatus">${optionsHtml(ENTITY_STATUSES.map((s) => [s, s]), v.status)}</select>
+        </div>
+        ${linkRow('Vendor live link', link)}
+        ${linkRow('Vendor live link formatted', formatted)}
+      </div>`,
+    submitLabel: '<i class="bi bi-check2"></i> Save',
+    onSubmit: () => {
+      VENDOR_SWITCHES.forEach(([key]) => { info[key] = $(`[data-vi-switch="${key}"] .active`).dataset.value === '1'; });
+      VENDOR_TEXTS.forEach(([key]) => {
+        info.texts[key] = { on: $(`#vi-${key}`).checked, text: $(`#vi-${key}-text`).value.trim() };
+      });
+      v.status = $('#viStatus').value;
+      renderPanel('vendors');
+      showToast(`${v.name} saved.`);
+      return true;
+    },
+  });
+  $('#pvModalBody').onclick = (e) => {
+    const yes = e.target.closest('[data-vi-switch] button');
+    if (yes) {
+      $$('button', yes.parentElement).forEach((b) => {
+        b.classList.toggle('active', b === yes);
+        b.setAttribute('aria-pressed', String(b === yes));
+      });
+      return;
+    }
+    const tick = e.target.closest('[data-vi-text]');
+    if (tick) {
+      const box = $(`#vi-${tick.dataset.viText}-text`);
+      box.hidden = !tick.checked;
+      if (tick.checked) box.focus();
+      return;
+    }
+    const copy = e.target.closest('[data-vi-copy]');
+    if (copy) copyText(copy.dataset.viCopy, 'Link copied.');
+  };
 }
 
 function dailyRows(d) {
@@ -1633,7 +1754,7 @@ function exportPool(kind) {
   const cfg = POOL_CFG[kind];
   const items = p.detail[kind];
   downloadCsv(`project-${p.jobNo}-${cfg.slug}-${today()}.csv`, [
-    [cfg.column, 'Status', 'MRID', 'Used at'],
+    [cfg.column, 'Status', 'MFID', 'Used at'],
     ...items.map((i) => [i.value, i.usedAt ? 'Used' : 'Available', i.mrid || '', i.usedAt ? new Date(i.usedAt).toISOString() : '']),
   ]);
   showToast(`Downloaded ${plural(items.length, cfg.noun, cfg.nouns)}.`);
@@ -2030,7 +2151,7 @@ function confirmClick(el, label = 'Delete?') {
   return false;
 }
 
-/* ---------- Multi-select (PM, Survey group) ---------- */
+/* ---------- Multi-select (PM, Exclude a project) ---------- */
 function createMultiSelect(root, { id, options, selected = [], placeholder = '', describedBy = '', onChange = () => {} }) {
   let value = selected.filter((v) => options.some((o) => o.value === v));
   let open = false;
@@ -2188,6 +2309,7 @@ const ACTIONS = {
     showToast('Numbers are up to date.', 'info');
   },
   'export-vendor'(el) { exportVendor(Number(el.dataset.id)); },
+  'vendor-info'(el) { openVendorInfo(Number(el.dataset.id)); },
   'ec-toggle'(el) {
     pv.ecOnly = el.dataset.value === 'ec';
     $$('#projectView .ec-toggle button').forEach((b) => {
