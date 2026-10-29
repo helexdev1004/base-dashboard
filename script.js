@@ -1054,6 +1054,25 @@ function init() {
   // Export
   $('#exportBtn').addEventListener('click', exportCsv);
 
+  // My projects: shows the on/off state (the list itself isn't filtered yet).
+  $('#mineBtn').addEventListener('click', (e) => {
+    const btn = e.currentTarget;
+    const on = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', String(on));
+    btn.classList.toggle('active', on);
+    $('i', btn).className = on ? 'bi bi-person-check-fill' : 'bi bi-person';
+  });
+
+  // Refresh: redraws the counts and the list.
+  $('#refreshBtn').addEventListener('click', (e) => {
+    const btn = e.currentTarget;
+    btn.classList.remove('spinning');
+    void btn.offsetWidth; // restart the spin on repeated clicks
+    btn.classList.add('spinning');
+    renderKpis();
+    renderTable();
+  });
+
   // First paint
   syncStatusButtons();
   syncFilterUi();

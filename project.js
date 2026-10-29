@@ -555,7 +555,7 @@ function openProject(p, tab) {
     Object.assign(pv, {
       project: p, creating, dirty: false, rendered: new Set(), draftLink: null,
       vendorView: 'chart', vendorFilter: '', campStatus: 'Live', campPanel: '', campSort: 'desc',
-      expanded: new Set(), chartIndex: -1, ipDraft: null, unsaved: new Set(),
+      expanded: new Set(), chartIndex: -1, ipDraft: null, unsaved: new Set(), ecOnly: false,
     });
     renderShell();
     setView('project');
@@ -796,8 +796,11 @@ function renderMain(el) {
       </form>
 
       <section class="pv-card metrics-card" aria-labelledby="metricsTitle">
-        <div class="pv-card-head">
-          <h2 class="pv-card-title" id="metricsTitle">Fieldwork metrics <span class="pv-card-note">all vendors combined</span></h2>
+        <div class="pv-card-head metrics-head">
+          <div class="metrics-head-title">
+            <h2 class="pv-card-title" id="metricsTitle">Fieldwork metrics <span class="pv-card-note">all vendors combined</span></h2>
+            ${p ? ecToggleHtml() : ''}
+          </div>
           ${p ? '<button type="button" class="btn btn-ghost btn-sm-h" data-action="export-main"><i class="bi bi-download"></i> Export data</button>' : ''}
         </div>
         ${p ? metricsHtml(p) : `
@@ -978,9 +981,30 @@ function shieldHtml(d) {
   return `<span class="shield ${cls}" role="img" title="${label}" aria-label="${label}"><i class="bi ${icon}"></i></span>`;
 }
 
+// Show All / Show EC only (Main tab metrics and Project vendors share it). Only the toggle state for now.
+function ecToggleHtml() {
+  const btn = (value, label, on) => `
+    <button type="button" data-action="ec-toggle" data-value="${value}" class="${on ? 'active' : ''}" aria-pressed="${on}">${label}</button>`;
+  return `
+    <div class="segmented seg-xs ec-toggle" role="group" aria-label="Entries to show">
+      ${btn('all', 'Show All', !pv.ecOnly)}${btn('ec', 'Show EC only', pv.ecOnly)}
+    </div>`;
+}
+
+// Last entry / last complete per vendor. The busiest vendor matches the project's own times; the others are a little earlier.
+function vendorActivity(p, v, busiest) {
+  if (!v.stats.eb || !p.lastEntryAt) return { lastEntryAt: null, lastCompleteAt: null };
+  if (v === busiest) return { lastEntryAt: p.lastEntryAt, lastCompleteAt: v.stats.c1 ? p.lastCompleteAt : null };
+  const r = seeded(p.id * 131 + v.id);
+  const lastEntryAt = p.lastEntryAt - r.int(4, 180) * MINUTE;
+  const lastCompleteAt = v.stats.c1 && p.lastCompleteAt ? Math.min(lastEntryAt, p.lastCompleteAt - r.int(3, 240) * MINUTE) : null;
+  return { lastEntryAt, lastCompleteAt };
+}
+
 function renderVendors(el) {
   const d = pv.project.detail;
   const total = d.vendors.reduce((acc, v) => addStats(acc, v.stats), emptyStats());
+  const busiest = d.vendors.reduce((best, v) => (!best || v.stats.eb > best.stats.eb ? v : best), null);
   const isChart = pv.vendorView === 'chart';
   const subtitle = d.vendors.length === 1 ? `Daily completes (C1) · ${escapeHtml(d.vendors[0].name)}` : 'Daily completes (C1) by vendor';
   const cells = (stats) => VENDOR_COLS.map(([key]) => numCell(stats[key], key === 'c1' ? 'col-hl' : '')).join('');
@@ -991,11 +1015,12 @@ function renderVendors(el) {
         <button type="button" class="btn btn-ghost btn-sm-h" data-action="add-vendor"><i class="bi bi-plus-lg"></i> Add vendor</button>
         <button type="button" class="icon-btn-sm" data-action="refresh" data-tab="vendors" title="Refresh" aria-label="Refresh"><i class="bi bi-arrow-clockwise"></i></button>
         <span class="pv-toolbar-note">${plural(d.vendors.length, 'vendor')}</span>
+        ${ecToggleHtml()}
       </div>
       <div class="table-responsive">
-        <table class="pv-table">
+        <table class="pv-table vendor-table">
           <thead><tr>
-            <th>Vendor name</th><th><span class="visually-hidden">Export</span></th>
+            <th>Vendor name</th><th><span class="visually-hidden">Export</span></th><th class="col-progress">Progress</th>
             ${thCells(VENDOR_COLS)}<th>Status</th><th><span class="visually-hidden">Security</span></th>
           </tr></thead>
           <tbody>
@@ -1003,12 +1028,13 @@ function renderVendors(el) {
               <tr>
                 <td class="cell-name">${escapeHtml(v.name)}</td>
                 <td><button type="button" class="btn btn-ghost btn-xs" data-action="export-vendor" data-id="${v.id}"><i class="bi bi-download"></i> Export data</button></td>
+                <td class="activity col-progress">${activityHtml(vendorActivity(pv.project, v, busiest))}</td>
                 ${cells(v.stats)}
                 <td>${statusSelectHtml('vendor', v.id, v.status)}</td>
                 <td>${shieldHtml(d)}</td>
-              </tr>`).join('') : emptyRow(VENDOR_COLS.length + 4, 'No vendors yet', 'Add a vendor to start collecting responses.')}
+              </tr>`).join('') : emptyRow(VENDOR_COLS.length + 5, 'No vendors yet', 'Add a vendor to start collecting responses.')}
           </tbody>
-          ${d.vendors.length > 1 ? `<tfoot><tr><td>Total</td><td></td>${cells(total)}<td></td><td></td></tr></tfoot>` : ''}
+          ${d.vendors.length > 1 ? `<tfoot><tr><td>Total</td><td></td><td></td>${cells(total)}<td></td><td></td></tr></tfoot>` : ''}
         </table>
       </div>
     </section>
@@ -2162,6 +2188,14 @@ const ACTIONS = {
     showToast('Numbers are up to date.', 'info');
   },
   'export-vendor'(el) { exportVendor(Number(el.dataset.id)); },
+  'ec-toggle'(el) {
+    pv.ecOnly = el.dataset.value === 'ec';
+    $$('#projectView .ec-toggle button').forEach((b) => {
+      const on = (b.dataset.value === 'ec') === pv.ecOnly;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+  },
   'vendor-view'(el) {
     pv.vendorView = el.dataset.value;
     renderPanel('vendors');

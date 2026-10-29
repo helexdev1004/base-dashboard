@@ -1265,6 +1265,18 @@ html[data-bs-theme="dark"] .search-box input::-webkit-search-cancel-button { fil
   box-shadow: 0 4px 14px -4px rgba(255, 190, 40, .65);
 }
 
+/* Refresh (square) and My projects (on/off) next to Live / Closed */
+.btn-square { justify-content: center; width: 38px; padding: 0; font-size: 15px; }
+.btn-square.spinning i { animation: fz-spin .6s ease; }
+.btn-mine.active,
+.btn-mine.active:hover {
+  font-weight: 600;
+  color: #241a00;
+  background: linear-gradient(180deg, var(--amber) 0%, var(--amber-2) 100%);
+  border-color: transparent;
+  box-shadow: 0 4px 14px -4px rgba(255, 190, 40, .65);
+}
+
 .filter-count {
   display: inline-grid;
   place-items: center;
@@ -1837,6 +1849,18 @@ a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; 
 /* Metric boxes: one row per group, four boxes wide */
 .metrics-card { container-type: inline-size; }
 .metrics-card .pv-card-head { margin-bottom: 10px; }
+.metrics-head { flex-wrap: nowrap; align-items: flex-start; }
+/* Title then the toggle; the toggle drops under the title when the card is narrow, Export stays top right. */
+.metrics-head-title { display: flex; flex: 1 1 0; flex-wrap: wrap; align-items: center; gap: 8px 14px; min-width: 0; }
+.metrics-head > .btn { flex: 0 0 auto; }
+
+/* Show All / Show EC only */
+.ec-toggle button { white-space: nowrap; }
+.pv-toolbar .ec-toggle { margin-left: 4px; }
+
+/* Project vendors: PROGRESS column (last entry / last complete) */
+.vendor-table .col-progress { text-align: left; }
+.vendor-table td.col-progress { min-width: 180px; }
 .metric-rows { display: flex; flex-direction: column; gap: 6px; }
 .metric-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
 .metric-box {

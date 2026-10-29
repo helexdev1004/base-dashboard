@@ -169,10 +169,18 @@
               <kbd title="Press / to search">/</kbd>
             </div>
 
+            <button class="btn btn-ghost btn-square" type="button" id="refreshBtn" title="Refresh the list and counts" aria-label="Refresh the list and counts">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+
             <div class="segmented" role="group" aria-label="Project status">
               <button type="button" class="active" data-status="Live" aria-pressed="true">Live</button>
               <button type="button" data-status="Closed" aria-pressed="false">Closed</button>
             </div>
+
+            <button class="btn btn-ghost btn-mine" type="button" id="mineBtn" aria-pressed="false" title="Show only the projects where you're the PM">
+              <i class="bi bi-person"></i> My projects
+            </button>
 
             <button class="btn btn-ghost" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtersCanvas" aria-controls="filtersCanvas">
               <i class="bi bi-sliders2"></i> More filters
