@@ -23,6 +23,13 @@ const PROJECT_TYPES = ['ad hoc', 'tracker', 'omnibus'];
 const ENTITY_STATUSES = ['active', 'paused', 'closed'];
 const LINK_VARIABLES = ['{MFID}', '{UNIQUE_CODES}', '{CUSTOM_LINK}'];
 const SURVEY_GROUP_HELP = 'Respondents that attempted in selected projects are not eligible for this project.';
+// Project exclusions: [code, description] of each status that can be excluded.
+const EXCLUSION_STATUSES = [
+  ['C1', 'Complete'], ['S1', 'Screenout'], ['S2', 'Screenout in screener'], ['Q1', 'Quota full'], ['Q2', 'Quota full in screener'],
+  ['INC', 'Incomplete'], ['DUP1', 'Duplicate'], ['DUP2', 'Duplicate in Base'], ['DUP3', 'Excluded in group'], ['GEO1', 'GeoIP fail'],
+  ['QFAIL1', 'Quality fail'], ['QFAIL2', 'Quality fail in screener'], ['DEV1', 'Wrong device'], ['EX1', 'Forbidden IP'], ['EX2', 'Excluded'],
+];
+const EXCLUSION_UNITS = [['weeks', 'Weeks'], ['months', 'Months']];
 const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
 
 // Screener / post poll question builder.
@@ -72,6 +79,7 @@ const POLL_LIBRARY = [
 const TABS = [
   { id: 'main', label: 'Main' },
   { id: 'vendors', label: 'Project vendors' },
+  { id: 'exclusions', label: 'Project exclusions' },
   { id: 'progress', label: 'Progress' },
   { id: 'campaigns', label: 'Campaigns' },
   { id: 'codes', label: 'Unique codes' },
@@ -198,7 +206,7 @@ function projectStats(p) {
 
 function newDetail() {
   return {
-    type: 'ad hoc', geoIp: true, blockDupIp: true, surveyGroup: [], notes: '', liveLink: makeLiveLink(),
+    type: 'ad hoc', geoIp: true, blockDupIp: true, exclusions: [], notes: '', liveLink: makeLiveLink(),
     dup3: 0, geo1: 0, ex1: 0, ex2: 0, dev1: 0, noUnique: 0,
     days: [], vendors: [], campaigns: [], codes: [], links: [], ips: [],
     screenerActive: true, screener: [], pollActive: false, pollStatuses: ['C1'], poll: [],
@@ -214,6 +222,23 @@ function questionFromLibrary(lib, id) {
     type: lib.type,
     answers: lib.answers.map(([text, action = 'none'], i) => ({ id: i + 1, text, action, counts: [0, 0, 0] })),
   };
+}
+
+// Some projects exclude respondents of earlier projects in the same country.
+function sampleExclusions(p) {
+  const r = seeded(p.id * 53 + 5);
+  if (!r.chance(0.4)) return [];
+  const older = projects.filter((x) => x.country.code === p.country.code && x.id < p.id);
+  return shuffle(older, r.next).slice(0, r.int(1, 2)).map((x, i) => {
+    const [period, unit] = r.pick([[6, 'months'], [12, 'months'], [3, 'months'], [8, 'weeks']]);
+    return {
+      id: i + 1,
+      projectId: x.id,
+      statuses: r.chance(0.6) ? EXCLUSION_STATUSES.map(([code]) => code) : ['C1', 'S1', 'S2', 'QFAIL1', 'QFAIL2'],
+      period,
+      unit,
+    };
+  });
 }
 
 // Sample detail, generated the first time a project is opened (seeded by its id, so it's stable).
@@ -232,7 +257,7 @@ function ensureDetail(p) {
     type: r.chance(0.7) ? 'ad hoc' : r.pick(PROJECT_TYPES),
     geoIp: r.chance(0.8),
     blockDupIp: r.chance(0.75),
-    surveyGroup: [],
+    exclusions: sampleExclusions(p),
     notes: '',
     liveLink: makeLiveLink(r.next),
     dup3: r.chance(0.7) ? 0 : r.int(1, 5),
@@ -390,7 +415,7 @@ function createProject(v) {
   p.detail = {
     ...newDetail(),
     type: v.type, geoIp: v.geoIp, blockDupIp: v.blockDupIp,
-    surveyGroup: v.surveyGroup, notes: v.notes, liveLink: v.liveLink,
+    notes: v.notes, liveLink: v.liveLink,
   };
   // Library questions marked "Project default" for this country start the screener.
   p.detail.screener = SCREENER_LIBRARY
@@ -409,7 +434,7 @@ const pv = {
   rendered: new Set(),
   draftLink: null,
   pmSelect: null,
-  groupSelect: null,
+  exDraft: null, // Project exclusions rows being edited
   vendorView: 'chart',
   vendorFilter: '',
   campStatus: 'Live',
@@ -420,7 +445,7 @@ const pv = {
   ipDraft: null,         // Exclude IPs edits wait for Save
   unsaved: new Set(),    // tabs other than Main with unsaved edits ('ips', 'screener', 'poll')
 };
-const UNSAVED_LABELS = { ips: 'Exclude IPs', screener: 'Screener', poll: 'Post Poll' };
+const UNSAVED_LABELS = { exclusions: 'Project exclusions', ips: 'Exclude IPs', screener: 'Screener', poll: 'Post Poll' };
 let chartObserver = null;
 
 /* ---------- Routing ---------- */
@@ -521,7 +546,7 @@ function route() {
 
 function leaveProject() {
   chartObserver?.disconnect();
-  Object.assign(pv, { project: null, creating: false, dirty: false, unsaved: new Set(), ipDraft: null });
+  Object.assign(pv, { project: null, creating: false, dirty: false, unsaved: new Set(), ipDraft: null, exDraft: null });
 }
 
 function showList() {
@@ -563,7 +588,7 @@ function openProject(p, tab) {
     Object.assign(pv, {
       project: p, creating, dirty: false, rendered: new Set(), draftLink: null,
       vendorView: 'chart', vendorFilter: '', campStatus: 'Live', campPanel: '', campSort: 'desc',
-      expanded: new Set(), chartIndex: -1, ipDraft: null, unsaved: new Set(), ecOnly: false,
+      expanded: new Set(), chartIndex: -1, ipDraft: null, unsaved: new Set(), ecOnly: false, exDraft: null,
     });
     renderShell();
     setView('project');
@@ -635,6 +660,7 @@ function renderHeader() {
 const RENDERERS = {
   main: renderMain,
   vendors: renderVendors,
+  exclusions: renderExclusions,
   progress: renderProgress,
   campaigns: renderCampaigns,
   codes: (el) => renderPool(el, 'codes'),
@@ -671,14 +697,14 @@ function mainValues() {
     return {
       name: '', pms: ['RA'], client: '', surveyNo: nextJobNo(), po: '', length: '',
       geoIp: true, blockDupIp: true, country: '', status: 'Live', type: 'ad hoc',
-      surveyGroup: [], notes: '', liveLink: pv.draftLink,
+      notes: '', liveLink: pv.draftLink,
     };
   }
   const d = p.detail;
   return {
     name: p.name, pms: p.pms.map((x) => x.initials), client: p.client, surveyNo: p.jobNo, po: p.po,
     length: p.loiBid, geoIp: d.geoIp, blockDupIp: d.blockDupIp, country: p.country.code, status: p.status,
-    type: d.type, surveyGroup: d.surveyGroup.map(String), notes: d.notes, liveLink: d.liveLink,
+    type: d.type, notes: d.notes, liveLink: d.liveLink,
   };
 }
 
@@ -724,24 +750,12 @@ function renderMain(el) {
           </div>
 
           <div class="mf-row">
-            <div class="mf-field mf-grow">
+            <div class="mf-field mf-client">
               <label class="form-label" for="mfClient">Client</label>
               <select class="form-select" id="mfClient" required>${optionsHtml(clientOpts, v.client)}</select>
               <div class="invalid-feedback">Select a client.</div>
             </div>
-            <div class="mf-field mf-w-sm">
-              <label class="form-label" for="mfSurveyNo">MFJN</label>
-              <input class="form-control" id="mfSurveyNo" type="number" min="1" step="1" required value="${v.surveyNo}">
-              <div class="invalid-feedback" id="mfSurveyNoFeedback">Enter the MFJN.</div>
-            </div>
-            <div class="mf-field mf-w-sm">
-              <label class="form-label" for="mfPo">MFPO</label>
-              <input class="form-control" id="mfPo" maxlength="40" value="${escapeHtml(v.po)}" placeholder="MFPO">
-            </div>
-          </div>
-
-          <div class="mf-row">
-            <div class="mf-field mf-w-md">
+            <div class="mf-field mf-w-country">
               <label class="form-label" for="mfCountry">Country</label>
               <select class="form-select" id="mfCountry" required>${optionsHtml(countryOpts, v.country)}</select>
               <div class="invalid-feedback">Select a country.</div>
@@ -754,8 +768,15 @@ function renderMain(el) {
                 <div class="invalid-feedback">1–90 minutes.</div>
               </div>
             </div>
-            <div class="mf-field">${toggleHtml('geoIp', 'Geo IP check', v.geoIp)}</div>
-            <div class="mf-field">${toggleHtml('blockDupIp', 'Block duplicated IP', v.blockDupIp)}</div>
+            <div class="mf-field mf-w-num">
+              <label class="form-label" for="mfSurveyNo">MFJN</label>
+              <input class="form-control" id="mfSurveyNo" type="number" min="1" step="1" required value="${v.surveyNo}">
+              <div class="invalid-feedback" id="mfSurveyNoFeedback">Enter the MFJN.</div>
+            </div>
+            <div class="mf-field mf-w-num">
+              <label class="form-label" for="mfPo">MFPO</label>
+              <input class="form-control" id="mfPo" maxlength="40" value="${escapeHtml(v.po)}" placeholder="MFPO">
+            </div>
           </div>
 
           <div class="mf-row">
@@ -767,13 +788,8 @@ function renderMain(el) {
               <label class="form-label" for="mfType">Type</label>
               <select class="form-select" id="mfType">${optionsHtml(PROJECT_TYPES.map((t) => [t, t]), v.type)}</select>
             </div>
-            <div class="mf-field mf-grow">
-              <label class="form-label" for="mfGroup">
-                Exclude a project <i class="bi bi-info-circle mf-info" title="${SURVEY_GROUP_HELP}" aria-hidden="true"></i>
-              </label>
-              <div id="mfGroupSelect"></div>
-              <span class="visually-hidden" id="mfGroupHelp">${SURVEY_GROUP_HELP}</span>
-            </div>
+            <div class="mf-field">${toggleHtml('geoIp', 'Geo IP check', v.geoIp)}</div>
+            <div class="mf-field">${toggleHtml('blockDupIp', 'Block duplicated IP', v.blockDupIp)}</div>
           </div>
 
           <div class="mf-field">
@@ -829,14 +845,6 @@ function renderMain(el) {
       markDirty();
       if ($('#mainForm').classList.contains('was-validated')) pv.pmSelect.setInvalid(!value.length);
     },
-  });
-  pv.groupSelect = createMultiSelect($('#mfGroupSelect', el), {
-    id: 'mfGroup',
-    options: projects.filter((x) => x !== p).map((x) => ({ value: String(x.id), label: `#${x.jobNo} · ${x.name}` })),
-    selected: v.surveyGroup,
-    placeholder: 'Select projects…',
-    describedBy: 'mfGroupHelp',
-    onChange: markDirty,
   });
   pv.dirty = false;
 }
@@ -931,7 +939,6 @@ function saveMain() {
     type: $('#mfType').value,
     geoIp: toggleValue('geoIp'),
     blockDupIp: toggleValue('blockDupIp'),
-    surveyGroup: pv.groupSelect.getValue().map(Number),
     notes: $('#mfNotes').value.trim(),
     liveLink: link.value.trim(),
   };
@@ -950,7 +957,7 @@ function saveMain() {
   });
   Object.assign(p.detail, {
     type: values.type, geoIp: values.geoIp, blockDupIp: values.blockDupIp,
-    surveyGroup: values.surveyGroup, notes: values.notes, liveLink: values.liveLink,
+    notes: values.notes, liveLink: values.liveLink,
   });
   pv.rendered.clear();
   renderHeader();
@@ -1183,6 +1190,372 @@ function openVendorInfo(id) {
     }
     const copy = e.target.closest('[data-vi-copy]');
     if (copy) copyText(copy.dataset.viCopy, 'Link copied.');
+  };
+}
+
+/* ---------- Project exclusions tab ---------- */
+// Each row: one project, the statuses to exclude from it, and how far back (e.g. 12 months).
+const allExclusionStatuses = () => EXCLUSION_STATUSES.map(([code]) => code);
+const copyExclusions = (rows) => rows.map((x) => ({ ...x, statuses: [...x.statuses] }));
+const newExclusionRow = (rows) => ({
+  id: Math.max(0, ...rows.map((x) => x.id)) + 1, projectId: null, statuses: allExclusionStatuses(), period: 12, unit: 'months',
+});
+
+function renderExclusions(el) {
+  const p = pv.project;
+  if (!pv.exDraft) pv.exDraft = copyExclusions(p.detail.exclusions);
+  const rows = pv.exDraft;
+  const dirty = pv.unsaved.has('exclusions');
+  el.innerHTML = `
+    <form class="pv-card flush ex-card" id="exForm" novalidate autocomplete="off">
+      <div class="pv-toolbar">
+        <button type="button" class="btn btn-ghost btn-sm-h" data-ex="add"><i class="bi bi-plus-lg"></i> Add project</button>
+        <span class="pv-toolbar-note">${SURVEY_GROUP_HELP}</span>
+        <span class="dirty-flag ms-auto" id="exDirty" ${dirty ? '' : 'hidden'}><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+      </div>
+      ${rows.length ? `
+        <div class="ex-grid" role="table" aria-label="Project exclusions">
+          <div class="ex-row ex-head" role="row">
+            <span role="columnheader">Project to exclude</span><span role="columnheader">Statuses to exclude</span>
+            <span role="columnheader">Time period</span><span role="columnheader"><span class="visually-hidden">Remove</span></span>
+          </div>
+          ${rows.map((row) => `
+            <div class="ex-row" role="row" data-row="${row.id}">
+              <div class="ex-cell" role="cell">
+                <label class="visually-hidden" for="exProject-${row.id}">Project to exclude</label>
+                <div id="exProjectBox-${row.id}"></div>
+                <div class="invalid-feedback" id="exProjectMsg-${row.id}">Select a project.</div>
+              </div>
+              <div class="ex-cell" role="cell">
+                <div class="ex-statuses">
+                  <div id="exStatusBox-${row.id}"></div>
+                  <button type="button" class="icon-btn-sm ex-reset" data-ex="reset" title="Reset to all statuses" aria-label="Reset to all statuses"><i class="bi bi-arrow-counterclockwise"></i></button>
+                </div>
+                <div class="invalid-feedback" id="exStatusMsg-${row.id}">Pick at least one status.</div>
+              </div>
+              <div class="ex-cell" role="cell">
+                <div class="ex-period">
+                  <input class="form-control" type="number" inputmode="numeric" min="1" max="999" step="1" required value="${row.period}"
+                         data-ex-field="period" aria-label="Time period, number of ${row.unit}">
+                  <select class="form-select" data-ex-field="unit" aria-label="Weeks or months">${optionsHtml(EXCLUSION_UNITS, row.unit)}</select>
+                </div>
+                <div class="invalid-feedback" id="exPeriodMsg-${row.id}">Enter a whole number from 1 to 999.</div>
+              </div>
+              <div class="ex-cell ex-del-cell" role="cell">
+                <button type="button" class="icon-btn-sm danger" data-ex="remove" title="Remove this project" aria-label="Remove this project"><i class="bi bi-trash3"></i></button>
+              </div>
+            </div>`).join('')}
+        </div>` : `
+        <div class="pv-empty-block">
+          <i class="bi bi-funnel"></i>
+          <div class="empty-title">No projects excluded</div>
+          <div class="empty-text">Add a project to keep its respondents out of this one.</div>
+        </div>`}
+      <div class="ex-actions">
+        <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+        <button type="button" class="btn btn-ghost" data-ex="cancel">Cancel</button>
+      </div>
+    </form>`;
+
+  const others = projects.filter((x) => x !== p).map((x) => ({ value: String(x.id), label: `#${x.jobNo} ${x.name}`, hint: x.country.name }));
+  const statusOpts = EXCLUSION_STATUSES.map(([code, label]) => ({ value: code, label: code, hint: label }));
+  rows.forEach((row) => {
+    createComboBox($(`#exProjectBox-${row.id}`), {
+      id: `exProject-${row.id}`,
+      options: others,
+      value: row.projectId ? String(row.projectId) : '',
+      placeholder: 'Select a project',
+      onChange: (value) => {
+        row.projectId = value ? Number(value) : null;
+        if (value) $(`#exProjectMsg-${row.id}`).classList.remove('d-block');
+        markExclusionsDirty();
+      },
+    });
+    row.picker = createCheckSelect($(`#exStatusBox-${row.id}`), {
+      id: `exStatuses-${row.id}`,
+      options: statusOpts,
+      selected: row.statuses,
+      allLabel: 'All statuses',
+      placeholder: 'Select statuses',
+      searchLabel: 'Search statuses…',
+      onChange: (value) => {
+        row.statuses = value;
+        if (value.length) $(`#exStatusMsg-${row.id}`).classList.remove('d-block');
+        markExclusionsDirty();
+      },
+    });
+  });
+
+  el.onclick = onExclusionsClick;
+  el.oninput = onExclusionsInput;
+  el.onchange = onExclusionsInput;
+  el.onkeydown = (e) => {
+    // The period only takes digits.
+    if (e.target.dataset.exField === 'period' && ['e', 'E', '+', '-', '.', ','].includes(e.key)) e.preventDefault();
+  };
+  el.onsubmit = saveExclusions;
+}
+
+function markExclusionsDirty() {
+  pv.unsaved.add('exclusions');
+  const flag = $('#exDirty');
+  if (flag) flag.hidden = false;
+}
+
+const exclusionRowOf = (target) => pv.exDraft.find((x) => x.id === Number(target.closest('[data-row]')?.dataset.row));
+
+function onExclusionsClick(e) {
+  const el = e.target.closest('[data-ex]');
+  if (!el) return;
+  const row = exclusionRowOf(el);
+  switch (el.dataset.ex) {
+    case 'add':
+      pv.exDraft.push(newExclusionRow(pv.exDraft));
+      markExclusionsDirty();
+      renderPanel('exclusions');
+      $(`#exProject-${pv.exDraft.at(-1).id}`).focus();
+      break;
+    case 'remove':
+      pv.exDraft.splice(pv.exDraft.indexOf(row), 1);
+      markExclusionsDirty();
+      renderPanel('exclusions');
+      break;
+    case 'reset':
+      row.statuses = allExclusionStatuses();
+      row.picker.setValue(row.statuses);
+      $(`#exStatusMsg-${row.id}`).classList.remove('d-block');
+      markExclusionsDirty();
+      break;
+    case 'cancel':
+      pv.exDraft = null;
+      pv.unsaved.delete('exclusions');
+      renderPanel('exclusions');
+      break;
+    default:
+  }
+}
+
+function onExclusionsInput(e) {
+  const field = e.target.dataset.exField;
+  if (!field) return;
+  const row = exclusionRowOf(e.target);
+  if (field === 'period') {
+    row.period = e.target.value === '' ? '' : Number(e.target.value);
+    e.target.classList.remove('is-invalid');
+    $(`#exPeriodMsg-${row.id}`).classList.remove('d-block');
+  } else {
+    row.unit = e.target.value;
+    e.target.previousElementSibling.setAttribute('aria-label', `Time period, number of ${row.unit}`);
+  }
+  markExclusionsDirty();
+}
+
+function saveExclusions(e) {
+  e.preventDefault();
+  const seen = new Set();
+  let firstBad = null;
+  const flag = (control, msg, bad) => {
+    control.classList.toggle('is-invalid', bad);
+    msg.classList.toggle('d-block', bad);
+    return bad;
+  };
+  pv.exDraft.forEach((row) => {
+    const dupe = Boolean(row.projectId) && seen.has(row.projectId);
+    if (row.projectId) seen.add(row.projectId);
+    $(`#exProjectMsg-${row.id}`).textContent = dupe ? 'This project is already excluded in another row.' : 'Select a project.';
+    const badProject = flag($(`#exProjectBox-${row.id}`), $(`#exProjectMsg-${row.id}`), !row.projectId || dupe);
+    const badStatuses = flag($(`#exStatusBox-${row.id}`), $(`#exStatusMsg-${row.id}`), !row.statuses.length);
+    const period = $(`[data-row="${row.id}"] [data-ex-field="period"]`);
+    const badPeriod = flag(period, $(`#exPeriodMsg-${row.id}`), !Number.isInteger(row.period) || row.period < 1 || row.period > 999);
+    if (!firstBad && (badProject || badStatuses || badPeriod)) {
+      firstBad = badProject ? $(`#exProject-${row.id}`) : badStatuses ? $(`#exStatuses-${row.id}`) : period;
+    }
+  });
+  if (firstBad) {
+    firstBad.focus();
+    return;
+  }
+  pv.project.detail.exclusions = pv.exDraft.map(({ id, projectId, statuses, period, unit }) => ({ id, projectId, statuses: [...statuses], period, unit }));
+  pv.exDraft = null;
+  pv.unsaved.delete('exclusions');
+  renderPanel('exclusions');
+  const n = pv.project.detail.exclusions.length;
+  showToast(n ? `Project exclusions saved (${plural(n, 'project')}).` : 'Project exclusions saved: no projects excluded.');
+}
+
+/* ---------- Single-choice search box (Project exclusions ▸ project) ---------- */
+function createComboBox(root, { id, options, value = '', placeholder = '', onChange = () => {} }) {
+  let current = value;
+  let open = false;
+  let active = -1;
+  let filtered = [];
+  root.className = 'combo';
+  root.innerHTML = `
+    <i class="bi bi-search combo-icon" aria-hidden="true"></i>
+    <input type="text" class="form-control combo-input" id="${id}" role="combobox" aria-expanded="false" aria-autocomplete="list"
+           aria-controls="${id}-list" autocomplete="off" spellcheck="false" placeholder="${escapeHtml(placeholder)}">
+    <button type="button" class="combo-clear" aria-label="Clear" hidden><i class="bi bi-x-lg"></i></button>
+    <ul class="combo-menu" id="${id}-list" role="listbox" hidden></ul>`;
+  const input = $('.combo-input', root);
+  const menu = $('.combo-menu', root);
+  const clear = $('.combo-clear', root);
+  const labelOf = (v) => options.find((o) => o.value === v)?.label ?? '';
+
+  function sync() {
+    input.value = labelOf(current);
+    clear.hidden = !current;
+  }
+  function renderMenu() {
+    const q = input.value.trim().toLowerCase();
+    const showAll = !q || (current && input.value === labelOf(current));
+    filtered = options.filter((o) => showAll || `${o.label} ${o.hint || ''}`.toLowerCase().includes(q)).slice(0, 60);
+    active = Math.min(Math.max(active, 0), filtered.length - 1);
+    menu.innerHTML = filtered.length
+      ? filtered.map((o, i) => `
+          <li role="option" id="${id}-opt-${i}" data-value="${escapeHtml(o.value)}" class="${i === active ? 'active' : ''}${o.value === current ? ' selected' : ''}" aria-selected="${o.value === current}">
+            <span>${escapeHtml(o.label)}</span>${o.hint ? `<small>${escapeHtml(o.hint)}</small>` : ''}
+          </li>`).join('')
+      : '<li class="combo-empty">No matches</li>';
+    if (active >= 0) {
+      input.setAttribute('aria-activedescendant', `${id}-opt-${active}`);
+      $(`#${id}-opt-${active}`)?.scrollIntoView({ block: 'nearest' });
+    } else {
+      input.removeAttribute('aria-activedescendant');
+    }
+  }
+  function setOpen(next) {
+    open = next;
+    menu.hidden = !open;
+    root.classList.toggle('open', open);
+    input.setAttribute('aria-expanded', String(open));
+    if (open) renderMenu();
+  }
+  function choose(v) {
+    current = v;
+    sync();
+    setOpen(false);
+    root.classList.remove('is-invalid');
+    onChange(current);
+  }
+
+  menu.addEventListener('mousedown', (e) => e.preventDefault()); // keep focus in the input
+  menu.addEventListener('click', (e) => {
+    const li = e.target.closest('li[data-value]');
+    if (li) choose(li.dataset.value);
+  });
+  clear.addEventListener('mousedown', (e) => e.preventDefault());
+  clear.addEventListener('click', () => { choose(''); input.focus(); });
+  input.addEventListener('focus', () => { input.select(); active = -1; setOpen(true); });
+  input.addEventListener('blur', () => { setOpen(false); sync(); });
+  input.addEventListener('input', () => { active = 0; if (open) renderMenu(); else setOpen(true); });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!open) setOpen(true);
+      const n = filtered.length;
+      if (n) active = (active + (e.key === 'ArrowDown' ? 1 : n - 1)) % n;
+      renderMenu();
+    } else if (e.key === 'Enter') {
+      e.preventDefault(); // never submit the form from here
+      if (open && filtered[active]) choose(filtered[active].value);
+    } else if (e.key === 'Escape' && open) {
+      e.stopPropagation();
+      setOpen(false);
+      sync();
+    }
+  });
+  sync();
+  return { getValue: () => current };
+}
+
+/* ---------- Multi-choice list with search (Project exclusions ▸ statuses) ---------- */
+// Shows "All statuses" when everything is picked, otherwise the picked codes.
+function createCheckSelect(root, { id, options, selected = [], allLabel = 'All', placeholder = '', searchLabel = 'Search…', onChange = () => {} }) {
+  let value = options.map((o) => o.value).filter((v) => selected.includes(v));
+  root.className = 'chk';
+  root.innerHTML = `
+    <button type="button" class="form-select chk-toggle" id="${id}" aria-haspopup="true" aria-expanded="false" aria-controls="${id}-menu">
+      <span class="chk-summary"></span>
+    </button>
+    <div class="chk-menu" id="${id}-menu" hidden>
+      <input type="search" class="form-control chk-search" placeholder="${escapeHtml(searchLabel)}" aria-label="${escapeHtml(searchLabel)}">
+      <div class="chk-quick">
+        <button type="button" data-chk="all">Select all</button>
+        <button type="button" data-chk="none">Clear</button>
+      </div>
+      <ul class="chk-list">
+        ${options.map((o, i) => `
+          <li data-text="${escapeHtml(`${o.label} ${o.hint || ''}`.toLowerCase())}">
+            <label class="chk-option" for="${id}-o${i}">
+              <input class="form-check-input" type="checkbox" id="${id}-o${i}" value="${escapeHtml(o.value)}">
+              <strong>${escapeHtml(o.label)}</strong>${o.hint ? `<span>${escapeHtml(o.hint)}</span>` : ''}
+            </label>
+          </li>`).join('')}
+      </ul>
+    </div>`;
+  const toggle = $('.chk-toggle', root);
+  const menu = $('.chk-menu', root);
+  const search = $('.chk-search', root);
+  const boxes = $$('.chk-list input', root);
+
+  function paint() {
+    boxes.forEach((b) => { b.checked = value.includes(b.value); });
+    const n = value.length;
+    let text;
+    if (!n) text = `<span class="chk-placeholder">${escapeHtml(placeholder)}</span>`;
+    else if (n === options.length) text = `${escapeHtml(allLabel)} <span class="chk-count">${n}</span>`;
+    else if (n <= 4) text = escapeHtml(value.join(', '));
+    else text = `${escapeHtml(value.slice(0, 3).join(', '))} <span class="chk-count">+${n - 3}</span>`;
+    $('.chk-summary', root).innerHTML = text;
+    toggle.title = n ? value.join(', ') : placeholder;
+  }
+  function setOpen(open) {
+    menu.hidden = !open;
+    root.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    if (open) {
+      search.value = '';
+      $$('.chk-list li', root).forEach((li) => { li.hidden = false; });
+      search.focus();
+    }
+  }
+  function commit(next) {
+    value = options.map((o) => o.value).filter((v) => next.includes(v));
+    paint();
+    root.classList.remove('is-invalid');
+    onChange([...value]);
+  }
+
+  toggle.addEventListener('click', () => setOpen(menu.hidden));
+  // Clicking blank space inside the menu keeps it open.
+  menu.addEventListener('mousedown', (e) => { if (!e.target.closest('input, label, button')) e.preventDefault(); });
+  root.addEventListener('focusout', (e) => { if (!root.contains(e.relatedTarget)) setOpen(false); });
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menu.hidden) {
+      e.stopPropagation();
+      setOpen(false);
+      toggle.focus();
+    }
+    if (e.key === 'Enter' && e.target === search) e.preventDefault();
+  });
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    $$('.chk-list li', root).forEach((li) => { li.hidden = q && !li.dataset.text.includes(q); });
+  });
+  menu.addEventListener('change', (e) => {
+    if (!e.target.matches('.chk-list input')) return;
+    e.stopPropagation();
+    commit(boxes.filter((b) => b.checked).map((b) => b.value));
+  });
+  menu.addEventListener('click', (e) => {
+    const quick = e.target.closest('[data-chk]');
+    if (quick) commit(quick.dataset.chk === 'all' ? options.map((o) => o.value) : []);
+  });
+  paint();
+  return {
+    getValue: () => [...value],
+    setValue: (next) => { value = options.map((o) => o.value).filter((v) => next.includes(v)); paint(); root.classList.remove('is-invalid'); },
+    setInvalid: (bad) => root.classList.toggle('is-invalid', bad),
   };
 }
 
