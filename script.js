@@ -237,7 +237,10 @@ function makeMetrics(base, live, now) {
   const lastCompleteAt = c1 ? lastEntryAt - randInt(0, live ? 240 : 2880) * MINUTE : null;
 
   const activeToday = live && minsAgo < 1440;
-  const c24h = activeToday ? Math.round(c1 * rand(0.03, 0.2)) : 0;
+  // Completes in the past 24 hours: at least one when the last complete was that recent, none otherwise.
+  const completeToday = Boolean(activeToday && lastCompleteAt && now - lastCompleteAt < DAY);
+  const c24hShare = activeToday ? Math.round(c1 * rand(0.03, 0.2)) : 0;
+  const c24h = completeToday ? Math.max(1, c24hShare) : 0;
   const eb24h = activeToday ? Math.max(c24h, Math.round(eb * rand(0.05, 0.2))) : 0;
   const inThisMonth = live || (lastCompleteAt && lastCompleteAt >= startOfMonth(now));
 
@@ -313,6 +316,8 @@ function buildProjects() {
     dupsA: 126, dupsB: 55, qfA: 1, qfB: 0, others: 15, cMonth: 55, ebMonth: 472,
     lastEntryAt: now - 6 * MINUTE, lastCompleteAt: now - 14 * MINUTE,
   });
+  first.c24h = Math.max(first.c24h, 8);
+  first.eb24h = Math.max(first.eb24h, 74);
 
   return list;
 }
@@ -345,7 +350,6 @@ const SORTERS = {
   drops: (p) => p.drops,
   dups: (p) => p.dupsA + p.dupsB,
   qfails: (p) => p.qfA,
-  others: (p) => p.others,
   activity: (p) => p.lastEntryAt || 0,
 };
 const TEXT_SORTS = new Set(['name', 'pm', 'status']);
@@ -520,6 +524,95 @@ function activityHtml(p) {
   return line('Last entry', p.lastEntryAt) + line('Last complete', p.lastCompleteAt);
 }
 
+/* Progress: completes per hour over the past 24 hours (oldest first), adding up to the
+   "Completes past 24 hours" count. Hours without completes show as a dash. */
+const HOUR = 60 * MINUTE;
+const SPARK_HOURS = 24;
+const sparkCache = new Map();
+const hourStart = (ts) => { const d = new Date(ts); d.setMinutes(0, 0, 0); return d.getTime(); };
+
+function hourlyCompletes(p) {
+  const start = hourStart(Date.now()) - (SPARK_HOURS - 1) * HOUR;
+  const key = `${start}|${p.c24h}|${p.lastCompleteAt}`;
+  const hit = sparkCache.get(p.id);
+  if (hit?.key === key) return hit;
+  const counts = new Array(SPARK_HOURS).fill(0);
+  if (p.c24h && p.lastCompleteAt) {
+    const next = mulberry32(p.id * 2971 + 13);
+    const last = Math.max(0, Math.min(SPARK_HOURS - 1, Math.floor((hourStart(p.lastCompleteAt) - start) / HOUR)));
+    const first = Math.max(0, last - 2 - Math.floor(next() * 18));
+    // Busier towards the end, with a few quiet hours; the last complete's hour always has one.
+    const weights = counts.map((_, i) => (i < first || i > last ? 0
+      : i === last ? 1 + next() : next() < 0.25 ? 0 : next() * 0.8 + ((i - first) / (last - first + 1)) * 0.7));
+    const sum = weights.reduce((a, b) => a + b, 0);
+    const raw = weights.map((w) => (p.c24h * w) / sum);
+    raw.forEach((v, i) => { counts[i] = Math.floor(v); });
+    let rest = p.c24h - counts.reduce((a, b) => a + b, 0);
+    raw.map((v, i) => [v - Math.floor(v), i]).sort((a, b) => b[0] - a[0])
+      .forEach(([, i]) => { if (rest > 0 && weights[i]) { counts[i] += 1; rest -= 1; } });
+    if (!counts[last]) {
+      const donor = counts.indexOf(Math.max(...counts));
+      counts[donor] -= 1;
+      counts[last] += 1;
+    }
+  }
+  const entry = { key, start, counts };
+  sparkCache.set(p.id, entry);
+  return entry;
+}
+
+const fmtSparkDay = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const fmtSparkHour = (ts) => new Date(ts).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+function sparkHtml(p) {
+  const { start, counts } = hourlyCompletes(p);
+  const max = Math.max(...counts);
+  const total = counts.reduce((a, b) => a + b, 0);
+  const label = total
+    ? `${fmtInt(total)} complete${total === 1 ? '' : 's'} in the past 24 hours, most at ${fmtSparkHour(start + counts.indexOf(max) * HOUR)}`
+    : 'No completes in the past 24 hours';
+  return `
+    <div class="spark" role="img" aria-label="${label}" data-start="${start}">
+      ${counts.map((n, i) => `<span class="spark-slot" data-i="${i}" data-n="${n}"><span class="spark-bar${n ? '' : ' is-zero'}"${n ? ` style="height:${Math.max(10, Math.round((n / max) * 100))}%"` : ''}></span></span>`).join('')}
+    </div>`;
+}
+
+// One tooltip for every chart: the hour, its date and the completes in it.
+function initSparkTips() {
+  const tip = document.createElement('div');
+  tip.className = 'spark-tip';
+  tip.setAttribute('role', 'tooltip');
+  tip.hidden = true;
+  document.body.append(tip);
+  const tbody = $('#projectTbody');
+  let current = null;
+  const hide = () => {
+    tip.hidden = true;
+    current?.classList.remove('is-hover');
+    current = null;
+  };
+  tbody.addEventListener('mouseover', (e) => {
+    const slot = e.target.closest('.spark-slot');
+    if (!slot) return;
+    current?.classList.remove('is-hover');
+    current = slot;
+    slot.classList.add('is-hover');
+    const at = Number(slot.parentElement.dataset.start) + Number(slot.dataset.i) * HOUR;
+    const n = Number(slot.dataset.n);
+    tip.innerHTML = `<span>${fmtSparkDay(at)}</span><span>${fmtSparkHour(at)}</span><strong>${fmtInt(n)} complete${n === 1 ? '' : 's'}</strong>`;
+    tip.hidden = false;
+    const r = slot.getBoundingClientRect();
+    const w = tip.offsetWidth;
+    tip.style.left = `${Math.min(window.innerWidth - w - 8, Math.max(8, r.left + r.width / 2 - w / 2))}px`;
+    tip.style.top = `${r.bottom + 10}px`;
+    tip.style.setProperty('--arrow-x', `${r.left + r.width / 2 - parseFloat(tip.style.left)}px`);
+  });
+  tbody.addEventListener('mouseout', (e) => {
+    if (e.target.closest('.spark-slot') && !e.relatedTarget?.closest?.('.spark-slot')) hide();
+  });
+  window.addEventListener('scroll', hide, { passive: true });
+}
+
 function pmBadgeHtml(p) {
   const [first, ...rest] = p.pms;
   if (!first) return '<span class="num-zero">—</span>';
@@ -548,6 +641,7 @@ function rowHtml(p) {
           ${p.client ? `<span class="client" title="Client"><i class="bi bi-building"></i>${escapeHtml(p.client)}</span>` : ''}
         </div>
       </td>
+      <td class="col-spark">${sparkHtml(p)}</td>
       <td class="activity">${activityHtml(p)}</td>
       <td class="text-center">${pmBadgeHtml(p)}</td>
       <td class="text-center">${status}</td>
@@ -560,7 +654,6 @@ function rowHtml(p) {
       <td class="num">${cellNum(p.drops)}</td>
       <td class="num" title="DUP1 ${fmtInt(p.dupsA)} · DUP2 ${fmtInt(p.dupsB)}">${cellNum(p.dupsA + p.dupsB)}</td>
       <td class="num">${stack(cellNum(p.qfA), cellNum(p.qfB))}</td>
-      <td class="num">${cellNum(p.others)}</td>
     </tr>`;
 }
 
@@ -1082,6 +1175,8 @@ function init() {
     renderKpis();
     renderTable();
   });
+
+  initSparkTips();
 
   // First paint
   syncStatusButtons();
