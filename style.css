@@ -2084,6 +2084,131 @@ textarea.form-control { height: auto; } /* text boxes size by their rows */
 .camp-sub > td { font-size: 12.5px; background: color-mix(in srgb, var(--overlay) 2.5%, transparent); }
 .camp-sub .camp-name { padding-left: 34px; color: var(--text-2); }
 
+/* Campaign form: Create Campaign / Campaign info */
+.cf { display: flex; flex-direction: column; gap: 12px; }
+.cf-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); align-items: center; gap: 6px 14px; }
+.cf-row.cf-pair { grid-template-columns: 130px minmax(0, 1fr) 100px minmax(0, 1fr); }
+.cf-row.cf-top { align-items: start; }
+.cf-row.cf-top .cf-label { padding-top: 9px; }
+.cf-label { margin: 0; font-size: 13px; color: var(--text-2); }
+.cf-field { min-width: 0; }
+.cf-field > .form-check-input { margin: 0; }
+.cf-w-md { max-width: 340px; }
+.cf-w-sm { max-width: 180px; }
+.cf-auto { max-width: 200px; background-color: color-mix(in srgb, var(--amber) 20%, transparent) !important; border-color: color-mix(in srgb, var(--amber) 45%, transparent); }
+html[data-bs-theme="dark"] .cf-auto { background-color: color-mix(in srgb, var(--amber) 9%, transparent) !important; border-color: color-mix(in srgb, var(--amber) 55%, transparent); }
+.cf-extra,
+.cf-source,
+.cf-batch { display: flex; flex-direction: column; gap: 12px; }
+.cf-extra[hidden] { display: none; }
+.cf-batch:empty { display: none; }
+.cf-list .form-control[type="file"] { max-width: 420px; }
+.cf-sub { margin-top: 2px; font-size: 13px; color: var(--text-2); }
+.cf-empty { font-size: 12.5px; color: var(--muted); }
+.cf-round {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  font-size: 17px;
+  line-height: 1;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+}
+.cf-round.add { color: var(--success); }
+.cf-round.del { color: var(--danger); }
+.cf-round:hover { filter: brightness(1.15); }
+.cf-round:focus-visible { outline: 2px solid color-mix(in srgb, var(--primary) 90%, transparent); outline-offset: 2px; }
+.cf-picker { overflow: hidden; background: var(--menu-bg); border: 1px solid var(--border); border-radius: 10px; }
+.cf-picker[hidden] { display: none; }
+.cf-picker-head { display: flex; justify-content: flex-end; padding: 6px 12px; border-bottom: 1px solid var(--border); }
+.cf-picker-item {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text);
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--overlay) 6%, transparent);
+}
+.cf-picker-item:last-child { border-bottom: 0; }
+.cf-picker-item:hover,
+.cf-picker-item:focus-visible { background: color-mix(in srgb, var(--primary) 10%, transparent); outline: none; }
+.cf-picker-empty { padding: 10px 12px; font-size: 12.5px; color: var(--muted); }
+.cf-filters { display: flex; flex-direction: column; gap: 8px; }
+.cf-filter { display: grid; grid-template-columns: 26px 96px 140px minmax(0, 1fr); align-items: center; gap: 10px; }
+.cf-filter-label { font-size: 13px; font-weight: 700; color: var(--text-strong); }
+.cf-filter-value { min-width: 0; }
+.cf-range { display: flex; align-items: center; gap: 6px; }
+.cf-range > span { color: var(--muted); }
+.cf-range .form-control { flex: 1 1 0; min-width: 0; }
+.cf-one .form-control { flex: 0 1 200px; }
+.cf-samples { overflow-x: auto; }
+.cf-sample-table { width: 100%; border-collapse: separate; border-spacing: 0 6px; }
+.cf-sample-table th { padding: 0 6px; font-size: 12.5px; font-weight: 700; text-align: center; color: var(--text-strong); }
+.cf-sample-table td { padding: 0 6px; text-align: center; vertical-align: middle; }
+.cf-sample-table td:first-child { text-align: left; }
+.cf-sample-table .form-select { min-width: 130px; }
+.cf-sample-table .cf-range { justify-content: center; }
+.cf-sample-table .cf-range .form-control { flex: 0 0 auto; width: 66px; text-align: center; }
+.cf-req { width: 96px; margin: 0 auto; text-align: center; }
+.cf-refresh-cell { width: 44px; }
+.cf-refresh.spinning i { animation: fz-spin .6s ease; }
+.cf-sample-table tfoot td { padding-top: 4px; font-size: 13px; font-weight: 700; color: var(--text-strong); }
+.cf-pill {
+  display: inline-grid;
+  place-items: center;
+  min-width: 38px;
+  height: 20px;
+  padding: 0 9px;
+  font-size: 11.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  border-radius: 10px;
+}
+.cf-pill.is-ok { color: #fff; background: #15803d; }
+.cf-pill.is-short { color: #3d2a00; background: var(--amber); }
+.cf-pill.is-total { color: #fff; background: #5b6170; }
+.cf-note {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--amber) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--amber) 42%, transparent);
+  border-radius: 10px;
+}
+.cf-note[hidden] { display: none; }
+.cf-note > .bi { color: var(--amber-2); }
+.cf-stats { margin: 6px 0 0; padding: 0; overflow: hidden; list-style: none; border: 1px solid var(--border); border-radius: 10px; }
+.cf-stats li { display: flex; align-items: center; justify-content: space-between; padding: 7px 14px; font-size: 13px; color: var(--text); border-top: 1px solid var(--border); }
+.cf-stats li:first-child { border-top: 0; }
+.cf-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 20px;
+  padding: 0 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 10px;
+}
+.cf-count.is-zero { opacity: .5; }
+@media (max-width: 767.98px) {
+  .cf-row,
+  .cf-row.cf-pair { grid-template-columns: minmax(0, 1fr); }
+  .cf-filter { grid-template-columns: 26px minmax(0, 1fr); }
+  .cf-filter > .form-select,
+  .cf-filter-value { grid-column: 2; }
+}
+
 /* Progress chart */
 .chart-wrap { position: relative; border-radius: 10px; }
 .chart-wrap svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -2885,6 +3010,7 @@ textarea.form-control { height: auto; } /* text boxes size by their rows */
 }
 .combo-clear:hover { color: var(--text-strong); background: color-mix(in srgb, var(--overlay) 8%, transparent); }
 .combo.is-invalid .combo-input { border-color: var(--danger); }
+.was-validated .combo:has(.combo-input:invalid) + .invalid-feedback { display: block; }
 .combo-menu,
 .chk-menu {
   position: absolute;
