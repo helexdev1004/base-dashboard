@@ -529,12 +529,20 @@ const PAGE_RENDERERS = {
   translations: () => renderTranslations(),            // panel-tools.js
   'survey-points': () => renderSurveyPoints(),         // panel-tools.js
   'first-surveys': () => renderFirstSurveys(),         // panel-tools.js
+  'fw-accounts': () => renderFwAccounts(),             // framework.js
+  'fw-account': (r) => renderFwAccount(r.id),          // framework.js
+  'fw-projects': () => renderFwProjects(),             // framework.js
+  'fw-project': (r) => renderFwProject(r.id, r.tab),   // framework.js
+  'fw-ratecards': () => renderFwRatecards(),           // framework.js
+  'fw-ratecard': (r) => renderFwRatecard(r.id),        // framework.js
+  'fw-feasibilities': () => renderFwFeasibilities(),   // framework.js
   ...Object.fromEntries(Object.keys(SOON_PAGES).map((key) => [key, () => renderSoon(key)])),
 };
 // Pages opened by a plain #/<name> address.
 const SIMPLE_PAGES = [
   'feasibility', 'exports', 'vendors', 'vendor-groups', 'blacklist', 'screener-library', 'panels', 'rewards', 'redeem', 'recruiters',
   'users', 'statistics', 'translations', 'survey-points', 'first-surveys',
+  'fw-accounts', 'fw-projects', 'fw-ratecards', 'fw-feasibilities',
   ...Object.keys(SOON_PAGES),
 ];
 
@@ -547,6 +555,9 @@ const ROUTES = [
   [/^#\/panels\/([a-z]+)$/, (m) => ({ view: 'panel', panel: m[1] })],
   [/^#\/recruiters\/(new|\d+)$/, (m) => ({ view: 'recruiter', id: m[1] })],
   [/^#\/users\/(new|\d+)$/, (m) => ({ view: 'user', id: m[1] })],
+  [/^#\/fw-accounts\/(new|\d+)$/, (m) => ({ view: 'fw-account', id: m[1] })],
+  [/^#\/fw-projects\/(\d+)(?:\/(overview|targets))?$/, (m) => ({ view: 'fw-project', id: m[1], tab: m[2] })],
+  [/^#\/fw-ratecards\/(new|\d+)$/, (m) => ({ view: 'fw-ratecard', id: m[1] })],
   [new RegExp(`^#/(${SIMPLE_PAGES.join('|')})$`), (m) => ({ view: m[1] })],
 ];
 
@@ -2011,16 +2022,21 @@ function activeMembersIn(code, country) {
   return activeCountCache.get(key);
 }
 
-// Panelists who fit a sample: active members in the project's country × gender × age band × filters.
-function sampleAvailable(draft, s) {
-  const from = Number(s.from);
-  const to = Number(s.to);
-  if (!draft.vendor || !s.gender || !from || !to || from > to) return 0;
+// Share of panel members of a gender within an age band (members were born 1950-2006, 52% female).
+function demographicShare(gender, from, to) {
+  if (!gender || !from || !to || from > to) return 0;
   const year = new Date().getFullYear();
-  const youngest = year - 2006; // panel members were born 1950-2006
+  const youngest = year - 2006;
   const oldest = year - 1950;
   const overlap = Math.max(0, Math.min(to, oldest) - Math.max(from, youngest) + 1);
-  let share = (s.gender === 'Female' ? 0.52 : 0.48) * (overlap / (oldest - youngest + 1));
+  return (gender === 'Female' ? 0.52 : 0.48) * (overlap / (oldest - youngest + 1));
+}
+
+// Panelists who fit a sample: active members in the project's country × gender × age band × filters.
+function sampleAvailable(draft, s) {
+  if (!draft.vendor) return 0;
+  let share = demographicShare(s.gender, Number(s.from), Number(s.to));
+  if (!share) return 0;
   draft.filters.filter(filterIsSet).forEach((f) => {
     if (f.key === 'reliable') share *= f.a === 'no' ? 0.1 : 0.9;
     else share *= f.op === '!=' || f.op === 'none of' ? 1 - FILTER_SHARE[f.key] / 2 : FILTER_SHARE[f.key];
@@ -3193,6 +3209,7 @@ function createMultiSelect(root, { id, options, selected = [], placeholder = '',
 /* ---------- Form modal ---------- */
 let modalSubmit = null;
 // Without a submitLabel the modal is read-only: no submit button, and Cancel reads "Close".
+// wide: true for a large modal, 'xl' for an extra-large one (the ratecard grid).
 function openFormModal({ title, subtitle = '', body, submitLabel, onSubmit, wide = false }) {
   $('#pvModalTitle').textContent = title;
   $('#pvModalSub').textContent = subtitle;
@@ -3202,7 +3219,8 @@ function openFormModal({ title, subtitle = '', body, submitLabel, onSubmit, wide
   $('#pvModalSubmit').innerHTML = submitLabel || '';
   $('#pvModalSubmit').hidden = !submitLabel;
   $('#pvModalCancel').textContent = submitLabel ? 'Cancel' : 'Close';
-  $('#pvModal .modal-dialog').classList.toggle('modal-lg', wide);
+  $('#pvModal .modal-dialog').classList.toggle('modal-lg', wide === true);
+  $('#pvModal .modal-dialog').classList.toggle('modal-xl', wide === 'xl');
   $('#pvModalForm').classList.remove('was-validated');
   modalSubmit = onSubmit;
   bootstrap.Modal.getOrCreateInstance('#pvModal').show();

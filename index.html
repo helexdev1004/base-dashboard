@@ -87,7 +87,17 @@
             </ul>
           </li>
           <li><a class="nav-link" href="#/recruiters" data-view="recruiters"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
-          <li><a class="nav-link" href="#/framework" data-view="framework"><i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework" hidden>
+              <li><a class="nav-link" href="#/fw-accounts" data-view="fw-accounts"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="#/fw-projects" data-view="fw-projects"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="#/fw-ratecards" data-view="fw-ratecards"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="#/fw-feasibilities" data-view="fw-feasibilities"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
           <li><a class="nav-link" href="#/external-surveys" data-view="external-surveys"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
           <li><a class="nav-link" href="#/statistics" data-view="statistics"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
           <li><a class="nav-link" href="#/users" data-view="users"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
@@ -268,6 +278,13 @@
         <div class="page-view" id="translationsView" hidden></div>
         <div class="page-view" id="surveyPointsView" hidden></div>
         <div class="page-view" id="firstSurveysView" hidden></div>
+        <div class="page-view" id="fwAccountsView" hidden></div>
+        <div class="page-view" id="fwAccountView" hidden></div>
+        <div class="page-view" id="fwProjectsView" hidden></div>
+        <div class="page-view" id="fwProjectView" hidden></div>
+        <div class="page-view" id="fwRatecardsView" hidden></div>
+        <div class="page-view" id="fwRatecardView" hidden></div>
+        <div class="page-view" id="fwFeasibilitiesView" hidden></div>
         <div class="page-view" id="soonView" hidden></div>
 
       </main>
@@ -347,5 +364,6 @@
   <script src="recruiters.js"></script>
   <script src="users.js"></script>
   <script src="panel-tools.js"></script>
+  <script src="framework.js"></script>
 </body>
 </html>

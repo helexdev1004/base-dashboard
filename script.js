@@ -881,7 +881,6 @@ function applyTheme(id) {
 const SOON_PAGES = {
   clients: ['Clients', 'bi-people'],
   profiling: ['Profiling', 'bi-window-sidebar'],
-  framework: ['Framework', 'bi-asterisk'],
   'external-surveys': ['External surveys', 'bi-diagram-3'],
 };
 
@@ -911,11 +910,19 @@ const VIEWS = {
   translations: '#translationsView',
   'survey-points': '#surveyPointsView',
   'first-surveys': '#firstSurveysView',
+  'fw-accounts': '#fwAccountsView',
+  'fw-account': '#fwAccountView',
+  'fw-projects': '#fwProjectsView',
+  'fw-project': '#fwProjectView',
+  'fw-ratecards': '#fwRatecardsView',
+  'fw-ratecard': '#fwRatecardView',
+  'fw-feasibilities': '#fwFeasibilitiesView',
 };
 // Views that highlight another view's menu item.
 const NAV_PARENT = {
   project: 'list', 'vendor-form': 'vendors', 'library-form': 'screener-library',
   panel: 'panels', panelist: 'panels', recruiter: 'recruiters', user: 'users',
+  'fw-account': 'fw-accounts', 'fw-project': 'fw-projects', 'fw-ratecard': 'fw-ratecards',
 };
 // Edit pages register { dirty, hash, label } here so the router can stop you leaving with unsaved changes.
 const formGuards = {};
