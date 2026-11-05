@@ -1343,7 +1343,7 @@ function renderExclusions(el) {
       id: `exStatuses-${row.id}`,
       options: statusOpts,
       selected: row.statuses,
-      allLabel: 'All statuses',
+      allLabel: 'All', // the column says Statuses; "All 15" fits the narrow box
       placeholder: 'Select statuses',
       searchLabel: 'Search statuses…',
       onChange: (value) => {
@@ -1471,6 +1471,7 @@ function createComboBox(root, { id, options, value = '', placeholder = '', onCha
 
   function sync() {
     input.value = labelOf(current);
+    input.title = input.value; // the full name when the box is too narrow to show it
     clear.hidden = !current;
   }
   function renderMenu() {
