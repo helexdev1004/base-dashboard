@@ -349,7 +349,7 @@ const SORTERS = {
   s2: (p) => p.s2,
   drops: (p) => p.drops,
   dups: (p) => p.dupsA + p.dupsB,
-  qfails: (p) => p.qfA,
+  qfails: (p) => p.qfA + p.qfB,
   activity: (p) => p.lastEntryAt || 0,
 };
 const TEXT_SORTS = new Set(['name', 'pm', 'status']);
@@ -525,22 +525,36 @@ function activityHtml(p) {
 }
 
 /* Progress: completes per hour over the past 24 hours (oldest first), adding up to the
-   "Completes past 24 hours" count. Hours without completes show as a dash. */
+   "Completes past 24 hours" count. Hours without completes show as a dash. Entries per
+   hour add up to the past-24-hours entries, so each hour has its own conversion. */
 const HOUR = 60 * MINUTE;
 const SPARK_HOURS = 24;
 const sparkCache = new Map();
 const hourStart = (ts) => { const d = new Date(ts); d.setMinutes(0, 0, 0); return d.getTime(); };
 
+// Split a whole number over weighted slots (largest remainder), adding to `into`.
+function spreadInt(total, weights, into) {
+  const sum = weights.reduce((a, b) => a + b, 0);
+  if (!total || !sum) return;
+  const raw = weights.map((w) => (total * w) / sum);
+  raw.forEach((v, i) => { into[i] += Math.floor(v); });
+  let rest = total - raw.reduce((s, v) => s + Math.floor(v), 0);
+  raw.map((v, i) => [v - Math.floor(v), i]).sort((a, b) => b[0] - a[0])
+    .forEach(([, i]) => { if (rest > 0 && weights[i]) { into[i] += 1; rest -= 1; } });
+}
+
 function hourlyCompletes(p) {
   const start = hourStart(Date.now()) - (SPARK_HOURS - 1) * HOUR;
-  const key = `${start}|${p.c24h}|${p.lastCompleteAt}`;
+  const key = `${start}|${p.c24h}|${p.eb24h}|${p.lastCompleteAt}|${p.lastEntryAt}`;
   const hit = sparkCache.get(p.id);
   if (hit?.key === key) return hit;
+  const hourOf = (ts) => Math.max(0, Math.min(SPARK_HOURS - 1, Math.floor((hourStart(ts) - start) / HOUR)));
   const counts = new Array(SPARK_HOURS).fill(0);
+  let first = null;
   if (p.c24h && p.lastCompleteAt) {
     const next = mulberry32(p.id * 2971 + 13);
-    const last = Math.max(0, Math.min(SPARK_HOURS - 1, Math.floor((hourStart(p.lastCompleteAt) - start) / HOUR)));
-    const first = Math.max(0, last - 2 - Math.floor(next() * 18));
+    const last = hourOf(p.lastCompleteAt);
+    first = Math.max(0, last - 2 - Math.floor(next() * 18));
     // Busier towards the end, with a few quiet hours; the last complete's hour always has one.
     const weights = counts.map((_, i) => (i < first || i > last ? 0
       : i === last ? 1 + next() : next() < 0.25 ? 0 : next() * 0.8 + ((i - first) / (last - first + 1)) * 0.7));
@@ -556,28 +570,42 @@ function hourlyCompletes(p) {
       counts[last] += 1;
     }
   }
-  const entry = { key, start, counts };
+  // Entries: every complete was an entry, plus the other entries spread over the same hours,
+  // with at least one in the hour of the last entry.
+  const entries = [...counts];
+  let extra = Math.max(0, (p.eb24h || 0) - (p.c24h || 0));
+  if (extra && p.lastEntryAt && Date.now() - p.lastEntryAt < SPARK_HOURS * HOUR) {
+    const next = mulberry32(p.id * 4099 + 7);
+    const lastE = hourOf(p.lastEntryAt);
+    const firstE = Math.min(first ?? lastE, Math.max(0, lastE - 2 - Math.floor(next() * 18)));
+    entries[lastE] += 1;
+    extra -= 1;
+    spreadInt(extra, entries.map((_, i) => (i < firstE || i > lastE ? 0
+      : counts[i] ? counts[i] * 1.5 + 0.5 : next() < 0.2 ? 0 : 0.6)), entries);
+  }
+  const entry = { key, start, counts, entries };
   sparkCache.set(p.id, entry);
   return entry;
 }
 
-const fmtSparkDay = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-const fmtSparkHour = (ts) => new Date(ts).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+const pad2h = (n) => String(n).padStart(2, '0');
+const fmtSparkDay = (ts) => new Date(ts).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+const fmtSparkHours = (ts) => { const h = pad2h(new Date(ts).getHours()); return `${h}:00 – ${h}:59`; };
 
 function sparkHtml(p) {
-  const { start, counts } = hourlyCompletes(p);
+  const { start, counts, entries } = hourlyCompletes(p);
   const max = Math.max(...counts);
   const total = counts.reduce((a, b) => a + b, 0);
   const label = total
-    ? `${fmtInt(total)} complete${total === 1 ? '' : 's'} in the past 24 hours, most at ${fmtSparkHour(start + counts.indexOf(max) * HOUR)}`
+    ? `${fmtInt(total)} complete${total === 1 ? '' : 's'} in the past 24 hours, most between ${fmtSparkHours(start + counts.indexOf(max) * HOUR).replace(' – ', ' and ')}`
     : 'No completes in the past 24 hours';
   return `
     <div class="spark" role="img" aria-label="${label}" data-start="${start}">
-      ${counts.map((n, i) => `<span class="spark-slot" data-i="${i}" data-n="${n}"><span class="spark-bar${n ? '' : ' is-zero'}"${n ? ` style="height:${Math.max(10, Math.round((n / max) * 100))}%"` : ''}></span></span>`).join('')}
+      ${counts.map((n, i) => `<span class="spark-slot" data-i="${i}" data-n="${n}" data-e="${entries[i]}"><span class="spark-bar${n ? '' : ' is-zero'}"${n ? ` style="height:${Math.max(10, Math.round((n / max) * 100))}%"` : ''}></span></span>`).join('')}
     </div>`;
 }
 
-// One tooltip for every chart: the hour, its date and the completes in it.
+// One tooltip for every chart: the date, the hour, its completes and its conversion (completes ÷ entries).
 function initSparkTips() {
   const tip = document.createElement('div');
   tip.className = 'spark-tip';
@@ -599,7 +627,10 @@ function initSparkTips() {
     slot.classList.add('is-hover');
     const at = Number(slot.parentElement.dataset.start) + Number(slot.dataset.i) * HOUR;
     const n = Number(slot.dataset.n);
-    tip.innerHTML = `<span>${fmtSparkDay(at)}</span><span>${fmtSparkHour(at)}</span><strong>${fmtInt(n)} complete${n === 1 ? '' : 's'}</strong>`;
+    const entries = Number(slot.dataset.e);
+    const conversion = entries ? `${Math.round((n / entries) * 100)}% conversion` : 'No entries';
+    tip.innerHTML = `<span>${fmtSparkDay(at)}</span><span>${fmtSparkHours(at)}</span>
+      <span class="spark-tip-hl">${fmtInt(n)} complete${n === 1 ? '' : 's'}</span><span class="spark-tip-hl">${conversion}</span>`;
     tip.hidden = false;
     const r = slot.getBoundingClientRect();
     const w = tip.offsetWidth;
@@ -653,7 +684,7 @@ function rowHtml(p) {
       <td class="num">${stack(cellNum(p.s2), cellNum(p.q2))}</td>
       <td class="num">${cellNum(p.drops)}</td>
       <td class="num" title="DUP1 ${fmtInt(p.dupsA)} · DUP2 ${fmtInt(p.dupsB)}">${cellNum(p.dupsA + p.dupsB)}</td>
-      <td class="num">${stack(cellNum(p.qfA), cellNum(p.qfB))}</td>
+      <td class="num" title="QFAIL1 ${fmtInt(p.qfA)} · QFAIL2 ${fmtInt(p.qfB)}">${cellNum(p.qfA + p.qfB)}</td>
     </tr>`;
 }
 

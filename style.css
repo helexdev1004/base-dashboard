@@ -1285,11 +1285,12 @@ html[data-bs-theme="dark"] .search-box input::-webkit-search-cancel-button { fil
 .search-trio { display: flex; flex: 1 1 100%; gap: 10px; min-width: 0; }
 .search-trio .search-box { min-width: 0; }
 /* Each box just fits its placeholder; the "/" shortcut hint is on MFJN, where "/" lands. */
-.search-trio .search-sm { flex: 0 1 190px; min-width: 150px; }
-.search-trio .search-po { flex-basis: 178px; min-width: 150px; }
-.search-trio .search-main { flex: 0 1 260px; min-width: 200px; }
+/* Fixed widths (not flex-basis), so the group keeps them when it shares the row with the buttons. */
+.search-trio .search-sm { flex: 0 1 auto; width: 190px; min-width: 150px; }
+.search-trio .search-po { width: 178px; }
+.search-trio .search-main { flex: 0 1 auto; width: 260px; min-width: 200px; }
 @media (min-width: 1700px) {
-  .search-trio { flex: 0 1 auto; }
+  .search-trio { flex: 0 0 auto; }
 }
 .search-trio .search-box input { text-overflow: ellipsis; }
 @media (max-width: 767.98px) {
@@ -1483,20 +1484,20 @@ a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; 
   flex-direction: column;
   align-items: center;
   gap: 1px;
-  padding: 8px 14px;
-  font-size: 12.5px;
+  padding: 9px 16px;
+  font-size: 13px;
   line-height: 1.45;
   color: #fff;
   white-space: nowrap;
-  background: #0b0d14;
-  border: 1px solid rgba(255, 255, 255, .1);
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, .12);
   border-radius: 10px;
   box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .65);
   pointer-events: none;
 }
 .spark-tip[hidden] { display: none; }
-.spark-tip span { color: #a9adbb; }
-.spark-tip strong { font-weight: 600; }
+.spark-tip span { color: #fff; }
+.spark-tip .spark-tip-hl { color: #fff200; } /* completes and conversion */
 .spark-tip::before {
   content: '';
   position: absolute;
@@ -1504,7 +1505,7 @@ a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; 
   left: var(--arrow-x, 50%);
   width: 10px;
   height: 10px;
-  background: #0b0d14;
+  background: #000;
   border-top: 1px solid rgba(255, 255, 255, .1);
   border-left: 1px solid rgba(255, 255, 255, .1);
   transform: translateX(-50%) rotate(45deg);
