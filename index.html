@@ -149,8 +149,7 @@
                 </div>
               </li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i>My profile</a></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i>Account settings</a></li>
+              <li><a class="dropdown-item" href="#/my-statistics" data-profile-link><i class="bi bi-graph-up"></i>Personal statistics</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
             </ul>
@@ -206,6 +205,11 @@
               <i class="bi bi-sliders2"></i> More filters
               <span class="filter-count d-none" id="filterCount">0</span>
             </button>
+
+            <div class="segmented" role="group" aria-label="Progress chart" id="sparkMode" title="Progress chart: completes per hour (past 24 hours) or per day (past 14 days)">
+              <button type="button" class="active" data-spark="hourly" aria-pressed="true">Hourly</button>
+              <button type="button" data-spark="daily" aria-pressed="false">Daily</button>
+            </div>
 
             <button class="btn btn-export ms-md-auto" type="button" id="exportBtn">
               <i class="bi bi-download"></i> Export list
@@ -273,6 +277,8 @@
         <div class="page-view" id="usersView" hidden></div>
         <div class="page-view" id="userView" hidden></div>
         <div class="page-view" id="statisticsView" hidden></div>
+        <div class="page-view" id="userStatisticsView" hidden></div>
+        <div class="page-view" id="myStatisticsView" hidden></div>
         <div class="page-view" id="translationsView" hidden></div>
         <div class="page-view" id="surveyPointsView" hidden></div>
         <div class="page-view" id="firstSurveysView" hidden></div>
@@ -336,6 +342,7 @@
             <h5 class="modal-title" id="pvModalTitle"></h5>
             <p class="panel-subtitle" id="pvModalSub"></p>
           </div>
+          <div class="modal-head-extra" id="pvModalExtra"></div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="pvModalBody"></div>

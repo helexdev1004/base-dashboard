@@ -40,7 +40,9 @@ const ACCESS_ITEMS = [
   ['users', 'Users', 'bi-person-lines-fill', ''],
 ];
 const ACCESS_KEYS = ACCESS_ITEMS.map(([key]) => key);
-const VISITOR_ACCESS = ['projects', 'feasibility', 'exports', 'statistics'];
+const VISITOR_ACCESS = ['projects', 'feasibility', 'exports'];
+// Users and Statistics are for selected people: admins get them, others when switched on in Access control.
+const DEFAULT_USER_ACCESS = ACCESS_KEYS.filter((k) => k !== 'users' && k !== 'statistics');
 
 // { id, name, initials, color, email, role, enabled, projectCreator, progressView, lastLoginAt, access: Set }
 const users = [];
@@ -51,24 +53,26 @@ const users = [];
   const emailOf = (name) => `${name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]+/g, '.').replace(/^\.|\.$/g, '')}@base.example.com`;
   const pm = (initials) => PMS.find((x) => x.initials === initials).name;
   // The project managers, then two accounts that don't run projects.
+  // [id, name, initials, colour, role, account created, extra]
   [
-    [1, pm('RG'), 'RG', '#2f7d32', 'admin'],
-    [2, pm('RA'), 'RA', '#111111', 'admin'],
-    [3, pm('AL'), 'AL', '#d9382c', 'user'],
-    [4, pm('MK'), 'MK', '#3b74f2', 'user'],
-    [5, pm('JS'), 'JS', '#3fb6cc', 'user', { progressView: 'table' }],
-    [6, pm('TD'), 'TD', '#8a3b1e', 'user'],
-    [7, 'Omar Haddad', 'OH', '#c9b458', 'visitor', { projectCreator: false }],
-    [8, 'Lena Brandt', 'LB', '#cbd5e1', 'user', { enabled: false, projectCreator: false }],
-  ].forEach(([id, name, initials, color, role, extra = {}]) => {
+    [1, pm('RG'), 'RG', '#2f7d32', 'admin', '2022-03-14'],
+    [2, pm('RA'), 'RA', '#111111', 'admin', '2022-09-05'],
+    [3, pm('AL'), 'AL', '#d9382c', 'user', '2023-04-17'],
+    [4, pm('MK'), 'MK', '#3b74f2', 'user', '2023-11-02'],
+    [5, pm('JS'), 'JS', '#3fb6cc', 'user', '2024-06-10', { progressView: 'table' }],
+    [6, pm('TD'), 'TD', '#8a3b1e', 'user', '2025-02-24'],
+    [7, 'Omar Haddad', 'OH', '#c9b458', 'visitor', '2025-09-08', { projectCreator: false }],
+    [8, 'Lena Brandt', 'LB', '#cbd5e1', 'user', '2024-01-15', { enabled: false, projectCreator: false }],
+  ].forEach(([id, name, initials, color, role, created, extra = {}]) => {
     const enabled = extra.enabled ?? true;
     users.push({
       id, name, initials, color, role, enabled,
       email: emailOf(name),
       projectCreator: true,
       progressView: 'chart',
+      createdAt: new Date(`${created}T09:00:00`).getTime(),
       lastLoginAt: enabled ? now - r.between(0.05, 3) * DAY : now - r.int(60, 200) * DAY,
-      access: new Set(role === 'visitor' ? VISITOR_ACCESS : role === 'admin' ? ACCESS_KEYS : ACCESS_KEYS.filter((k) => k !== 'users')),
+      access: new Set(role === 'visitor' ? VISITOR_ACCESS : role === 'admin' ? ACCESS_KEYS : DEFAULT_USER_ACCESS),
       ...extra,
     });
   });
@@ -201,7 +205,7 @@ function renderUser(id) {
   }
   Object.assign(userForm, { routeId: id, dirty: false, hash: `#/users/${id}` });
   document.title = `${u ? u.name : 'New user'} · Base`;
-  const access = u ? u.access : new Set(ACCESS_KEYS.filter((k) => k !== 'users'));
+  const access = u ? u.access : new Set(DEFAULT_USER_ACCESS);
   const v = u || { name: '', initials: '', color: '#3b74f2', email: '', role: 'user', enabled: true, projectCreator: true, progressView: 'chart' };
 
   $('#userView').innerHTML = `
@@ -358,14 +362,158 @@ function saveUser(e) {
   if (u) {
     saved = Object.assign(u, data);
   } else {
-    saved = { id: Math.max(0, ...users.map((x) => x.id)) + 1, lastLoginAt: null, ...data };
+    saved = { id: Math.max(0, ...users.map((x) => x.id)) + 1, createdAt: Date.now(), lastLoginAt: null, ...data };
     users.push(saved);
     ul.page = Infinity;
   }
   ul.flashId = saved.id;
   userForm.dirty = false;
+  syncStatisticsMenu(); // the signed-in user's access may have changed
   location.hash = '#/users';
   showToast(u ? `${saved.name} saved.` : `${saved.name} added.`);
+}
+
+/* ---------- Who is signed in, and who sees Statistics ---------- */
+const currentUser = () => users.find((u) => u.initials === 'RA'); // Ray, as in the top bar
+const canSeeStatistics = () => Boolean(currentUser()?.access.has('statistics'));
+
+// The Statistics menu item is only there for people with Statistics switched on in Access control.
+function syncStatisticsMenu() {
+  const link = $('#sideNav a[data-view="statistics"]');
+  if (link) link.closest('li').hidden = !canSeeStatistics();
+}
+
+function statisticsBlocked() {
+  if (canSeeStatistics()) return false;
+  history.replaceState(null, '', '#/');
+  showToast('Statistics is only available to selected people. An admin can switch it on in Users ▸ Access control.', 'info');
+  showList();
+  return true;
+}
+
+document.addEventListener('DOMContentLoaded', syncStatisticsMenu);
+
+/* ---------- Statistics per month (Personal statistics, and a user from Statistics) ---------- */
+const MONTH_STATS_PAGE_SIZE = 12;
+const monthKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+const monthLabel = (d) => `${monthKey(d)} - ${d.toLocaleDateString('en-GB', { month: 'long' })}`;
+
+// One row per month from the month the account was created up to this month, newest first.
+// This month comes from the user's projects; earlier months are sample history.
+function monthlyStats(u) {
+  const now = new Date();
+  const first = new Date(u.createdAt || Date.now());
+  const rows = [];
+  const list = userProjects(u);
+  for (let d = new Date(now.getFullYear(), now.getMonth(), 1); d >= new Date(first.getFullYear(), first.getMonth(), 1); d.setMonth(d.getMonth() - 1)) {
+    const current = rows.length === 0;
+    let setups = 0;
+    let completes = 0;
+    let entries = 0;
+    if (u.projectCreator && list.length) {
+      const r = seeded(u.id * 977 + d.getFullYear() * 13 + d.getMonth());
+      if (current) {
+        setups = Math.max(1, Math.round(list.length * r.between(0.15, 0.35)));
+        completes = list.reduce((s, p) => s + p.cMonth, 0);
+        entries = list.reduce((s, p) => s + p.ebMonth, 0);
+      } else {
+        const quiet = r.chance(0.08); // the odd month without new projects
+        setups = quiet ? 0 : r.int(2, 14);
+        completes = quiet ? r.int(0, 40) : Math.round(setups * r.between(40, 180));
+        entries = completes ? Math.round(completes / r.between(0.08, 0.32)) : 0;
+      }
+    }
+    rows.push({ month: monthLabel(d), setups, completes, entries });
+  }
+  return rows;
+}
+
+function monthlyTableHtml(rows, page) {
+  const { rows: shown, page: cur, pages, start } = paginate(rows, page, MONTH_STATS_PAGE_SIZE);
+  const sum = (k) => rows.reduce((s, r) => s + r[k], 0);
+  const conv = (r) => (r.entries ? fmtPct1(pctOf(r.completes, r.entries)) : '<span class="zero">—</span>');
+  const num = (v, cls = '') => `<td class="t-num${cls}${v ? '' : ' zero'}">${fmtInt(v)}</td>`;
+  return {
+    page: cur,
+    html: `
+      <div class="table-responsive">
+        <table class="pv-table list-table mstat-table">
+          <thead><tr>
+            <th>Year and month</th><th class="t-num">Setups created</th><th class="t-num col-hl">Completes delivered</th>
+            <th class="t-num" title="Completes ÷ entries">Conversion</th>
+          </tr></thead>
+          <tbody>
+            ${shown.map((r) => `
+              <tr><td class="mstat-month">${r.month}</td>${num(r.setups)}${num(r.completes, ' col-hl')}<td class="t-num">${conv(r)}</td></tr>`).join('')}
+          </tbody>
+          <tfoot><tr>
+            <td>All ${plural(rows.length, 'month')}</td>${num(sum('setups'))}${num(sum('completes'), ' col-hl')}
+            <td class="t-num">${conv({ completes: sum('completes'), entries: sum('entries') })}</td>
+          </tr></tfoot>
+        </table>
+      </div>
+      <div class="table-footer">
+        <span class="page-info">Showing <strong>${start + 1}–${start + shown.length}</strong> of <strong>${rows.length}</strong> months</span>
+        <nav aria-label="Month pages">${pagerHtml(cur, pages, 'mstat-page')}</nav>
+      </div>`,
+  };
+}
+
+const msState = { key: '', page: 1 };
+
+// root: the view; u: whose statistics; head: the page header.
+function renderMonthlyStats(root, u, head) {
+  const key = `${root.id}|${u.id}`;
+  if (msState.key !== key) Object.assign(msState, { key, page: 1 });
+  const rows = monthlyStats(u);
+  const draw = () => {
+    const table = monthlyTableHtml(rows, msState.page);
+    msState.page = table.page;
+    $('.mstat-card', root).innerHTML = table.html;
+  };
+  root.innerHTML = `${head}<section class="pv-card flush mstat-card"></section>`;
+  draw();
+  root.onclick = (e) => {
+    const btn = e.target.closest('[data-mstat-page]');
+    if (!btn || btn.disabled) return;
+    msState.page = Number(btn.dataset.mstatPage);
+    draw();
+  };
+}
+
+const sinceText = (u) => new Date(u.createdAt || Date.now()).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+
+function renderMyStatistics() {
+  const u = currentUser();
+  document.title = 'Personal statistics · Base';
+  renderMonthlyStats($('#myStatisticsView'), u, `
+    <header class="page-head">
+      <h1 class="page-title">Personal statistics</h1>
+      <p class="page-sub">${escapeHtml(u.name)} · your project setups, completes delivered and conversion per month, since your account was created in ${sinceText(u)}.</p>
+    </header>`);
+}
+
+function renderUserStatistics(id) {
+  if (statisticsBlocked()) return;
+  const u = users.find((x) => x.id === Number(id));
+  if (!u) {
+    history.replaceState(null, '', '#/statistics');
+    showToast("That user couldn't be found.", 'info');
+    showPage('statistics');
+    return;
+  }
+  document.title = `${u.name} · Statistics · Base`;
+  renderMonthlyStats($('#userStatisticsView'), u, `
+    <header class="page-head page-head-back">
+      <a class="pv-back-btn" href="#/statistics" title="Back to Statistics" aria-label="Back to Statistics"><i class="bi bi-arrow-left"></i></a>
+      <div class="mstat-head">
+        ${userBadgeHtml(u)}
+        <div>
+          <h1 class="page-title">${escapeHtml(u.name)}</h1>
+          <p class="page-sub">Project setups, completes delivered and conversion per month, since the account was created in ${sinceText(u)}.</p>
+        </div>
+      </div>
+    </header>`);
 }
 
 /* ---------- Statistics ---------- */
@@ -394,6 +542,7 @@ function userStats(u) {
 }
 
 function renderStatistics() {
+  if (statisticsBlocked()) return;
   document.title = 'Statistics · Base';
   // Everyone who runs projects is picked at first.
   if (!st.selected) st.selected = users.filter((u) => u.enabled && userProjects(u).length).map((u) => String(u.id));
@@ -401,7 +550,7 @@ function renderStatistics() {
   root.innerHTML = `
     <header class="page-head">
       <h1 class="page-title">Statistics</h1>
-      <p class="page-sub">Project setups, completes and conversion per user. P1W is the past week, P2W the past two weeks.</p>
+      <p class="page-sub">Project setups, completes and conversion per user. P1W is the past week, P2W the past two weeks. Click a user for their statistics per month.</p>
     </header>
     <section class="pv-card flush">
       <div class="list-filters st-filters">
@@ -444,8 +593,8 @@ function renderStatRows() {
     ? picked.map((u) => {
         const s = userStats(u);
         return `
-          <tr>
-            <td><a class="cell-link" href="#/users/${u.id}">${escapeHtml(u.name)}</a></td>
+          <tr class="row-link" data-href="#/statistics/${u.id}">
+            <td><a class="cell-link" href="#/statistics/${u.id}" title="Statistics per month">${escapeHtml(u.name)}</a></td>
             <td>${userBadgeHtml(u)}</td>
             ${num(s.setups1)}${num(s.setups2)}${num(s.live)}${num(s.closed)}
             ${num(s.c1w1, ' col-hl')}${num(s.c1w2, ' col-hl')}
@@ -456,6 +605,11 @@ function renderStatRows() {
 }
 
 function onStatisticsClick(e) {
+  const row = e.target.closest('tr[data-href]');
+  if (row && !e.target.closest('a, button')) {
+    location.hash = row.dataset.href;
+    return;
+  }
   const btn = e.target.closest('[data-st-action="refresh"]');
   if (!btn) return;
   btn.classList.remove('spinning');

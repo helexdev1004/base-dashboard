@@ -334,6 +334,7 @@ const state = {
   sortKey: 'id',
   sortDir: 'desc',
   page: 1,
+  sparkMode: 'hourly', // Progress chart: 'hourly' (past 24 hours) or 'daily' (past 14 days)
 };
 
 const SORTERS = {
@@ -588,24 +589,57 @@ function hourlyCompletes(p) {
   return entry;
 }
 
+// Daily: completes and entries per day over the past 14 days (oldest first), from the project's
+// own day-by-day numbers (the same ones as its Progress over time table).
+const SPARK_DAYS = 14;
+const dailySparkCache = new Map();
+function dailyCompletes(p) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const days = Array.from({ length: SPARK_DAYS }, (_, i) => {
+    const d = new Date(today);
+    d.setDate(d.getDate() - (SPARK_DAYS - 1 - i));
+    return d.getTime();
+  });
+  const key = `${days[0]}|${p.c1}|${p.eb}|${p.lastEntryAt}`;
+  const hit = dailySparkCache.get(p.id);
+  if (hit?.key === key) return hit;
+  const detail = ensureDetail(p); // project.js
+  const byDate = new Map(detail.days.map((date, i) => [date, detail.vendors.reduce((acc, v) => {
+    acc.c1 += v.daily[i]?.c1 || 0;
+    acc.eb += v.daily[i]?.eb || 0;
+    return acc;
+  }, { c1: 0, eb: 0 })]));
+  const counts = days.map((ts) => byDate.get(isoDay(ts))?.c1 || 0);
+  const entries = days.map((ts) => byDate.get(isoDay(ts))?.eb || 0);
+  const entry = { key, days, counts, entries };
+  dailySparkCache.set(p.id, entry);
+  return entry;
+}
+
 const pad2h = (n) => String(n).padStart(2, '0');
 const fmtSparkDay = (ts) => new Date(ts).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 const fmtSparkHours = (ts) => { const h = pad2h(new Date(ts).getHours()); return `${h}:00 – ${h}:59`; };
 
 function sparkHtml(p) {
-  const { start, counts, entries } = hourlyCompletes(p);
+  const daily = state.sparkMode === 'daily';
+  const data = daily ? dailyCompletes(p) : hourlyCompletes(p);
+  const { counts, entries } = data;
+  const at = (i) => (daily ? data.days[i] : data.start + i * HOUR);
   const max = Math.max(...counts);
   const total = counts.reduce((a, b) => a + b, 0);
-  const label = total
-    ? `${fmtInt(total)} complete${total === 1 ? '' : 's'} in the past 24 hours, most between ${fmtSparkHours(start + counts.indexOf(max) * HOUR).replace(' – ', ' and ')}`
-    : 'No completes in the past 24 hours';
+  const busiest = at(counts.indexOf(max));
+  const label = !total
+    ? `No completes in the past ${daily ? '14 days' : '24 hours'}`
+    : `${fmtInt(total)} complete${total === 1 ? '' : 's'} in the past ${daily ? '14 days' : '24 hours'}, most ${daily
+      ? `on ${fmtSparkDay(busiest)}` : `between ${fmtSparkHours(busiest).replace(' – ', ' and ')}`}`;
   return `
-    <div class="spark" role="img" aria-label="${label}" data-start="${start}">
-      ${counts.map((n, i) => `<span class="spark-slot" data-i="${i}" data-n="${n}" data-e="${entries[i]}"><span class="spark-bar${n ? '' : ' is-zero'}"${n ? ` style="height:${Math.max(10, Math.round((n / max) * 100))}%"` : ''}></span></span>`).join('')}
+    <div class="spark${daily ? ' is-daily' : ''}" role="img" aria-label="${label}">
+      ${counts.map((n, i) => `<span class="spark-slot" data-at="${at(i)}" data-n="${n}" data-e="${entries[i]}"><span class="spark-bar${n ? '' : ' is-zero'}"${n ? ` style="height:${Math.max(10, Math.round((n / max) * 100))}%"` : ''}></span></span>`).join('')}
     </div>`;
 }
 
-// One tooltip for every chart: the date, the hour, its completes and its conversion (completes ÷ entries).
+// One tooltip for every chart: the date, the hour (hourly only), the completes and the conversion (completes ÷ entries).
 function initSparkTips() {
   const tip = document.createElement('div');
   tip.className = 'spark-tip';
@@ -625,11 +659,12 @@ function initSparkTips() {
     current?.classList.remove('is-hover');
     current = slot;
     slot.classList.add('is-hover');
-    const at = Number(slot.parentElement.dataset.start) + Number(slot.dataset.i) * HOUR;
+    const at = Number(slot.dataset.at);
     const n = Number(slot.dataset.n);
     const entries = Number(slot.dataset.e);
     const conversion = entries ? `${Math.round((n / entries) * 100)}% conversion` : 'No entries';
-    tip.innerHTML = `<span>${fmtSparkDay(at)}</span><span>${fmtSparkHours(at)}</span>
+    const hours = slot.parentElement.classList.contains('is-daily') ? '' : `<span>${fmtSparkHours(at)}</span>`;
+    tip.innerHTML = `<span>${fmtSparkDay(at)}</span>${hours}
       <span class="spark-tip-hl">${fmtInt(n)} complete${n === 1 ? '' : 's'}</span><span class="spark-tip-hl">${conversion}</span>`;
     tip.hidden = false;
     const r = slot.getBoundingClientRect();
@@ -938,6 +973,8 @@ const VIEWS = {
   users: '#usersView',
   user: '#userView',
   statistics: '#statisticsView',
+  'user-statistics': '#userStatisticsView',
+  'my-statistics': '#myStatisticsView',
   translations: '#translationsView',
   'survey-points': '#surveyPointsView',
   'first-surveys': '#firstSurveysView',
@@ -952,7 +989,7 @@ const VIEWS = {
 // Views that highlight another view's menu item.
 const NAV_PARENT = {
   project: 'list', 'vendor-form': 'vendors', 'library-form': 'screener-library',
-  panel: 'panels', panelist: 'panels', recruiter: 'recruiters', user: 'users',
+  panel: 'panels', panelist: 'panels', recruiter: 'recruiters', user: 'users', 'user-statistics': 'statistics',
   'fw-account': 'fw-accounts', 'fw-project': 'fw-projects', 'fw-ratecard': 'fw-ratecards',
 };
 // Edit pages register { dirty, hash, label } here so the router can stop you leaving with unsaved changes.
@@ -1100,7 +1137,8 @@ function init() {
     if (e.target.closest('.nav-link')) setMobileOpen(false); // the link itself changes the URL
   });
 
-  $$('.profile-menu .dropdown-item').forEach((item) => item.addEventListener('click', (e) => e.preventDefault()));
+  // Personal statistics opens its page; Sign out isn't part of this preview.
+  $$('.profile-menu .dropdown-item:not([data-profile-link])').forEach((item) => item.addEventListener('click', (e) => e.preventDefault()));
 
   // Search: MFJN, MFPO, and project name / any other field
   const SEARCH_FIELDS = { searchJob: 'searchJob', searchPo: 'searchPo', searchInput: 'search' };
@@ -1202,6 +1240,20 @@ function init() {
     btn.setAttribute('aria-pressed', String(on));
     btn.classList.toggle('active', on);
     $('i', btn).className = on ? 'bi bi-person-check-fill' : 'bi bi-person';
+  });
+
+  // Progress chart: completes per hour (past 24 hours) or per day (past 14 days).
+  $('#sparkMode').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-spark]');
+    if (!btn || btn.dataset.spark === state.sparkMode) return;
+    state.sparkMode = btn.dataset.spark;
+    $$('#sparkMode [data-spark]').forEach((b) => {
+      const on = b === btn;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    $('.project-table th.col-spark').title = state.sparkMode === 'daily' ? 'Completes per day, past 14 days' : 'Completes per hour, past 24 hours';
+    renderTable();
   });
 
   // Refresh: redraws the counts and the list.

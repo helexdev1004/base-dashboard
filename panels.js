@@ -688,33 +688,55 @@ function onPanelChange(e) {
   renderMemberRows(panel);
 }
 
+// Members per country by status, and how many signed up in the last week or month.
+const PANEL_STAT_PERIODS = { week: [7, 'Last week'], month: [30, 'Last month'] };
+let panelStatPeriod = 'month';
+
 function openPanelStats(panel) {
   const d = panelData(panel);
   const byCountry = new Map();
-  const recent = PANEL_NOW - 30 * DAY;
+  const since = { week: PANEL_NOW - 7 * DAY, month: PANEL_NOW - 30 * DAY };
   for (let i = 0, n = memberTotal(d); i < n; i++) {
     const code = countryAt(d, i);
-    const row = byCountry.get(code) || { pending: 0, active: 0, deleted: 0, joined: 0 };
+    const row = byCountry.get(code) || { pending: 0, active: 0, deleted: 0, week: 0, month: 0 };
     row[statusAt(d, i)] += 1;
-    if ((i < d.n ? joinedAt(panel, i) : d.extra[i - d.n].createdAt) >= recent) row.joined += 1;
+    const joined = i < d.n ? joinedAt(panel, i) : d.extra[i - d.n].createdAt;
+    if (joined >= since.month) row.month += 1;
+    if (joined >= since.week) row.week += 1;
     byCountry.set(code, row);
   }
   const rows = [...byCountry].map(([code, r]) => ({ code, ...r, total: r.pending + r.active + r.deleted })).sort((a, b) => b.total - a.total);
   const sum = (k) => rows.reduce((s, r) => s + r[k], 0);
-  const cells = (r) => `<td>${fmtInt(r.pending)}</td><td>${fmtInt(r.active)}</td><td>${fmtInt(r.deleted)}</td><td>${fmtInt(r.total)}</td><td>${fmtInt(r.joined)}</td>`;
+  const totals = Object.fromEntries(['pending', 'active', 'deleted', 'total', 'week', 'month'].map((k) => [k, sum(k)]));
+  const cells = (r) => `<td>${fmtInt(r.pending)}</td><td>${fmtInt(r.active)}</td><td>${fmtInt(r.deleted)}</td><td>${fmtInt(r.total)}</td>
+    <td class="pl-new">${fmtInt(r[panelStatPeriod])}</td>`;
+  const newHead = () => {
+    const days = PANEL_STAT_PERIODS[panelStatPeriod][0];
+    return `<th class="pl-new" title="Signed up in the last ${days} days">New (${days} days)</th>`;
+  };
+  const tableHtml = () => `
+    <thead><tr><th>Country</th><th>Pending</th><th>Active</th><th>Deleted</th><th>Total</th>${newHead()}</tr></thead>
+    <tbody>${rows.map((r) => `<tr><td>${escapeHtml(countryName(r.code))}</td>${cells(r)}</tr>`).join('')}</tbody>
+    <tfoot><tr><td>Total</td>${cells(totals)}</tr></tfoot>`;
+  const toggleHtml = () => Object.entries(PANEL_STAT_PERIODS).map(([key, [, label]]) => `
+    <button type="button" data-period="${key}" class="${key === panelStatPeriod ? 'active' : ''}" aria-pressed="${key === panelStatPeriod}">${label}</button>`).join('');
   openFormModal({
     title: 'Panel statistics',
     subtitle: `${panelLabel(panel)} · launched ${fmtDate(panel.start)}`,
     wide: true,
+    headerExtra: `<div class="segmented pl-period" role="group" aria-label="New members in the">${toggleHtml()}</div>`,
     body: `
       <div class="pv-table-frame table-responsive pl-stats-table">
-        <table class="pv-table">
-          <thead><tr><th>Country</th><th>Pending</th><th>Active</th><th>Deleted</th><th>Total</th><th title="Signed up in the last 30 days">New (30 days)</th></tr></thead>
-          <tbody>${rows.map((r) => `<tr><td>${escapeHtml(countryName(r.code))}</td>${cells(r)}</tr>`).join('')}</tbody>
-          <tfoot><tr><td>Total</td>${cells({ pending: sum('pending'), active: sum('active'), deleted: sum('deleted'), total: sum('total'), joined: sum('joined') })}</tr></tfoot>
-        </table>
+        <table class="pv-table" id="plStatsTable">${tableHtml()}</table>
       </div>`,
   });
+  $('#pvModalExtra').onclick = (e) => {
+    const btn = e.target.closest('[data-period]');
+    if (!btn || btn.dataset.period === panelStatPeriod) return;
+    panelStatPeriod = btn.dataset.period;
+    $('#pvModalExtra .pl-period').innerHTML = toggleHtml();
+    $('#plStatsTable').innerHTML = tableHtml();
+  };
 }
 
 function exportMembers(panel) {

@@ -100,18 +100,45 @@ const STAT_COLS = [
 ];
 const STAT_KEYS = STAT_COLS.map(([key]) => key);
 const colsFor = (keys) => keys.map((k) => STAT_COLS.find(([key]) => key === k));
-const VENDOR_COLS = colsFor(['eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'incomplete', 'dup1', 'dup2', 'dup3', 'geo1', 'qfail1', 'qfail2', 'dev1', 'ex1', 'ex2'])
-  .map((col) => (col[0] === 'incomplete' ? ['incomplete', 'INC', 'Incomplete'] : col));
-const DAILY_COLS = colsFor(['eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'dup1', 'dup2', 'dup3', 'geo1', 'qfail1', 'qfail2', 'ex1', 'ex2', 'dev1']);
+// Computed columns: IR% and CONV% (one decimal), DUPS and FAILS (sums). Drops are "incomplete" (campaigns: "inc").
+const pctOf = (part, whole) => (whole ? (part / whole) * 100 : null);
+const STAT_DERIVED = {
+  ir: (s) => pctOf(s.c1 || 0, (s.c1 || 0) + (s.s1 || 0) + (s.s2 || 0)),
+  conv: (s) => pctOf(s.c1 || 0, s.eb || 0),
+  dups: (s) => (s.dup1 || 0) + (s.dup2 || 0) + (s.dup3 || 0),
+  fails: (s) => (s.qfail1 || 0) + (s.qfail2 || 0),
+};
+const PCT_KEYS = new Set(['ir', 'conv']);
+const statValue = (s, key) => (STAT_DERIVED[key] ? STAT_DERIVED[key](s) : s[key] || 0);
+const fmtPct1 = (v) => (v == null ? '—' : `${v.toFixed(1)}%`);
+// One table cell for a stat column: counts as whole numbers, IR% and CONV% as 33.5%.
+function statCell(s, key, hl = 'c1') {
+  const v = statValue(s, key);
+  const cls = key === hl ? 'col-hl' : '';
+  if (PCT_KEYS.has(key)) return `<td class="${cls}${v ? '' : ' zero'}">${fmtPct1(v)}</td>`;
+  return numCell(v, cls);
+}
+const statCsv = (s, key) => (PCT_KEYS.has(key) ? fmtPct1(statValue(s, key)) : statValue(s, key));
+
+// Project vendors, Progress over time (daily) and the Progress tab share these columns.
+const VENDOR_COLS = [
+  ['eb', 'EB', 'Entry base'], ['ec', 'EC', 'Entry client'], ['c1', 'C1', 'Completes'],
+  ['ir', 'IR%', 'Incidence rate: C1 ÷ (C1 + S1 + S2)'], ['conv', 'CONV%', 'Conversion: C1 ÷ EB'],
+  ['s1', 'S1', 'Screenouts'], ['s2', 'S2', 'Screenouts in screener'], ['q1', 'Q1', 'Quota fulls'], ['q2', 'Q2', 'Quota fulls in screener'],
+  ['incomplete', 'DROPS', 'Drop-outs (incomplete)'], ['dups', 'DUPS', 'Duplicates: DUP1 + DUP2 + DUP3'],
+  ['fails', 'FAILS', 'Quality fails: QFAIL1 + QFAIL2'],
+];
+const DAILY_COLS = VENDOR_COLS;
 const CAMPAIGN_COLS = [
   ['inv', 'INV', 'Invitations sent'], ['eb', 'EB', 'Entry base'], ['ec', 'EC', 'Entry client'], ['rr', 'RR', 'Response rate (EB ÷ INV)'],
-  ['c1', 'C1', 'Completes'], ['s1', 'S1'], ['s2', 'S2'], ['q1', 'Q1'], ['q2', 'Q2'], ['inc', 'INC', 'Incomplete'],
-  ['oth', 'OTH', 'Other statuses: DUP1-3, GEO1, QFAIL1-2, EX1-2, DEV1 and no unique code'],
+  ['c1', 'C1', 'Completes'], ['ir', 'IR%', 'Incidence rate: C1 ÷ (C1 + S1 + S2)'], ['conv', 'CONV%', 'Conversion: C1 ÷ EB'],
+  ['s1', 'S1'], ['s2', 'S2'], ['q1', 'Q1'], ['q2', 'Q2'], ['inc', 'DROPS', 'Drop-outs (incomplete)'],
+  ['dups', 'DUPS', 'Duplicates: DUP1 + DUP2 + DUP3'], ['fails', 'FAILS', 'Quality fails: QFAIL1 + QFAIL2'],
 ];
-// OTH is the sum of these.
+// Statuses a campaign counts besides INV / EB / EC / C1 / S / Q / drops (shown one by one in Campaign info).
 const CAMPAIGN_OTHER_KEYS = ['dup1', 'dup2', 'dup3', 'geo1', 'qfail1', 'qfail2', 'ex1', 'ex2', 'dev1', 'noUnique'];
 const CAMPAIGN_KEYS = ['inv', 'eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'inc', ...CAMPAIGN_OTHER_KEYS];
-const campStat = (s, key) => (key === 'oth' ? CAMPAIGN_OTHER_KEYS.reduce((sum, k) => sum + (s[k] || 0), 0) : s[key] || 0);
+const campStat = (s, key) => statValue(s, key);
 // Campaign info: every status of the campaign.
 const CAMPAIGN_INFO_STATS = [
   ['eb', 'EB'], ['ec', 'EC'], ['inc', 'Incomplete'], ['c1', 'C1'], ['s1', 'S1'], ['s2', 'S2'], ['q1', 'Q1'], ['q2', 'Q2'],
@@ -526,6 +553,8 @@ const PAGE_RENDERERS = {
   users: () => renderUsers(),                          // users.js
   user: (r) => renderUser(r.id),                       // users.js
   statistics: () => renderStatistics(),                // users.js
+  'user-statistics': (r) => renderUserStatistics(r.id), // users.js
+  'my-statistics': () => renderMyStatistics(),         // users.js
   translations: () => renderTranslations(),            // panel-tools.js
   'survey-points': () => renderSurveyPoints(),         // panel-tools.js
   'first-surveys': () => renderFirstSurveys(),         // panel-tools.js
@@ -541,7 +570,7 @@ const PAGE_RENDERERS = {
 // Pages opened by a plain #/<name> address.
 const SIMPLE_PAGES = [
   'feasibility', 'exports', 'vendors', 'vendor-groups', 'blacklist', 'screener-library', 'panels', 'rewards', 'redeem', 'recruiters',
-  'users', 'statistics', 'translations', 'survey-points', 'first-surveys',
+  'users', 'statistics', 'my-statistics', 'translations', 'survey-points', 'first-surveys',
   'fw-accounts', 'fw-projects', 'fw-ratecards', 'fw-feasibilities',
   ...Object.keys(SOON_PAGES),
 ];
@@ -555,6 +584,7 @@ const ROUTES = [
   [/^#\/panels\/([a-z]+)$/, (m) => ({ view: 'panel', panel: m[1] })],
   [/^#\/recruiters\/(new|\d+)$/, (m) => ({ view: 'recruiter', id: m[1] })],
   [/^#\/users\/(new|\d+)$/, (m) => ({ view: 'user', id: m[1] })],
+  [/^#\/statistics\/(\d+)$/, (m) => ({ view: 'user-statistics', id: m[1] })],
   [/^#\/fw-accounts\/(new|\d+)$/, (m) => ({ view: 'fw-account', id: m[1] })],
   [/^#\/fw-projects\/(\d+)(?:\/(overview|targets))?$/, (m) => ({ view: 'fw-project', id: m[1], tab: m[2] })],
   [/^#\/fw-ratecards\/(new|\d+)$/, (m) => ({ view: 'fw-ratecard', id: m[1] })],
@@ -1090,7 +1120,7 @@ function renderVendors(el) {
   const busiest = d.vendors.reduce((best, v) => (!best || v.stats.eb > best.stats.eb ? v : best), null);
   const isChart = pv.vendorView === 'chart';
   const subtitle = d.vendors.length === 1 ? `Daily completes (C1) · ${escapeHtml(d.vendors[0].name)}` : 'Daily completes (C1) by vendor';
-  const cells = (stats) => VENDOR_COLS.map(([key]) => numCell(stats[key], key === 'c1' ? 'col-hl' : '')).join('');
+  const cells = (stats) => VENDOR_COLS.map(([key]) => statCell(stats, key)).join('');
 
   el.innerHTML = `
     <section class="pv-card flush">
@@ -1636,7 +1666,7 @@ function dailyRows(d) {
 function dailyTableHtml(d) {
   const rows = dailyRows(d);
   const total = rows.reduce((acc, r) => addStats(acc, r), emptyStats());
-  const cells = (r) => DAILY_COLS.map(([key]) => numCell(r[key], key === 'c1' ? 'col-hl' : '')).join('');
+  const cells = (r) => DAILY_COLS.map(([key]) => statCell(r, key)).join('');
   return `
     <div class="pv-subbar">
       <select class="form-select form-select-sm pv-filter" data-change="vendor-filter" aria-label="Filter vendor">
@@ -1650,7 +1680,7 @@ function dailyTableHtml(d) {
         <thead><tr><th>Date</th>${thCells(DAILY_COLS)}</tr></thead>
         <tbody>
           ${rows.length
-            ? rows.map((r) => `<tr><td>${r.date}</td>${cells(r)}</tr>`).join('')
+            ? [...rows].reverse().map((r) => `<tr><td>${r.date}</td>${cells(r)}</tr>`).join('') /* newest day first */
             : emptyRow(DAILY_COLS.length + 1, 'No fieldwork days yet', 'Daily numbers appear once respondents start the survey.')}
         </tbody>
         ${rows.length ? `<tfoot><tr><td>Total</td>${cells(total)}</tr></tfoot>` : ''}
@@ -1842,8 +1872,8 @@ function exportVendor(id) {
   const v = p.detail.vendors.find((x) => x.id === id);
   downloadCsv(`project-${p.jobNo}-${slugify(v.name)}-daily-${today()}.csv`, [
     ['Date', ...DAILY_COLS.map(([, label]) => label)],
-    ...v.daily.map((r) => [r.date, ...DAILY_COLS.map(([key]) => r[key])]),
-    ['Total', ...DAILY_COLS.map(([key]) => v.stats[key])],
+    ...[...v.daily].reverse().map((r) => [r.date, ...DAILY_COLS.map(([key]) => statCsv(r, key))]),
+    ['Total', ...DAILY_COLS.map(([key]) => statCsv(v.stats, key))],
   ]);
   showToast(`Exported daily data for ${v.name}.`);
 }
@@ -1854,7 +1884,7 @@ function exportDaily() {
   const vendor = p.detail.vendors.find((v) => String(v.id) === pv.vendorFilter);
   downloadCsv(`project-${p.jobNo}-${vendor ? slugify(vendor.name) : 'all-vendors'}-daily-${today()}.csv`, [
     ['Date', ...DAILY_COLS.map(([, label]) => label)],
-    ...rows.map((r) => [r.date, ...DAILY_COLS.map(([key]) => r[key])]),
+    ...[...rows].reverse().map((r) => [r.date, ...DAILY_COLS.map(([key]) => statCsv(r, key))]),
   ]);
   showToast('Daily progress exported.');
 }
@@ -1880,7 +1910,7 @@ function renderProgress(el) {
       <div class="table-responsive">
         <table class="pv-table">
           <thead><tr><th>Vendor name</th>${thCells(VENDOR_COLS)}</tr></thead>
-          <tbody><tr><td class="cell-name">Main Frame</td>${VENDOR_COLS.map(([key]) => numCell(totals[key], key === 'c1' ? 'col-hl' : '')).join('')}</tr></tbody>
+          <tbody><tr><td class="cell-name">Main Frame</td>${VENDOR_COLS.map(([key]) => statCell(totals, key)).join('')}</tr></tbody>
         </table>
       </div>
     </section>`;
@@ -1915,7 +1945,7 @@ function campaignRowHtml(c, parent) {
     ? `<button type="button" class="camp-caret${open ? ' open' : ''}" data-action="camp-toggle" data-id="${c.id}"
                aria-expanded="${open}" aria-label="${open ? 'Hide' : 'Show'} segments of ${escapeHtml(c.name)}"><i class="bi bi-caret-right-fill"></i></button>`
     : '<span class="camp-caret-spacer"></span>';
-  const value = (key) => (key === 'rr' ? `<td>${s.inv ? Math.round(ratio(s.eb, s.inv)) : 0}%</td>` : numCell(campStat(s, key), key === 'c1' ? 'col-hl' : ''));
+  const value = (key) => (key === 'rr' ? `<td>${s.inv ? Math.round(ratio(s.eb, s.inv)) : 0}%</td>` : statCell(s, key));
   const name = isSub
     ? `<span>${escapeHtml(c.name)}</span>`
     : `<button type="button" class="cell-link" data-action="camp-info" data-id="${c.id}" title="Campaign info">${escapeHtml(c.name)}</button>`;
@@ -1958,6 +1988,7 @@ function renderCampaigns(el) {
           <option value="">All panels</option>
           ${PANELS.map((x) => `<option value="${x.code}"${x.code === pv.campPanel ? ' selected' : ''}>${x.code} · ${escapeHtml(x.name)}</option>`).join('')}
         </select>
+        ${ecToggleHtml()}
       </div>
       <div class="table-responsive">
         <table class="pv-table camp-table">
@@ -3211,9 +3242,11 @@ function createMultiSelect(root, { id, options, selected = [], placeholder = '',
 let modalSubmit = null;
 // Without a submitLabel the modal is read-only: no submit button, and Cancel reads "Close".
 // wide: true for a large modal, 'xl' for an extra-large one (the ratecard grid).
-function openFormModal({ title, subtitle = '', body, submitLabel, onSubmit, wide = false }) {
+// headerExtra: controls shown in the header next to the title (e.g. Last week / Last month).
+function openFormModal({ title, subtitle = '', body, submitLabel, onSubmit, wide = false, headerExtra = '' }) {
   $('#pvModalTitle').textContent = title;
   $('#pvModalSub').textContent = subtitle;
+  Object.assign($('#pvModalExtra'), { innerHTML: headerExtra, onclick: null });
   $('#pvModalBody').innerHTML = body;
   // Callers that need clicks or typing inside the body set these after opening.
   Object.assign($('#pvModalBody'), { onclick: null, oninput: null, onchange: null });

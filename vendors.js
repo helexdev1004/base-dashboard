@@ -274,7 +274,7 @@ function exportVendorStats() {
     ['ID', 'Vendor name', 'Vendor group', 'Panel', 'API', 'Created', 'Projects', ...VENDOR_COLS.map(([, label]) => label)],
     ...list.map((v) => {
       const s = totals.get(v.name) || { projects: 0, ...emptyStats() };
-      return [v.id, v.name, groupName(v.groupId), v.panel, v.api ? 'Yes' : 'No', fmtDate(v.createdAt), s.projects, ...VENDOR_COLS.map(([key]) => s[key])];
+      return [v.id, v.name, groupName(v.groupId), v.panel, v.api ? 'Yes' : 'No', fmtDate(v.createdAt), s.projects, ...VENDOR_COLS.map(([key]) => statCsv(s, key))];
     }),
   ]);
   showToast(`Exported stats for ${plural(list.length, 'vendor')}.`);

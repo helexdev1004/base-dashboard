@@ -1476,6 +1476,12 @@ a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; 
   .spark { width: 150px; }
   .spark-bar { max-width: 4px; }
 }
+/* Daily: 14 wider bars in the same space */
+.spark.is-daily .spark-slot { padding: 0 1px; }
+.spark.is-daily .spark-bar { max-width: 5px; }
+@media (min-width: 1600px) {
+  .spark.is-daily .spark-bar { max-width: 8px; }
+}
 .spark-slot.is-hover .spark-bar { background: var(--primary); }
 .spark-tip {
   position: fixed;
@@ -1650,6 +1656,10 @@ a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; 
 .modal-content { border-radius: 16px; box-shadow: var(--float-shadow); }
 .modal-header,
 .offcanvas-header { align-items: flex-start; padding: 20px 22px 14px; border-bottom: 1px solid var(--border); }
+/* Controls next to a modal title (Panel statistics: Last week / Last month) */
+.modal-head-extra { margin: 2px 16px 0 auto; }
+.modal-head-extra:empty { display: none; }
+.modal-head-extra:not(:empty) + .btn-close { margin-left: 0; }
 .modal-title,
 .offcanvas-title { font-size: 17px; font-weight: 700; color: var(--text-strong); }
 .panel-subtitle { margin: 4px 0 0; font-size: 12.5px; color: var(--muted); }
@@ -3200,6 +3210,12 @@ html[data-bs-theme="dark"] .cf-auto { background-color: color-mix(in srgb, var(-
 .ac-sub { padding-left: 14px; }
 .ac-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); }
 .ac-label .bi { width: 16px; color: var(--muted); }
+
+/* Statistics per month (Personal statistics, and a user from Statistics) */
+.mstat-card { max-width: 760px; }
+.mstat-month { font-variant-numeric: tabular-nums; font-weight: 500; color: var(--text-strong); }
+.mstat-table tfoot td { font-weight: 700; color: var(--text-strong); }
+.mstat-head { display: flex; align-items: center; gap: 12px; }
 
 /* ---------- Statistics ---------- */
 .st-filters { flex-wrap: nowrap; align-items: flex-start; }
