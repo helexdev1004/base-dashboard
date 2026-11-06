@@ -1,8 +1,8 @@
 'use strict';
 
-// Exclude IPs tab.
+// Exclude IPs tab. Edits go into pv.ipDraft and only reach the project on Save.
 
-// Edits go into a draft list and only apply to the project on Save.
+// IPv4 with an optional /0-32 mask. IPv6 just gets a loose shape check below.
 const IPV4 = /^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\/(3[0-2]|[12]?\d))?$/;
 function isValidIp(value) {
   if (IPV4.test(value)) return true;

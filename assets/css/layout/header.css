@@ -99,7 +99,8 @@
 .theme-tile-name .bi { font-size: 13px; color: var(--primary); visibility: hidden; }
 .theme-tile[aria-checked="true"] .theme-tile-name .bi { visibility: visible; }
 
-/* Mini dashboard preview: sidebar, header, two cards and an accent button. */
+/* The little dashboard drawing in each theme option: sidebar, header, two cards, accent button.
+   layout/themes.js sets the --p-* colours inline. */
 .theme-preview {
   display: grid;
   grid-template-columns: 24% 1fr;

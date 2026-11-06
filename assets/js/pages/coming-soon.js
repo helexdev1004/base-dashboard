@@ -2,7 +2,7 @@
 
 // Placeholder page for menu items that are not built yet.
 
-// Menu items without a design yet (SOON_PAGES in script.js) share one placeholder page.
+// key is one of SOON_PAGES (app/router.js)
 function renderSoon(key) {
   const [title, icon] = SOON_PAGES[key];
   document.title = `${title} · Base`;

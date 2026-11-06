@@ -14,6 +14,7 @@ function leaveProject() {
 function openProject(p, tab) {
   const creating = !p;
   const same = currentView === 'project' && pv.creating === creating && pv.project === p;
+  // Same project, only the tab changed: keep the panels that are already rendered.
   if (!same) {
     if (p) ensureDetail(p);
     Object.assign(pv, {

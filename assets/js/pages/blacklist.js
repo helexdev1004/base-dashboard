@@ -15,7 +15,7 @@ function sampleUuid(next) {
 (function seedBlacklist() {
   const r = seeded(9091);
   const at = (iso) => new Date(iso).getTime();
-  // The first ten match the reference design; the rest came in one bulk import.
+  // First ten RESPIDs are fixed, the rest random. Anything without its own date came in the one bulk import.
   const known = [
     ['3fe19810-ba59-479e-b671-7966126956a0', '2026-09-28T20:03:24'],
     ['3dd1fdd8-8f47-4b1f-a24b-46e3cf7766bb', '2026-10-05T20:28:23'],

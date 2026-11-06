@@ -32,7 +32,7 @@ const FW_BASE_CPI = [
   [8, 8.7, 8.7, 9.3, 10.1, 11.1, 12.1, 13.7, 15.5, 17.8, 29, 39.8],
   [9, 9.7, 9.7, 10.3, 11.1, 12.1, 13.1, 14.7, 16.5, 18.8, 30, 40.8],
 ];
-// Dollar and pound prices follow the euro price (worked out in cents to avoid rounding drift).
+// Dollar and pound prices follow the euro price. rate is a percentage (110 = x1.10), and the maths is done in cents so it doesn't drift.
 const fromEur = (eur, rate) => Math.round((Math.round(eur * 100) * rate) / 100) / 100;
 function cpiGrid(factor) {
   const eur = FW_BASE_CPI.map((row) => row.map((v) => Math.round(v * factor * 10) / 10));
@@ -70,7 +70,7 @@ const fwEmail = (handle, client) => `${handle}@${slugify(client)}.example.com`;
     fwAccounts.push({ id, name, initials, color, client, email: fwEmail(handle, client), packages, enabled, lastLoginAt: at(login) });
   });
 
-  // Ratecard01 is the one in the reference design; the others get a few markets each.
+  // Ratecard01 has the full market list (targetCpi reads it); the others get a few random markets each.
   const marketsOf = (groups) => groups.map(([id, countries, factor]) => ({ id, countries, factor, cpi: null }));
   fwRatecards.push({ id: 13, name: 'Dynamic', markets: [] });
   fwRatecards.push({
@@ -97,7 +97,7 @@ const fwEmail = (handle, client) => `${handle}@${slugify(client)}.example.com`;
     const groups = [];
     for (let g = 0, used = 0; g < r.int(3, 6); g++) {
       const size = r.int(1, 5);
-      if (nextMarketId === 41) nextMarketId += 1;
+      if (nextMarketId === 41) nextMarketId += 1; // 41 is China on Ratecard01
       groups.push([nextMarketId++, pool.slice(used, used + size).sort(), Math.round(r.between(0.7, 1.3) * 100) / 100]);
       used += size;
     }
@@ -137,7 +137,7 @@ const fwEmail = (handle, client) => `${handle}@${slugify(client)}.example.com`;
   known.forEach(([id, accountId, name, jn, po, iso, status, targets]) => {
     fwProjects.push({
       id, accountId, name, jn, po, createdAt: at(iso), status,
-      // As in the reference design: all devices, no PII, a short note.
+      // Fixed: all devices, no PII, info 'test'.
       targets: targets.map(([country, completes, loi, ir], i) => ({
         ...makeTarget(i + 1, country, completes, loi, ir, 0), devices: FW_DEVICES, pii: false, info: 'test',
       })),
@@ -163,7 +163,7 @@ const fwEmail = (handle, client) => `${handle}@${slugify(client)}.example.com`;
     });
   }
 
-  // Feasibility per market (two from the reference design, the rest sample).
+  // Feasibility per market. Argentina and Australia are fixed, the rest random.
   const fixed = { Argentina: 5796, Australia: 3831 };
   [...FW_MARKETS].sort().slice(0, 48).forEach((market) => {
     fwFeasibilities.push({ market, value: fixed[market] ?? Math.round(r.between(400, 60000) / (r.chance(0.3) ? 4 : 1)) });

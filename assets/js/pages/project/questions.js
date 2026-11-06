@@ -2,10 +2,10 @@
 
 // Screener and Post Poll tabs.
 
-// Each question is its own form: edits stay in the card until its Save button is pressed.
+// Each question card is its own form. Edits stay in the card until that card's Save.
 const QUESTION_KINDS = {
   screener: {
-    get library() { return SCREENER_LIBRARY; }, // library.js
+    get library() { return SCREENER_LIBRARY; }, // getter because the Screener Library script loads after this one
     statusKey: 'screenerActive', statusLabel: 'Screener status',
     exportLabel: 'Export screener data', slug: 'screener', actions: true,
   },

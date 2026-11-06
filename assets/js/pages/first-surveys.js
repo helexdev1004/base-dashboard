@@ -1,8 +1,8 @@
 'use strict';
 
-// First surveys.
+// First surveys: the survey each panel sends its new members first.
 
-// The survey each panel sends new members first: one live project per panel, in a country the panel covers.
+// Built on first render: the newest project in a country the panel covers (Gavenze gets two, different countries).
 let firstSurveys = null;
 const fs = { sortDir: 'desc', page: 1, mounted: false };
 

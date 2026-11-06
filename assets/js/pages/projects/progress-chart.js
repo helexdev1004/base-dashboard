@@ -2,15 +2,15 @@
 
 // Small completes chart in the PROGRESS column (hourly or daily) and its tooltip.
 
-/* Progress: completes per hour over the past 24 hours (oldest first), adding up to the
-   "Completes past 24 hours" count. Hours without completes show as a dash. Entries per
-   hour add up to the past-24-hours entries, so each hour has its own conversion. */
+/* Hourly: 24 slots, oldest first. Completes add up to p.c24h (the "Completes past 24 hours"
+   number) and entries to p.eb24h, so each hour has its own conversion. Empty hours draw as a
+   flat dash. */
 const HOUR = 60 * MINUTE;
 const SPARK_HOURS = 24;
 const sparkCache = new Map();
 const hourStart = (ts) => { const d = new Date(ts); d.setMinutes(0, 0, 0); return d.getTime(); };
 
-// Split a whole number over weighted slots (largest remainder), adding to `into`.
+// Like splitInt (core/utils.js) but adds into an existing array and skips zero-weight slots.
 function spreadInt(total, weights, into) {
   const sum = weights.reduce((a, b) => a + b, 0);
   if (!total || !sum) return;
@@ -81,7 +81,7 @@ function dailyCompletes(p) {
   const key = `${days[0]}|${p.c1}|${p.eb}|${p.lastEntryAt}`;
   const hit = dailySparkCache.get(p.id);
   if (hit?.key === key) return hit;
-  const detail = ensureDetail(p); // project.js
+  const detail = ensureDetail(p); // pages/project/data.js
   const byDate = new Map(detail.days.map((date, i) => [date, detail.vendors.reduce((acc, v) => {
     acc.c1 += v.daily[i]?.c1 || 0;
     acc.eb += v.daily[i]?.eb || 0;
@@ -116,7 +116,7 @@ function sparkHtml(p) {
     </div>`;
 }
 
-// One tooltip for every chart: the date, the hour (hourly only), the completes and the conversion (completes ÷ entries).
+// One shared tooltip for all the Progress charts: date, hour range (hourly only), completes, conversion.
 function initSparkTips() {
   const tip = document.createElement('div');
   tip.className = 'spark-tip';

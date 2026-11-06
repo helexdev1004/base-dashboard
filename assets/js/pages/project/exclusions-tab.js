@@ -1,8 +1,8 @@
 'use strict';
 
-// Project exclusions tab.
+// Project exclusions tab: keep respondents of other projects out of this one.
 
-// Each row: one project, the statuses to exclude from it, and how far back (e.g. 12 months).
+// One row per project: which of its statuses to exclude and how far back (e.g. 12 months).
 const allExclusionStatuses = () => EXCLUSION_STATUSES.map(([code]) => code);
 const copyExclusions = (rows) => rows.map((x) => ({ ...x, statuses: [...x.statuses] }));
 const newExclusionRow = (rows) => ({
@@ -98,7 +98,7 @@ function renderExclusions(el) {
   el.oninput = onExclusionsInput;
   el.onchange = onExclusionsInput;
   el.onkeydown = (e) => {
-    // The period only takes digits.
+    // Digits only. type=number would still let e, +, - and . through.
     if (e.target.dataset.exField === 'period' && ['e', 'E', '+', '-', '.', ','].includes(e.key)) e.preventDefault();
   };
   el.onsubmit = saveExclusions;

@@ -4,7 +4,7 @@
 
 const THEME_KEY = 'base.theme';
 
-// Ids and modes must match the inline script in index.html; colours live in style.css.
+// Ids and modes must match the inline script in index.html. Colours are in assets/css/base/themes.css.
 // preview = [page, sidebar, header, card, accent] for the mini dashboard in the picker.
 const THEMES = [
   { id: 'midnight', name: 'Midnight', desc: 'Deep navy with a violet glow', mode: 'dark',

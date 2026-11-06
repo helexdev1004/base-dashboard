@@ -294,7 +294,7 @@ function exportMembers(panel) {
   }, big ? 60 : 0);
 }
 
-// Emails are composed here and handed to the mailer; this preview only confirms them.
+// TODO: hand these to the mailer. For now Send only shows a toast.
 function openCompose(panel, { status, member }) {
   const count = member ? 1 : statusCounts(panel)[status];
   const to = member ? `${memberName(member)} <${member.email}>` : `All ${status} members of ${panelLabel(panel)} (${fmtInt(count)})`;

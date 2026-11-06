@@ -225,7 +225,8 @@ function renderFwMarketRows(rc, flashId = null) {
     <nav aria-label="Market pages">${pagerHtml(page, pages, 'fwm-page')}</nav>`;
 }
 
-// Ratecard details: the markets this price list covers and the CPI per survey length and incidence rate.
+// One market of a ratecard: its countries and the CPI grid (LOI x IR, per currency).
+// Seeded markets have no saved grid, so it's worked out from their factor.
 function openMarketModal(rc, market) {
   const grid = market ? market.cpi || cpiGrid(market.factor) : emptyCpiGrid();
   openFormModal({

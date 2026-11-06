@@ -1,15 +1,15 @@
 'use strict';
 
-// Views and hash routing. Every page registers its renderer in PAGE_RENDERERS.
+// Views and hash routing. PAGE_RENDERERS maps each page to its render function.
 
-// Menu items that have no design yet: [title, icon]. Each opens the shared "Coming soon" page.
+// Menu items that aren't built yet: [title, icon]. They all open the "Coming soon" page.
 const SOON_PAGES = {
   clients: ['Clients', 'bi-people'],
   profiling: ['Profiling', 'bi-window-sidebar'],
   'external-surveys': ['External surveys', 'bi-diagram-3'],
 };
 
-// One view shows at a time; the router in project.js decides which.
+// view name -> container. Only one is visible at a time; route() picks it.
 const VIEWS = {
   ...Object.fromEntries(Object.keys(SOON_PAGES).map((key) => [key, '#soonView'])),
   list: '#listView',
@@ -77,38 +77,38 @@ function setView(name) {
   window.scrollTo(0, name === 'list' ? listScrollY : 0);
 }
 
-// Every page other than the project list and a project.
+// Every page except the project list and the project page, which route() handles itself.
 const PAGE_RENDERERS = {
-  feasibility: () => renderFeasibility(),              // feasibility.js
-  exports: () => renderExports(),                      // exports.js
-  vendors: () => renderVendorsList(),                  // vendors.js
-  'vendor-form': (r) => renderVendorForm(r.id),        // vendors.js
-  'vendor-groups': () => renderVendorGroups(),         // vendors.js
-  blacklist: () => renderBlacklist(),                  // blacklist.js
-  'screener-library': () => renderLibrary(),           // library.js
-  'library-form': (r) => renderLibraryForm(r.id),      // library.js
-  panels: () => renderPanels(),                        // panels.js
-  panel: (r) => renderPanelPage(r.panel),              // panels.js
-  panelist: (r) => renderPanelist(r.panel, r.id),      // panels.js
-  rewards: () => renderRewards(),                      // rewards.js
-  redeem: () => renderRedeem(),                        // rewards.js
-  recruiters: () => renderRecruiters(),                // recruiters.js
-  recruiter: (r) => renderRecruiter(r.id),             // recruiters.js
-  users: () => renderUsers(),                          // users.js
-  user: (r) => renderUser(r.id),                       // users.js
-  statistics: () => renderStatistics(),                // users.js
-  'user-statistics': (r) => renderUserStatistics(r.id), // users.js
-  'my-statistics': () => renderMyStatistics(),         // users.js
-  translations: () => renderTranslations(),            // panel-tools.js
-  'survey-points': () => renderSurveyPoints(),         // panel-tools.js
-  'first-surveys': () => renderFirstSurveys(),         // panel-tools.js
-  'fw-accounts': () => renderFwAccounts(),             // framework.js
-  'fw-account': (r) => renderFwAccount(r.id),          // framework.js
-  'fw-projects': () => renderFwProjects(),             // framework.js
-  'fw-project': (r) => renderFwProject(r.id, r.tab),   // framework.js
-  'fw-ratecards': () => renderFwRatecards(),           // framework.js
-  'fw-ratecard': (r) => renderFwRatecard(r.id),        // framework.js
-  'fw-feasibilities': () => renderFwFeasibilities(),   // framework.js
+  feasibility: () => renderFeasibility(),
+  exports: () => renderExports(),
+  vendors: () => renderVendorsList(),
+  'vendor-form': (r) => renderVendorForm(r.id),
+  'vendor-groups': () => renderVendorGroups(),
+  blacklist: () => renderBlacklist(),
+  'screener-library': () => renderLibrary(),
+  'library-form': (r) => renderLibraryForm(r.id),
+  panels: () => renderPanels(),
+  panel: (r) => renderPanelPage(r.panel),
+  panelist: (r) => renderPanelist(r.panel, r.id),
+  rewards: () => renderRewards(),
+  redeem: () => renderRedeem(),
+  recruiters: () => renderRecruiters(),
+  recruiter: (r) => renderRecruiter(r.id),
+  users: () => renderUsers(),
+  user: (r) => renderUser(r.id),
+  statistics: () => renderStatistics(),
+  'user-statistics': (r) => renderUserStatistics(r.id),
+  'my-statistics': () => renderMyStatistics(),
+  translations: () => renderTranslations(),
+  'survey-points': () => renderSurveyPoints(),
+  'first-surveys': () => renderFirstSurveys(),
+  'fw-accounts': () => renderFwAccounts(),
+  'fw-account': (r) => renderFwAccount(r.id),
+  'fw-projects': () => renderFwProjects(),
+  'fw-project': (r) => renderFwProject(r.id, r.tab),
+  'fw-ratecards': () => renderFwRatecards(),
+  'fw-ratecard': (r) => renderFwRatecard(r.id),
+  'fw-feasibilities': () => renderFwFeasibilities(),
   ...Object.fromEntries(Object.keys(SOON_PAGES).map((key) => [key, () => renderSoon(key)])),
 };
 // Pages opened by a plain #/<name> address.
@@ -119,7 +119,7 @@ const SIMPLE_PAGES = [
   ...Object.keys(SOON_PAGES),
 ];
 
-// [pattern, route] — the first match wins.
+// [pattern, route]. First match wins, so the plain #/<name> catch-all goes last.
 const ROUTES = [
   [/^#\/project\/(new|\d+)(?:\/([a-z]+))?$/, (m) => ({ view: 'project', id: m[1], tab: m[2] })],
   [/^#\/vendors\/(new|\d+)$/, (m) => ({ view: 'vendor-form', id: m[1] })],
@@ -148,12 +148,13 @@ function route() {
   const open = currentView === 'project';
   const sameTarget = r.view === 'project' && (r.id === 'new' ? pv.creating : Number(r.id) === pv.project?.id);
   const pending = [pv.dirty && 'Main', ...[...pv.unsaved].map((t) => UNSAVED_LABELS[t])].filter(Boolean);
+  // Unsaved project tabs: put the old hash back and stay where we are.
   if (open && pending.length && !sameTarget) {
     history.replaceState(null, '', projectHash(pv.project, pv.tab));
     showToast(`You have unsaved changes on ${pending.join(', ')}. Save or cancel them first.`, 'info');
     return;
   }
-  // Edit pages (vendor, library question, panelist, recruiter) register in formGuards (script.js).
+  // Same for any edit page registered in formGuards.
   const guard = formGuards[currentView];
   if (guard?.dirty && location.hash !== guard.hash) {
     history.replaceState(null, '', guard.hash);

@@ -1,13 +1,13 @@
 'use strict';
 
-// Vendor info modal (opened from a vendor name).
+// Vendor info modal, opened by clicking a vendor name on Project vendors.
 
-// [key, label, default]: Yes / No settings.
+// Yes/No settings: [key, label, default].
 const VENDOR_SWITCHES = [
   ['recaptcha', 'reCAPTCHA enabled', false], ['screener', 'Show screener', true], ['poll', 'Show post poll', true],
   ['s2s', 'Server to server call', false], ['redirect', 'Auto redirect', true],
 ];
-// [key, label, ticked by default, default text]: ticking opens a text box.
+// Screen texts: [key, label, ticked by default, default text]. Ticking one shows its text box.
 const VENDOR_TEXTS = [
   ['intro', 'Intro screen text', false, ''], ['terminate', 'Terminate & quotafull screen text', false, ''],
   ['complete', 'Complete screen text', true, 'Thank you for completing this survey!'], ['closed', 'Closed screen text', false, ''],
@@ -21,7 +21,7 @@ function vendorInfo(v) {
   return v.info;
 }
 
-// The vendor's entry link, and the same link in the vendor's format (from the Vendors list, when it has one).
+// The vendor's entry link, plus the same link in the vendor's own format if the Vendors page has one for it.
 function vendorLinks(p, v) {
   const link = `https://fwredirect.com/v/${token(15, seeded(p.id * 977 + v.id).next)}`;
   const format = vendorRegistry.find((x) => x.name === v.name)?.liveLink || `{LIVE_LINK}?vid=${v.id}&rid={RID}`;

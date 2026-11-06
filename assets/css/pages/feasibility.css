@@ -1,6 +1,6 @@
 /* MF+A Feasibility. */
 
-/* Feasibility settings */
+/* Settings row and the templates menu */
 .fz-filter-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 16px; }
 .fz-field { flex: 0 0 auto; min-width: 0; }
 .fz-field .form-label { margin-bottom: 4px; font-size: 12px; }
@@ -48,7 +48,7 @@
 .fz-recalc-cell { width: 56px; text-align: center !important; vertical-align: middle !important; background: none !important; }
 .fz-recalc { width: 34px; height: 34px; border-radius: 50%; font-size: 15px; }
 .fz-recalc.spin i { animation: fz-spin .6s ease; }
-@keyframes fz-spin { to { transform: rotate(360deg); } }
+@keyframes fz-spin { to { transform: rotate(360deg); } } /* the other refresh buttons spin with this too */
 
 .fz-avail,
 .fz-total {

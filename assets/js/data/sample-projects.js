@@ -91,7 +91,8 @@ function buildProjects() {
 
   const list = bases.map((b) => makeMetrics(b, liveIds.has(b.id), now));
 
-  // Row 1 matches the reference design exactly.
+  // Project 8650 (top of the list) gets fixed numbers and is always live.
+  // If it came out Closed, another live one is closed so the count stays at LIVE_PROJECTS.
   const first = list.find((p) => p.id === 8650);
   if (first.status !== 'Live') {
     const swap = list.find((p) => p.status === 'Live' && p.id !== 8650);

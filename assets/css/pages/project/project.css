@@ -252,7 +252,7 @@
 .ec-toggle button { white-space: nowrap; }
 .pv-toolbar .ec-toggle { margin-left: 4px; }
 
-/* Project vendors: PROGRESS column (last entry / last complete) */
+/* Vendors tab: PROGRESS column (last entry / last complete). Metric boxes continue below. */
 .vendor-table .col-progress { text-align: left; }
 .vendor-table td.col-progress { min-width: 180px; }
 .metric-rows { display: flex; flex-direction: column; gap: 6px; }
@@ -589,8 +589,7 @@ html[data-bs-theme="dark"] .cf-auto { background-color: color-mix(in srgb, var(-
   border-radius: 9px;
 }
 
-/* File uploads */
-/* Unique codes and Custom Link: compact, about a third of the page wide. */
+/* File uploads. The Unique codes and Custom link tabs are capped at 460px, about a third of the page. */
 #panel-codes > *,
 #panel-links > * { width: 100%; max-width: 460px; }
 #panel-codes .sum-tiles,

@@ -7,7 +7,7 @@
   <link rel="icon" href="assets/images/favicon.png" type="image/png">
   <meta name="theme-color" content="#06070f">
 
-  <!-- Apply the saved theme before first paint to avoid a flash of the default theme. -->
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
   <script>
     (function () {
       var modes = {
@@ -34,11 +34,11 @@
 
   <div class="app">
 
-    <!-- ============ Sidebar ============ -->
+    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar" aria-label="Main navigation">
       <div class="sidebar-brand">
         <a class="brand" href="#" aria-label="Base home">
-          <!-- White text for dark sidebars, black text for light ones; the collapsed menu shows just the mark. -->
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
           <span class="brand-logo">
             <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
             <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
@@ -100,7 +100,7 @@
     </aside>
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    <!-- ============ Main ============ -->
+    <!-- Main -->
     <div class="main">
 
       <!-- Header -->
@@ -114,7 +114,7 @@
         </a>
 
         <div class="topbar-actions">
-          <!-- Theme picker -->
+          <!-- Theme picker (options come from assets/js/layout/themes.js) -->
           <div class="dropdown">
             <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
               <i class="bi bi-palette2"></i>
@@ -156,7 +156,7 @@
 
       <main class="content">
 
-        <!-- ============ Project list ============ -->
+        <!-- Project list -->
         <div class="list-view" id="listView">
 
           <!-- KPI row: New Project + 5 metric cards -->
@@ -252,10 +252,10 @@
 
         </div>
 
-        <!-- ============ Project detail (rendered by project.js) ============ -->
+        <!-- Project detail, built by assets/js/pages/project/shell.js -->
         <div class="project-view" id="projectView" hidden></div>
 
-        <!-- ============ Pages (rendered by feasibility.js / exports.js) ============ -->
+        <!-- Other pages. Each one is filled in by its script under assets/js/pages/; assets/js/app/router.js shows one at a time. -->
         <div class="page-view" id="feasibilityView" hidden></div>
         <div class="page-view" id="exportsView" hidden></div>
         <div class="page-view" id="vendorsView" hidden></div>
@@ -292,7 +292,7 @@
     </div>
   </div>
 
-  <!-- ============ More filters (offcanvas) ============ -->
+  <!-- More filters (offcanvas) -->
   <div class="offcanvas offcanvas-end panel-offcanvas" tabindex="-1" id="filtersCanvas" aria-labelledby="filtersTitle">
     <div class="offcanvas-header">
       <div>
@@ -330,7 +330,7 @@
     </div>
   </div>
 
-  <!-- ============ Form modal (Add vendor, New campaign — filled in by project.js) ============ -->
+  <!-- Shared form modal (Add vendor, New campaign, ...), driven by openFormModal() in assets/js/components/modal.js -->
   <div class="modal fade" id="pvModal" tabindex="-1" aria-labelledby="pvModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <form class="modal-content" id="pvModalForm" novalidate>

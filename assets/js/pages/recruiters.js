@@ -11,7 +11,7 @@ const recruiters = [];
   const r = seeded(5151);
   const codes = WORLD_COUNTRIES.map((c) => c.code).sort();
   const at = (iso) => new Date(iso).getTime();
-  // Panel SOS: the first ten countries are the rows in the reference design.
+  // Panel SOS has fixed [pending, active, p2w] for the first ten countries; the rest are random.
   const sos = new Map([
     ['ar', [35, 33, 0]], ['at', [6, 9, 2]], ['au', [21, 17, 0]], ['be', [466, 1301, 18]], ['bg', [20, 20, 2]],
     ['bo', [46, 23, 0]], ['br', [73, 26, 1]], ['ca', [29, 14, 0]], ['ch', [3, 4, 0]], ['cl', [32, 29, 0]],

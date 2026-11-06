@@ -16,7 +16,7 @@ function pageList(current, total) {
   return out;
 }
 
-// « ‹ 1 2 3 › » — buttons carry data-<attr>="<page>".
+// First, prev, page numbers, next, last. Every button carries data-<attr>="<page>".
 function pagerHtml(cur, pages, attr) {
   const btn = (page, label, aria, disabled) => `
     <li><button type="button" data-${attr}="${page}" ${disabled ? 'disabled' : ''} aria-label="${aria}">${label}</button></li>`;

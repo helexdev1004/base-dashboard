@@ -10,7 +10,7 @@ const pv = {
   rendered: new Set(),
   draftLink: null,
   pmSelect: null,
-  exDraft: null, // Project exclusions rows being edited
+  exDraft: null, // Project exclusions rows while editing
   vendorView: 'chart',
   vendorFilter: '',
   campStatus: 'Live',
@@ -19,7 +19,7 @@ const pv = {
   expanded: new Set(),
   chartIndex: -1,
   ipDraft: null,         // Exclude IPs edits wait for Save
-  unsaved: new Set(),    // tabs other than Main with unsaved edits ('ips', 'screener', 'poll')
+  unsaved: new Set(),    // tabs other than Main with unsaved edits ('exclusions', 'ips', 'screener', 'poll')
 };
 const UNSAVED_LABELS = { exclusions: 'Project exclusions', ips: 'Exclude IPs', screener: 'Screener', poll: 'Post Poll' };
 let chartObserver = null;

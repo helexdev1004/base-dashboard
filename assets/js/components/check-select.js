@@ -2,7 +2,7 @@
 
 // Dropdown list of checkboxes with a search field.
 
-// Shows "All statuses" when everything is picked, otherwise the picked codes.
+// The toggle reads allLabel when everything is ticked, else up to 4 values (3 and "+N" past that).
 function createCheckSelect(root, { id, options, selected = [], allLabel = 'All', placeholder = '', searchLabel = 'Search…', onChange = () => {} }) {
   let value = options.map((o) => o.value).filter((v) => selected.includes(v));
   root.className = 'chk';

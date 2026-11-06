@@ -3,7 +3,7 @@
 // KPI cards above the project list.
 
 const KPI_CONFIG = [
-  // Accents come from the active theme (--kpi-1 … --kpi-5 in style.css).
+  // Accents follow the theme (--kpi-1 to --kpi-5 in assets/css/base/themes.css).
   { key: 'live', title: 'Projects', sub: 'currently live', icon: 'bi-broadcast', accent: 'var(--kpi-1)', type: 'int' },
   { key: 'cMonth', title: 'Completes', sub: 'this month', icon: 'bi-check2-circle', accent: 'var(--kpi-2)', type: 'int' },
   { key: 'c24', title: 'Completes', sub: 'past 24 hours', icon: 'bi-clock-history', accent: 'var(--kpi-3)', type: 'int' },
@@ -22,7 +22,7 @@ function computeKpis() {
   };
 }
 
-// 14 days of history ending at today's value (synthetic, but stable per load).
+// Made-up 14-day trend ending at today's value. Built once per card; after that only the last point moves.
 const kpiSeries = {};
 function seriesFor(key, end) {
   if (!kpiSeries[key]) {

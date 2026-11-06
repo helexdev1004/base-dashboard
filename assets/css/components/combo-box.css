@@ -1,6 +1,5 @@
-/* Single-choice search box. */
+/* Single-choice search box. Its menu rule also covers .chk-menu from check-select.css. */
 
-/* Single-choice search box */
 .combo { position: relative; }
 .combo-icon { position: absolute; top: 12px; left: 12px; font-size: 13px; color: var(--muted); pointer-events: none; }
 .combo-input { padding-left: 34px; padding-right: 34px; text-overflow: ellipsis; }

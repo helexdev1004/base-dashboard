@@ -1,6 +1,6 @@
 'use strict';
 
-// FW - Feasibilities.
+// FW - Feasibilities: completes per market, with import and export.
 
 const fwf = { search: '', sortKey: 'market', sortDir: 'asc', page: 1, mounted: false, flashMarket: null };
 

@@ -1,6 +1,6 @@
 'use strict';
 
-// Create Campaign / Campaign info modal.
+// Create Campaign / Campaign info modal. Same form for both; once a campaign exists, its vendor, source and samples are locked.
 
 // [key, label, conditions, kind of value]. Reliable is on every new campaign; the rest are added with +.
 const CAMPAIGN_FILTERS = [
@@ -46,7 +46,7 @@ function activeMembersIn(code, country) {
   return activeCountCache.get(key);
 }
 
-// Share of panel members of a gender within an age band (members were born 1950-2006, 52% female).
+// Share of members of a gender in an age band. Assumes birth years 1950-2006, spread evenly, and 52% female.
 function demographicShare(gender, from, to) {
   if (!gender || !from || !to || from > to) return 0;
   const year = new Date().getFullYear();
@@ -56,7 +56,7 @@ function demographicShare(gender, from, to) {
   return (gender === 'Female' ? 0.52 : 0.48) * (overlap / (oldest - youngest + 1));
 }
 
-// Panelists who fit a sample: active members in the project's country × gender × age band × filters.
+// Panelists who fit a sample: active members in the project's country, scaled by the gender/age share and each filter.
 function sampleAvailable(draft, s) {
   if (!draft.vendor) return 0;
   let share = demographicShare(s.gender, Number(s.from), Number(s.to));
@@ -300,7 +300,7 @@ function renderCfSamples() {
   updateCfAvailability();
 }
 
-// Available per sample: green when it covers what's requested, yellow when it doesn't.
+// Available per sample: green if it covers what's requested, yellow if not. Also flags age ranges that run backwards.
 function updateCfAvailability() {
   const v = cf.draft;
   if (!v.batch || !$('#cfReqTotal')) return;

@@ -14,7 +14,8 @@ function shieldHtml(d) {
   return `<span class="shield ${cls}" role="img" title="${label}" aria-label="${label}"><i class="bi ${icon}"></i></span>`;
 }
 
-// Show All / Show EC only (Main tab metrics and Project vendors share it). Only the toggle state for now.
+// Show All / Show EC only, used on the Main, Project vendors and Campaigns tabs.
+// TODO: filter the numbers by pv.ecOnly. Right now only the buttons change.
 function ecToggleHtml() {
   const btn = (value, label, on) => `
     <button type="button" data-action="ec-toggle" data-value="${value}" class="${on ? 'active' : ''}" aria-pressed="${on}">${label}</button>`;
@@ -24,7 +25,7 @@ function ecToggleHtml() {
     </div>`;
 }
 
-// Last entry / last complete per vendor. The busiest vendor matches the project's own times; the others are a little earlier.
+// Last entry / last complete per vendor. The busiest vendor gets the project's own times, the rest a bit earlier.
 function vendorActivity(p, v, busiest) {
   if (!v.stats.eb || !p.lastEntryAt) return { lastEntryAt: null, lastCompleteAt: null };
   if (v === busiest) return { lastEntryAt: p.lastEntryAt, lastCompleteAt: v.stats.c1 ? p.lastCompleteAt : null };
@@ -131,7 +132,7 @@ function dailyTableHtml(d) {
 function niceScale(max, target = 4) {
   const rough = max / target;
   const mag = 10 ** Math.floor(Math.log10(rough));
-  // Counts are whole numbers, so only whole-number steps (2.5 is allowed once it scales to 25, 250, …).
+  // Counts are whole numbers, so only whole-number steps (2.5 is fine once it scales to 25, 250, ...).
   const step = Math.max(1, [1, 2, 2.5, 5, 10].map((s) => s * mag).find((s) => s >= rough && Number.isInteger(s)));
   return { step, top: Math.ceil(max / step) * step };
 }
@@ -169,7 +170,7 @@ function drawProgressChart() {
   const { step, top: yMax } = niceScale(Math.max(1, ...series.flatMap((s) => s.values)));
   const y = (v) => m.top + plotH - (v / yMax) * plotH;
 
-  // Direct end labels for 2–4 vendors, but only when they don't collide (otherwise legend + tooltip carry it).
+  // Name labels at the line ends for 2-4 vendors, unless they'd overlap. The legend and tooltip cover the rest.
   let endLabels = false;
   if (multi && series.length <= 4) {
     const ends = series.map((s) => y(s.values[s.values.length - 1])).sort((a, b) => a - b);
@@ -276,7 +277,7 @@ function drawProgressChart() {
 
 function addVendor() {
   const d = pv.project.detail;
-  // Every vendor in the Vendors list (vendors.js) that isn't on this project yet.
+  // Vendors from the Vendors page (pages/vendors.js) not on this project yet.
   const available = vendorRegistry.map((v) => v.name).sort((a, b) => a.localeCompare(b))
     .filter((name) => !d.vendors.some((v) => v.name === name));
   if (!available.length) {

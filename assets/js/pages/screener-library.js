@@ -8,7 +8,7 @@ const LIBRARY_PAGE_SIZE = 10;
 const SCREENER_LIBRARY = [];
 
 (function seedLibrary() {
-  // Austria, as in the reference design.
+  // Austria gets a hand-written German set, quality checks included.
   const austria = [
     [25, 'Quality - Brands', 'Welche der folgenden Marken kennst du?', 'Multiple choice', false,
       [['Red Bull'], ['Manner'], ['Billa'], ['Spar'], ['Velmora', 'QFAIL2'], ['Keine davon']]],

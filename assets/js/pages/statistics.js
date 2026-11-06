@@ -88,7 +88,7 @@ function monthlyTableHtml(rows, page) {
 
 const msState = { key: '', page: 1 };
 
-// root: the view; u: whose statistics; head: the page header.
+// head is the page header HTML. Paging resets when the view or the user changes.
 function renderMonthlyStats(root, u, head) {
   const key = `${root.id}|${u.id}`;
   if (msState.key !== key) Object.assign(msState, { key, page: 1 });

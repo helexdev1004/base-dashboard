@@ -58,7 +58,7 @@ const PORTAL_TRANSLATIONS = {
     'Enquêtes disponibles', 'Historique des enquêtes', 'Nous contacter', 'Politique de confidentialité', 'Conditions générales', 'Enregistrer', 'Annuler'],
 };
 
-const savedTranslations = new Map(); // "<panel>|<category>|<language>" → [text]
+const savedTranslations = new Map(); // "<panel>|<category>|<language>" -> [text]
 const tr = { panel: '', category: '', language: '', mounted: false };
 const trForm = { dirty: false, hash: '#/translations', label: 'on these translations' };
 formGuards.translations = trForm;

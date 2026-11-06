@@ -131,7 +131,7 @@ async function downloadExport(job, button) {
     XLSX.utils.book_append_sheet(book, XLSX.utils.aoa_to_sheet(rows), job.kind === 'poll' ? 'Post poll' : 'Screener');
     XLSX.writeFile(book, job.fileName);
   } catch {
-    // The spreadsheet reader couldn't load (offline?): fall back to a CSV of the same data.
+    // SheetJS comes from a CDN. If it won't load (offline?), save the same rows as CSV instead.
     downloadCsv(job.fileName.replace(/\.xlsx$/, '.csv'), rows);
   }
   exportJobs.splice(exportJobs.indexOf(job), 1);

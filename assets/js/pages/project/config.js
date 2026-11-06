@@ -1,12 +1,12 @@
 'use strict';
 
-// Project detail settings: tabs, stat columns, question types and screener presets.
+// Constants for the project page: tabs, stat columns, question types, screener presets.
 
 const PROJECT_TYPES = ['ad hoc', 'tracker', 'omnibus'];
 const ENTITY_STATUSES = ['active', 'paused', 'closed'];
 const LINK_VARIABLES = ['{MFID}', '{UNIQUE_CODES}', '{CUSTOM_LINK}'];
 const SURVEY_GROUP_HELP = 'Respondents that attempted in selected projects are not eligible for this project.';
-// Project exclusions: [code, description] of each status that can be excluded.
+// [code, description] of every status a project exclusion can cover.
 const EXCLUSION_STATUSES = [
   ['C1', 'Complete'], ['S1', 'Screenout'], ['S2', 'Screenout in screener'], ['Q1', 'Quota full'], ['Q2', 'Quota full in screener'],
   ['INC', 'Incomplete'], ['DUP1', 'Duplicate'], ['DUP2', 'Duplicate in Base'], ['DUP3', 'Excluded in group'], ['GEO1', 'GeoIP fail'],
@@ -15,7 +15,7 @@ const EXCLUSION_STATUSES = [
 const EXCLUSION_UNITS = [['weeks', 'Weeks'], ['months', 'Months']];
 const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
 
-// Screener / post poll question builder.
+// Screener and post poll questions
 const QUESTION_TYPES = ['Single radio', 'Single dropdown', 'Multiple choice', 'Numeric', 'Open text'];
 const TYPES_WITHOUT_ANSWERS = new Set(['Numeric', 'Open text']);
 // QFAIL2 is a quality fail in the screener (QFAIL1 is reported from the survey itself).
@@ -28,8 +28,8 @@ const POLL_STATUSES = [
   ['Q2', 'Quota full (Q2)'], ['QFAIL', 'Quality fail'], ['DUP', 'Duplicate'], ['GEO', 'Geo IP fail'],
 ];
 
-// Library answers are [text, action]; the action defaults to "No action".
-// Generic screener questions, used for sample project screeners and to build the per-country Screener Library.
+// Generic screener questions. The sample projects' screeners and the per-country Screener Library are built from these.
+// answers are [text, action]; leave the action out for "No action".
 const SCREENER_TEMPLATES = [
   { id: 'age', text: 'How old are you?', type: 'Single dropdown',
     answers: [['Under 18', 'S1'], ['18–24'], ['25–34'], ['35–44'], ['45–54'], ['55–64'], ['65 or older', 'S1']] },
@@ -73,7 +73,7 @@ const TABS = [
 ];
 const TAB_IDS = new Set(TABS.map((t) => t.id));
 
-// [key, label, tooltip] — every response metric a project tracks.
+// Every response metric a project tracks: [key, label, tooltip].
 const STAT_COLS = [
   ['eb', 'EB', 'Entry base'], ['ec', 'EC', 'Entry client'], ['incomplete', 'Incomplete'], ['c1', 'C1', 'Completes'],
   ['s1', 'S1', 'Screenouts'], ['s2', 'S2', 'Screenouts'], ['q1', 'Q1', 'Quota fulls'], ['q2', 'Q2', 'Quota fulls'],
@@ -83,7 +83,7 @@ const STAT_COLS = [
 ];
 const STAT_KEYS = STAT_COLS.map(([key]) => key);
 const colsFor = (keys) => keys.map((k) => STAT_COLS.find(([key]) => key === k));
-// Computed columns: IR% and CONV% (one decimal), DUPS and FAILS (sums). Drops are "incomplete" (campaigns: "inc").
+// Computed columns: IR% and CONV% (one decimal), DUPS and FAILS (sums). Drops are stored as "incomplete", "inc" on campaigns.
 const pctOf = (part, whole) => (whole ? (part / whole) * 100 : null);
 const STAT_DERIVED = {
   ir: (s) => pctOf(s.c1 || 0, (s.c1 || 0) + (s.s1 || 0) + (s.s2 || 0)),
@@ -94,7 +94,7 @@ const STAT_DERIVED = {
 const PCT_KEYS = new Set(['ir', 'conv']);
 const statValue = (s, key) => (STAT_DERIVED[key] ? STAT_DERIVED[key](s) : s[key] || 0);
 const fmtPct1 = (v) => (v == null ? '—' : `${v.toFixed(1)}%`);
-// One table cell for a stat column: counts as whole numbers, IR% and CONV% as 33.5%.
+// <td> for one stat column: counts as whole numbers, IR%/CONV% like 33.5%.
 function statCell(s, key, hl = 'c1') {
   const v = statValue(s, key);
   const cls = key === hl ? 'col-hl' : '';
@@ -118,11 +118,10 @@ const CAMPAIGN_COLS = [
   ['s1', 'S1'], ['s2', 'S2'], ['q1', 'Q1'], ['q2', 'Q2'], ['inc', 'DROPS', 'Drop-outs (incomplete)'],
   ['dups', 'DUPS', 'Duplicates: DUP1 + DUP2 + DUP3'], ['fails', 'FAILS', 'Quality fails: QFAIL1 + QFAIL2'],
 ];
-// Statuses a campaign counts besides INV / EB / EC / C1 / S / Q / drops (shown one by one in Campaign info).
+// What a campaign counts on top of INV, EB, EC, C1, S1/S2, Q1/Q2 and drops.
 const CAMPAIGN_OTHER_KEYS = ['dup1', 'dup2', 'dup3', 'geo1', 'qfail1', 'qfail2', 'ex1', 'ex2', 'dev1', 'noUnique'];
 const CAMPAIGN_KEYS = ['inv', 'eb', 'ec', 'c1', 's1', 's2', 'q1', 'q2', 'inc', ...CAMPAIGN_OTHER_KEYS];
 const campStat = (s, key) => statValue(s, key);
-// Campaign info: every status of the campaign.
 const CAMPAIGN_INFO_STATS = [
   ['eb', 'EB'], ['ec', 'EC'], ['inc', 'Incomplete'], ['c1', 'C1'], ['s1', 'S1'], ['s2', 'S2'], ['q1', 'Q1'], ['q2', 'Q2'],
   ['dup1', 'DUP1'], ['dup2', 'DUP2'], ['dup3', 'DUP3'], ['geo1', 'GEO1'], ['qfail1', 'QFAIL1'], ['qfail2', 'QFAIL2'],

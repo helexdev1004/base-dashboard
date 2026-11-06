@@ -4,14 +4,14 @@
 
 const REWARDS_PAGE_SIZE = 10;
 
-// { id, name, panel (slug), points, value, currency, countries: ['at', …], active }
+// { id, name, panel (slug), points, value, currency, countries: ['at', ...], active }
 const rewards = [];
 
 (function seedRewards() {
   const cc = (s) => s.toLowerCase().split(/,\s*/);
   // [name, panel, points, value, currency, countries, active]
   [
-    // The first ten are the rows in the reference design.
+    // The first ten make up page 1 of the list (sorted by id), so keep them in this order.
     ['PayPal', 'gavenze', 550, 30, 'EUR', 'AT, BE, BG, HR, CZ, FR, DE, GR, HU, IT, NL, PL, PT, RO, SK, SI, ES, SE'],
     ['Allegro - gift card', 'gavenze', 430, 100, 'ZŁ', 'PL'],
     ['Amazon - gift card', 'gavenze', 430, 100, 'ZŁ', 'PL'],
@@ -82,7 +82,7 @@ const rewardValue = (value, currency) => `${fmtInt(value)} ${currency}`;
 
 // { id, panel, index (member), panelistId, rewardId, reward, value, currency, points, status, requestedAt }
 const redemptions = [];
-const redemptionIndex = new Map(); // "<panel>:<panelistId>" → [redemption]
+const redemptionIndex = new Map(); // "<panel>:<panelistId>" -> [redemption]
 let redemptionsReady = false;
 
 function indexRedemption(red) {

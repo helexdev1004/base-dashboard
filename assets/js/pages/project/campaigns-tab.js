@@ -1,6 +1,6 @@
 'use strict';
 
-// Campaigns tab: the campaign table.
+// Campaigns tab: the campaign table. Batch campaigns expand to show one sub-row per segment.
 
 function findCampaign(id, parentId) {
   const list = pv.project.detail.campaigns;

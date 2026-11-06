@@ -1,4 +1,4 @@
-/* Base dashboard styles. Order matters: themes and layout first, page styles after, responsive tweaks last. */
+/* Imports every stylesheet. Order matters (later files win on ties): themes first, responsive last. */
 
 @import url("base/themes.css");
 @import url("layout/app.css");

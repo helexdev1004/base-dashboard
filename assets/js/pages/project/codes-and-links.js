@@ -1,6 +1,6 @@
 'use strict';
 
-// Unique codes and Custom Link tabs.
+// Unique codes and Custom Link tabs. Same screen for both, POOL_CFG holds the differences.
 
 const POOL_CFG = {
   codes: {

@@ -1,6 +1,6 @@
-/* Small-screen tweaks. Kept last so they win. */
+/* Small-screen overrides. main.css imports this last so these win. */
 
-/* Answer actions stay on one line and scroll sideways on narrow screens */
+/* Answer action buttons (questions tab, Screener Library): one line, scroll sideways when there's no room */
 .ans-actions { flex: 0 1 auto; min-width: 0; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
 .ans-actions::-webkit-scrollbar { display: none; }
 .ans-actions button { flex: 0 0 auto; white-space: nowrap; }

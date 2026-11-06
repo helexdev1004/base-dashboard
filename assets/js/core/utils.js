@@ -88,6 +88,7 @@ function downloadCsv(filename, rows) {
   const csv = rows
     .map((cols) => cols.map((v) => `"${String(v ?? '').replace(/"/g, '""')}"`).join(','))
     .join('\r\n');
+  // Starts with an invisible UTF-8 BOM so Excel doesn't mangle accented names.
   const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');

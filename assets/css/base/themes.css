@@ -12,11 +12,10 @@
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* ---------- Themes ----------
-   Each theme defines the same set of colour tokens.
-   Midnight is also the fallback when no theme is set. */
+/* Every theme sets the same tokens. Midnight is on :root as well, so it's
+   what you get if data-theme is missing or unknown. */
 
-/* 1. Midnight — deep navy with violet glow */
+/* Midnight: deep navy, violet glow */
 :root,
 html[data-theme="midnight"] {
   --color-scheme: dark;
@@ -90,7 +89,7 @@ html[data-theme="midnight"] {
   --backdrop-opacity: .7;
 }
 
-/* 2. Ocean — deep sea blues with cyan accents */
+/* Ocean: deep blues, cyan accents */
 html[data-theme="ocean"] {
   --color-scheme: dark;
   --bg: #071a26;
@@ -163,7 +162,7 @@ html[data-theme="ocean"] {
   --backdrop-opacity: .7;
 }
 
-/* 3. Forest — deep greens with emerald and lime */
+/* Forest: dark greens, emerald and lime */
 html[data-theme="forest"] {
   --color-scheme: dark;
   --bg: #08140f;
@@ -236,7 +235,7 @@ html[data-theme="forest"] {
   --backdrop-opacity: .7;
 }
 
-/* 4. Sunset — plum backdrop with pink-to-orange accents */
+/* Sunset: plum background, pink to orange accents */
 html[data-theme="sunset"] {
   --color-scheme: dark;
   --bg: #1a0b1f;
@@ -309,7 +308,7 @@ html[data-theme="sunset"] {
   --backdrop-opacity: .7;
 }
 
-/* 5. Daylight — clean light with indigo accents */
+/* Daylight: plain light theme, indigo accents */
 html[data-theme="daylight"] {
   --color-scheme: light;
   --bg: #f3f5fb;
@@ -380,7 +379,7 @@ html[data-theme="daylight"] {
   --backdrop-opacity: .4;
 }
 
-/* 6. Arctic — cool light content with a deep teal sidebar */
+/* Arctic: cool light content, dark teal sidebar */
 html[data-theme="arctic"] {
   --color-scheme: light;
   --bg: #edf3f7;
@@ -453,7 +452,7 @@ html[data-theme="arctic"] {
   --backdrop-opacity: .4;
 }
 
-/* 7. Sand — warm light with terracotta accents */
+/* Sand: warm light, terracotta accents */
 html[data-theme="sand"] {
   --color-scheme: light;
   --bg: #f6f1e9;
@@ -524,7 +523,7 @@ html[data-theme="sand"] {
   --backdrop-opacity: .35;
 }
 
-/* 8. Rose — soft blush light with magenta accents */
+/* Rose: light blush, magenta accents */
 html[data-theme="rose"] {
   --color-scheme: light;
   --bg: #fdf2f6;
@@ -595,7 +594,8 @@ html[data-theme="rose"] {
   --backdrop-opacity: .35;
 }
 
-/* Map theme tokens onto Bootstrap's variables (beats Bootstrap's own [data-bs-theme] rules). */
+/* Point Bootstrap's variables at the theme tokens. html[data-theme] is more specific
+   than Bootstrap's [data-bs-theme] rules, so these win. */
 :root,
 html[data-theme] {
   color-scheme: var(--color-scheme);
@@ -608,14 +608,14 @@ html[data-theme] {
   --bs-link-color: var(--primary);
   --bs-link-hover-color: var(--primary-2);
 
-  /* Charts: hairline grid, ring colour around markers */
+  /* Chart grid and axis lines; --chart-surface is the ring around each marker */
   --chart-grid: color-mix(in srgb, var(--overlay) 9%, transparent);
   --chart-axis: color-mix(in srgb, var(--overlay) 22%, transparent);
   --chart-surface: var(--menu-bg);
 }
 
-/* Chart series colours — a fixed, colour-blind-checked categorical order (validated against
-   every theme's card surface). Light themes use the light steps, dark themes the dark steps. */
+/* Chart series colours in a fixed order, checked for colour blindness and for contrast
+   on every theme's cards. Dark themes get the first set, light themes the second. */
 :root,
 html[data-bs-theme="dark"] {
   --series-1: #3987e5;

@@ -37,7 +37,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
 }
-textarea.form-control { height: auto; } /* text boxes size by their rows */
+textarea.form-control { height: auto; } /* undo the 40px above; textareas size by rows */
 .form-control::placeholder { color: var(--muted-2); }
 .form-control:focus,
 .form-select:focus {

@@ -1,8 +1,7 @@
 'use strict';
 
-// Main tab: the project form and the fieldwork metric boxes. Also the New Project form.
+// Main tab: the project form and the fieldwork metric boxes. Also serves as the New project form.
 
-// Creating and editing projects lives in project.js (the Main tab).
 function nextJobNo() {
   return Math.max(...projects.map((p) => p.jobNo)) + 1;
 }
@@ -40,7 +39,7 @@ function renderMain(el) {
   const countryOpts = [['', 'Select a country'], ...COUNTRIES.map((c) => [c.code, c.name]).sort((a, b) => a[1].localeCompare(b[1]))];
   const clientOpts = [['', 'Select a client'], ...[...CLIENTS].sort().map((c) => [c, c])];
 
-  // Two columns: a compact form on the left (short fields share rows), fieldwork metrics on the right.
+  // Compact form on the left (short fields share a row), fieldwork metrics on the right.
   el.innerHTML = `
     <div class="main-layout">
       <form class="pv-card mf-compact" id="mainForm" novalidate autocomplete="off">
@@ -166,7 +165,7 @@ function renderMain(el) {
   pv.dirty = false;
 }
 
-// Fieldwork metric boxes, one row per group: [key, label, tooltip].
+// Fieldwork metric boxes, one row per group. Each is [key, label, tooltip].
 const METRIC_GROUPS = [
   [['c1', 'Completes', 'Completes (C1)'], ['ir', 'Incidence', 'Incidence rate'], ['conv', 'Conversion'], ['lastEntry', 'Last entry']],
   [['loiBid', 'LOI bid (min)', 'Length of interview quoted, in minutes'], ['loiReal', 'LOI actual (min)', 'Actual length of interview so far, in minutes']],

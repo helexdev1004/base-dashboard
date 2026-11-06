@@ -1,6 +1,6 @@
 'use strict';
 
-// Click/change/input handlers for the project page (data-action buttons).
+// Event handlers for the project page. Buttons name their handler in data-action.
 
 const ACTIONS = {
   toggle(el) {
@@ -82,7 +82,7 @@ const ACTIONS = {
     showToast(`${src.name} duplicated as Campaign ${pad2(id)}.`);
   },
 
-  // Unique codes / Custom link
+  // Unique codes / Custom Link
   'pool-export'(el) { exportPool(el.dataset.kind); },
 
   // Exclude IPs (draft until Save)
@@ -114,7 +114,7 @@ const ACTIONS = {
     showToast(`${kind === 'screener' ? 'Screener' : 'Post poll'} is now ${on ? 'active' : 'inactive'}.`, 'info');
   },
   'q-export'(el) {
-    const job = queueExport(pv.project, el.dataset.kind); // exports.js
+    const job = queueExport(pv.project, el.dataset.kind); // pages/exports.js
     showToast(`Preparing ${job.fileName}. You'll find it on the Exports page.`, 'info');
   },
   'q-new'(el) {
@@ -176,7 +176,7 @@ function onClick(e) {
 
 function onChange(e) {
   const el = e.target;
-  if (el.classList.contains('ms-input') || el.type === 'file') return;
+  if (el.classList.contains('ms-input') || el.type === 'file') return; // multi-select search text or a picked file isn't an edit
   if (el.closest('#mainForm')) {
     markDirty();
     return;

@@ -34,7 +34,6 @@
 .btn-danger-solid:focus-visible { color: #fff; filter: brightness(1.08); }
 .btn-danger-solid.is-armed { box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 30%, transparent); }
 
-/* Shared bits for the list pages below */
 .table-responsive { position: relative; } /* keeps visually-hidden labels inside the scroll box */
 .list-table .num-l { font-variant-numeric: tabular-nums; }
 .pill-yes { color: var(--live); background: color-mix(in srgb, var(--success) 14%, transparent); }

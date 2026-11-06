@@ -13,7 +13,7 @@ const PANEL_NOW = (() => { const d = new Date(); d.setHours(0, 0, 0, 0); return 
 const WORLD_INDEX = new Map(WORLD_COUNTRIES.map((c, i) => [c.code, i]));
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-// [country, weight, name pool, language] — the pool and language default from the country.
+// countries: [country, weight, name pool, language]. Pool and language are optional and default from the country.
 const PANEL_INFO = [
   { slug: 'gavenze', code: 'GAV', base: 400001, seed: 11, launched: '2022-04-21T08:30:00', size: 93865, mix: [0.306, 0.501],
     logo: { mark: 'letter', text: 'G', color: '#d9381e', lines: ['Gavenze'] },
@@ -333,7 +333,7 @@ function assignIds(list, idOf) {
 }
 
 // Project invitations and the point log of one member. Survey points match the
-// completes in the project history; reward exchanges come from Redeem (rewards.js).
+// completes in the project history; exchanges and refunds come from redemptionsOf().
 function buildHistory(panel, i) {
   const m = memberAt(panel, i);
   const r = seeded(memberSeed(panel, i) ^ 0x5bd1e995);
@@ -395,7 +395,7 @@ function memberHistory(panel, i) {
 }
 
 const pointsBalance = (h) => h.log.reduce((s, e) => s + e.points, 0);
-// Without caching, for exports that touch every member.
+// cache = false skips storing the history (exports go through every member).
 const memberPoints = (panel, i, cache = true) => {
   const d = panelData(panel);
   return pointsBalance(cache || d.history.has(i) ? memberHistory(panel, i) : buildHistory(panel, i));

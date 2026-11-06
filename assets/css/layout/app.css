@@ -13,7 +13,7 @@ body::before {
     radial-gradient(900px 600px at 100% 110%, var(--glow-3), transparent 60%);
 }
 
-body.no-transition * { transition: none !important; }
+body.no-transition * { transition: none !important; } /* main.js removes it after two frames, so the saved collapsed sidebar doesn't animate in */
 
 .text-muted-2 { color: var(--muted) !important; }
 .text-danger-soft { color: var(--danger-soft) !important; }

@@ -1,6 +1,5 @@
-/* Checkbox list with search. */
+/* Checkbox dropdown with a search box. .chk-menu gets its position and look from combo-box.css. */
 
-/* Multi-choice list with search */
 .chk { position: relative; flex: 1 1 auto; min-width: 0; }
 .chk-toggle { display: flex; align-items: center; width: 100%; overflow: hidden; font-size: 13px; color: var(--text); text-align: left; white-space: nowrap; }
 .chk-summary { overflow: hidden; text-overflow: ellipsis; }

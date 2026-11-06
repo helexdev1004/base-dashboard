@@ -10,7 +10,7 @@
   gap: 12px;
 }
 
-/* Compact single-row card: icon · label · value, with the sparkline behind. */
+/* One-line card: icon, label, value, with the sparkline behind. */
 .kpi-card {
   --accent: var(--kpi-1);
   position: relative;
@@ -169,12 +169,12 @@ html[data-bs-theme="dark"] .search-box input::-webkit-search-cancel-button { fil
   box-shadow: 0 4px 14px -4px rgba(255, 190, 40, .65);
 }
 
-/* Three searches: MFJN, MFPO, project name / any other field */
-/* Own row on most screens (sized like the mockup); shares the row with the buttons on very wide ones. */
+/* Three searches: MFJN, MFPO, and name / any other field. They get a row to themselves
+   until 1700px, then share it with the buttons. */
 .search-trio { display: flex; flex: 1 1 100%; gap: 10px; min-width: 0; }
 .search-trio .search-box { min-width: 0; }
-/* Each box just fits its placeholder; the "/" shortcut hint is on MFJN, where "/" lands. */
-/* Fixed widths (not flex-basis), so the group keeps them when it shares the row with the buttons. */
+/* Each box just fits its placeholder. Fixed widths, not flex-basis, so they hold when the group
+   shares the row. The "/" hint is on MFJN because that's the box "/" focuses. */
 .search-trio .search-sm { flex: 0 1 auto; width: 190px; min-width: 150px; }
 .search-trio .search-po { width: 178px; }
 .search-trio .search-main { flex: 0 1 auto; width: 260px; min-width: 200px; }
@@ -346,7 +346,7 @@ a.pname:focus-visible { color: var(--primary-soft); text-decoration: underline; 
 }
 .pmeta .country { letter-spacing: .03em; }
 
-/* Progress: completes per hour, past 24 hours (a dash for hours without completes) */
+/* Progress column: completes per hour over the past 24 hours, a short dash for hours with none */
 .project-table .col-spark { width: 108px; padding-left: 4px !important; padding-right: 8px !important; }
 .spark { display: flex; align-items: flex-end; width: 96px; height: 30px; }
 .spark-slot { display: flex; flex: 1 1 0; align-items: flex-end; justify-content: center; height: 100%; padding: 0 .5px; }

@@ -1,6 +1,6 @@
 'use strict';
 
-// Progress tab.
+// Progress tab: summary tiles and one combined totals row.
 
 function renderProgress(el) {
   const p = pv.project;

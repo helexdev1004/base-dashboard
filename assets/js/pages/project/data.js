@@ -1,12 +1,12 @@
 'use strict';
 
-// Sample detail for a project (vendors, days, campaigns, codes...), built the first time it is opened.
+// Made-up detail for a project (vendors, days, campaigns, codes...), generated the first time it's opened.
 
 const pmNames = (p) => p.pms.map((x) => x.name).join(', ');
 const makeLiveLink = (next = Math.random) => `https://fwredirect.com/start/${token(15, next)}/{MFID}`;
 
-// Totals shown inside a project. Most come straight from the list row; the extra
-// breakdown (DUP3, GEO1, EX1/2, DEV1, no unique code) lives in project.detail.
+// Totals shown inside a project. Most come straight from the list row; the finer
+// breakdown (DUP3, GEO1, EX1/2, DEV1, no unique code) is only in p.detail.
 function projectStats(p) {
   const d = p.detail;
   return {
@@ -53,7 +53,7 @@ function sampleExclusions(p) {
   });
 }
 
-// Sample detail, generated the first time a project is opened (seeded by its id, so it's stable).
+// Seeded from the project id, so the same project always gets the same numbers.
 function ensureDetail(p) {
   if (p.detail) return p.detail;
   const r = seeded(p.id * 7919 + 17);
@@ -168,7 +168,7 @@ function campaignStats(r) {
 const zeroCampaignStats = (inv = 0) => ({ ...Object.fromEntries(CAMPAIGN_KEYS.map((k) => [k, 0])), inv });
 const sampleName = (s) => `${s.gender}, ${s.from}-${s.to}`;
 
-// Segments are the campaign's samples, each with its share of the numbers.
+// One segment per sample of a batch campaign, each with its share of the numbers (even split if no r).
 function segmentsFor(c, stats, r = null) {
   if (!c.setup.batch) return [];
   const weights = c.setup.samples.map(() => (r ? r.between(0.6, 1) : 1));
@@ -223,7 +223,7 @@ function makeCampaigns(r, end, live, p) {
   return list;
 }
 
-// Survey points for a panel and survey length, from Panel management ▸ Survey points.
+// Points for a panel and survey length, from Panel management > Survey points (closest shorter length if no exact match).
 function campaignPoints(code, length) {
   if (typeof surveyPoints === 'undefined' || typeof PANEL_INFO === 'undefined' || !(length > 0)) return '';
   const slug = PANEL_INFO.find((x) => x.code === code)?.slug;
@@ -236,6 +236,7 @@ function campaignPoints(code, length) {
   return (below.length ? below.at(-1) : rows[0])[1];
 }
 
+// Unique codes or custom links as { value, mrid, usedAt }. The first `used` items are marked as used.
 function makePool(count, used, r, makeValue, days, end) {
   const seen = new Set();
   const items = [];

@@ -300,7 +300,7 @@ function renderQuotaTable() {
   updateFeasibility();
 }
 
-// Refreshes every computed number in place (keeps focus in the inputs).
+// Updates the numbers in place rather than re-rendering, so focus stays in whatever input is being typed in.
 function updateFeasibility() {
   const countries = selectedCountries();
   countries.forEach((c) => {

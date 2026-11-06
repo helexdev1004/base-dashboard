@@ -45,7 +45,7 @@
 .pl-stat strong { font-size: 13.5px; font-weight: 700; color: var(--text-strong); font-variant-numeric: tabular-nums; }
 .pl-stat.is-active { font-weight: 600; color: var(--text); background: color-mix(in srgb, var(--amber) 16%, transparent); }
 
-/* Text logos */
+/* Panel logos are drawn with text and CSS, no image files. --mark is each panel's colour, set inline. */
 .pl-word { font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1; white-space: nowrap; }
 .pl-word.two { font-size: 17px; font-weight: 700; line-height: 1.02; }
 .pl-word em { font-style: normal; font-weight: 800; color: #e0452b; }
@@ -148,7 +148,7 @@
 .pl-stats-table { max-height: 60vh; overflow-y: auto; }
 .pl-stats-table td:first-child { text-align: left; }
 
-/* Panelist */
+/* Panelist page */
 .pf-card { padding-top: 6px; }
 .pf-tabs { align-items: center; margin: 0 -4px 18px; }
 .pf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 40px; }

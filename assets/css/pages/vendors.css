@@ -1,6 +1,5 @@
 /* Vendor form and vendor group modal. */
 
-/* Vendor form */
 .page-head-back { flex-direction: row; align-items: flex-start; gap: 12px; }
 .vendor-form { display: flex; flex-direction: column; gap: 16px; }
 .hf-rows { display: flex; flex-direction: column; gap: 12px; }

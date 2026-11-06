@@ -4,7 +4,7 @@
 .ex-card > .pv-toolbar { border-radius: var(--radius) var(--radius) 0 0; }
 .ex-row {
   display: grid;
-  /* Project 244px, statuses 150px + the reset button, time period, remove. */
+  /* project, statuses (150px select + 6px gap + 40px reset), time period, remove */
   grid-template-columns: 244px 196px 220px 32px;
   justify-content: start;
   align-items: start;

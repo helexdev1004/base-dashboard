@@ -42,7 +42,7 @@ function vendorUrls(name) {
   ].forEach(([name, iso], i) => vendorGroups.push({ id: i + 1, name, createdAt: at(iso) }));
   const groupId = (name) => vendorGroups.find((g) => g.name === name).id;
 
-  // The vendors from the reference design, plus the ones used in project sample data.
+  // Fixed vendors. Every name in VENDORS has to be here, since project sample data uses them.
   // [id, name, group, panel, api, created]
   const known = new Map([
     [1, 'Gavenze', 'Main Frame', 'Gavenze panel', false, '2022-03-07T11:20:14'],

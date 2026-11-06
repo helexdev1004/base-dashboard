@@ -1,9 +1,9 @@
 'use strict';
 
-// Start-up: wires the shell and the project list, then routes to the page in the URL.
+// Start-up: wires the shell and the project list. initProjectView then routes to the page in the URL.
 
 function init() {
-  // Selects
+  // More filters dropdowns
   const countryOpts = COUNTRIES.map((c) => [c.code, c.name]).sort((a, b) => a[1].localeCompare(b[1]));
   const clientOpts = [...CLIENTS].sort().map((c) => [c, c]);
   const pmOpts = PMS.map((p) => [p.initials, `${p.name} (${p.initials})`]);
@@ -28,6 +28,7 @@ function init() {
     customClass: 'nav-tip',
   }));
   setCollapsed(readCollapsed());
+  // Wait two frames so the saved collapsed state doesn't animate in on load.
   requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.remove('no-transition')));
 
   $('#sidebarToggle').addEventListener('click', () => {
@@ -47,10 +48,10 @@ function init() {
     if (e.target.closest('.nav-link')) setMobileOpen(false); // the link itself changes the URL
   });
 
-  // Personal statistics opens its page; Sign out isn't part of this preview.
+  // Personal statistics is a real link. Sign out isn't wired up yet, so its click is swallowed.
   $$('.profile-menu .dropdown-item:not([data-profile-link])').forEach((item) => item.addEventListener('click', (e) => e.preventDefault()));
 
-  // Search: MFJN, MFPO, and project name / any other field
+  // Search: MFJN, MFPO, and free text (name or any other field)
   const SEARCH_FIELDS = { searchJob: 'searchJob', searchPo: 'searchPo', searchInput: 'search' };
   let searchTimer;
   Object.entries(SEARCH_FIELDS).forEach(([id, key]) => {
@@ -83,7 +84,7 @@ function init() {
     renderTable();
   });
 
-  // Sorting
+  // Sorting. Text columns start A-Z, number columns start highest first.
   $('.project-table thead').addEventListener('click', (e) => {
     const th = e.target.closest('th[data-sort]');
     if (!th) return;
@@ -105,7 +106,6 @@ function init() {
     if (row) location.hash = `#/project/${row.dataset.id}`;
   });
 
-  // Pagination
   $('#pagination').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-page]');
     if (!btn || btn.disabled) return;
@@ -140,10 +140,9 @@ function init() {
       : { [key]: '' });
   });
 
-  // Export
   $('#exportBtn').addEventListener('click', exportCsv);
 
-  // My projects: shows the on/off state (the list itself isn't filtered yet).
+  // My projects only flips the button for now, the list isn't filtered.
   $('#mineBtn').addEventListener('click', (e) => {
     const btn = e.currentTarget;
     const on = btn.getAttribute('aria-pressed') !== 'true';
@@ -152,7 +151,7 @@ function init() {
     $('i', btn).className = on ? 'bi bi-person-check-fill' : 'bi bi-person';
   });
 
-  // Progress chart: completes per hour (past 24 hours) or per day (past 14 days).
+  // Hourly/Daily switch for the Progress column (past 24 hours or past 14 days)
   $('#sparkMode').addEventListener('click', (e) => {
     const btn = e.target.closest('[data-spark]');
     if (!btn || btn.dataset.spark === state.sparkMode) return;
@@ -166,11 +165,11 @@ function init() {
     renderTable();
   });
 
-  // Refresh: redraws the counts and the list.
+  // Refresh just redraws; there's no server to fetch from.
   $('#refreshBtn').addEventListener('click', (e) => {
     const btn = e.currentTarget;
     btn.classList.remove('spinning');
-    void btn.offsetWidth; // restart the spin on repeated clicks
+    void btn.offsetWidth; // force a reflow so the spin restarts on repeat clicks
     btn.classList.add('spinning');
     renderKpis();
     renderTable();

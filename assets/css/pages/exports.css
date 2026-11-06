@@ -1,6 +1,5 @@
-/* Exports. */
+/* Exports page: the attention banner and the files table. */
 
-/* Exports */
 .alert-attention {
   display: flex;
   align-items: center;

@@ -38,7 +38,7 @@ const PMS = [
   { initials: 'RA', name: 'Ray' },
 ];
 
-// The first few topics mirror the reference designs; the rest are sample data.
+// Fixed name and country for the first six projects; the rest are built from TOPICS.
 const PRESET_TOPICS = [
   { name: 'Test concepts assurance auto', country: 'fr' },
   { name: 'HelloOmnibus 2026-Oct', country: 'fr' },
@@ -105,7 +105,7 @@ const REGIONS = {
 const regionsFor = (code) => REGIONS[String(code).toLowerCase()] || DEFAULT_REGIONS;
 
 const VENDORS = ['Gavenze', 'Panelwise', 'Northfield Sample', 'Opinion Bridge', 'SurveyHub Direct', 'Quickpoll Panels'];
-// Panels (Panel management ▸ Panels has the details).
+// Panels (the details are on Panel management > Panels).
 const PANELS = [
   { code: 'GAV', name: 'Gavenze' },
   { code: 'JAF', name: 'Jafenzi' },

@@ -1,6 +1,5 @@
-/* Multi-select. */
+/* Multi-select with chips (PM, Survey group). */
 
-/* Multi-select (PM, Survey group) */
 .ms { position: relative; }
 .ms-control {
   display: flex;
@@ -100,6 +99,7 @@
 .ms-menu li[data-value]:hover { color: var(--text-strong); background: color-mix(in srgb, var(--primary) 14%, transparent); }
 .ms-menu .ms-empty { color: var(--muted); cursor: default; }
 
+/* Project page breakpoints, not multi-select. They just have to load after the project page rules. */
 @media (max-width: 1199.98px) {
   .main-layout { grid-template-columns: minmax(0, 1fr); }
 }

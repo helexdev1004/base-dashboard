@@ -34,8 +34,10 @@
 }
 .brand:hover { color: var(--sidebar-fg-strong); }
 
-/* Logo: base-logos/base_dark.png (white text) on dark sidebars, base_light.png (black text) on light ones.
-   The image is 999 × 296; the "b" mark is its first 235px. */
+/* Logos are in assets/images/logos: base-dark.png (white text) for dark sidebars, base-light.png
+   (black text) for light ones. Arctic is light but its sidebar is dark, so it's left out of the
+   sidebar list below (its topbar still swaps). The files are 999x296: at 32px tall that's 108px
+   wide, and the "b" mark (first 235px) comes to about 26px. */
 .brand-logo {
   display: block;
   flex: 0 0 auto;
@@ -167,7 +169,7 @@ html[data-bs-theme="light"] .topbar-brand .logo-on-light { display: block !impor
     opacity: 0;
     visibility: hidden;
     transition: opacity .25s, visibility .25s;
-    z-index: 1039;
+    z-index: 1039; /* over the topbar (1030), under the sidebar (1040) */
   }
   body.sidebar-open .sidebar-backdrop { opacity: 1; visibility: visible; }
 }

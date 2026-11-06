@@ -3,6 +3,7 @@
 // Reading uploaded CSV / Excel files.
 
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
+// A first row that looks like a column header (code, link, url, ip, respondent id, uid...) gets dropped.
 const HEADER_RE = /^(unique[\s_-]*)?codes?$|^(custom[\s_-]*)?links?$|^urls?$|^ip(s|[\s_-]*address(es)?)?$|^resp(ondent)?[\s_-]*ids?$|^(panelist[\s_-]*)?(pu)?u?ids?$/i;
 let xlsxLoading = null;
 
@@ -48,6 +49,7 @@ async function readFileValues(file) {
     const rows = XLSX.utils.sheet_to_json(book.Sheets[book.SheetNames[0]], { header: 1, blankrows: false });
     values = rows.map((row) => String(row.find((c) => c != null && String(c).trim() !== '') ?? '').trim());
   } else {
+    // strip a leading UTF-8 BOM (the character in the regex is invisible)
     values = (await file.text()).replace(/^﻿/, '').split(/\r?\n/).map(firstCsvField);
   }
   values = values.filter(Boolean);

@@ -1,4 +1,4 @@
-/* Page header used by the standalone pages, and the menu badge. */
+/* Header for the standalone pages, and the count badge in the sidebar menu. */
 
 .page-view { display: flex; flex-direction: column; gap: 16px; }
 .page-head { display: flex; flex-direction: column; gap: 4px; }
