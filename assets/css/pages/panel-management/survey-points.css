@@ -1,0 +1,13 @@
+/* Survey points. */
+
+.sp-panel { width: 220px; vertical-align: top !important; }
+.sp-countries { min-width: 280px; white-space: normal !important; line-height: 1.5; font-size: 12.5px; color: var(--text-2); }
+.sp-head { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+.sp-cols,
+.sp-row { display: grid; grid-template-columns: 130px 110px 30px; justify-content: center; align-items: center; gap: 10px; }
+.sp-cols { margin: 8px 0 4px; font-size: 12px; font-weight: 700; text-align: center; color: var(--text-2); }
+.sp-list { display: flex; flex-direction: column; gap: 6px; max-height: 340px; padding: 4px 2px; overflow-y: auto; }
+.sp-loi .form-control { text-align: center; background: color-mix(in srgb, var(--overlay) 3%, transparent); }
+.sp-pts { text-align: center; }
+.sp-del { width: 30px; height: 30px; color: #fff; background: var(--danger); border-color: var(--danger); }
+.sp-del:hover:not(:disabled) { color: #fff; filter: brightness(1.08); border-color: var(--danger); }

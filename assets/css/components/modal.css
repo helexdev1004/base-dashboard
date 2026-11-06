@@ -1,0 +1,50 @@
+/* Modals and off-canvas panels. */
+
+.modal-content,
+.panel-offcanvas {
+  color: var(--text);
+  background: var(--modal-bg);
+  border: 1px solid var(--border);
+}
+.modal-content { border-radius: 16px; box-shadow: var(--float-shadow); }
+.modal-header,
+.offcanvas-header { align-items: flex-start; padding: 20px 22px 14px; border-bottom: 1px solid var(--border); }
+/* Controls next to a modal title (Panel statistics: Last week / Last month) */
+.modal-head-extra { margin: 2px 16px 0 auto; }
+.modal-head-extra:empty { display: none; }
+.modal-head-extra:not(:empty) + .btn-close { margin-left: 0; }
+.modal-title,
+.offcanvas-title { font-size: 17px; font-weight: 700; color: var(--text-strong); }
+.panel-subtitle { margin: 4px 0 0; font-size: 12.5px; color: var(--muted); }
+.modal-body { padding: 20px 22px; }
+.modal-footer { padding: 14px 22px; border-top: 1px solid var(--border); gap: 8px; }
+.modal-footer > * { margin: 0; }
+.modal-footer .btn { height: 38px; padding: 0 16px; }
+.modal-backdrop { --bs-backdrop-opacity: var(--backdrop-opacity); }
+
+.panel-offcanvas { --bs-offcanvas-width: 360px; border-width: 0 0 0 1px; }
+.offcanvas-body { padding: 20px 22px; }
+.offcanvas-footer { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 22px; border-top: 1px solid var(--border); }
+.offcanvas-footer .btn { height: 38px; padding: 0 16px; }
+
+.form-label { font-size: 12.5px; font-weight: 500; color: var(--text-2); margin-bottom: 6px; }
+.form-control,
+.form-select {
+  height: 40px;
+  font-size: 13.5px;
+  color: var(--text);
+  background-color: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+textarea.form-control { height: auto; } /* text boxes size by their rows */
+.form-control::placeholder { color: var(--muted-2); }
+.form-control:focus,
+.form-select:focus {
+  color: var(--text);
+  background-color: var(--input-bg);
+  border-color: color-mix(in srgb, var(--primary) 75%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+.form-control[readonly] { color: var(--muted); background-color: color-mix(in srgb, var(--overlay) 4%, transparent); }
+.form-select option { background: var(--option-bg); color: var(--text); }

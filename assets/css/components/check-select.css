@@ -1,0 +1,33 @@
+/* Checkbox list with search. */
+
+/* Multi-choice list with search */
+.chk { position: relative; flex: 1 1 auto; min-width: 0; }
+.chk-toggle { display: flex; align-items: center; width: 100%; overflow: hidden; font-size: 13px; color: var(--text); text-align: left; white-space: nowrap; }
+.chk-summary { overflow: hidden; text-overflow: ellipsis; }
+.chk-placeholder { color: var(--muted-2); }
+.chk-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 18px;
+  margin-left: 4px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 9px;
+}
+.chk.is-invalid .chk-toggle { border-color: var(--danger); }
+.chk-menu { width: max(100%, 290px); padding: 8px; }
+.chk-search { height: 34px; font-size: 13px; }
+.chk-quick { display: flex; gap: 14px; padding: 8px 4px 4px; }
+.chk-quick button { padding: 0; font-size: 12px; font-weight: 500; color: var(--primary-soft); background: none; border: 0; }
+.chk-quick button:hover { text-decoration: underline; text-underline-offset: 3px; }
+.chk-list { max-height: 250px; margin: 4px 0 0; padding: 0; overflow-y: auto; list-style: none; }
+.chk-list li[hidden] { display: none; }
+.chk-option { display: flex; align-items: center; gap: 8px; margin: 0; padding: 6px; font-size: 13px; border-radius: 6px; cursor: pointer; }
+.chk-option:hover { background: color-mix(in srgb, var(--primary) 8%, transparent); }
+.chk-option .form-check-input { flex: 0 0 auto; margin: 0; }
+.chk-option strong { min-width: 54px; font-weight: 600; color: var(--text-strong); }
+.chk-option span { font-size: 12px; color: var(--muted); }

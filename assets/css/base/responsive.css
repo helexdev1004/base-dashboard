@@ -1,0 +1,51 @@
+/* Small-screen tweaks. Kept last so they win. */
+
+/* Answer actions stay on one line and scroll sideways on narrow screens */
+.ans-actions { flex: 0 1 auto; min-width: 0; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.ans-actions::-webkit-scrollbar { display: none; }
+.ans-actions button { flex: 0 0 auto; white-space: nowrap; }
+
+@media (max-width: 991.98px) {
+  .pf-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 575.98px) {
+  .pf-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .pl-strip-item { padding: 8px 6px; }
+  .pl-head-actions { width: 100%; }
+  .rw-country { margin-left: 0; }
+}
+
+/* Below 1280px the button moves above the cards so all five stay on one row. */
+@media (max-width: 1279.98px) {
+  .kpi-row { flex-direction: column; align-items: stretch; gap: 12px; }
+  .btn-new-project { align-self: flex-start; }
+}
+
+@media (max-width: 1099.98px) {
+  .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767.98px) {
+  .content { padding: 16px 16px 24px; }
+  .topbar { padding: 0 16px; }
+  .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .search-box { flex: 1 1 100%; }
+  .btn-export { margin-left: auto; }
+  .table-footer { justify-content: center; }
+  .profile-meta { display: none; }
+  .theme-btn-label { display: none; }
+}
+
+@media (max-width: 419.98px) {
+  .btn-new-project { align-self: stretch; }
+  .search-box kbd { display: none; }
+  .theme-menu { width: min(336px, calc(100vw - 24px)); }
+}
+
+@media (max-width: 359.98px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

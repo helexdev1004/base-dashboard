@@ -1,0 +1,27 @@
+/* Vendor info modal. */
+
+.vi-form { display: flex; flex-direction: column; gap: 14px; }
+.vi-row { display: grid; grid-template-columns: 190px minmax(0, 1fr); align-items: center; gap: 6px 14px; }
+.vi-label { margin: 0; font-size: 13px; color: var(--text-2); }
+.vi-vendor { max-width: 300px; }
+.vi-status { max-width: 180px; }
+.vi-switches {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
+  padding: 14px 0;
+  border-block: 1px solid var(--border);
+}
+.vi-switches > :first-child { grid-column: 1 / -1; }
+.vi-switches .vi-row { grid-template-columns: 190px auto; justify-content: start; }
+.vi-texts { display: flex; flex-direction: column; gap: 10px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.vi-text .form-check { margin-bottom: 6px; }
+.vi-text textarea { font-size: 13px; }
+.vi-link { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.vi-link .mono { overflow-wrap: anywhere; font-size: 12.5px; color: var(--text); }
+.vi-link .icon-btn-sm { flex: 0 0 auto; }
+@media (max-width: 767.98px) {
+  .vi-switches { grid-template-columns: minmax(0, 1fr); }
+  .vi-row,
+  .vi-switches .vi-row { grid-template-columns: minmax(0, 1fr); }
+}

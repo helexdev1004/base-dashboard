@@ -1,0 +1,182 @@
+/* Sidebar, logo, collapsed state and the mobile drawer. */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  flex: 0 0 auto;
+  width: var(--sidebar-w);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  transition: width .25s ease, transform .25s ease;
+  z-index: 1040;
+}
+
+.sidebar-brand {
+  position: relative;
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px 0 20px;
+  flex: 0 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--sidebar-fg-strong);
+  text-decoration: none;
+  overflow: hidden;
+}
+.brand:hover { color: var(--sidebar-fg-strong); }
+
+/* Logo: base-logos/base_dark.png (white text) on dark sidebars, base_light.png (black text) on light ones.
+   The image is 999 × 296; the "b" mark is its first 235px. */
+.brand-logo {
+  display: block;
+  flex: 0 0 auto;
+  width: 108px;
+  height: 32px;
+  overflow: hidden;
+  transition: width .25s ease;
+}
+.brand-logo img,
+.topbar-brand img { display: block; width: auto; height: 32px; max-width: none; }
+.logo-on-light { display: none !important; }
+html[data-theme="daylight"] .sidebar .logo-on-dark,
+html[data-theme="sand"] .sidebar .logo-on-dark,
+html[data-theme="rose"] .sidebar .logo-on-dark,
+html[data-bs-theme="light"] .topbar-brand .logo-on-dark { display: none !important; }
+html[data-theme="daylight"] .sidebar .logo-on-light,
+html[data-theme="sand"] .sidebar .logo-on-light,
+html[data-theme="rose"] .sidebar .logo-on-light,
+html[data-bs-theme="light"] .topbar-brand .logo-on-light { display: block !important; }
+
+.sidebar-toggle {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  padding: 0;
+  font-size: 12px;
+  color: var(--sidebar-fg);
+  background: color-mix(in srgb, var(--sidebar-overlay) 4%, transparent);
+  border: 1px solid var(--sidebar-border);
+  border-radius: 50%;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.sidebar-toggle:hover {
+  color: var(--sidebar-fg-strong);
+  border-color: var(--sidebar-active-border);
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+.sidebar-toggle i { transition: transform .25s ease; }
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 12px 20px;
+}
+
+.sidebar-nav .nav { gap: 3px; }
+
+.sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--sidebar-fg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition: background .18s, color .18s, border-color .18s, box-shadow .18s;
+}
+.sidebar .nav-link i { font-size: 16px; width: 18px; text-align: center; flex: 0 0 auto; }
+.sidebar .nav-link span { overflow: hidden; transition: opacity .2s ease; }
+.sidebar .nav-link:hover {
+  color: var(--sidebar-fg-strong);
+  background: color-mix(in srgb, var(--sidebar-overlay) 5%, transparent);
+}
+
+.sidebar .nav-link.active {
+  color: var(--sidebar-active-fg);
+  background: var(--sidebar-active-bg);
+  border-color: var(--sidebar-active-border);
+  box-shadow: var(--sidebar-active-shadow);
+}
+
+/* Collapsed (desktop only) */
+@media (min-width: 992px) {
+  body.sidebar-collapsed .sidebar { width: var(--sidebar-w-collapsed); }
+  body.sidebar-collapsed .sidebar-brand { justify-content: center; padding: 0; }
+  body.sidebar-collapsed .brand-logo { width: 26px; } /* just the "b" mark */
+  body.sidebar-collapsed .brand { gap: 0; }
+  body.sidebar-collapsed .sidebar-toggle {
+    position: absolute;
+    right: -13px;
+    top: calc(50% - 13px);
+    background: var(--sidebar-toggle-bg);
+  }
+  body.sidebar-collapsed .sidebar-toggle i { transform: rotate(180deg); }
+  body.sidebar-collapsed .sidebar .nav-link { justify-content: center; gap: 0; padding-inline: 0; }
+  body.sidebar-collapsed .sidebar .nav-link span { opacity: 0; width: 0; }
+  /* The Exports count sits on the icon's corner, so the icon stays centred like the others. */
+  body.sidebar-collapsed .sidebar .nav-link { position: relative; }
+  body.sidebar-collapsed .sidebar .nav-link .nav-badge {
+    position: absolute;
+    top: 3px;
+    left: calc(50% + 4px);
+    width: auto;
+    min-width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0 4px;
+    font-size: 9.5px;
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--sidebar-toggle-bg);
+  }
+}
+
+.sidebar-backdrop { display: none; }
+
+/* Off-canvas sidebar on tablets/phones */
+@media (max-width: 991.98px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, .3);
+  }
+  body.sidebar-open .sidebar { transform: none; }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: var(--backdrop);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s, visibility .25s;
+    z-index: 1039;
+  }
+  body.sidebar-open .sidebar-backdrop { opacity: 1; visibility: visible; }
+}
+
+/* Tooltips shown beside the collapsed sidebar */
+.nav-tip {
+  --bs-tooltip-bg: var(--menu-bg);
+  --bs-tooltip-color: var(--text);
+  --bs-tooltip-font-size: 12.5px;
+  --bs-tooltip-opacity: 1;
+}
+.nav-tip .tooltip-inner { border: 1px solid var(--border-strong); padding: 6px 10px; box-shadow: var(--float-shadow); }

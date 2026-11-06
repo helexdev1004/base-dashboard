@@ -1,0 +1,14 @@
+/* Toasts. */
+
+.app-toast {
+  min-width: 280px;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--menu-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  box-shadow: var(--float-shadow);
+}
+.app-toast .toast-icon { font-size: 16px; }
+.app-toast.toast-success .toast-icon { color: var(--success); }
+.app-toast.toast-info .toast-icon { color: var(--primary-soft); }

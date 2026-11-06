@@ -1,0 +1,649 @@
+/* Design tokens and the eight colour themes. */
+
+:root {
+  --amber: #ffc83d;
+  --amber-2: #f5a90b;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --sidebar-w: 236px;
+  --sidebar-w-collapsed: 76px;
+  --topbar-h: 60px;
+  --kpi-h: 46px; /* shared by the New Project button and the KPI cards */
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ---------- Themes ----------
+   Each theme defines the same set of colour tokens.
+   Midnight is also the fallback when no theme is set. */
+
+/* 1. Midnight — deep navy with violet glow */
+:root,
+html[data-theme="midnight"] {
+  --color-scheme: dark;
+  --bg: #06070f;
+  --glow-1: rgba(112, 76, 255, .24);
+  --glow-2: rgba(59, 91, 219, .16);
+  --glow-3: rgba(79, 124, 255, .08);
+
+  --text: #e9ebf8;
+  --text-2: #b6bad6;
+  --muted: #8a8fb2;
+  --muted-2: #5f6489;
+  --text-strong: #ffffff;
+  --border: rgba(132, 140, 210, .14);
+  --border-strong: rgba(140, 130, 255, .42);
+  --overlay: #ffffff;
+
+  --primary: #6d5cff;
+  --primary-2: #4f7cff;
+  --primary-soft: #a99cff;
+  --grad-primary: linear-gradient(135deg, #7b5cff 0%, #4f7cff 100%);
+
+  --success: #4ade80;
+  --danger: #f87171;
+  --danger-soft: #ff8a8a;
+  --live: #7ff0a4;
+  --fresh: #7ff0a4;
+  --warm: #ffcf66;
+
+  --sidebar-bg:
+    radial-gradient(260px 300px at 0% 100%, rgba(109, 92, 255, .10), transparent 70%),
+    linear-gradient(180deg, #0b0d1b 0%, #07080f 100%);
+  --sidebar-fg: #b6bad6;
+  --sidebar-fg-strong: #ffffff;
+  --sidebar-border: rgba(132, 140, 210, .14);
+  --sidebar-overlay: #ffffff;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(109, 92, 255, .38) 0%, rgba(79, 124, 255, .16) 100%);
+  --sidebar-active-border: rgba(134, 120, 255, .55);
+  --sidebar-active-fg: #ffffff;
+  --sidebar-active-shadow: 0 0 22px -6px rgba(109, 92, 255, .6), inset 0 1px 0 rgba(255, 255, 255, .06);
+  --sidebar-toggle-bg: #10132a;
+
+  --topbar-bg: linear-gradient(100deg, #090b17 0%, #0f1330 42%, #161b4a 70%, #0b0d1d 100%);
+  --topbar-shadow: 0 8px 24px -16px rgba(0, 0, 0, .8);
+
+  --card-bg: linear-gradient(160deg, rgba(31, 35, 76, .9) 0%, rgba(13, 15, 33, .92) 100%);
+  --card-shadow: 0 12px 30px -18px rgba(0, 0, 0, .9), inset 0 1px 0 rgba(255, 255, 255, .04);
+  --card-glow: 22%;
+  --panel-bg: linear-gradient(180deg, rgba(17, 20, 42, .82) 0%, rgba(11, 13, 28, .88) 100%);
+  --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, .9);
+
+  --menu-bg: #10132b;
+  --modal-bg: linear-gradient(180deg, #121533 0%, #0c0e22 100%);
+  --float-shadow: 0 18px 40px -12px rgba(0, 0, 0, .8);
+  --input-bg: rgba(6, 8, 20, .7);
+  --option-bg: #0e1126;
+
+  --pm-bg: #04050a;
+  --pm-fg: #ffffff;
+  --pm-border: rgba(255, 255, 255, .14);
+  --icon-mix: #ffffff;
+
+  --kpi-1: #4f7cff;
+  --kpi-2: #6366f1;
+  --kpi-3: #8b5cf6;
+  --kpi-4: #38bdf8;
+  --kpi-5: #a855f7;
+
+  --scrollbar: rgba(140, 146, 200, .25);
+  --backdrop: rgba(3, 4, 10, .6);
+  --backdrop-opacity: .7;
+}
+
+/* 2. Ocean — deep sea blues with cyan accents */
+html[data-theme="ocean"] {
+  --color-scheme: dark;
+  --bg: #071a26;
+  --glow-1: rgba(34, 211, 238, .16);
+  --glow-2: rgba(14, 116, 144, .22);
+  --glow-3: rgba(56, 189, 248, .08);
+
+  --text: #e3f4fa;
+  --text-2: #a9cbd8;
+  --muted: #7aa3b3;
+  --muted-2: #4f7686;
+  --text-strong: #ffffff;
+  --border: rgba(120, 200, 225, .15);
+  --border-strong: rgba(34, 211, 238, .5);
+  --overlay: #ffffff;
+
+  --primary: #06b6d4;
+  --primary-2: #3b82f6;
+  --primary-soft: #67e8f9;
+  --grad-primary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+
+  --success: #34d399;
+  --danger: #fb7185;
+  --danger-soft: #fda4af;
+  --live: #6ee7b7;
+  --fresh: #6ee7b7;
+  --warm: #fcd34d;
+
+  --sidebar-bg:
+    radial-gradient(260px 300px at 0% 100%, rgba(34, 211, 238, .14), transparent 70%),
+    linear-gradient(180deg, #0a2738 0%, #061823 100%);
+  --sidebar-fg: #a9cbd8;
+  --sidebar-fg-strong: #ffffff;
+  --sidebar-border: rgba(120, 200, 225, .12);
+  --sidebar-overlay: #ffffff;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(6, 182, 212, .34) 0%, rgba(59, 130, 246, .14) 100%);
+  --sidebar-active-border: rgba(103, 232, 249, .5);
+  --sidebar-active-fg: #ffffff;
+  --sidebar-active-shadow: 0 0 22px -6px rgba(6, 182, 212, .55), inset 0 1px 0 rgba(255, 255, 255, .06);
+  --sidebar-toggle-bg: #0b2a3b;
+
+  --topbar-bg: linear-gradient(100deg, #082030 0%, #0b2f45 45%, #0e3b57 72%, #08202f 100%);
+  --topbar-shadow: 0 8px 24px -16px rgba(0, 0, 0, .7);
+
+  --card-bg: linear-gradient(160deg, rgba(14, 59, 84, .9) 0%, rgba(8, 30, 44, .94) 100%);
+  --card-shadow: 0 12px 30px -18px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .05);
+  --card-glow: 22%;
+  --panel-bg: linear-gradient(180deg, rgba(10, 40, 58, .85) 0%, rgba(7, 27, 39, .9) 100%);
+  --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, .8);
+
+  --menu-bg: #0c2c3e;
+  --modal-bg: linear-gradient(180deg, #0e3247 0%, #0a2433 100%);
+  --float-shadow: 0 18px 40px -12px rgba(0, 0, 0, .7);
+  --input-bg: rgba(4, 16, 24, .6);
+  --option-bg: #0a2433;
+
+  --pm-bg: #03111a;
+  --pm-fg: #ffffff;
+  --pm-border: rgba(255, 255, 255, .14);
+  --icon-mix: #ffffff;
+
+  --kpi-1: #22d3ee;
+  --kpi-2: #3b82f6;
+  --kpi-3: #2dd4bf;
+  --kpi-4: #38bdf8;
+  --kpi-5: #818cf8;
+
+  --scrollbar: rgba(120, 200, 225, .25);
+  --backdrop: rgba(2, 10, 16, .6);
+  --backdrop-opacity: .7;
+}
+
+/* 3. Forest — deep greens with emerald and lime */
+html[data-theme="forest"] {
+  --color-scheme: dark;
+  --bg: #08140f;
+  --glow-1: rgba(52, 211, 153, .14);
+  --glow-2: rgba(132, 204, 22, .08);
+  --glow-3: rgba(16, 185, 129, .07);
+
+  --text: #e6f4ec;
+  --text-2: #b0cdbd;
+  --muted: #82a493;
+  --muted-2: #557563;
+  --text-strong: #ffffff;
+  --border: rgba(140, 210, 170, .14);
+  --border-strong: rgba(52, 211, 153, .5);
+  --overlay: #ffffff;
+
+  --primary: #10b981;
+  --primary-2: #65a30d;
+  --primary-soft: #6ee7b7;
+  --grad-primary: linear-gradient(135deg, #10b981 0%, #65a30d 100%);
+
+  --success: #4ade80;
+  --danger: #f87171;
+  --danger-soft: #fca5a5;
+  --live: #86efac;
+  --fresh: #86efac;
+  --warm: #fde047;
+
+  --sidebar-bg:
+    radial-gradient(260px 300px at 0% 100%, rgba(52, 211, 153, .12), transparent 70%),
+    linear-gradient(180deg, #0d2018 0%, #07120d 100%);
+  --sidebar-fg: #b0cdbd;
+  --sidebar-fg-strong: #ffffff;
+  --sidebar-border: rgba(140, 210, 170, .12);
+  --sidebar-overlay: #ffffff;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(16, 185, 129, .34) 0%, rgba(132, 204, 22, .12) 100%);
+  --sidebar-active-border: rgba(110, 231, 183, .5);
+  --sidebar-active-fg: #ffffff;
+  --sidebar-active-shadow: 0 0 22px -6px rgba(16, 185, 129, .5), inset 0 1px 0 rgba(255, 255, 255, .06);
+  --sidebar-toggle-bg: #0f241b;
+
+  --topbar-bg: linear-gradient(100deg, #0a1a13 0%, #0f2a1f 45%, #14372a 72%, #0a1a13 100%);
+  --topbar-shadow: 0 8px 24px -16px rgba(0, 0, 0, .7);
+
+  --card-bg: linear-gradient(160deg, rgba(22, 58, 43, .9) 0%, rgba(9, 24, 17, .94) 100%);
+  --card-shadow: 0 12px 30px -18px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .05);
+  --card-glow: 22%;
+  --panel-bg: linear-gradient(180deg, rgba(14, 38, 28, .85) 0%, rgba(9, 22, 16, .9) 100%);
+  --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, .8);
+
+  --menu-bg: #0f2a1f;
+  --modal-bg: linear-gradient(180deg, #123224 0%, #0c2219 100%);
+  --float-shadow: 0 18px 40px -12px rgba(0, 0, 0, .7);
+  --input-bg: rgba(3, 12, 8, .6);
+  --option-bg: #0c2219;
+
+  --pm-bg: #030a07;
+  --pm-fg: #ffffff;
+  --pm-border: rgba(255, 255, 255, .14);
+  --icon-mix: #ffffff;
+
+  --kpi-1: #34d399;
+  --kpi-2: #84cc16;
+  --kpi-3: #2dd4bf;
+  --kpi-4: #a3e635;
+  --kpi-5: #22c55e;
+
+  --scrollbar: rgba(140, 210, 170, .25);
+  --backdrop: rgba(2, 8, 5, .6);
+  --backdrop-opacity: .7;
+}
+
+/* 4. Sunset — plum backdrop with pink-to-orange accents */
+html[data-theme="sunset"] {
+  --color-scheme: dark;
+  --bg: #1a0b1f;
+  --glow-1: rgba(249, 115, 22, .16);
+  --glow-2: rgba(219, 39, 119, .18);
+  --glow-3: rgba(168, 85, 247, .10);
+
+  --text: #fbeef4;
+  --text-2: #dcb9cc;
+  --muted: #b08ba2;
+  --muted-2: #7c5a70;
+  --text-strong: #ffffff;
+  --border: rgba(240, 170, 210, .15);
+  --border-strong: rgba(251, 113, 133, .5);
+  --overlay: #ffffff;
+
+  --primary: #f43f5e;
+  --primary-2: #f97316;
+  --primary-soft: #fda4af;
+  --grad-primary: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+
+  --success: #4ade80;
+  --danger: #fb7185;
+  --danger-soft: #fda4af;
+  --live: #86efac;
+  --fresh: #86efac;
+  --warm: #fcd34d;
+
+  --sidebar-bg:
+    radial-gradient(260px 300px at 0% 100%, rgba(249, 115, 22, .14), transparent 70%),
+    linear-gradient(180deg, #2a1030 0%, #170818 100%);
+  --sidebar-fg: #dcb9cc;
+  --sidebar-fg-strong: #ffffff;
+  --sidebar-border: rgba(240, 170, 210, .12);
+  --sidebar-overlay: #ffffff;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(236, 72, 153, .38) 0%, rgba(249, 115, 22, .16) 100%);
+  --sidebar-active-border: rgba(251, 146, 160, .55);
+  --sidebar-active-fg: #ffffff;
+  --sidebar-active-shadow: 0 0 22px -6px rgba(236, 72, 153, .55), inset 0 1px 0 rgba(255, 255, 255, .06);
+  --sidebar-toggle-bg: #2a1030;
+
+  --topbar-bg: linear-gradient(100deg, #1f0c24 0%, #3a1238 45%, #521a3c 72%, #22102a 100%);
+  --topbar-shadow: 0 8px 24px -16px rgba(0, 0, 0, .7);
+
+  --card-bg: linear-gradient(160deg, rgba(74, 24, 72, .9) 0%, rgba(30, 11, 34, .94) 100%);
+  --card-shadow: 0 12px 30px -18px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .05);
+  --card-glow: 24%;
+  --panel-bg: linear-gradient(180deg, rgba(46, 16, 50, .85) 0%, rgba(28, 10, 32, .9) 100%);
+  --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, .8);
+
+  --menu-bg: #2e1233;
+  --modal-bg: linear-gradient(180deg, #36153b 0%, #251029 100%);
+  --float-shadow: 0 18px 40px -12px rgba(0, 0, 0, .7);
+  --input-bg: rgba(14, 4, 16, .6);
+  --option-bg: #251029;
+
+  --pm-bg: #0d0410;
+  --pm-fg: #ffffff;
+  --pm-border: rgba(255, 255, 255, .14);
+  --icon-mix: #ffffff;
+
+  --kpi-1: #f472b6;
+  --kpi-2: #fb923c;
+  --kpi-3: #f43f5e;
+  --kpi-4: #facc15;
+  --kpi-5: #c084fc;
+
+  --scrollbar: rgba(240, 170, 210, .25);
+  --backdrop: rgba(12, 3, 14, .6);
+  --backdrop-opacity: .7;
+}
+
+/* 5. Daylight — clean light with indigo accents */
+html[data-theme="daylight"] {
+  --color-scheme: light;
+  --bg: #f3f5fb;
+  --glow-1: rgba(109, 92, 255, .10);
+  --glow-2: rgba(59, 108, 255, .07);
+  --glow-3: rgba(109, 92, 255, .05);
+
+  --text: #1a1f36;
+  --text-2: #4a5170;
+  --muted: #6b7393;
+  --muted-2: #a3a9c2;
+  --text-strong: #0d1024;
+  --border: rgba(26, 31, 54, .10);
+  --border-strong: rgba(91, 75, 255, .45);
+  --overlay: #1a1f36;
+
+  --primary: #5b4bff;
+  --primary-2: #3b6cff;
+  --primary-soft: #5b4bff;
+  --grad-primary: linear-gradient(135deg, #6a4bff 0%, #3b6cff 100%);
+
+  --success: #16a34a;
+  --danger: #dc2626;
+  --danger-soft: #dc2626;
+  --live: #15803d;
+  --fresh: #15803d;
+  --warm: #b45309;
+
+  --sidebar-bg: #ffffff;
+  --sidebar-fg: #4a5170;
+  --sidebar-fg-strong: #0d1024;
+  --sidebar-border: rgba(26, 31, 54, .08);
+  --sidebar-overlay: #1a1f36;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(91, 75, 255, .14) 0%, rgba(59, 108, 255, .05) 100%);
+  --sidebar-active-border: rgba(91, 75, 255, .35);
+  --sidebar-active-fg: #3f2fe0;
+  --sidebar-active-shadow: 0 6px 16px -10px rgba(91, 75, 255, .5);
+  --sidebar-toggle-bg: #ffffff;
+
+  --topbar-bg: linear-gradient(100deg, #ffffff 0%, #f7f6ff 60%, #eef1ff 100%);
+  --topbar-shadow: 0 8px 20px -18px rgba(26, 31, 54, .3);
+
+  --card-bg: linear-gradient(160deg, #ffffff 0%, #fafbff 100%);
+  --card-shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 10px 24px -16px rgba(16, 24, 40, .18);
+  --card-glow: 10%;
+  --panel-bg: #ffffff;
+  --panel-shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 16px 32px -24px rgba(16, 24, 40, .2);
+
+  --menu-bg: #ffffff;
+  --modal-bg: #ffffff;
+  --float-shadow: 0 18px 40px -16px rgba(16, 24, 40, .25);
+  --input-bg: #ffffff;
+  --option-bg: #ffffff;
+
+  --pm-bg: #1a1f36;
+  --pm-fg: #ffffff;
+  --pm-border: transparent;
+  --icon-mix: #1a1f36;
+
+  --kpi-1: #3b6cff;
+  --kpi-2: #6366f1;
+  --kpi-3: #8b5cf6;
+  --kpi-4: #0ea5e9;
+  --kpi-5: #a855f7;
+
+  --scrollbar: rgba(26, 31, 54, .2);
+  --backdrop: rgba(15, 20, 40, .35);
+  --backdrop-opacity: .4;
+}
+
+/* 6. Arctic — cool light content with a deep teal sidebar */
+html[data-theme="arctic"] {
+  --color-scheme: light;
+  --bg: #edf3f7;
+  --glow-1: rgba(8, 145, 178, .10);
+  --glow-2: rgba(37, 99, 235, .06);
+  --glow-3: rgba(8, 145, 178, .05);
+
+  --text: #0f2433;
+  --text-2: #3c5466;
+  --muted: #66798a;
+  --muted-2: #a2b1bd;
+  --text-strong: #06141e;
+  --border: rgba(15, 36, 51, .10);
+  --border-strong: rgba(8, 145, 178, .5);
+  --overlay: #0f2433;
+
+  --primary: #0891b2;
+  --primary-2: #2563eb;
+  --primary-soft: #0e7490;
+  --grad-primary: linear-gradient(135deg, #0891b2 0%, #2563eb 100%);
+
+  --success: #059669;
+  --danger: #dc2626;
+  --danger-soft: #dc2626;
+  --live: #047857;
+  --fresh: #047857;
+  --warm: #b45309;
+
+  --sidebar-bg:
+    radial-gradient(260px 300px at 0% 100%, rgba(34, 211, 238, .12), transparent 70%),
+    linear-gradient(180deg, #0e2a3b 0%, #0a1f2c 100%);
+  --sidebar-fg: #b9d3e0;
+  --sidebar-fg-strong: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, .06);
+  --sidebar-overlay: #ffffff;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(34, 211, 238, .28) 0%, rgba(37, 99, 235, .14) 100%);
+  --sidebar-active-border: rgba(103, 232, 249, .45);
+  --sidebar-active-fg: #ffffff;
+  --sidebar-active-shadow: 0 0 20px -8px rgba(34, 211, 238, .55);
+  --sidebar-toggle-bg: #0e2a3b;
+
+  --topbar-bg: linear-gradient(100deg, #ffffff 0%, #f2f9fc 60%, #e6f3f8 100%);
+  --topbar-shadow: 0 8px 20px -18px rgba(15, 36, 51, .3);
+
+  --card-bg: linear-gradient(160deg, #ffffff 0%, #f8fcfe 100%);
+  --card-shadow: 0 1px 2px rgba(15, 36, 51, .04), 0 10px 24px -16px rgba(15, 36, 51, .18);
+  --card-glow: 10%;
+  --panel-bg: #ffffff;
+  --panel-shadow: 0 1px 2px rgba(15, 36, 51, .04), 0 16px 32px -24px rgba(15, 36, 51, .2);
+
+  --menu-bg: #ffffff;
+  --modal-bg: #ffffff;
+  --float-shadow: 0 18px 40px -16px rgba(15, 36, 51, .25);
+  --input-bg: #ffffff;
+  --option-bg: #ffffff;
+
+  --pm-bg: #0f2433;
+  --pm-fg: #ffffff;
+  --pm-border: transparent;
+  --icon-mix: #0f2433;
+
+  --kpi-1: #0891b2;
+  --kpi-2: #2563eb;
+  --kpi-3: #0d9488;
+  --kpi-4: #6366f1;
+  --kpi-5: #0284c7;
+
+  --scrollbar: rgba(15, 36, 51, .2);
+  --backdrop: rgba(10, 25, 35, .35);
+  --backdrop-opacity: .4;
+}
+
+/* 7. Sand — warm light with terracotta accents */
+html[data-theme="sand"] {
+  --color-scheme: light;
+  --bg: #f6f1e9;
+  --glow-1: rgba(234, 88, 12, .08);
+  --glow-2: rgba(245, 158, 11, .08);
+  --glow-3: rgba(234, 88, 12, .04);
+
+  --text: #2b2118;
+  --text-2: #5c4c3c;
+  --muted: #8a7764;
+  --muted-2: #bba993;
+  --text-strong: #1a120b;
+  --border: rgba(70, 50, 25, .12);
+  --border-strong: rgba(194, 65, 12, .45);
+  --overlay: #46321a;
+
+  --primary: #c2410c;
+  --primary-2: #ea580c;
+  --primary-soft: #c2410c;
+  --grad-primary: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+
+  --success: #15803d;
+  --danger: #b91c1c;
+  --danger-soft: #b91c1c;
+  --live: #166534;
+  --fresh: #166534;
+  --warm: #b45309;
+
+  --sidebar-bg: linear-gradient(180deg, #fbf7f1 0%, #f5eee3 100%);
+  --sidebar-fg: #5c4c3c;
+  --sidebar-fg-strong: #1a120b;
+  --sidebar-border: rgba(70, 50, 25, .10);
+  --sidebar-overlay: #46321a;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(234, 88, 12, .16) 0%, rgba(245, 158, 11, .07) 100%);
+  --sidebar-active-border: rgba(194, 65, 12, .35);
+  --sidebar-active-fg: #9a3412;
+  --sidebar-active-shadow: 0 6px 16px -10px rgba(194, 65, 12, .45);
+  --sidebar-toggle-bg: #fbf7f1;
+
+  --topbar-bg: linear-gradient(100deg, #fffdf9 0%, #fbf4ea 60%, #f7ecdc 100%);
+  --topbar-shadow: 0 8px 20px -18px rgba(70, 50, 25, .3);
+
+  --card-bg: linear-gradient(160deg, #fffdf9 0%, #fdf8f1 100%);
+  --card-shadow: 0 1px 2px rgba(70, 50, 25, .05), 0 10px 24px -16px rgba(70, 50, 25, .2);
+  --card-glow: 12%;
+  --panel-bg: #fffdf9;
+  --panel-shadow: 0 1px 2px rgba(70, 50, 25, .05), 0 16px 32px -24px rgba(70, 50, 25, .22);
+
+  --menu-bg: #fffdf9;
+  --modal-bg: #fffdf9;
+  --float-shadow: 0 18px 40px -16px rgba(70, 50, 25, .28);
+  --input-bg: #fffdf9;
+  --option-bg: #fffdf9;
+
+  --pm-bg: #2b2118;
+  --pm-fg: #ffffff;
+  --pm-border: transparent;
+  --icon-mix: #2b2118;
+
+  --kpi-1: #ea580c;
+  --kpi-2: #d97706;
+  --kpi-3: #b45309;
+  --kpi-4: #0f766e;
+  --kpi-5: #be185d;
+
+  --scrollbar: rgba(70, 50, 25, .22);
+  --backdrop: rgba(40, 25, 10, .3);
+  --backdrop-opacity: .35;
+}
+
+/* 8. Rose — soft blush light with magenta accents */
+html[data-theme="rose"] {
+  --color-scheme: light;
+  --bg: #fdf2f6;
+  --glow-1: rgba(236, 72, 153, .10);
+  --glow-2: rgba(244, 63, 94, .07);
+  --glow-3: rgba(168, 85, 247, .05);
+
+  --text: #3a1426;
+  --text-2: #6b3a52;
+  --muted: #95687e;
+  --muted-2: #c9a3b5;
+  --text-strong: #2a0a1a;
+  --border: rgba(90, 20, 55, .10);
+  --border-strong: rgba(219, 39, 119, .45);
+  --overlay: #5a1437;
+
+  --primary: #db2777;
+  --primary-2: #e11d48;
+  --primary-soft: #be185d;
+  --grad-primary: linear-gradient(135deg, #db2777 0%, #e11d48 100%);
+
+  --success: #15803d;
+  --danger: #b91c1c;
+  --danger-soft: #be123c;
+  --live: #15803d;
+  --fresh: #15803d;
+  --warm: #b45309;
+
+  --sidebar-bg: linear-gradient(180deg, #fff7fa 0%, #fdeaf1 100%);
+  --sidebar-fg: #6b3a52;
+  --sidebar-fg-strong: #2a0a1a;
+  --sidebar-border: rgba(90, 20, 55, .08);
+  --sidebar-overlay: #5a1437;
+  --sidebar-active-bg: linear-gradient(90deg, rgba(219, 39, 119, .15) 0%, rgba(244, 63, 94, .06) 100%);
+  --sidebar-active-border: rgba(219, 39, 119, .35);
+  --sidebar-active-fg: #9d174d;
+  --sidebar-active-shadow: 0 6px 16px -10px rgba(219, 39, 119, .45);
+  --sidebar-toggle-bg: #fff7fa;
+
+  --topbar-bg: linear-gradient(100deg, #ffffff 0%, #fff3f7 60%, #fde6ef 100%);
+  --topbar-shadow: 0 8px 20px -18px rgba(90, 20, 55, .3);
+
+  --card-bg: linear-gradient(160deg, #ffffff 0%, #fff8fb 100%);
+  --card-shadow: 0 1px 2px rgba(90, 20, 55, .04), 0 10px 24px -16px rgba(90, 20, 55, .18);
+  --card-glow: 10%;
+  --panel-bg: #ffffff;
+  --panel-shadow: 0 1px 2px rgba(90, 20, 55, .04), 0 16px 32px -24px rgba(90, 20, 55, .2);
+
+  --menu-bg: #ffffff;
+  --modal-bg: #ffffff;
+  --float-shadow: 0 18px 40px -16px rgba(90, 20, 55, .25);
+  --input-bg: #ffffff;
+  --option-bg: #ffffff;
+
+  --pm-bg: #3a1426;
+  --pm-fg: #ffffff;
+  --pm-border: transparent;
+  --icon-mix: #3a1426;
+
+  --kpi-1: #db2777;
+  --kpi-2: #e11d48;
+  --kpi-3: #a855f7;
+  --kpi-4: #f97316;
+  --kpi-5: #ec4899;
+
+  --scrollbar: rgba(90, 20, 55, .2);
+  --backdrop: rgba(40, 10, 25, .3);
+  --backdrop-opacity: .35;
+}
+
+/* Map theme tokens onto Bootstrap's variables (beats Bootstrap's own [data-bs-theme] rules). */
+:root,
+html[data-theme] {
+  color-scheme: var(--color-scheme);
+  --bs-body-font-family: var(--font);
+  --bs-body-bg: var(--bg);
+  --bs-body-color: var(--text);
+  --bs-border-color: var(--border);
+  --bs-secondary-color: var(--muted);
+  --bs-emphasis-color: var(--text-strong);
+  --bs-link-color: var(--primary);
+  --bs-link-hover-color: var(--primary-2);
+
+  /* Charts: hairline grid, ring colour around markers */
+  --chart-grid: color-mix(in srgb, var(--overlay) 9%, transparent);
+  --chart-axis: color-mix(in srgb, var(--overlay) 22%, transparent);
+  --chart-surface: var(--menu-bg);
+}
+
+/* Chart series colours — a fixed, colour-blind-checked categorical order (validated against
+   every theme's card surface). Light themes use the light steps, dark themes the dark steps. */
+:root,
+html[data-bs-theme="dark"] {
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+html[data-bs-theme="light"] {
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+}
+
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar) transparent; }
+
+body {
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}

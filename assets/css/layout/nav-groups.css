@@ -1,0 +1,19 @@
+/* Collapsible menu groups in the sidebar. */
+
+.sidebar button.nav-link { width: 100%; text-align: left; background: none; }
+.sidebar .nav-link .nav-caret {
+  width: auto;
+  margin-left: auto;
+  font-size: 11px;
+  opacity: .65;
+  transition: transform .2s ease;
+}
+.nav-toggle[aria-expanded="false"] .nav-caret { transform: rotate(-90deg); }
+.nav-group.has-active > .nav-toggle { color: var(--sidebar-fg-strong); }
+.nav-sub { gap: 2px; margin: 2px 0 4px; padding-left: 18px; }
+.sidebar .nav-sub .nav-link { padding-top: 7px; padding-bottom: 7px; font-size: 13px; }
+.sidebar .nav-sub .nav-link i { font-size: 14px; }
+@media (min-width: 992px) {
+  body.sidebar-collapsed .nav-caret { display: none; }
+  body.sidebar-collapsed .nav-sub { padding-left: 0; }
+}

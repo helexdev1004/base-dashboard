@@ -1,0 +1,136 @@
+/* Framework pages. */
+
+.mono-sm { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+.btn-import { color: var(--amber-2); background: transparent; border: 1px solid color-mix(in srgb, var(--amber) 60%, transparent); }
+.btn-import:hover:not(:disabled),
+.btn-import:focus-visible { color: var(--amber-2); background: color-mix(in srgb, var(--amber) 12%, transparent); border-color: var(--amber); }
+.btn-import:disabled { opacity: .5; }
+.fw-tabs { padding: 6px 12px 0; }
+.fw-tabs a.pv-tab { text-decoration: none; }
+.fw-tab-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 18px;
+  margin-left: 4px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-2);
+  background: color-mix(in srgb, var(--overlay) 8%, transparent);
+  border-radius: 9px;
+}
+.pv-tab.active .fw-tab-count { color: #fff; background: var(--primary); }
+
+/* Account form: two columns */
+.fwa-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 40px; align-items: center; }
+.fwa-grid .segmented.seg-field button { min-width: 0; padding: 0 14px; }
+@media (max-width: 991.98px) {
+  .fwa-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* A framework project (read-only) */
+.fwd-card { padding-top: 0; }
+.fwd-card > .fw-tabs { margin: 0 -20px 18px; }
+.fwd-overview { display: flex; flex-direction: column; gap: 12px; max-width: 640px; }
+.fwd-overview .uf-row { grid-template-columns: 160px minmax(0, 1fr); }
+.fwd-short { max-width: 300px; }
+.fwd-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+.fwd-actions .btn { height: 38px; padding: 0 18px; }
+.fwt-list { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--border); border-radius: 10px; }
+.fwt-item + .fwt-item { border-top: 1px solid var(--border); }
+.fwt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--text);
+  text-align: left;
+  background: none;
+  border: 0;
+}
+.fwt-head:hover { background: color-mix(in srgb, var(--primary) 6%, transparent); }
+.fwt-head:focus-visible { outline: 2px solid color-mix(in srgb, var(--primary) 90%, transparent); outline-offset: -2px; }
+.fwt-head .bi { font-size: 13px; color: var(--muted); transition: transform .2s; }
+.fwt-item.open .fwt-head { font-weight: 600; color: var(--text-strong); background: color-mix(in srgb, var(--primary) 14%, transparent); }
+.fwt-item.open .fwt-head .bi { transform: rotate(180deg); }
+.fwt-body { display: flex; flex-direction: column; gap: 14px; padding: 16px 18px 18px; }
+.fwt-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, .8fr); gap: 12px 18px; align-items: end; }
+.fwt-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.fwt-chips .ms-chip { flex: 0 0 auto; height: 26px; padding: 0 9px; font-size: 12px; white-space: nowrap; }
+.fwt-field { min-width: 0; }
+.fwt-field .form-label { display: block; margin-bottom: 4px; font-size: 12px; text-align: center; }
+.fwt-wide { grid-column: span 1; }
+.fwt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 40px;
+  padding: 6px 8px;
+  background: color-mix(in srgb, var(--overlay) 4%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.fwt-block .form-label { text-align: left; }
+.fwt-row { grid-template-columns: 160px minmax(0, 1fr); }
+.fwt-base { max-width: 520px; }
+.fwt-quotas td:first-child .form-select { min-width: 160px; }
+@media (max-width: 991.98px) {
+  .fwt-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 575.98px) {
+  .fwt-grid { grid-template-columns: minmax(0, 1fr); }
+  .fwt-row,
+  .fwd-overview .uf-row { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Ratecard and its markets */
+.fwr-name { grid-template-columns: 160px minmax(0, 480px); }
+.fwm-countries { white-space: normal !important; line-height: 1.5; }
+.fwm-link { font-weight: 500; color: var(--text); }
+.rc-import .input-group .form-control { max-width: 520px; }
+.rc-wrap { margin-top: 14px; overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+.rc-grid { width: 100%; font-size: 12px; border-collapse: collapse; }
+.rc-grid th { padding: 6px 6px; font-weight: 700; text-align: center; color: var(--text-strong); white-space: nowrap; }
+.rc-grid thead th { background: color-mix(in srgb, var(--primary) 14%, transparent); }
+.rc-grid thead tr:first-child th { background: color-mix(in srgb, var(--primary) 20%, transparent); }
+.rc-grid .rc-loi,
+.rc-grid .rc-loi-head { padding: 0 10px; background: color-mix(in srgb, var(--primary) 9%, transparent); }
+.rc-grid tbody tr + tr { border-top: 1px solid var(--border); }
+.rc-grid td { padding: 5px 3px; }
+.rc-cell { display: flex; flex-direction: column; gap: 3px; }
+.rc-price {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.rc-price span { flex: 0 0 auto; width: 18px; font-size: 11px; text-align: center; color: var(--muted); }
+.rc-price input {
+  width: 52px;
+  min-width: 0;
+  height: 24px;
+  padding: 0 4px 0 0;
+  font-size: 12px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  background: transparent;
+  border: 0;
+  outline: none;
+  -moz-appearance: textfield;
+}
+.rc-price input::-webkit-outer-spin-button,
+.rc-price input::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
+.rc-price:focus-within { border-color: color-mix(in srgb, var(--primary) 70%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 18%, transparent); }
+
+/* Feasibilities */
+.fwf-io { display: flex; gap: 8px; margin-left: auto; }
+.fwf-table th:last-child,
+.fwf-table td:last-child { text-align: right; }
+.fwf-value { font-variant-numeric: tabular-nums; }

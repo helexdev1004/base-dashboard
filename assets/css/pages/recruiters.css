@@ -1,0 +1,6 @@
+/* Recruiters. */
+
+@media (min-width: 768px) {
+  .rc-name-row { grid-template-columns: 200px minmax(0, 1fr); }
+}
+.rc-table tfoot td { text-align: left; }

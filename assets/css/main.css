@@ -1,0 +1,35 @@
+/* Base dashboard styles. Order matters: themes and layout first, page styles after, responsive tweaks last. */
+
+@import url("base/themes.css");
+@import url("layout/app.css");
+@import url("layout/sidebar.css");
+@import url("layout/header.css");
+@import url("components/buttons.css");
+@import url("pages/projects.css");
+@import url("components/pagination.css");
+@import url("components/modal.css");
+@import url("components/toast.css");
+@import url("pages/project/project.css");
+@import url("components/multi-select.css");
+@import url("components/page.css");
+@import url("pages/feasibility.css");
+@import url("pages/exports.css");
+@import url("layout/nav-groups.css");
+@import url("components/list-page.css");
+@import url("pages/vendors.css");
+@import url("pages/blacklist.css");
+@import url("pages/screener-library.css");
+@import url("pages/panel-management/panels.css");
+@import url("pages/panel-management/rewards.css");
+@import url("pages/recruiters.css");
+@import url("pages/project/exclusions.css");
+@import url("components/combo-box.css");
+@import url("components/check-select.css");
+@import url("pages/project/vendor-info.css");
+@import url("pages/users.css");
+@import url("pages/panel-management/translations.css");
+@import url("pages/panel-management/survey-points.css");
+@import url("pages/first-surveys.css");
+@import url("pages/framework.css");
+@import url("pages/coming-soon.css");
+@import url("base/responsive.css");

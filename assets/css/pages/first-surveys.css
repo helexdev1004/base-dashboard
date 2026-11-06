@@ -1,0 +1,5 @@
+/* First surveys. */
+
+.fs-status { font-size: 12.5px; font-weight: 600; }
+.fs-status.is-live { color: var(--live); }
+.fs-status.is-closed { color: var(--muted); }

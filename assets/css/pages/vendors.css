@@ -1,0 +1,42 @@
+/* Vendor form and vendor group modal. */
+
+/* Vendor form */
+.page-head-back { flex-direction: row; align-items: flex-start; gap: 12px; }
+.vendor-form { display: flex; flex-direction: column; gap: 16px; }
+.hf-rows { display: flex; flex-direction: column; gap: 12px; }
+.hf-row { display: grid; grid-template-columns: 250px minmax(0, 1fr); align-items: start; gap: 4px 16px; }
+.hf-row > .form-label { margin: 0; padding-top: 9px; font-size: 13px; }
+.hf-field { min-width: 0; }
+.hf-md { max-width: 620px; }
+.hf-sm { max-width: 400px; }
+.hf-field .form-check { padding-top: 8px; }
+.form-check-label { font-size: 13px; color: var(--text-2); }
+.form-actions-bar {
+  position: sticky;
+  bottom: 12px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--menu-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--float-shadow);
+}
+.form-actions-bar .btn { height: 38px; padding: 0 18px; }
+
+/* Vendor group modal */
+.vg-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.vg-chip {
+  padding: 4px 10px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  border-radius: 14px;
+}
+.vg-chip:hover { color: var(--text-strong); border-color: var(--primary); }

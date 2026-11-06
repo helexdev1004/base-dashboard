@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Base · Survey Projects</title>
-  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
   <meta name="theme-color" content="#06070f">
 
   <!-- Apply the saved theme before first paint to avoid a flash of the default theme. -->
@@ -28,7 +28,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
 </head>
 <body class="no-transition">
 
@@ -40,8 +40,8 @@
         <a class="brand" href="#" aria-label="Base home">
           <!-- White text for dark sidebars, black text for light ones; the collapsed menu shows just the mark. -->
           <span class="brand-logo">
-            <img class="logo-on-dark" src="base-logos/base_dark.png" alt="" width="999" height="296">
-            <img class="logo-on-light" src="base-logos/base_light.png" alt="" width="999" height="296">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
           </span>
         </a>
         <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
@@ -109,8 +109,8 @@
           <i class="bi bi-list"></i>
         </button>
         <a class="topbar-brand d-lg-none" href="#" aria-label="Base home">
-          <img class="logo-on-dark" src="base-logos/base_dark.png" alt="" width="999" height="296">
-          <img class="logo-on-light" src="base-logos/base_light.png" alt="" width="999" height="296">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
         </a>
 
         <div class="topbar-actions">
@@ -354,18 +354,71 @@
   <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
-  <script src="project.js"></script>
-  <script src="feasibility.js"></script>
-  <script src="exports.js"></script>
-  <script src="vendors.js"></script>
-  <script src="blacklist.js"></script>
-  <script src="library.js"></script>
-  <script src="panels.js"></script>
-  <script src="rewards.js"></script>
-  <script src="recruiters.js"></script>
-  <script src="users.js"></script>
-  <script src="panel-tools.js"></script>
-  <script src="framework.js"></script>
+  <script src="assets/js/core/utils.js"></script>
+
+  <script src="assets/js/data/reference-data.js"></script>
+  <script src="assets/js/data/sample-projects.js"></script>
+
+  <script src="assets/js/components/toast.js"></script>
+  <script src="assets/js/components/pagination.js"></script>
+  <script src="assets/js/components/modal.js"></script>
+  <script src="assets/js/components/multi-select.js"></script>
+  <script src="assets/js/components/combo-box.js"></script>
+  <script src="assets/js/components/check-select.js"></script>
+  <script src="assets/js/components/file-upload.js"></script>
+
+  <script src="assets/js/layout/themes.js"></script>
+  <script src="assets/js/layout/sidebar.js"></script>
+
+  <script src="assets/js/app/router.js"></script>
+  <script src="assets/js/pages/coming-soon.js"></script>
+
+  <script src="assets/js/pages/projects/kpi-cards.js"></script>
+  <script src="assets/js/pages/projects/progress-chart.js"></script>
+  <script src="assets/js/pages/projects/list.js"></script>
+
+  <script src="assets/js/pages/project/config.js"></script>
+  <script src="assets/js/pages/project/data.js"></script>
+  <script src="assets/js/pages/project/state.js"></script>
+  <script src="assets/js/pages/project/main-tab.js"></script>
+  <script src="assets/js/pages/project/vendors-tab.js"></script>
+  <script src="assets/js/pages/project/vendor-info.js"></script>
+  <script src="assets/js/pages/project/exclusions-tab.js"></script>
+  <script src="assets/js/pages/project/progress-tab.js"></script>
+  <script src="assets/js/pages/project/campaigns-tab.js"></script>
+  <script src="assets/js/pages/project/campaign-form.js"></script>
+  <script src="assets/js/pages/project/codes-and-links.js"></script>
+  <script src="assets/js/pages/project/exclude-ips.js"></script>
+  <script src="assets/js/pages/project/questions.js"></script>
+  <script src="assets/js/pages/project/shell.js"></script>
+  <script src="assets/js/pages/project/events.js"></script>
+
+  <script src="assets/js/pages/feasibility.js"></script>
+  <script src="assets/js/pages/exports.js"></script>
+  <script src="assets/js/pages/vendors.js"></script>
+  <script src="assets/js/pages/blacklist.js"></script>
+  <script src="assets/js/pages/screener-library.js"></script>
+
+  <script src="assets/js/pages/panel-management/panel-data.js"></script>
+  <script src="assets/js/pages/panel-management/panels.js"></script>
+  <script src="assets/js/pages/panel-management/panel-members.js"></script>
+  <script src="assets/js/pages/panel-management/panelist.js"></script>
+  <script src="assets/js/pages/panel-management/rewards.js"></script>
+  <script src="assets/js/pages/panel-management/redeem.js"></script>
+  <script src="assets/js/pages/panel-management/translations.js"></script>
+  <script src="assets/js/pages/panel-management/survey-points.js"></script>
+
+  <script src="assets/js/pages/recruiters.js"></script>
+  <script src="assets/js/pages/users.js"></script>
+  <script src="assets/js/pages/statistics.js"></script>
+  <script src="assets/js/pages/first-surveys.js"></script>
+
+  <script src="assets/js/pages/framework/data.js"></script>
+  <script src="assets/js/pages/framework/accounts.js"></script>
+  <script src="assets/js/pages/framework/projects.js"></script>
+  <script src="assets/js/pages/framework/ratecards.js"></script>
+  <script src="assets/js/pages/framework/feasibilities.js"></script>
+
+  <script src="assets/js/app/main.js"></script>
 </body>
 </html>

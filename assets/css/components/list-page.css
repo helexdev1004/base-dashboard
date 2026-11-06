@@ -1,0 +1,41 @@
+/* Shared bits of the list pages (filters bar, list tables, links). */
+
+.list-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.search-group { flex: 0 1 440px; min-width: 240px; flex-wrap: nowrap; }
+.search-group .form-control { height: 36px; font-size: 13px; }
+.search-group .btn { height: 36px; padding: 0 11px; border-color: var(--border); }
+.search-group .form-control::-webkit-search-cancel-button { display: none; }
+.list-filters .pv-filter { height: 36px; min-width: 200px; }
+.list-table th,
+.list-table td { text-align: left; }
+.list-table .t-end { text-align: right; }
+.row-link { cursor: pointer; }
+.cell-link {
+  padding: 0;
+  font-weight: 600;
+  color: var(--text-strong);
+  text-align: left;
+  text-decoration: none;
+  background: none;
+  border: 0;
+}
+.cell-link:hover,
+.cell-link:focus-visible { color: var(--primary-soft); text-decoration: underline; text-underline-offset: 3px; }
+.api-yes { font-size: 16px; color: var(--success); }
+.btn-danger-solid { color: #fff; background: var(--danger); border: 1px solid var(--danger); font-weight: 600; }
+.btn-danger-solid:hover,
+.btn-danger-solid:focus-visible { color: #fff; filter: brightness(1.08); }
+.btn-danger-solid.is-armed { box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 30%, transparent); }
+
+/* Shared bits for the list pages below */
+.table-responsive { position: relative; } /* keeps visually-hidden labels inside the scroll box */
+.list-table .num-l { font-variant-numeric: tabular-nums; }
+.pill-yes { color: var(--live); background: color-mix(in srgb, var(--success) 14%, transparent); }
+.pv-table tfoot .num-l { color: var(--text-strong); }
