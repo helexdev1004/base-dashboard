@@ -724,15 +724,27 @@ body.no-transition * { transition: none !important; }
 }
 .brand:hover { color: var(--sidebar-fg-strong); }
 
-.brand-mark { width: 26px; height: 26px; flex: 0 0 auto; }
-
-.brand-text {
-  font-size: 23px;
-  font-weight: 700;
-  letter-spacing: -.02em;
-  white-space: nowrap;
-  transition: opacity .2s ease;
+/* Logo: base-logos/base_dark.png (white text) on dark sidebars, base_light.png (black text) on light ones.
+   The image is 999 × 296; the "b" mark is its first 235px. */
+.brand-logo {
+  display: block;
+  flex: 0 0 auto;
+  width: 108px;
+  height: 32px;
+  overflow: hidden;
+  transition: width .25s ease;
 }
+.brand-logo img,
+.topbar-brand img { display: block; width: auto; height: 32px; max-width: none; }
+.logo-on-light { display: none !important; }
+html[data-theme="daylight"] .sidebar .logo-on-dark,
+html[data-theme="sand"] .sidebar .logo-on-dark,
+html[data-theme="rose"] .sidebar .logo-on-dark,
+html[data-bs-theme="light"] .topbar-brand .logo-on-dark { display: none !important; }
+html[data-theme="daylight"] .sidebar .logo-on-light,
+html[data-theme="sand"] .sidebar .logo-on-light,
+html[data-theme="rose"] .sidebar .logo-on-light,
+html[data-bs-theme="light"] .topbar-brand .logo-on-light { display: block !important; }
 
 .sidebar-toggle {
   width: 26px;
@@ -795,7 +807,7 @@ body.no-transition * { transition: none !important; }
 @media (min-width: 992px) {
   body.sidebar-collapsed .sidebar { width: var(--sidebar-w-collapsed); }
   body.sidebar-collapsed .sidebar-brand { justify-content: center; padding: 0; }
-  body.sidebar-collapsed .brand-text { opacity: 0; width: 0; }
+  body.sidebar-collapsed .brand-logo { width: 26px; } /* just the "b" mark */
   body.sidebar-collapsed .brand { gap: 0; }
   body.sidebar-collapsed .sidebar-toggle {
     position: absolute;
@@ -874,7 +886,8 @@ body.no-transition * { transition: none !important; }
   box-shadow: var(--topbar-shadow);
 }
 
-.topbar-brand { font-size: 19px; font-weight: 700; letter-spacing: -.02em; color: var(--text-strong); }
+.topbar-brand { display: block; height: 28px; overflow: hidden; text-decoration: none; }
+.topbar-brand img { height: 28px; }
 .topbar-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 
 .icon-btn {

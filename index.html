@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Base · Survey Projects</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.png" type="image/png">
   <meta name="theme-color" content="#06070f">
 
   <!-- Apply the saved theme before first paint to avoid a flash of the default theme. -->
@@ -38,17 +38,11 @@
     <aside class="sidebar" id="sidebar" aria-label="Main navigation">
       <div class="sidebar-brand">
         <a class="brand" href="#" aria-label="Base home">
-          <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true">
-            <defs>
-              <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#ffd047" />
-                <stop offset="1" stop-color="#f59e0b" />
-              </linearGradient>
-            </defs>
-            <path d="M6 3v16a6 6 0 0 0 6 6h4a6 6 0 0 0 6-6v-2a6 6 0 0 0-6-6h-6" fill="none" stroke="url(#brandGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
-            <circle cx="14" cy="18" r="2.4" fill="url(#brandGrad)" />
-          </svg>
-          <span class="brand-text">base</span>
+          <!-- White text for dark sidebars, black text for light ones; the collapsed menu shows just the mark. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="base-logos/base_dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="base-logos/base_light.png" alt="" width="999" height="296">
+          </span>
         </a>
         <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
           <i class="bi bi-chevron-left"></i>
@@ -114,7 +108,10 @@
         <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
           <i class="bi bi-list"></i>
         </button>
-        <span class="topbar-brand d-lg-none">base</span>
+        <a class="topbar-brand d-lg-none" href="#" aria-label="Base home">
+          <img class="logo-on-dark" src="base-logos/base_dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="base-logos/base_light.png" alt="" width="999" height="296">
+        </a>
 
         <div class="topbar-actions">
           <!-- Theme picker -->
