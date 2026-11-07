@@ -1,0 +1,2305 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Back to school spending · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link active" href="index.html" aria-current="page"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="feasibility.html"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels" hidden>
+              <li><a class="nav-link" href="panels.html"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="rewards.html"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="redeem.html"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="profiling.html"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework" hidden>
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="fw-projects.html"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="fw-ratecards.html"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link" href="users.html"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="project-view" id="projectView">
+          <header class="pv-header" id="pvHeader">
+            <div class="pv-title-row">
+              <a class="pv-back-btn" href="index.html" title="Back to projects" aria-label="Back to projects"><i class="bi bi-arrow-left"></i></a>
+              <div class="pv-title-block">
+                <h1 class="pv-title">Back to school spending</h1>
+                <div class="pv-meta">
+                  <span class="status-badge status-live">Live</span>
+                  <span class="pv-job" title="MFJN">#28573</span>
+                  <span class="pv-job" title="MFPO">#28573</span>
+                  <span><span class="fi fi-fr"></span> France</span>
+                  <span><i class="bi bi-building"></i> Orbit Consumer Lab</span>
+                  <span><i class="bi bi-tag"></i> ad hoc</span>
+                  <span><i class="bi bi-person"></i> Adam Lindqvist</span>
+                </div>
+              </div>
+              <div class="pv-quick">
+                <div class="pv-chip"><span class="pv-chip-label">Completes</span><span class="pv-chip-value">65</span></div>
+                <div class="pv-chip"><span class="pv-chip-label">IR / Conv</span><span class="pv-chip-value">16% / 9%</span></div>
+                <div class="pv-chip"><span class="pv-chip-label">LOI real</span><span class="pv-chip-value">13.66 min</span></div>
+                <div class="pv-chip"><span class="pv-chip-label">Last entry</span><span class="pv-chip-value">1 hour ago</span></div>
+              </div>
+            </div></header>
+          <nav class="pv-tabs" role="tablist" aria-label="Project sections">
+            <button type="button" class="pv-tab active" role="tab" id="tab-main" data-tab="main" aria-controls="panel-main" aria-selected="true" tabindex="0" data-hash="main">Main</button>
+            <button type="button" class="pv-tab" role="tab" id="tab-vendors" data-tab="vendors" aria-controls="panel-vendors" aria-selected="false" tabindex="-1" data-hash="vendors">Project vendors</button>
+            <button type="button" class="pv-tab" role="tab" id="tab-exclusions" data-tab="exclusions" aria-controls="panel-exclusions" aria-selected="false" tabindex="-1" data-hash="exclusions">Project exclusions</button>
+            <button type="button" class="pv-tab" role="tab" id="tab-progress" data-tab="progress" aria-controls="panel-progress" aria-selected="false" tabindex="-1" data-hash="progress">Progress</button>
+            <button type="button" class="pv-tab" role="tab" id="tab-campaigns" data-tab="campaigns" aria-controls="panel-campaigns" aria-selected="false" tabindex="-1" data-hash="campaigns">Campaigns</button>
+            <button type="button" class="pv-tab" role="tab" id="tab-codes" data-tab="codes" aria-controls="panel-codes" aria-selected="false" tabindex="-1" data-hash="codes">Unique codes</button>
+            <button type="button" class="pv-tab" role="tab" id="tab-links" data-tab="links" aria-controls="panel-links" aria-selected="false" tabindex="-1" data-hash="links">Custom Link</button>
+            <button type="button" class="pv-tab" role="tab" id="tab-ips" data-tab="ips" aria-controls="panel-ips" aria-selected="false" tabindex="-1" data-hash="ips">Exclude IPs</button>
+            <button type="button" class="pv-tab" role="tab" id="tab-screener" data-tab="screener" aria-controls="panel-screener" aria-selected="false" tabindex="-1" data-hash="screener">Screener</button>
+            <button type="button" class="pv-tab" role="tab" id="tab-poll" data-tab="poll" aria-controls="panel-poll" aria-selected="false" tabindex="-1" data-hash="poll">Post Poll</button>
+          </nav>
+          <section class="pv-panel" id="panel-main" role="tabpanel" aria-labelledby="tab-main">
+            <div class="main-layout">
+              <form class="pv-card mf-compact" id="mainForm" novalidate autocomplete="off" data-toast="Changes saved.">
+                <div class="pv-card-head">
+                  <div>
+                    <h2 class="pv-card-title">Project details</h2>
+                  </div>
+                  <span class="dirty-flag" id="dirtyFlag" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+                </div>
+                <div class="mf-rows">
+                  <div class="mf-row">
+                    <div class="mf-field mf-grow">
+                      <label class="form-label" for="mfName">Name</label>
+                      <input class="form-control" id="mfName" required maxlength="100" value="Back to school spending" placeholder="e.g. Employed individuals">
+                      <div class="invalid-feedback">Enter a project name.</div>
+                    </div>
+                    <div class="mf-field mf-grow mf-grow-lg">
+                      <label class="form-label" for="mfPm">PM</label>
+                      <div id="mfPmSelect" class="ms">
+                        <div class="ms-control">
+                          <span class="ms-chips">
+                            <span class="ms-chip">Adam Lindqvist<button type="button" data-remove="AL" aria-label="Remove Adam Lindqvist"><i class="bi bi-x"></i></button></span></span>
+                          <input type="text" class="ms-input" id="mfPm" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="mfPm-list" autocomplete="off" spellcheck="false" placeholder="">
+                        </div>
+                        <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
+                        <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+                        <ul class="ms-menu" id="mfPm-list" role="listbox" aria-multiselectable="true" hidden><li role="option" id="mfPm-opt-0" data-value="RG" aria-selected="false">Ruth Gallagher</li><li role="option" id="mfPm-opt-1" data-value="MK" aria-selected="false">Mia Kovács</li><li role="option" id="mfPm-opt-2" data-value="JS" aria-selected="false">Jonas Schmidt</li><li role="option" id="mfPm-opt-3" data-value="TD" aria-selected="false">Tara Dubois</li><li role="option" id="mfPm-opt-4" data-value="RA" aria-selected="false">Ray</li></ul></div>
+                      <div class="invalid-feedback">Pick at least one project manager.</div>
+                    </div>
+                  </div>
+                  <div class="mf-row">
+                    <div class="mf-field mf-client">
+                      <label class="form-label" for="mfClient">Client</label>
+                      <select class="form-select" id="mfClient" required><option value="">Select a client</option><option value="Bluepeak Insights">Bluepeak Insights</option><option value="Cobalt Strategy">Cobalt Strategy</option><option value="Kestrel Analytics">Kestrel Analytics</option><option value="Meridian Panels">Meridian Panels</option><option value="Northwind Research">Northwind Research</option><option value="Orbit Consumer Lab" selected>Orbit Consumer Lab</option><option value="Vantage Media Group">Vantage Media Group</option></select>
+                      <div class="invalid-feedback">Select a client.</div>
+                    </div>
+                    <div class="mf-field mf-w-country">
+                      <label class="form-label" for="mfCountry">Country</label>
+                      <select class="form-select" id="mfCountry" required><option value="">Select a country</option><option value="be">Belgium</option><option value="cz">Czech Republic</option><option value="fr" selected>France</option><option value="de">Germany</option><option value="hu">Hungary</option><option value="it">Italy</option><option value="nl">Netherlands</option><option value="pl">Poland</option><option value="pt">Portugal</option><option value="ro">Romania</option><option value="es">Spain</option><option value="se">Sweden</option><option value="gb">United Kingdom</option><option value="us">United States</option></select>
+                      <div class="invalid-feedback">Select a country.</div>
+                    </div>
+                    <div class="mf-field mf-w-xs">
+                      <label class="form-label" for="mfLength">Survey length</label>
+                      <div class="input-group has-validation">
+                        <input class="form-control" id="mfLength" type="number" min="1" max="90" step="1" required value="12" placeholder="10">
+                        <span class="input-group-text">min</span>
+                        <div class="invalid-feedback">1–90 minutes.</div>
+                      </div>
+                    </div>
+                    <div class="mf-field mf-w-num">
+                      <label class="form-label" for="mfSurveyNo">MFJN</label>
+                      <input class="form-control" id="mfSurveyNo" type="number" min="1" step="1" required value="28573">
+                      <div class="invalid-feedback" id="mfSurveyNoFeedback">Enter the MFJN.</div>
+                    </div>
+                    <div class="mf-field mf-w-num">
+                      <label class="form-label" for="mfPo">MFPO</label>
+                      <input class="form-control" id="mfPo" maxlength="40" value="28573" placeholder="MFPO">
+                    </div>
+                  </div>
+                  <div class="mf-row">
+                    <div class="mf-field mf-w-sm">
+                      <label class="form-label" for="mfStatus">Status</label>
+                      <select class="form-select" id="mfStatus"><option value="Live" selected>Live</option><option value="Closed">Closed</option></select>
+                    </div>
+                    <div class="mf-field mf-w-sm">
+                      <label class="form-label" for="mfType">Type</label>
+                      <select class="form-select" id="mfType"><option value="ad hoc" selected>ad hoc</option><option value="tracker">tracker</option><option value="omnibus">omnibus</option></select>
+                    </div>
+                    <div class="mf-field">
+                      <span class="form-label d-block" id="lbl-geoIp">Geo IP check</span>
+                      <div class="segmented seg-field" role="group" aria-labelledby="lbl-geoIp" data-field="geoIp">
+                        <button type="button" data-action="toggle" data-value="1" class="active" aria-pressed="true">Active</button>
+                        <button type="button" data-action="toggle" data-value="0" aria-pressed="false">Inactive</button>
+                      </div></div>
+                    <div class="mf-field">
+                      <span class="form-label d-block" id="lbl-blockDupIp">Block duplicated IP</span>
+                      <div class="segmented seg-field" role="group" aria-labelledby="lbl-blockDupIp" data-field="blockDupIp">
+                        <button type="button" data-action="toggle" data-value="1" aria-pressed="false">Active</button>
+                        <button type="button" data-action="toggle" data-value="0" class="active" aria-pressed="true">Inactive</button>
+                      </div></div>
+                  </div>
+                  <div class="mf-field">
+                    <label class="form-label" for="mfNotes">Notes</label>
+                    <textarea class="form-control" id="mfNotes" rows="3" maxlength="2000" placeholder="Anything the team should know about this project"></textarea>
+                  </div>
+                  <div class="mf-field">
+                    <div class="mf-label-row">
+                      <label class="form-label" for="mfLink">Live link</label>
+                      <div class="field-help" role="group" aria-label="Predefined variables">
+                        Insert variable:
+                        <button type="button" class="var-chip" data-action="insert-var" data-value="{MFID}">{MFID}</button><button type="button" class="var-chip" data-action="insert-var" data-value="{UNIQUE_CODES}">{UNIQUE_CODES}</button><button type="button" class="var-chip" data-action="insert-var" data-value="{CUSTOM_LINK}">{CUSTOM_LINK}</button>
+                      </div>
+                    </div>
+                    <div class="input-group has-validation">
+                      <input class="form-control mono" id="mfLink" required value="https://fwredirect.com/start/pdpdGDYYmgauMWA/{MFID}" spellcheck="false">
+                      <button class="btn btn-ghost" type="button" data-action="copy-link" title="Copy link" aria-label="Copy live link" data-toast="Live link copied."><i class="bi bi-clipboard"></i></button>
+                      <div class="invalid-feedback">Enter a full URL starting with http:// or https://.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pv-form-actions">
+                  <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+                  <button type="button" class="btn btn-ghost" data-action="cancel-main">Cancel</button>
+                </div>
+              </form>
+              <section class="pv-card metrics-card" aria-labelledby="metricsTitle">
+                <div class="pv-card-head metrics-head">
+                  <div class="metrics-head-title">
+                    <h2 class="pv-card-title" id="metricsTitle">Fieldwork metrics <span class="pv-card-note">all vendors combined</span></h2>
+                    <div class="segmented seg-xs ec-toggle" role="group" aria-label="Entries to show">
+                      <button type="button" data-action="ec-toggle" data-value="all" class="active" aria-pressed="true">Show All</button>
+                      <button type="button" data-action="ec-toggle" data-value="ec" aria-pressed="false">Show EC only</button>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm-h" data-action="export-main" data-toast="Project summary exported."><i class="bi bi-download"></i> Export data</button>
+                </div>
+                <div class="metric-rows">
+                  <div class="metric-row is-headline">
+                    <div class="metric-box is-key" title="Completes (C1)">
+                      <span class="metric-label">Completes</span>
+                      <span class="metric-value">65</span>
+                    </div>
+                    <div class="metric-box " title="Incidence rate">
+                      <span class="metric-label">Incidence</span>
+                      <span class="metric-value">16%</span>
+                    </div>
+                    <div class="metric-box ">
+                      <span class="metric-label">Conversion</span>
+                      <span class="metric-value">9%</span>
+                    </div>
+                    <div class="metric-box is-text" title="2026-11-07 08:55">
+                      <span class="metric-label">Last entry</span>
+                      <span class="metric-value">1 h ago</span>
+                    </div>
+                  </div>
+                  <div class="metric-row">
+                    <div class="metric-box " title="Length of interview quoted, in minutes">
+                      <span class="metric-label">LOI bid (min)</span>
+                      <span class="metric-value">12.00</span>
+                    </div>
+                    <div class="metric-box " title="Actual length of interview so far, in minutes">
+                      <span class="metric-label">LOI actual (min)</span>
+                      <span class="metric-value">13.66</span>
+                    </div>
+                  </div>
+                  <div class="metric-row">
+                    <div class="metric-box ">
+                      <span class="metric-label">Entry base (EB)</span>
+                      <span class="metric-value">755</span>
+                    </div>
+                    <div class="metric-box ">
+                      <span class="metric-label">Entry client (EC)</span>
+                      <span class="metric-value">518</span>
+                    </div>
+                    <div class="metric-box ">
+                      <span class="metric-label">Incomplete</span>
+                      <span class="metric-value">36</span>
+                    </div>
+                  </div>
+                  <div class="metric-row">
+                    <div class="metric-box " title="Quota fulls">
+                      <span class="metric-label">Q1</span>
+                      <span class="metric-value">54</span>
+                    </div>
+                    <div class="metric-box is-zero" title="Quota fulls">
+                      <span class="metric-label">Q2</span>
+                      <span class="metric-value">0</span>
+                    </div>
+                    <div class="metric-box " title="Screenouts">
+                      <span class="metric-label">S1</span>
+                      <span class="metric-value">340</span>
+                    </div>
+                    <div class="metric-box is-zero" title="Screenouts">
+                      <span class="metric-label">S2</span>
+                      <span class="metric-value">0</span>
+                    </div>
+                  </div>
+                  <div class="metric-row">
+                    <div class="metric-box " title="Duplicates">
+                      <span class="metric-label">DUP1</span>
+                      <span class="metric-value">70</span>
+                    </div>
+                    <div class="metric-box " title="Duplicates">
+                      <span class="metric-label">DUP2</span>
+                      <span class="metric-value">40</span>
+                    </div>
+                    <div class="metric-box is-zero" title="Duplicates">
+                      <span class="metric-label">DUP3</span>
+                      <span class="metric-value">0</span>
+                    </div>
+                  </div>
+                  <div class="metric-row">
+                    <div class="metric-box " title="Quality fails">
+                      <span class="metric-label">QFAIL1</span>
+                      <span class="metric-value">6</span>
+                    </div>
+                    <div class="metric-box " title="Quality fails">
+                      <span class="metric-label">QFAIL2</span>
+                      <span class="metric-value">4</span>
+                    </div>
+                    <div class="metric-box is-zero">
+                      <span class="metric-label">GEO1</span>
+                      <span class="metric-value">0</span>
+                    </div>
+                  </div>
+                  <div class="metric-row">
+                    <div class="metric-box is-zero">
+                      <span class="metric-label">DEV1</span>
+                      <span class="metric-value">0</span>
+                    </div>
+                    <div class="metric-box is-zero">
+                      <span class="metric-label">EX1</span>
+                      <span class="metric-value">0</span>
+                    </div>
+                    <div class="metric-box is-zero">
+                      <span class="metric-label">EX2</span>
+                      <span class="metric-value">0</span>
+                    </div>
+                    <div class="metric-box is-zero">
+                      <span class="metric-label">No unique code</span>
+                      <span class="metric-value">0</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div></section><section class="pv-panel" id="panel-vendors" role="tabpanel" aria-labelledby="tab-vendors" hidden>
+            <section class="pv-card flush">
+              <div class="pv-toolbar">
+                <button type="button" class="btn btn-ghost btn-sm-h" data-action="add-vendor" data-bs-toggle="modal" data-bs-target="#addVendorModal"><i class="bi bi-plus-lg"></i> Add vendor</button>
+                <button type="button" class="icon-btn-sm" data-action="refresh" data-tab="vendors" title="Refresh" aria-label="Refresh" data-toast="Numbers are up to date." data-toast-tone="info"><i class="bi bi-arrow-clockwise"></i></button>
+                <span class="pv-toolbar-note">2 vendors</span>
+                <div class="segmented seg-xs ec-toggle" role="group" aria-label="Entries to show">
+                  <button type="button" data-action="ec-toggle" data-value="all" class="active" aria-pressed="true">Show All</button>
+                  <button type="button" data-action="ec-toggle" data-value="ec" aria-pressed="false">Show EC only</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="pv-table vendor-table">
+                  <thead><tr>
+                      <th>Vendor name</th><th><span class="visually-hidden">Export</span></th><th class="col-progress">Progress</th>
+                      <th title="Entry base">EB</th><th title="Entry client">EC</th><th class="col-hl" title="Completes">C1</th><th title="Incidence rate: C1 ÷ (C1 + S1 + S2)">IR%</th><th title="Conversion: C1 ÷ EB">CONV%</th><th title="Screenouts">S1</th><th title="Screenouts in screener">S2</th><th title="Quota fulls">Q1</th><th title="Quota fulls in screener">Q2</th><th title="Drop-outs (incomplete)">DROPS</th><th title="Duplicates: DUP1 + DUP2 + DUP3">DUPS</th><th title="Quality fails: QFAIL1 + QFAIL2">FAILS</th><th>Status</th><th><span class="visually-hidden">Security</span></th>
+                    </tr></thead>
+                  <tbody>
+                    <tr>
+                      <td class="cell-name"><button type="button" class="cell-link" data-action="vendor-info" data-id="1" title="Vendor info" data-bs-toggle="modal" data-bs-target="#vendorInfoModal">Gavenze</button></td>
+                      <td><button type="button" class="btn btn-ghost btn-xs" data-action="export-vendor" data-id="1" data-toast="Exported daily data for Gavenze."><i class="bi bi-download"></i> Export data</button></td>
+                      <td class="activity col-progress"><div><span class="act-label">Last entry:</span> <span class="act-time warm">2 hours ago</span></div><div><span class="act-label">Last complete:</span> <span class="act-time warm">5 hours ago</span></div></td>
+                      <td>332</td><td>228</td><td class="col-hl">29</td><td>16.2%</td><td>8.7%</td><td>150</td><td class=" zero">0</td><td>24</td><td class=" zero">0</td><td>16</td><td>49</td><td>5</td>
+                      <td>
+                        <select class="form-select status-select" data-change="vendor-status" data-id="1" data-status="active" aria-label="Status">
+                          <option value="active" selected>active</option><option value="paused">paused</option><option value="closed">closed</option>
+                        </select></td>
+                      <td><span class="shield partial" role="img" title="Security checks on: Geo IP check" aria-label="Security checks on: Geo IP check"><i class="bi bi-shield-fill-exclamation"></i></span></td>
+                    </tr>
+                    <tr>
+                      <td class="cell-name"><button type="button" class="cell-link" data-action="vendor-info" data-id="2" title="Vendor info" data-bs-toggle="modal" data-bs-target="#vendorInfoModal">Quickpoll Panels</button></td>
+                      <td><button type="button" class="btn btn-ghost btn-xs" data-action="export-vendor" data-id="2" data-toast="Exported daily data for Quickpoll Panels."><i class="bi bi-download"></i> Export data</button></td>
+                      <td class="activity col-progress"><div><span class="act-label">Last entry:</span> <span class="act-time warm">1 hour ago</span></div><div><span class="act-label">Last complete:</span> <span class="act-time warm">4 hours ago</span></div></td>
+                      <td>423</td><td>290</td><td class="col-hl">36</td><td>15.9%</td><td>8.5%</td><td>190</td><td class=" zero">0</td><td>30</td><td class=" zero">0</td><td>20</td><td>61</td><td>5</td>
+                      <td>
+                        <select class="form-select status-select" data-change="vendor-status" data-id="2" data-status="active" aria-label="Status">
+                          <option value="active" selected>active</option><option value="paused">paused</option><option value="closed">closed</option>
+                        </select></td>
+                      <td><span class="shield partial" role="img" title="Security checks on: Geo IP check" aria-label="Security checks on: Geo IP check"><i class="bi bi-shield-fill-exclamation"></i></span></td>
+                    </tr>
+                  </tbody>
+                  <tfoot><tr><td>Total</td><td></td><td></td><td>755</td><td>518</td><td class="col-hl">65</td><td>16.0%</td><td>8.6%</td><td>340</td><td class=" zero">0</td><td>54</td><td class=" zero">0</td><td>36</td><td>110</td><td>10</td><td></td><td></td></tr></tfoot>
+                </table>
+              </div>
+            </section>
+            <section class="pv-card" data-variant-of="vendor-view" data-variant="chart">
+              <div class="pv-card-head">
+                <div>
+                  <h2 class="pv-card-title">Progress over time</h2>
+                  <p class="pv-card-sub">Daily completes (C1) by vendor</p>
+                </div>
+                <div class="segmented seg-sm" role="group" aria-label="Progress view">
+                  <button type="button" data-action="vendor-view" data-value="chart" class="active" aria-pressed="true" data-variant-target="vendor-view:chart">Chart</button>
+                  <button type="button" data-action="vendor-view" data-value="table" aria-pressed="false" data-variant-target="vendor-view:table">Table</button>
+                </div>
+              </div>
+              <div class="chart-wrap" id="progressChart" tabindex="0" role="group" aria-roledescription="chart" aria-label="Daily completes from 2026-11-05 to 2026-11-07. Use the left and right arrow keys to read each day.">
+                <svg viewBox="0 0 1122 300" width="1122" height="300" role="img" aria-hidden="true">
+                  <line class="ch-grid" x1="56" x2="998.4" y1="238" y2="238"></line>
+                  <text class="ch-tick" x="46" y="242" text-anchor="end">0</text>
+                  <line class="ch-grid" x1="56" x2="998.4" y1="164" y2="164"></line>
+                  <text class="ch-tick" x="46" y="168" text-anchor="end">5</text>
+                  <line class="ch-grid" x1="56" x2="998.4" y1="90" y2="90"></line>
+                  <text class="ch-tick" x="46" y="94" text-anchor="end">10</text>
+                  <line class="ch-grid" x1="56" x2="998.4" y1="16" y2="16"></line>
+                  <text class="ch-tick" x="46" y="20" text-anchor="end">15</text>
+                  <line class="ch-axis" x1="56" x2="998.4" y1="238" y2="238"></line>
+                  <text class="ch-tick" transform="translate(14 127) rotate(-90)" text-anchor="middle">Completes (C1)</text>
+                  <text class="ch-tick" x="78" y="258" text-anchor="middle">Nov 5</text>
+                  <g class="ch-total"><rect x="64" y="268" width="28" height="18" rx="5"></rect>
+                    <text x="78" y="281" text-anchor="middle">27</text></g>
+                  <text class="ch-tick" x="527.2" y="258" text-anchor="middle">Nov 6</text>
+                  <g class="ch-total"><rect x="513.2" y="268" width="28" height="18" rx="5"></rect>
+                    <text x="527.2" y="281" text-anchor="middle">27</text></g>
+                  <text class="ch-tick" x="976.4" y="258" text-anchor="middle">Nov 7</text>
+                  <g class="ch-total"><rect x="962.4" y="268" width="28" height="18" rx="5"></rect>
+                    <text x="976.4" y="281" text-anchor="middle">11</text></g>
+                  <line class="ch-cross" x1="0" x2="0" y1="16" y2="238" visibility="hidden"></line>
+                  <path class="ch-line" d="M78.0,45.6 C227.7,50.5 377.5,51.6 527.2,60.4 C676.9,69.2 826.7,139.3 976.4,178.8" style="stroke:var(--series-1)"></path><circle class="ch-dot" cx="78" cy="45.599999999999994" r="4" style="fill:var(--series-1)"></circle><circle class="ch-dot" cx="527.2" cy="60.39999999999998" r="4" style="fill:var(--series-1)"></circle><circle class="ch-dot" cx="976.4" cy="178.8" r="4" style="fill:var(--series-1)"></circle><path class="ch-line" d="M78.0,30.8 C227.7,25.9 377.5,16.0 527.2,16.0 C676.9,16.0 826.7,94.9 976.4,134.4" style="stroke:var(--series-2)"></path><circle class="ch-dot" cx="78" cy="30.799999999999983" r="4" style="fill:var(--series-2)"></circle><circle class="ch-dot" cx="527.2" cy="16" r="4" style="fill:var(--series-2)"></circle><circle class="ch-dot" cx="976.4" cy="134.39999999999998" r="4" style="fill:var(--series-2)"></circle>
+                  <text class="ch-end" x="986.4" y="182.8">Gavenze</text><text class="ch-end" x="986.4" y="138.39999999999998">Quickpoll Panels</text>
+                  <rect class="ch-hit" x="56" y="16" width="942.4" height="222"></rect>
+                </svg>
+                <div class="chart-tooltip" aria-live="polite" hidden></div></div><div class="chart-legend" id="progressLegend"><span class="legend-item"><span class="legend-key" style="background:var(--series-1)"></span>Gavenze</span><span class="legend-item"><span class="legend-key" style="background:var(--series-2)"></span>Quickpoll Panels</span></div>
+            </section>
+            <section class="pv-card" data-variant-of="vendor-view" data-variant="table" hidden>
+              <div class="pv-card-head">
+                <div>
+                  <h2 class="pv-card-title">Progress over time</h2>
+                  <p class="pv-card-sub">Daily completes (C1) by vendor</p>
+                </div>
+                <div class="segmented seg-sm" role="group" aria-label="Progress view">
+                  <button type="button" data-action="vendor-view" data-value="chart" aria-pressed="false" data-variant-target="vendor-view:chart">Chart</button>
+                  <button type="button" data-action="vendor-view" data-value="table" class="active" aria-pressed="true" data-variant-target="vendor-view:table">Table</button>
+                </div>
+              </div>
+              <div class="pv-subbar">
+                <select class="form-select form-select-sm pv-filter" data-change="vendor-filter" aria-label="Filter vendor">
+                  <option value="" selected>All vendors</option>
+                  <option value="1">Gavenze</option><option value="2">Quickpoll Panels</option>
+                </select>
+                <button type="button" class="btn btn-ghost btn-sm-h ms-auto" data-action="export-daily" data-toast="Daily progress exported."><i class="bi bi-download"></i> Export data</button>
+              </div>
+              <div class="table-responsive pv-table-frame">
+                <table class="pv-table">
+                  <thead><tr><th>Date</th><th title="Entry base">EB</th><th title="Entry client">EC</th><th class="col-hl" title="Completes">C1</th><th title="Incidence rate: C1 ÷ (C1 + S1 + S2)">IR%</th><th title="Conversion: C1 ÷ EB">CONV%</th><th title="Screenouts">S1</th><th title="Screenouts in screener">S2</th><th title="Quota fulls">Q1</th><th title="Quota fulls in screener">Q2</th><th title="Drop-outs (incomplete)">DROPS</th><th title="Duplicates: DUP1 + DUP2 + DUP3">DUPS</th><th title="Quality fails: QFAIL1 + QFAIL2">FAILS</th></tr></thead>
+                  <tbody>
+                    <tr><td>2026-11-07</td><td>104</td><td>75</td><td class="col-hl">11</td><td>18.3%</td><td>10.6%</td><td>49</td><td class=" zero">0</td><td>9</td><td class=" zero">0</td><td>5</td><td>15</td><td>1</td></tr><tr><td>2026-11-06</td><td>308</td><td>193</td><td class="col-hl">27</td><td>16.2%</td><td>8.8%</td><td>140</td><td class=" zero">0</td><td>21</td><td class=" zero">0</td><td>14</td><td>42</td><td>4</td></tr><tr><td>2026-11-05</td><td>343</td><td>250</td><td class="col-hl">27</td><td>15.2%</td><td>7.9%</td><td>151</td><td class=" zero">0</td><td>24</td><td class=" zero">0</td><td>17</td><td>53</td><td>5</td></tr>
+                  </tbody>
+                  <tfoot><tr><td>Total</td><td>755</td><td>518</td><td class="col-hl">65</td><td>16.0%</td><td>8.6%</td><td>340</td><td class=" zero">0</td><td>54</td><td class=" zero">0</td><td>36</td><td>110</td><td>10</td></tr></tfoot>
+                </table>
+              </div>
+            </section></section><section class="pv-panel" id="panel-exclusions" role="tabpanel" aria-labelledby="tab-exclusions" hidden>
+            <form class="pv-card flush ex-card" id="exForm" novalidate autocomplete="off" data-toast="Project exclusions saved.">
+              <div class="pv-toolbar">
+                <button type="button" class="btn btn-ghost btn-sm-h" data-ex="add"><i class="bi bi-plus-lg"></i> Add project</button>
+                <span class="pv-toolbar-note">Respondents that attempted in selected projects are not eligible for this project.</span>
+                <span class="dirty-flag ms-auto" id="exDirty" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+              </div>
+              <div class="ex-grid" role="table" aria-label="Project exclusions">
+                <div class="ex-row ex-head" role="row">
+                  <span role="columnheader">Project to exclude</span><span role="columnheader">Statuses to exclude</span>
+                  <span role="columnheader">Time period</span><span role="columnheader"><span class="visually-hidden">Remove</span></span>
+                </div>
+                <div class="ex-row" role="row" data-row="1">
+                  <div class="ex-cell" role="cell">
+                    <label class="visually-hidden" for="exProject-1">Project to exclude</label>
+                    <div id="exProjectBox-1" class="combo">
+                      <i class="bi bi-search combo-icon" aria-hidden="true"></i>
+                      <input type="text" class="form-control combo-input" id="exProject-1" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="exProject-1-list" autocomplete="off" spellcheck="false" placeholder="Select a project" title="#22210 Pet food brand tracker W3" value="#22210 Pet food brand tracker W3">
+                      <button type="button" class="combo-clear" aria-label="Clear"><i class="bi bi-x-lg"></i></button>
+                      <ul class="combo-menu" id="exProject-1-list" role="listbox" hidden>
+                        <li role="option" id="exProject-1-opt-0" data-value="8650" class="active" aria-selected="false">
+                          <span>#33732 Test concepts assurance auto</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-1" data-value="8648" aria-selected="false">
+                          <span>#33711 HelloOmnibus 2026-Oct</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-2" data-value="8647" aria-selected="false">
+                          <span>#33700 The impact of influencers</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-3" data-value="8644" aria-selected="false">
+                          <span>#33687 Men's basketball followers</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-4" data-value="8642" aria-selected="false">
+                          <span>#33472 Employed individuals</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-5" data-value="8641" aria-selected="false">
+                          <span>#33470 SurveyR</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-6" data-value="8638" aria-selected="false">
+                          <span>#33463 Grocery delivery habits</span><small>Germany</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-7" data-value="8636" aria-selected="false">
+                          <span>#33460 Electric vehicle purchase intent</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-8" data-value="8634" aria-selected="false">
+                          <span>#32768 Streaming service churn drivers</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-9" data-value="8633" aria-selected="false">
+                          <span>#32742 Banking app satisfaction</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-10" data-value="8630" aria-selected="false">
+                          <span>#32726 Pet food brand tracker</span><small>Germany</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-11" data-value="8629" aria-selected="false">
+                          <span>#32723 Holiday travel planning</span><small>Spain</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-12" data-value="8627" aria-selected="false">
+                          <span>#32686 Smart home device usage</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-13" data-value="8625" aria-selected="false">
+                          <span>#31786 Coffee shop loyalty</span><small>United States</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-14" data-value="8622" aria-selected="false">
+                          <span>#31767 Sustainable packaging attitudes</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-15" data-value="8621" aria-selected="false">
+                          <span>#31756 Mobile gaming spend</span><small>Poland</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-16" data-value="8620" aria-selected="false">
+                          <span>#31754 Fitness tracker adoption</span><small>United States</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-17" data-value="8618" aria-selected="false">
+                          <span>#31753 Skincare routine U&amp;A</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-18" data-value="8615" aria-selected="false">
+                          <span>#31478 B2B IT decision makers</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-19" data-value="8614" aria-selected="false">
+                          <span>#31455 Fast food menu test</span><small>Germany</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-20" data-value="8611" aria-selected="false">
+                          <span>#31446 Home insurance switching</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-21" data-value="8610" aria-selected="false">
+                          <span>#31061 Craft beer preferences</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-22" data-value="8609" aria-selected="false">
+                          <span>#30269 Parents of toddlers</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-23" data-value="8608" aria-selected="false">
+                          <span>#30259 Online fashion returns</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-24" data-value="8605" aria-selected="false">
+                          <span>#29793 Public transport commuters</span><small>Netherlands</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-25" data-value="8604" aria-selected="false">
+                          <span>#29790 Energy supplier perceptions</span><small>Portugal</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-26" data-value="8603" aria-selected="false">
+                          <span>#29788 Podcast listening habits</span><small>Czech Republic</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-27" data-value="8601" aria-selected="false">
+                          <span>#29763 Plant-based dairy trial</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-28" data-value="8599" aria-selected="false">
+                          <span>#28968 Small business owners pulse</span><small>Poland</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-29" data-value="8596" aria-selected="false">
+                          <span>#28931 Ad recall wave 3</span><small>Portugal</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-30" data-value="8593" aria-selected="false">
+                          <span>#28906 Premium chocolate packaging test</span><small>Poland</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-31" data-value="8592" aria-selected="false">
+                          <span>#28898 Healthcare professionals panel</span><small>United States</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-32" data-value="8590" aria-selected="false">
+                          <span>#28672 Gen Z social media</span><small>Romania</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-33" data-value="8588" aria-selected="false">
+                          <span>#28652 Retirement planning attitudes</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-34" data-value="8585" aria-selected="false">
+                          <span>#28625 Car rental experience</span><small>Romania</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-35" data-value="8582" aria-selected="false">
+                          <span>#28611 Luxury watch buyers</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-36" data-value="8576" aria-selected="false">
+                          <span>#28009 Mattress purchase journey</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-37" data-value="8574" aria-selected="false">
+                          <span>#27783 Telecom NPS tracker</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-38" data-value="8571" aria-selected="false">
+                          <span>#27749 Frozen meals concept screen</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-39" data-value="8568" aria-selected="false">
+                          <span>#27716 Home improvement DIYers</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-40" data-value="8566" aria-selected="false">
+                          <span>#27698 Sports betting attitudes</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-41" data-value="8563" aria-selected="false">
+                          <span>#27689 Grocery delivery habits W2</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-42" data-value="8562" aria-selected="false">
+                          <span>#27651 Electric vehicle purchase intent W2</span><small>Netherlands</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-43" data-value="8559" aria-selected="false">
+                          <span>#27630 Streaming service churn drivers W2</span><small>Poland</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-44" data-value="8556" aria-selected="false">
+                          <span>#27610 Banking app satisfaction W2</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-45" data-value="8555" aria-selected="false">
+                          <span>#27601 Pet food brand tracker W2</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-46" data-value="8552" aria-selected="false">
+                          <span>#27598 Holiday travel planning W2</span><small>Italy</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-47" data-value="8551" aria-selected="false">
+                          <span>#27221 Smart home device usage W2</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-48" data-value="8550" aria-selected="false">
+                          <span>#27217 Coffee shop loyalty W2</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-49" data-value="8549" aria-selected="false">
+                          <span>#27187 Sustainable packaging attitudes W2</span><small>Spain</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-50" data-value="8546" aria-selected="false">
+                          <span>#27167 Mobile gaming spend W2</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-51" data-value="8545" aria-selected="false">
+                          <span>#27132 Fitness tracker adoption W2</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-52" data-value="8542" aria-selected="false">
+                          <span>#27131 Skincare routine U&amp;A W2</span><small>Italy</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-53" data-value="8539" aria-selected="false">
+                          <span>#27105 B2B IT decision makers W2</span><small>Romania</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-54" data-value="8536" aria-selected="false">
+                          <span>#27065 Fast food menu test W2</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-55" data-value="8535" aria-selected="false">
+                          <span>#27048 Home insurance switching W2</span><small>Romania</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-56" data-value="8533" aria-selected="false">
+                          <span>#26397 Craft beer preferences W2</span><small>Spain</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-57" data-value="8531" aria-selected="false">
+                          <span>#26379 Parents of toddlers W2</span><small>Germany</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-58" data-value="8528" aria-selected="false">
+                          <span>#26343 Online fashion returns W2</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-1-opt-59" data-value="8526" aria-selected="false">
+                          <span>#26325 Public transport commuters W2</span><small>Romania</small>
+                        </li></ul></div>
+                    <div class="invalid-feedback" id="exProjectMsg-1">Select a project.</div>
+                  </div>
+                  <div class="ex-cell" role="cell">
+                    <div class="ex-statuses">
+                      <div id="exStatusBox-1" class="chk" data-all-label="All">
+                        <button type="button" class="form-select chk-toggle" id="exStatuses-1" aria-haspopup="true" aria-expanded="false" aria-controls="exStatuses-1-menu" title="C1, S1, S2, Q1, Q2, INC, DUP1, DUP2, DUP3, GEO1, QFAIL1, QFAIL2, DEV1, EX1, EX2">
+                          <span class="chk-summary">All <span class="chk-count">15</span></span>
+                        </button>
+                        <div class="chk-menu" id="exStatuses-1-menu" hidden>
+                          <input type="search" class="form-control chk-search" placeholder="Search statuses…" aria-label="Search statuses…">
+                          <div class="chk-quick">
+                            <button type="button" data-chk="all">Select all</button>
+                            <button type="button" data-chk="none">Clear</button>
+                          </div>
+                          <ul class="chk-list">
+                            <li data-text="c1 complete">
+                              <label class="chk-option" for="exStatuses-1-o0">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o0" value="C1" checked>
+                                <strong>C1</strong><span>Complete</span>
+                              </label>
+                            </li>
+                            <li data-text="s1 screenout">
+                              <label class="chk-option" for="exStatuses-1-o1">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o1" value="S1" checked>
+                                <strong>S1</strong><span>Screenout</span>
+                              </label>
+                            </li>
+                            <li data-text="s2 screenout in screener">
+                              <label class="chk-option" for="exStatuses-1-o2">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o2" value="S2" checked>
+                                <strong>S2</strong><span>Screenout in screener</span>
+                              </label>
+                            </li>
+                            <li data-text="q1 quota full">
+                              <label class="chk-option" for="exStatuses-1-o3">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o3" value="Q1" checked>
+                                <strong>Q1</strong><span>Quota full</span>
+                              </label>
+                            </li>
+                            <li data-text="q2 quota full in screener">
+                              <label class="chk-option" for="exStatuses-1-o4">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o4" value="Q2" checked>
+                                <strong>Q2</strong><span>Quota full in screener</span>
+                              </label>
+                            </li>
+                            <li data-text="inc incomplete">
+                              <label class="chk-option" for="exStatuses-1-o5">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o5" value="INC" checked>
+                                <strong>INC</strong><span>Incomplete</span>
+                              </label>
+                            </li>
+                            <li data-text="dup1 duplicate">
+                              <label class="chk-option" for="exStatuses-1-o6">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o6" value="DUP1" checked>
+                                <strong>DUP1</strong><span>Duplicate</span>
+                              </label>
+                            </li>
+                            <li data-text="dup2 duplicate in base">
+                              <label class="chk-option" for="exStatuses-1-o7">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o7" value="DUP2" checked>
+                                <strong>DUP2</strong><span>Duplicate in Base</span>
+                              </label>
+                            </li>
+                            <li data-text="dup3 excluded in group">
+                              <label class="chk-option" for="exStatuses-1-o8">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o8" value="DUP3" checked>
+                                <strong>DUP3</strong><span>Excluded in group</span>
+                              </label>
+                            </li>
+                            <li data-text="geo1 geoip fail">
+                              <label class="chk-option" for="exStatuses-1-o9">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o9" value="GEO1" checked>
+                                <strong>GEO1</strong><span>GeoIP fail</span>
+                              </label>
+                            </li>
+                            <li data-text="qfail1 quality fail">
+                              <label class="chk-option" for="exStatuses-1-o10">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o10" value="QFAIL1" checked>
+                                <strong>QFAIL1</strong><span>Quality fail</span>
+                              </label>
+                            </li>
+                            <li data-text="qfail2 quality fail in screener">
+                              <label class="chk-option" for="exStatuses-1-o11">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o11" value="QFAIL2" checked>
+                                <strong>QFAIL2</strong><span>Quality fail in screener</span>
+                              </label>
+                            </li>
+                            <li data-text="dev1 wrong device">
+                              <label class="chk-option" for="exStatuses-1-o12">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o12" value="DEV1" checked>
+                                <strong>DEV1</strong><span>Wrong device</span>
+                              </label>
+                            </li>
+                            <li data-text="ex1 forbidden ip">
+                              <label class="chk-option" for="exStatuses-1-o13">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o13" value="EX1" checked>
+                                <strong>EX1</strong><span>Forbidden IP</span>
+                              </label>
+                            </li>
+                            <li data-text="ex2 excluded">
+                              <label class="chk-option" for="exStatuses-1-o14">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-1-o14" value="EX2" checked>
+                                <strong>EX2</strong><span>Excluded</span>
+                              </label>
+                            </li>
+                          </ul>
+                        </div></div>
+                      <button type="button" class="icon-btn-sm ex-reset" data-ex="reset" title="Reset to all statuses" aria-label="Reset to all statuses"><i class="bi bi-arrow-counterclockwise"></i></button>
+                    </div>
+                    <div class="invalid-feedback" id="exStatusMsg-1">Pick at least one status.</div>
+                  </div>
+                  <div class="ex-cell" role="cell">
+                    <div class="ex-period">
+                      <input class="form-control" type="number" inputmode="numeric" min="1" max="999" step="1" required value="12" data-ex-field="period" aria-label="Time period, number of months">
+                      <select class="form-select" data-ex-field="unit" aria-label="Weeks or months"><option value="weeks">Weeks</option><option value="months" selected>Months</option></select>
+                    </div>
+                    <div class="invalid-feedback" id="exPeriodMsg-1">Enter a whole number from 1 to 999.</div>
+                  </div>
+                  <div class="ex-cell ex-del-cell" role="cell">
+                    <button type="button" class="icon-btn-sm danger" data-ex="remove" title="Remove this project" aria-label="Remove this project" data-remove-row="tr"><i class="bi bi-trash3"></i></button>
+                  </div>
+                </div>
+                <div class="ex-row" role="row" data-row="2">
+                  <div class="ex-cell" role="cell">
+                    <label class="visually-hidden" for="exProject-2">Project to exclude</label>
+                    <div id="exProjectBox-2" class="combo">
+                      <i class="bi bi-search combo-icon" aria-hidden="true"></i>
+                      <input type="text" class="form-control combo-input" id="exProject-2" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="exProject-2-list" autocomplete="off" spellcheck="false" placeholder="Select a project" title="#27716 Home improvement DIYers" value="#27716 Home improvement DIYers">
+                      <button type="button" class="combo-clear" aria-label="Clear"><i class="bi bi-x-lg"></i></button>
+                      <ul class="combo-menu" id="exProject-2-list" role="listbox" hidden>
+                        <li role="option" id="exProject-2-opt-0" data-value="8650" class="active" aria-selected="false">
+                          <span>#33732 Test concepts assurance auto</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-1" data-value="8648" aria-selected="false">
+                          <span>#33711 HelloOmnibus 2026-Oct</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-2" data-value="8647" aria-selected="false">
+                          <span>#33700 The impact of influencers</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-3" data-value="8644" aria-selected="false">
+                          <span>#33687 Men's basketball followers</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-4" data-value="8642" aria-selected="false">
+                          <span>#33472 Employed individuals</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-5" data-value="8641" aria-selected="false">
+                          <span>#33470 SurveyR</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-6" data-value="8638" aria-selected="false">
+                          <span>#33463 Grocery delivery habits</span><small>Germany</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-7" data-value="8636" aria-selected="false">
+                          <span>#33460 Electric vehicle purchase intent</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-8" data-value="8634" aria-selected="false">
+                          <span>#32768 Streaming service churn drivers</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-9" data-value="8633" aria-selected="false">
+                          <span>#32742 Banking app satisfaction</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-10" data-value="8630" aria-selected="false">
+                          <span>#32726 Pet food brand tracker</span><small>Germany</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-11" data-value="8629" aria-selected="false">
+                          <span>#32723 Holiday travel planning</span><small>Spain</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-12" data-value="8627" aria-selected="false">
+                          <span>#32686 Smart home device usage</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-13" data-value="8625" aria-selected="false">
+                          <span>#31786 Coffee shop loyalty</span><small>United States</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-14" data-value="8622" aria-selected="false">
+                          <span>#31767 Sustainable packaging attitudes</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-15" data-value="8621" aria-selected="false">
+                          <span>#31756 Mobile gaming spend</span><small>Poland</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-16" data-value="8620" aria-selected="false">
+                          <span>#31754 Fitness tracker adoption</span><small>United States</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-17" data-value="8618" aria-selected="false">
+                          <span>#31753 Skincare routine U&amp;A</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-18" data-value="8615" aria-selected="false">
+                          <span>#31478 B2B IT decision makers</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-19" data-value="8614" aria-selected="false">
+                          <span>#31455 Fast food menu test</span><small>Germany</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-20" data-value="8611" aria-selected="false">
+                          <span>#31446 Home insurance switching</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-21" data-value="8610" aria-selected="false">
+                          <span>#31061 Craft beer preferences</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-22" data-value="8609" aria-selected="false">
+                          <span>#30269 Parents of toddlers</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-23" data-value="8608" aria-selected="false">
+                          <span>#30259 Online fashion returns</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-24" data-value="8605" aria-selected="false">
+                          <span>#29793 Public transport commuters</span><small>Netherlands</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-25" data-value="8604" aria-selected="false">
+                          <span>#29790 Energy supplier perceptions</span><small>Portugal</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-26" data-value="8603" aria-selected="false">
+                          <span>#29788 Podcast listening habits</span><small>Czech Republic</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-27" data-value="8601" aria-selected="false">
+                          <span>#29763 Plant-based dairy trial</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-28" data-value="8599" aria-selected="false">
+                          <span>#28968 Small business owners pulse</span><small>Poland</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-29" data-value="8596" aria-selected="false">
+                          <span>#28931 Ad recall wave 3</span><small>Portugal</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-30" data-value="8593" aria-selected="false">
+                          <span>#28906 Premium chocolate packaging test</span><small>Poland</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-31" data-value="8592" aria-selected="false">
+                          <span>#28898 Healthcare professionals panel</span><small>United States</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-32" data-value="8590" aria-selected="false">
+                          <span>#28672 Gen Z social media</span><small>Romania</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-33" data-value="8588" aria-selected="false">
+                          <span>#28652 Retirement planning attitudes</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-34" data-value="8585" aria-selected="false">
+                          <span>#28625 Car rental experience</span><small>Romania</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-35" data-value="8582" aria-selected="false">
+                          <span>#28611 Luxury watch buyers</span><small>United Kingdom</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-36" data-value="8576" aria-selected="false">
+                          <span>#28009 Mattress purchase journey</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-37" data-value="8574" aria-selected="false">
+                          <span>#27783 Telecom NPS tracker</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-38" data-value="8571" aria-selected="false">
+                          <span>#27749 Frozen meals concept screen</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-39" data-value="8568" class=" selected" aria-selected="true">
+                          <span>#27716 Home improvement DIYers</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-40" data-value="8566" aria-selected="false">
+                          <span>#27698 Sports betting attitudes</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-41" data-value="8563" aria-selected="false">
+                          <span>#27689 Grocery delivery habits W2</span><small>Belgium</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-42" data-value="8562" aria-selected="false">
+                          <span>#27651 Electric vehicle purchase intent W2</span><small>Netherlands</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-43" data-value="8559" aria-selected="false">
+                          <span>#27630 Streaming service churn drivers W2</span><small>Poland</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-44" data-value="8556" aria-selected="false">
+                          <span>#27610 Banking app satisfaction W2</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-45" data-value="8555" aria-selected="false">
+                          <span>#27601 Pet food brand tracker W2</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-46" data-value="8552" aria-selected="false">
+                          <span>#27598 Holiday travel planning W2</span><small>Italy</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-47" data-value="8551" aria-selected="false">
+                          <span>#27221 Smart home device usage W2</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-48" data-value="8550" aria-selected="false">
+                          <span>#27217 Coffee shop loyalty W2</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-49" data-value="8549" aria-selected="false">
+                          <span>#27187 Sustainable packaging attitudes W2</span><small>Spain</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-50" data-value="8546" aria-selected="false">
+                          <span>#27167 Mobile gaming spend W2</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-51" data-value="8545" aria-selected="false">
+                          <span>#27132 Fitness tracker adoption W2</span><small>Sweden</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-52" data-value="8542" aria-selected="false">
+                          <span>#27131 Skincare routine U&amp;A W2</span><small>Italy</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-53" data-value="8539" aria-selected="false">
+                          <span>#27105 B2B IT decision makers W2</span><small>Romania</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-54" data-value="8536" aria-selected="false">
+                          <span>#27065 Fast food menu test W2</span><small>Hungary</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-55" data-value="8535" aria-selected="false">
+                          <span>#27048 Home insurance switching W2</span><small>Romania</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-56" data-value="8533" aria-selected="false">
+                          <span>#26397 Craft beer preferences W2</span><small>Spain</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-57" data-value="8531" aria-selected="false">
+                          <span>#26379 Parents of toddlers W2</span><small>Germany</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-58" data-value="8528" aria-selected="false">
+                          <span>#26343 Online fashion returns W2</span><small>France</small>
+                        </li>
+                        <li role="option" id="exProject-2-opt-59" data-value="8526" aria-selected="false">
+                          <span>#26325 Public transport commuters W2</span><small>Romania</small>
+                        </li></ul></div>
+                    <div class="invalid-feedback" id="exProjectMsg-2">Select a project.</div>
+                  </div>
+                  <div class="ex-cell" role="cell">
+                    <div class="ex-statuses">
+                      <div id="exStatusBox-2" class="chk" data-all-label="All">
+                        <button type="button" class="form-select chk-toggle" id="exStatuses-2" aria-haspopup="true" aria-expanded="false" aria-controls="exStatuses-2-menu" title="C1, S1, S2, Q1, Q2, INC, DUP1, DUP2, DUP3, GEO1, QFAIL1, QFAIL2, DEV1, EX1, EX2">
+                          <span class="chk-summary">All <span class="chk-count">15</span></span>
+                        </button>
+                        <div class="chk-menu" id="exStatuses-2-menu" hidden>
+                          <input type="search" class="form-control chk-search" placeholder="Search statuses…" aria-label="Search statuses…">
+                          <div class="chk-quick">
+                            <button type="button" data-chk="all">Select all</button>
+                            <button type="button" data-chk="none">Clear</button>
+                          </div>
+                          <ul class="chk-list">
+                            <li data-text="c1 complete">
+                              <label class="chk-option" for="exStatuses-2-o0">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o0" value="C1" checked>
+                                <strong>C1</strong><span>Complete</span>
+                              </label>
+                            </li>
+                            <li data-text="s1 screenout">
+                              <label class="chk-option" for="exStatuses-2-o1">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o1" value="S1" checked>
+                                <strong>S1</strong><span>Screenout</span>
+                              </label>
+                            </li>
+                            <li data-text="s2 screenout in screener">
+                              <label class="chk-option" for="exStatuses-2-o2">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o2" value="S2" checked>
+                                <strong>S2</strong><span>Screenout in screener</span>
+                              </label>
+                            </li>
+                            <li data-text="q1 quota full">
+                              <label class="chk-option" for="exStatuses-2-o3">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o3" value="Q1" checked>
+                                <strong>Q1</strong><span>Quota full</span>
+                              </label>
+                            </li>
+                            <li data-text="q2 quota full in screener">
+                              <label class="chk-option" for="exStatuses-2-o4">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o4" value="Q2" checked>
+                                <strong>Q2</strong><span>Quota full in screener</span>
+                              </label>
+                            </li>
+                            <li data-text="inc incomplete">
+                              <label class="chk-option" for="exStatuses-2-o5">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o5" value="INC" checked>
+                                <strong>INC</strong><span>Incomplete</span>
+                              </label>
+                            </li>
+                            <li data-text="dup1 duplicate">
+                              <label class="chk-option" for="exStatuses-2-o6">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o6" value="DUP1" checked>
+                                <strong>DUP1</strong><span>Duplicate</span>
+                              </label>
+                            </li>
+                            <li data-text="dup2 duplicate in base">
+                              <label class="chk-option" for="exStatuses-2-o7">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o7" value="DUP2" checked>
+                                <strong>DUP2</strong><span>Duplicate in Base</span>
+                              </label>
+                            </li>
+                            <li data-text="dup3 excluded in group">
+                              <label class="chk-option" for="exStatuses-2-o8">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o8" value="DUP3" checked>
+                                <strong>DUP3</strong><span>Excluded in group</span>
+                              </label>
+                            </li>
+                            <li data-text="geo1 geoip fail">
+                              <label class="chk-option" for="exStatuses-2-o9">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o9" value="GEO1" checked>
+                                <strong>GEO1</strong><span>GeoIP fail</span>
+                              </label>
+                            </li>
+                            <li data-text="qfail1 quality fail">
+                              <label class="chk-option" for="exStatuses-2-o10">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o10" value="QFAIL1" checked>
+                                <strong>QFAIL1</strong><span>Quality fail</span>
+                              </label>
+                            </li>
+                            <li data-text="qfail2 quality fail in screener">
+                              <label class="chk-option" for="exStatuses-2-o11">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o11" value="QFAIL2" checked>
+                                <strong>QFAIL2</strong><span>Quality fail in screener</span>
+                              </label>
+                            </li>
+                            <li data-text="dev1 wrong device">
+                              <label class="chk-option" for="exStatuses-2-o12">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o12" value="DEV1" checked>
+                                <strong>DEV1</strong><span>Wrong device</span>
+                              </label>
+                            </li>
+                            <li data-text="ex1 forbidden ip">
+                              <label class="chk-option" for="exStatuses-2-o13">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o13" value="EX1" checked>
+                                <strong>EX1</strong><span>Forbidden IP</span>
+                              </label>
+                            </li>
+                            <li data-text="ex2 excluded">
+                              <label class="chk-option" for="exStatuses-2-o14">
+                                <input class="form-check-input" type="checkbox" id="exStatuses-2-o14" value="EX2" checked>
+                                <strong>EX2</strong><span>Excluded</span>
+                              </label>
+                            </li>
+                          </ul>
+                        </div></div>
+                      <button type="button" class="icon-btn-sm ex-reset" data-ex="reset" title="Reset to all statuses" aria-label="Reset to all statuses"><i class="bi bi-arrow-counterclockwise"></i></button>
+                    </div>
+                    <div class="invalid-feedback" id="exStatusMsg-2">Pick at least one status.</div>
+                  </div>
+                  <div class="ex-cell" role="cell">
+                    <div class="ex-period">
+                      <input class="form-control" type="number" inputmode="numeric" min="1" max="999" step="1" required value="6" data-ex-field="period" aria-label="Time period, number of months">
+                      <select class="form-select" data-ex-field="unit" aria-label="Weeks or months"><option value="weeks">Weeks</option><option value="months" selected>Months</option></select>
+                    </div>
+                    <div class="invalid-feedback" id="exPeriodMsg-2">Enter a whole number from 1 to 999.</div>
+                  </div>
+                  <div class="ex-cell ex-del-cell" role="cell">
+                    <button type="button" class="icon-btn-sm danger" data-ex="remove" title="Remove this project" aria-label="Remove this project" data-remove-row="tr"><i class="bi bi-trash3"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="ex-actions">
+                <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+                <button type="button" class="btn btn-ghost" data-ex="cancel">Cancel</button>
+              </div>
+            </form></section><section class="pv-panel" id="panel-progress" role="tabpanel" aria-labelledby="tab-progress" hidden>
+            <div class="sum-tiles">
+              <div class="sum-tile"><div class="sum-label">Completes (C1)</div><div class="sum-value">65</div><div class="sum-sub">65 this month</div></div>
+              <div class="sum-tile"><div class="sum-label">Incidence rate</div><div class="sum-value">16%</div></div>
+              <div class="sum-tile"><div class="sum-label">Conversion</div><div class="sum-value">9%</div></div>
+              <div class="sum-tile"><div class="sum-label">Length of interview</div><div class="sum-value">13.66 min</div><div class="sum-sub">Bid 12.00 min</div></div>
+              <div class="sum-tile"><div class="sum-label">Last complete</div><div class="sum-value">4 hours ago</div><div class="sum-sub">Last entry 1 hour ago</div></div>
+            </div>
+            <section class="pv-card flush">
+              <div class="pv-toolbar"><span class="pv-toolbar-title">Overall progress</span><span class="pv-toolbar-note">All sources combined</span></div>
+              <div class="table-responsive">
+                <table class="pv-table">
+                  <thead><tr><th>Vendor name</th><th title="Entry base">EB</th><th title="Entry client">EC</th><th class="col-hl" title="Completes">C1</th><th title="Incidence rate: C1 ÷ (C1 + S1 + S2)">IR%</th><th title="Conversion: C1 ÷ EB">CONV%</th><th title="Screenouts">S1</th><th title="Screenouts in screener">S2</th><th title="Quota fulls">Q1</th><th title="Quota fulls in screener">Q2</th><th title="Drop-outs (incomplete)">DROPS</th><th title="Duplicates: DUP1 + DUP2 + DUP3">DUPS</th><th title="Quality fails: QFAIL1 + QFAIL2">FAILS</th></tr></thead>
+                  <tbody><tr><td class="cell-name">Main Frame</td><td>755</td><td>518</td><td class="col-hl">65</td><td>16.0%</td><td>8.6%</td><td>340</td><td class=" zero">0</td><td>54</td><td class=" zero">0</td><td>36</td><td>110</td><td>10</td></tr></tbody>
+                </table>
+              </div>
+            </section></section><section class="pv-panel" id="panel-campaigns" role="tabpanel" aria-labelledby="tab-campaigns" hidden>
+            <section class="pv-card flush" data-variant-of="camp-status" data-variant="Live">
+              <div class="pv-toolbar">
+                <button type="button" class="btn btn-ghost btn-sm-h" data-action="new-campaign" data-bs-toggle="modal" data-bs-target="#newCampaignModal"><i class="bi bi-plus-circle"></i> New Campaign</button>
+                <button type="button" class="icon-btn-sm" data-action="refresh" data-tab="campaigns" title="Refresh" aria-label="Refresh" data-toast="Numbers are up to date." data-toast-tone="info"><i class="bi bi-arrow-clockwise"></i></button>
+                <div class="segmented seg-sm" role="group" aria-label="Campaign status">
+                  <button type="button" data-action="camp-status" data-value="Live" class="active" aria-pressed="true" data-variant-target="camp-status:Live">Live</button>
+                  <button type="button" data-action="camp-status" data-value="Closed" aria-pressed="false" data-variant-target="camp-status:Closed">Closed</button>
+                </div>
+                <select class="form-select form-select-sm pv-filter" data-change="camp-panel" aria-label="Filter on panel">
+                  <option value="" selected>All panels</option>
+                  <option value="GAV">GAV · Gavenze</option><option value="JAF">JAF · Jafenzi</option><option value="ENC">ENC · Encuestat</option><option value="SDD">SDD · Sondage Direct</option><option value="MVD">MVD · Mening Vandaag</option><option value="OPT">OPT · Opinion Today</option><option value="SEP">SEP · Sondaggi &amp; premi</option>
+                </select>
+                <div class="segmented seg-xs ec-toggle" role="group" aria-label="Entries to show">
+                  <button type="button" data-action="ec-toggle" data-value="all" class="active" aria-pressed="true">Show All</button>
+                  <button type="button" data-action="ec-toggle" data-value="ec" aria-pressed="false">Show EC only</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="pv-table camp-table">
+                  <thead><tr>
+                      <th>Campaign</th><th>Panel</th><th title="Invitations sent">INV</th><th title="Entry base">EB</th><th title="Entry client">EC</th><th title="Response rate (EB ÷ INV)">RR</th><th class="col-hl" title="Completes">C1</th><th title="Incidence rate: C1 ÷ (C1 + S1 + S2)">IR%</th><th title="Conversion: C1 ÷ EB">CONV%</th><th>S1</th><th>S2</th><th>Q1</th><th>Q2</th><th title="Drop-outs (incomplete)">DROPS</th><th title="Duplicates: DUP1 + DUP2 + DUP3">DUPS</th><th title="Quality fails: QFAIL1 + QFAIL2">FAILS</th><th>Status</th>
+                      <th aria-sort="descending">
+                        <button type="button" class="th-sort" data-action="camp-sort">Created <i class="bi bi-caret-down-fill"></i></button>
+                      </th>
+                      <th><span class="visually-hidden">Actions</span></th>
+                    </tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><div class="camp-name"><button type="button" class="camp-caret" data-action="camp-toggle" data-id="2" aria-expanded="false" aria-label="Show segments of Campaign 02"><i class="bi bi-caret-right-fill"></i></button><button type="button" class="cell-link" data-action="camp-info" data-id="2" title="Campaign info" data-bs-toggle="modal" data-bs-target="#campaignInfoModal">Campaign 02</button></div></td>
+                      <td>GAV</td>
+                      <td>732</td><td>282</td><td>171</td><td>39%</td><td class="col-hl">102</td><td>100.0%</td><td>36.2%</td><td class=" zero">0</td><td class=" zero">0</td><td class=" zero">0</td><td>43</td><td>59</td><td>2</td><td class=" zero">0</td>
+                      <td>
+                        <select class="form-select status-select" data-change="campaign-status" data-id="2" data-status="active" aria-label="Status">
+                          <option value="active" selected>active</option><option value="paused">paused</option><option value="closed">closed</option>
+                        </select></td>
+                      <td class="t-muted">2026-11-04 07:28</td>
+                      <td>
+                        <div class="row-actions">
+                          <div class="dropdown">
+                            <button type="button" class="icon-btn-sm mail-btn" data-bs-toggle="dropdown" data-bs-popper-config="{&quot;strategy&quot;:&quot;fixed&quot;}" aria-expanded="false" aria-label="Email options for Campaign 02">
+                              <i class="bi bi-envelope"></i><i class="bi bi-chevron-down mail-caret"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                              <li><button type="button" class="dropdown-item" data-action="camp-mail" data-kind="reminder" data-id="2" data-toast="Reminder email queued."><i class="bi bi-bell"></i> Reminder email</button></li>
+                            </ul>
+                          </div>
+                          <button type="button" class="icon-btn-sm" data-action="camp-duplicate" data-id="2" title="Duplicate campaign" aria-label="Duplicate Campaign 02" data-toast="Campaign 02 duplicated."><i class="bi bi-repeat"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="camp-sub" hidden>
+                      <td><div class="camp-name"><span>Male, 18-99</span></div></td>
+                      <td></td>
+                      <td>407</td><td>157</td><td>95</td><td>39%</td><td class="col-hl">57</td><td>100.0%</td><td>36.3%</td><td class=" zero">0</td><td class=" zero">0</td><td class=" zero">0</td><td>24</td><td>33</td><td>2</td><td class=" zero">0</td>
+                      <td>
+                        <select class="form-select status-select" data-change="campaign-status" data-id="1" data-status="active" data-parent="2" aria-label="Status">
+                          <option value="active" selected>active</option><option value="paused">paused</option><option value="closed">closed</option>
+                        </select></td>
+                      <td class="t-muted">2026-11-04 07:28</td>
+                      <td>
+                        <div class="row-actions">
+                          <div class="dropdown">
+                            <button type="button" class="icon-btn-sm mail-btn" data-bs-toggle="dropdown" data-bs-popper-config="{&quot;strategy&quot;:&quot;fixed&quot;}" aria-expanded="false" aria-label="Email options for Male, 18-99">
+                              <i class="bi bi-envelope"></i><i class="bi bi-chevron-down mail-caret"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                              <li><button type="button" class="dropdown-item" data-action="camp-mail" data-kind="reminder" data-id="1" data-parent="2" data-toast="Reminder email queued."><i class="bi bi-bell"></i> Reminder email</button></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="camp-sub" hidden>
+                      <td><div class="camp-name"><span>Female, 18-99</span></div></td>
+                      <td></td>
+                      <td>325</td><td>125</td><td>76</td><td>38%</td><td class="col-hl">45</td><td>100.0%</td><td>36.0%</td><td class=" zero">0</td><td class=" zero">0</td><td class=" zero">0</td><td>19</td><td>26</td><td class=" zero">0</td><td class=" zero">0</td>
+                      <td>
+                        <select class="form-select status-select" data-change="campaign-status" data-id="2" data-status="active" data-parent="2" aria-label="Status">
+                          <option value="active" selected>active</option><option value="paused">paused</option><option value="closed">closed</option>
+                        </select></td>
+                      <td class="t-muted">2026-11-04 07:28</td>
+                      <td>
+                        <div class="row-actions">
+                          <div class="dropdown">
+                            <button type="button" class="icon-btn-sm mail-btn" data-bs-toggle="dropdown" data-bs-popper-config="{&quot;strategy&quot;:&quot;fixed&quot;}" aria-expanded="false" aria-label="Email options for Female, 18-99">
+                              <i class="bi bi-envelope"></i><i class="bi bi-chevron-down mail-caret"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                              <li><button type="button" class="dropdown-item" data-action="camp-mail" data-kind="reminder" data-id="2" data-parent="2" data-toast="Reminder email queued."><i class="bi bi-bell"></i> Reminder email</button></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><div class="camp-name"><span class="camp-caret-spacer"></span><button type="button" class="cell-link" data-action="camp-info" data-id="1" title="Campaign info" data-bs-toggle="modal" data-bs-target="#campaignInfoModal">Campaign 01</button></div></td>
+                      <td>GAV</td>
+                      <td>653</td><td>440</td><td>337</td><td>67%</td><td class="col-hl">162</td><td>100.0%</td><td>36.8%</td><td class=" zero">0</td><td class=" zero">0</td><td>6</td><td>106</td><td>44</td><td class=" zero">0</td><td class=" zero">0</td>
+                      <td>
+                        <select class="form-select status-select" data-change="campaign-status" data-id="1" data-status="active" aria-label="Status">
+                          <option value="active" selected>active</option><option value="paused">paused</option><option value="closed">closed</option>
+                        </select></td>
+                      <td class="t-muted">2026-11-03 10:16</td>
+                      <td>
+                        <div class="row-actions">
+                          <div class="dropdown">
+                            <button type="button" class="icon-btn-sm mail-btn" data-bs-toggle="dropdown" data-bs-popper-config="{&quot;strategy&quot;:&quot;fixed&quot;}" aria-expanded="false" aria-label="Email options for Campaign 01">
+                              <i class="bi bi-envelope"></i><i class="bi bi-chevron-down mail-caret"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                              <li><button type="button" class="dropdown-item" data-action="camp-mail" data-kind="reminder" data-id="1" data-toast="Reminder email queued."><i class="bi bi-bell"></i> Reminder email</button></li>
+                            </ul>
+                          </div>
+                          <button type="button" class="icon-btn-sm" data-action="camp-duplicate" data-id="1" title="Duplicate campaign" aria-label="Duplicate Campaign 01" data-toast="Campaign 01 duplicated."><i class="bi bi-repeat"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <section class="pv-card flush" data-variant-of="camp-status" data-variant="Closed" hidden>
+              <div class="pv-toolbar">
+                <button type="button" class="btn btn-ghost btn-sm-h" data-action="new-campaign" data-bs-toggle="modal" data-bs-target="#newCampaignModal"><i class="bi bi-plus-circle"></i> New Campaign</button>
+                <button type="button" class="icon-btn-sm" data-action="refresh" data-tab="campaigns" title="Refresh" aria-label="Refresh" data-toast="Numbers are up to date." data-toast-tone="info"><i class="bi bi-arrow-clockwise"></i></button>
+                <div class="segmented seg-sm" role="group" aria-label="Campaign status">
+                  <button type="button" data-action="camp-status" data-value="Live" aria-pressed="false" data-variant-target="camp-status:Live">Live</button>
+                  <button type="button" data-action="camp-status" data-value="Closed" class="active" aria-pressed="true" data-variant-target="camp-status:Closed">Closed</button>
+                </div>
+                <select class="form-select form-select-sm pv-filter" data-change="camp-panel" aria-label="Filter on panel">
+                  <option value="" selected>All panels</option>
+                  <option value="GAV">GAV · Gavenze</option><option value="JAF">JAF · Jafenzi</option><option value="ENC">ENC · Encuestat</option><option value="SDD">SDD · Sondage Direct</option><option value="MVD">MVD · Mening Vandaag</option><option value="OPT">OPT · Opinion Today</option><option value="SEP">SEP · Sondaggi &amp; premi</option>
+                </select>
+                <div class="segmented seg-xs ec-toggle" role="group" aria-label="Entries to show">
+                  <button type="button" data-action="ec-toggle" data-value="all" class="active" aria-pressed="true">Show All</button>
+                  <button type="button" data-action="ec-toggle" data-value="ec" aria-pressed="false">Show EC only</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="pv-table camp-table">
+                  <thead><tr>
+                      <th>Campaign</th><th>Panel</th><th title="Invitations sent">INV</th><th title="Entry base">EB</th><th title="Entry client">EC</th><th title="Response rate (EB ÷ INV)">RR</th><th class="col-hl" title="Completes">C1</th><th title="Incidence rate: C1 ÷ (C1 + S1 + S2)">IR%</th><th title="Conversion: C1 ÷ EB">CONV%</th><th>S1</th><th>S2</th><th>Q1</th><th>Q2</th><th title="Drop-outs (incomplete)">DROPS</th><th title="Duplicates: DUP1 + DUP2 + DUP3">DUPS</th><th title="Quality fails: QFAIL1 + QFAIL2">FAILS</th><th>Status</th>
+                      <th aria-sort="descending">
+                        <button type="button" class="th-sort" data-action="camp-sort">Created <i class="bi bi-caret-down-fill"></i></button>
+                      </th>
+                      <th><span class="visually-hidden">Actions</span></th>
+                    </tr></thead>
+                  <tbody>
+                    <tr class="pv-empty"><td colspan="19">
+                        <i class="bi bi-inboxes"></i><div class="empty-title">No closed campaigns</div><div class="empty-text">Closed campaigns show up here.</div>
+                      </td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section></section><section class="pv-panel" id="panel-codes" role="tabpanel" aria-labelledby="tab-codes" hidden>
+            <div class="pv-callout">
+              <i class="bi bi-info-circle-fill"></i>
+              <span>Variable to use for the unique codes: <strong class="mono">{UNIQUE_CODES}</strong></span>
+              <button type="button" class="btn btn-ghost btn-xs ms-auto" data-action="copy-var" data-value="{UNIQUE_CODES}" data-toast="{UNIQUE_CODES} copied."><i class="bi bi-clipboard"></i> Copy</button>
+            </div>
+            <div class="sum-tiles">
+              <div class="sum-tile"><div class="sum-label">Total</div><div class="sum-value">254</div></div>
+              <div class="sum-tile">
+                <div class="sum-label">Used</div>
+                <div class="sum-value">65<span class="sum-pct">26%</span></div>
+              </div>
+              <div class="sum-tile"><div class="sum-label">Left</div><div class="sum-value">189</div></div>
+            </div>
+            <section class="pv-card">
+              <form data-form="pool-upload" data-kind="codes" novalidate data-toast="Changes saved.">
+                <label class="form-label" for="file-codes">Upload codes</label>
+                <div class="upload-row">
+                  <input class="form-control" type="file" id="file-codes" name="file" accept=".csv,text/csv">
+                  <button type="submit" class="btn btn-primary-grad"><i class="bi bi-upload"></i> Upload</button>
+                </div>
+                <div class="field-help">Select a CSV file to upload, one code per row. Duplicates are skipped.</div>
+              </form>
+              <div class="upload-foot">
+                <span>Download every code with its status and the respondent who used it.</span>
+                <button type="button" class="btn btn-ghost btn-sm-h" data-action="pool-export" data-kind="codes" data-toast="List downloaded."><i class="bi bi-download"></i> Download list</button>
+              </div>
+            </section></section><section class="pv-panel" id="panel-links" role="tabpanel" aria-labelledby="tab-links" hidden>
+            <div class="pv-callout">
+              <i class="bi bi-info-circle-fill"></i>
+              <span>Variable to use for the custom link: <strong class="mono">{CUSTOM_LINK}</strong></span>
+              <button type="button" class="btn btn-ghost btn-xs ms-auto" data-action="copy-var" data-value="{CUSTOM_LINK}" data-toast="{CUSTOM_LINK} copied."><i class="bi bi-clipboard"></i> Copy</button>
+            </div>
+            <div class="sum-tiles">
+              <div class="sum-tile"><div class="sum-label">Total</div><div class="sum-value">126</div></div>
+              <div class="sum-tile">
+                <div class="sum-label">Used</div>
+                <div class="sum-value">52</div>
+              </div>
+              <div class="sum-tile"><div class="sum-label">Left</div><div class="sum-value">74</div></div>
+            </div>
+            <section class="pv-card">
+              <form data-form="pool-upload" data-kind="links" novalidate data-toast="Changes saved.">
+                <label class="form-label" for="file-links">Upload links</label>
+                <div class="upload-row">
+                  <input class="form-control" type="file" id="file-links" name="file" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+                  <button type="submit" class="btn btn-primary-grad"><i class="bi bi-upload"></i> Upload</button>
+                </div>
+                <div class="field-help">Select a CSV or XLSX file to upload, one link per row. Duplicates are skipped.</div>
+              </form>
+              <div class="upload-foot">
+                <span>Download every link with its status and the respondent who used it.</span>
+                <button type="button" class="btn btn-ghost btn-sm-h" data-action="pool-export" data-kind="links" data-toast="List downloaded."><i class="bi bi-download"></i> Download list</button>
+              </div>
+            </section></section><section class="pv-panel" id="panel-ips" role="tabpanel" aria-labelledby="tab-ips" hidden>
+            <section class="pv-card ips-card">
+              <form data-form="ips-file" novalidate data-toast="Changes saved.">
+                <label class="form-label" for="ipFile">Import from a file</label>
+                <div class="upload-row">
+                  <input class="form-control" type="file" id="ipFile" name="file" accept=".csv,text/csv">
+                  <button type="submit" class="btn btn-ghost">Process</button>
+                </div>
+                <div class="field-help">Select a CSV file to process, one IP address or range per row.</div>
+              </form>
+              <form class="ips-add" data-form="ips-add" novalidate data-toast="Changes saved.">
+                <label class="form-label" for="ipInput">Add an address</label>
+                <div class="input-group">
+                  <input class="form-control mono" id="ipInput" name="ip" placeholder="IPv4 or IPv6 address" autocomplete="off" spellcheck="false">
+                  <button class="btn btn-ghost" type="submit" title="Add address" aria-label="Add address"><i class="bi bi-plus-circle"></i></button>
+                </div>
+                <div class="field-help">Ranges in CIDR form, such as 198.51.100.0/24, work too.</div>
+              </form>
+              <div class="ips-table">
+                <table class="pv-table">
+                  <thead><tr><th>IPs</th><th><span class="visually-hidden">Remove</span></th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td class="mono">76.222.242.144</td>
+                      <td><button type="button" class="icon-btn-sm danger" data-action="ips-remove" data-index="0" aria-label="Remove 76.222.242.144"><i class="bi bi-trash3"></i></button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="pv-form-actions">
+                <button type="button" class="btn btn-primary-grad" data-action="ips-save" disabled data-toast="Exclusion list saved."><i class="bi bi-check2"></i> Save</button>
+                <span class="pv-toolbar-note ms-auto">1 address excluded</span>
+              </div>
+            </section></section><section class="pv-panel" id="panel-screener" role="tabpanel" aria-labelledby="tab-screener" hidden>
+            <section class="pv-card">
+              <div class="q-settings">
+                <div class="q-setting">
+                  <span class="form-label" id="lbl-screener-status">Screener status</span>
+                  <div class="segmented seg-field" role="group" aria-labelledby="lbl-screener-status">
+                    <button type="button" data-action="q-status" data-kind="screener" data-value="1" class="active" aria-pressed="true" data-toast="Screener is now active." data-toast-tone="info">Active</button>
+                    <button type="button" data-action="q-status" data-kind="screener" data-value="0" aria-pressed="false" data-toast="Screener is now inactive." data-toast-tone="info">Inactive</button>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-ghost btn-sm-h q-export" data-action="q-export" data-kind="screener" data-toast="Preparing the export. You'll find it on the Exports page." data-toast-tone="info"><i class="bi bi-download"></i> Export screener data</button>
+              </div>
+              <div class="q-toolbar">
+                <button type="button" class="btn btn-ghost btn-sm-h" data-action="q-new" data-kind="screener"><i class="bi bi-plus-circle"></i> Add question</button>
+                <button type="button" class="btn btn-ghost btn-sm-h" data-action="q-library" data-kind="screener" data-bs-toggle="modal" data-bs-target="#screenerLibraryModal"><i class="bi bi-plus-circle"></i> Add Library question</button>
+              </div>
+            </section>
+            <div class="q-cards" id="qCards-screener">
+              <form class="pv-card q-card" data-form="q-save" data-kind="screener" data-id="1" novalidate data-toast="Question saved.">
+                <div class="q-row">
+                  <span class="q-num">1</span>
+                  <label class="q-label" for="qt-screener-1">Question text</label>
+                  <input class="form-control q-text-input" id="qt-screener-1" name="text" required maxlength="300" value="How old are you?" placeholder="Type the question">
+                  <select class="form-select q-type-select" name="type" aria-label="Question type" data-answers=".ans-block"><option value="Single radio">Single radio</option><option value="Single dropdown" selected>Single dropdown</option><option value="Multiple choice">Multiple choice</option><option value="Numeric">Numeric</option><option value="Open text">Open text</option></select>
+                  <button type="button" class="icon-btn-sm danger" data-action="q-delete" data-kind="screener" data-id="1" title="Delete question" aria-label="Delete question 1" data-confirm="Delete?" data-confirm-remove=".q-card" data-confirm-toast="Question deleted."><i class="bi bi-trash3"></i></button>
+                </div>
+                <div class="q-save-row">
+                  <button type="submit" class="btn btn-primary-grad btn-sm-h"><i class="bi bi-check2"></i> Save</button>
+                  <button type="button" class="btn btn-ghost btn-sm-h q-cancel" data-action="q-cancel" data-kind="screener" data-id="1" hidden>Cancel</button>
+                  <span class="dirty-flag q-dirty" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+                </div>
+                <div class="ans-block">
+                  <div class="ans-toolbar">
+                    <button type="button" class="btn btn-ghost btn-xs" data-action="ans-add" data-add-row=".q-card|.ans-list"><i class="bi bi-plus-circle"></i> Add answer</button>
+                    <span class="ans-legend" aria-hidden="true"><span class="count-badge c-chose">Chose</span><span class="count-badge c-done">Completed</span><span class="count-badge c-out">Screened out</span></span>
+                    <button type="button" class="icon-btn-sm ms-auto" data-action="ans-refresh" title="Refresh counts" aria-label="Refresh counts" data-toast="Answer counts are up to date." data-toast-tone="info"><i class="bi bi-arrow-clockwise"></i></button>
+                  </div>
+                  <div class="ans-list">
+                    <div class="ans-row" data-aid="1">
+                      <input class="form-control ans-text" name="answer" value="Under 18" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+                        <button type="button" role="radio" data-action="ans-action" data-value="none" aria-checked="false">No action</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S1" class="active" aria-checked="true">S1</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S2" aria-checked="false">S2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Q2" aria-checked="false">Q2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="QFAIL2" aria-checked="false">QFAIL2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Required" aria-checked="false">Required</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Qualify" aria-checked="false">Qualify</button>
+                      </div>
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Chose this answer">96</span>
+                        <span class="count-badge c-done" title="Went on to complete">0</span>
+                        <span class="count-badge c-out" title="Screened out on this answer">96</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="2">
+                      <input class="form-control ans-text" name="answer" value="18–24" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+                        <button type="button" role="radio" data-action="ans-action" data-value="none" class="active" aria-checked="true">No action</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S1" aria-checked="false">S1</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S2" aria-checked="false">S2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Q2" aria-checked="false">Q2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="QFAIL2" aria-checked="false">QFAIL2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Required" aria-checked="false">Required</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Qualify" aria-checked="false">Qualify</button>
+                      </div>
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Chose this answer">173</span>
+                        <span class="count-badge c-done" title="Went on to complete">20</span>
+                        <span class="count-badge c-out" title="Screened out on this answer">0</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="3">
+                      <input class="form-control ans-text" name="answer" value="25–34" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+                        <button type="button" role="radio" data-action="ans-action" data-value="none" class="active" aria-checked="true">No action</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S1" aria-checked="false">S1</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S2" aria-checked="false">S2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Q2" aria-checked="false">Q2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="QFAIL2" aria-checked="false">QFAIL2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Required" aria-checked="false">Required</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Qualify" aria-checked="false">Qualify</button>
+                      </div>
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Chose this answer">73</span>
+                        <span class="count-badge c-done" title="Went on to complete">8</span>
+                        <span class="count-badge c-out" title="Screened out on this answer">0</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="4">
+                      <input class="form-control ans-text" name="answer" value="35–44" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+                        <button type="button" role="radio" data-action="ans-action" data-value="none" class="active" aria-checked="true">No action</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S1" aria-checked="false">S1</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S2" aria-checked="false">S2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Q2" aria-checked="false">Q2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="QFAIL2" aria-checked="false">QFAIL2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Required" aria-checked="false">Required</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Qualify" aria-checked="false">Qualify</button>
+                      </div>
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Chose this answer">138</span>
+                        <span class="count-badge c-done" title="Went on to complete">16</span>
+                        <span class="count-badge c-out" title="Screened out on this answer">0</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="5">
+                      <input class="form-control ans-text" name="answer" value="45–54" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+                        <button type="button" role="radio" data-action="ans-action" data-value="none" class="active" aria-checked="true">No action</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S1" aria-checked="false">S1</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S2" aria-checked="false">S2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Q2" aria-checked="false">Q2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="QFAIL2" aria-checked="false">QFAIL2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Required" aria-checked="false">Required</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Qualify" aria-checked="false">Qualify</button>
+                      </div>
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Chose this answer">119</span>
+                        <span class="count-badge c-done" title="Went on to complete">13</span>
+                        <span class="count-badge c-out" title="Screened out on this answer">0</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="6">
+                      <input class="form-control ans-text" name="answer" value="55–64" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+                        <button type="button" role="radio" data-action="ans-action" data-value="none" class="active" aria-checked="true">No action</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S1" aria-checked="false">S1</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S2" aria-checked="false">S2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Q2" aria-checked="false">Q2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="QFAIL2" aria-checked="false">QFAIL2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Required" aria-checked="false">Required</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Qualify" aria-checked="false">Qualify</button>
+                      </div>
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Chose this answer">73</span>
+                        <span class="count-badge c-done" title="Went on to complete">8</span>
+                        <span class="count-badge c-out" title="Screened out on this answer">0</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="7">
+                      <input class="form-control ans-text" name="answer" value="65 or older" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+                        <button type="button" role="radio" data-action="ans-action" data-value="none" aria-checked="false">No action</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S1" class="active" aria-checked="true">S1</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S2" aria-checked="false">S2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Q2" aria-checked="false">Q2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="QFAIL2" aria-checked="false">QFAIL2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Required" aria-checked="false">Required</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Qualify" aria-checked="false">Qualify</button>
+                      </div>
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Chose this answer">83</span>
+                        <span class="count-badge c-done" title="Went on to complete">0</span>
+                        <span class="count-badge c-out" title="Screened out on this answer">83</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div></div>
+                </div>
+              </form>
+              <form class="pv-card q-card" data-form="q-save" data-kind="screener" data-id="2" novalidate data-toast="Question saved.">
+                <div class="q-row">
+                  <span class="q-num">2</span>
+                  <label class="q-label" for="qt-screener-2">Question text</label>
+                  <input class="form-control q-text-input" id="qt-screener-2" name="text" required maxlength="300" value="Are you a parent of a child under 18?" placeholder="Type the question">
+                  <select class="form-select q-type-select" name="type" aria-label="Question type" data-answers=".ans-block"><option value="Single radio" selected>Single radio</option><option value="Single dropdown">Single dropdown</option><option value="Multiple choice">Multiple choice</option><option value="Numeric">Numeric</option><option value="Open text">Open text</option></select>
+                  <button type="button" class="icon-btn-sm danger" data-action="q-delete" data-kind="screener" data-id="2" title="Delete question" aria-label="Delete question 2" data-confirm="Delete?" data-confirm-remove=".q-card" data-confirm-toast="Question deleted."><i class="bi bi-trash3"></i></button>
+                </div>
+                <div class="q-save-row">
+                  <button type="submit" class="btn btn-primary-grad btn-sm-h"><i class="bi bi-check2"></i> Save</button>
+                  <button type="button" class="btn btn-ghost btn-sm-h q-cancel" data-action="q-cancel" data-kind="screener" data-id="2" hidden>Cancel</button>
+                  <span class="dirty-flag q-dirty" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+                </div>
+                <div class="ans-block">
+                  <div class="ans-toolbar">
+                    <button type="button" class="btn btn-ghost btn-xs" data-action="ans-add" data-add-row=".q-card|.ans-list"><i class="bi bi-plus-circle"></i> Add answer</button>
+                    <span class="ans-legend" aria-hidden="true"><span class="count-badge c-chose">Chose</span><span class="count-badge c-done">Completed</span><span class="count-badge c-out">Screened out</span></span>
+                    <button type="button" class="icon-btn-sm ms-auto" data-action="ans-refresh" title="Refresh counts" aria-label="Refresh counts" data-toast="Answer counts are up to date." data-toast-tone="info"><i class="bi bi-arrow-clockwise"></i></button>
+                  </div>
+                  <div class="ans-list">
+                    <div class="ans-row" data-aid="1">
+                      <input class="form-control ans-text" name="answer" value="Yes" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+                        <button type="button" role="radio" data-action="ans-action" data-value="none" aria-checked="false">No action</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S1" aria-checked="false">S1</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S2" aria-checked="false">S2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Q2" aria-checked="false">Q2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="QFAIL2" aria-checked="false">QFAIL2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Required" aria-checked="false">Required</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Qualify" class="active" aria-checked="true">Qualify</button>
+                      </div>
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Chose this answer">305</span>
+                        <span class="count-badge c-done" title="Went on to complete">65</span>
+                        <span class="count-badge c-out" title="Screened out on this answer">0</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="2">
+                      <input class="form-control ans-text" name="answer" value="No" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="segmented seg-xs ans-actions" role="radiogroup" aria-label="Action for this answer">
+                        <button type="button" role="radio" data-action="ans-action" data-value="none" aria-checked="false">No action</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S1" class="active" aria-checked="true">S1</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="S2" aria-checked="false">S2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Q2" aria-checked="false">Q2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="QFAIL2" aria-checked="false">QFAIL2</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Required" aria-checked="false">Required</button>
+                        <button type="button" role="radio" data-action="ans-action" data-value="Qualify" aria-checked="false">Qualify</button>
+                      </div>
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Chose this answer">450</span>
+                        <span class="count-badge c-done" title="Went on to complete">0</span>
+                        <span class="count-badge c-out" title="Screened out on this answer">450</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div></div>
+                </div>
+              </form>
+            </div>
+            <div class="pv-card pv-empty-block" id="qEmpty-screener" hidden>
+              <i class="bi bi-ui-checks"></i>
+              <div class="empty-title">No questions yet</div>
+              <div class="empty-text">Add a question, or pick one from the library.</div>
+            </div></section><section class="pv-panel" id="panel-poll" role="tabpanel" aria-labelledby="tab-poll" hidden>
+            <section class="pv-card">
+              <div class="q-settings">
+                <div class="q-setting">
+                  <span class="form-label" id="lbl-poll-status">Post poll status</span>
+                  <div class="segmented seg-field" role="group" aria-labelledby="lbl-poll-status">
+                    <button type="button" data-action="q-status" data-kind="poll" data-value="1" class="active" aria-pressed="true" data-toast="Post poll is now active." data-toast-tone="info">Active</button>
+                    <button type="button" data-action="q-status" data-kind="poll" data-value="0" aria-pressed="false" data-toast="Post poll is now inactive." data-toast-tone="info">Inactive</button>
+                  </div>
+                </div>
+                <div class="q-setting q-setting-grow">
+                  <label class="form-label" for="pollStatuses">Show to statuses</label>
+                  <div id="pollStatusSelect" class="ms">
+                    <div class="ms-control">
+                      <span class="ms-chips">
+                        <span class="ms-chip">Complete (C1)<button type="button" data-remove="C1" aria-label="Remove Complete (C1)"><i class="bi bi-x"></i></button></span>
+                        <span class="ms-chip">Screenout (S1)<button type="button" data-remove="S1" aria-label="Remove Screenout (S1)"><i class="bi bi-x"></i></button></span></span>
+                      <input type="text" class="ms-input" id="pollStatuses" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="pollStatuses-list" autocomplete="off" spellcheck="false" placeholder="">
+                    </div>
+                    <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
+                    <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+                    <ul class="ms-menu" id="pollStatuses-list" role="listbox" aria-multiselectable="true" hidden><li role="option" id="pollStatuses-opt-0" data-value="S2" aria-selected="false">Screenout (S2)</li><li role="option" id="pollStatuses-opt-1" data-value="Q1" aria-selected="false">Quota full (Q1)</li><li role="option" id="pollStatuses-opt-2" data-value="Q2" aria-selected="false">Quota full (Q2)</li><li role="option" id="pollStatuses-opt-3" data-value="QFAIL" aria-selected="false">Quality fail</li><li role="option" id="pollStatuses-opt-4" data-value="DUP" aria-selected="false">Duplicate</li><li role="option" id="pollStatuses-opt-5" data-value="GEO" aria-selected="false">Geo IP fail</li></ul></div>
+                </div>
+                <button type="button" class="btn btn-ghost btn-sm-h q-export" data-action="q-export" data-kind="poll" data-toast="Preparing the export. You'll find it on the Exports page." data-toast-tone="info"><i class="bi bi-download"></i> Export poll data</button>
+              </div>
+              <div class="q-toolbar">
+                <button type="button" class="btn btn-ghost btn-sm-h" data-action="q-new" data-kind="poll"><i class="bi bi-plus-circle"></i> Add question</button>
+                <button type="button" class="btn btn-ghost btn-sm-h" data-action="q-library" data-kind="poll" data-bs-toggle="modal" data-bs-target="#pollLibraryModal"><i class="bi bi-plus-circle"></i> Add Library question</button>
+              </div>
+            </section>
+            <div class="q-cards" id="qCards-poll">
+              <form class="pv-card q-card" data-form="q-save" data-kind="poll" data-id="1" novalidate data-toast="Question saved.">
+                <div class="q-row">
+                  <span class="q-num">1</span>
+                  <label class="q-label" for="qt-poll-1">Question text</label>
+                  <input class="form-control q-text-input" id="qt-poll-1" name="text" required maxlength="300" value="How would you rate this survey overall?" placeholder="Type the question">
+                  <select class="form-select q-type-select" name="type" aria-label="Question type" data-answers=".ans-block"><option value="Single radio" selected>Single radio</option><option value="Single dropdown">Single dropdown</option><option value="Multiple choice">Multiple choice</option><option value="Numeric">Numeric</option><option value="Open text">Open text</option></select>
+                  <button type="button" class="icon-btn-sm danger" data-action="q-delete" data-kind="poll" data-id="1" title="Delete question" aria-label="Delete question 1" data-confirm="Delete?" data-confirm-remove=".q-card" data-confirm-toast="Question deleted."><i class="bi bi-trash3"></i></button>
+                </div>
+                <div class="q-save-row">
+                  <button type="submit" class="btn btn-primary-grad btn-sm-h"><i class="bi bi-check2"></i> Save</button>
+                  <button type="button" class="btn btn-ghost btn-sm-h q-cancel" data-action="q-cancel" data-kind="poll" data-id="1" hidden>Cancel</button>
+                  <span class="dirty-flag q-dirty" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+                </div>
+                <div class="ans-block">
+                  <div class="ans-toolbar">
+                    <button type="button" class="btn btn-ghost btn-xs" data-action="ans-add" data-add-row=".q-card|.ans-list"><i class="bi bi-plus-circle"></i> Add answer</button>
+                    <span class="ans-legend" aria-hidden="true"><span class="count-badge c-chose">Responses</span></span>
+                    <button type="button" class="icon-btn-sm ms-auto" data-action="ans-refresh" title="Refresh counts" aria-label="Refresh counts" data-toast="Answer counts are up to date." data-toast-tone="info"><i class="bi bi-arrow-clockwise"></i></button>
+                  </div>
+                  <div class="ans-list">
+                    <div class="ans-row" data-aid="1">
+                      <input class="form-control ans-text" name="answer" value="Very poor" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Responses">16</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="2">
+                      <input class="form-control ans-text" name="answer" value="Poor" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Responses">6</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="3">
+                      <input class="form-control ans-text" name="answer" value="Okay" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Responses">4</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="4">
+                      <input class="form-control ans-text" name="answer" value="Good" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Responses">7</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div>
+                    <div class="ans-row" data-aid="5">
+                      <input class="form-control ans-text" name="answer" value="Excellent" maxlength="200" placeholder="Answer text" aria-label="Answer text">
+                      <div class="ans-counts">
+                        <span class="count-badge c-chose" title="Responses">13</span>
+                      </div>
+                      <button type="button" class="icon-btn-sm danger" data-action="ans-remove" aria-label="Remove answer" data-remove-row=".ans-row"><i class="bi bi-trash3"></i></button>
+                    </div></div>
+                </div>
+              </form>
+            </div>
+            <div class="pv-card pv-empty-block" id="qEmpty-poll" hidden>
+              <i class="bi bi-ui-checks"></i>
+              <div class="empty-title">No questions yet</div>
+              <div class="empty-text">Add a question, or pick one from the library.</div>
+            </div></section></div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="addVendorModalTitle">Add vendor</h5>
+            <p class="panel-subtitle">The vendor starts with no responses.</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label" for="mvVendor">Vendor</label>
+          <select class="form-select" id="mvVendor" name="vendor" required><option value="Andata" selected>Andata</option><option value="Aparteko - mainframe">Aparteko - mainframe</option><option value="Aparteko - mainframe1">Aparteko - mainframe1</option><option value="Aparteko - mainframe2">Aparteko - mainframe2</option><option value="API - Make Opinion">API - Make Opinion</option><option value="Atlas Direct">Atlas Direct</option><option value="Atlas Research">Atlas Research</option><option value="Beacon Insights">Beacon Insights</option><option value="Beacon Recruit">Beacon Recruit</option><option value="Beacon Research">Beacon Research</option><option value="Cint">Cint</option><option value="Cobalt Research">Cobalt Research</option><option value="Gavenze test only">Gavenze test only</option><option value="Harbor Sample">Harbor Sample</option><option value="Horizon Direct">Horizon Direct</option><option value="Horizon Panel">Horizon Panel</option><option value="Juniper Direct">Juniper Direct</option><option value="Juniper Panel">Juniper Panel</option><option value="Juniper Sample">Juniper Sample</option><option value="Keystone Research">Keystone Research</option><option value="Lighthouse Insights">Lighthouse Insights</option><option value="Lighthouse Panel">Lighthouse Panel</option><option value="Lighthouse Sample">Lighthouse Sample</option><option value="Lucid">Lucid</option><option value="Northfield Sample">Northfield Sample</option><option value="Opinion Bridge">Opinion Bridge</option><option value="Orbit Panel">Orbit Panel</option><option value="Panelwise">Panelwise</option><option value="Pioneer Panel">Pioneer Panel</option><option value="Pioneer Research">Pioneer Research</option><option value="Prime Sample">Prime Sample</option><option value="Pulse Direct">Pulse Direct</option><option value="Pulse Panel">Pulse Panel</option><option value="Pulse Recruit">Pulse Recruit</option><option value="Quantum Insights">Quantum Insights</option><option value="Silverline Direct">Silverline Direct</option><option value="Silverline Sample">Silverline Sample</option><option value="Sterling Sample">Sterling Sample</option><option value="Summit Direct">Summit Direct</option><option value="Summit Insights">Summit Insights</option><option value="Summit Sample">Summit Sample</option><option value="SurveyHub Direct">SurveyHub Direct</option><option value="Szinapszis">Szinapszis</option><option value="Tandem Insights">Tandem Insights</option><option value="Unity Research">Unity Research</option><option value="Unity Sample">Unity Sample</option><option value="Vertex Direct">Vertex Direct</option><option value="Willow Research">Willow Research</option><option value="Xhuljeta">Xhuljeta</option></select>
+          <label class="form-label mt-3" for="mvStatus">Status</label>
+          <select class="form-select" id="mvStatus" name="status"><option value="active" selected>active</option><option value="paused">paused</option></select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Add vendor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="vendorInfoModal" tabindex="-1" aria-labelledby="vendorInfoModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="vendorInfoModalTitle">Vendor info</h5>
+            <p class="panel-subtitle">Gavenze · Back to school spending</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="vi-form">
+            <div class="vi-row">
+              <label class="vi-label" for="viVendor">Vendor</label>
+              <select class="form-select vi-vendor" id="viVendor" disabled><option selected>Gavenze</option></select>
+            </div>
+            <div class="vi-switches">
+              <div class="vi-row">
+                <span class="vi-label" id="vi-recaptcha-label">reCAPTCHA enabled</span>
+                <div class="segmented seg-sm" role="group" aria-labelledby="vi-recaptcha-label" data-vi-switch="recaptcha">
+                  <button type="button" data-value="1" aria-pressed="false">Yes</button>
+                  <button type="button" data-value="0" class="active" aria-pressed="true">No</button>
+                </div>
+              </div>
+              <div class="vi-row">
+                <span class="vi-label" id="vi-screener-label">Show screener</span>
+                <div class="segmented seg-sm" role="group" aria-labelledby="vi-screener-label" data-vi-switch="screener">
+                  <button type="button" data-value="1" class="active" aria-pressed="true">Yes</button>
+                  <button type="button" data-value="0" aria-pressed="false">No</button>
+                </div>
+              </div>
+              <div class="vi-row">
+                <span class="vi-label" id="vi-poll-label">Show post poll</span>
+                <div class="segmented seg-sm" role="group" aria-labelledby="vi-poll-label" data-vi-switch="poll">
+                  <button type="button" data-value="1" class="active" aria-pressed="true">Yes</button>
+                  <button type="button" data-value="0" aria-pressed="false">No</button>
+                </div>
+              </div>
+              <div class="vi-row">
+                <span class="vi-label" id="vi-s2s-label">Server to server call</span>
+                <div class="segmented seg-sm" role="group" aria-labelledby="vi-s2s-label" data-vi-switch="s2s">
+                  <button type="button" data-value="1" aria-pressed="false">Yes</button>
+                  <button type="button" data-value="0" class="active" aria-pressed="true">No</button>
+                </div>
+              </div>
+              <div class="vi-row">
+                <span class="vi-label" id="vi-redirect-label">Auto redirect</span>
+                <div class="segmented seg-sm" role="group" aria-labelledby="vi-redirect-label" data-vi-switch="redirect">
+                  <button type="button" data-value="1" class="active" aria-pressed="true">Yes</button>
+                  <button type="button" data-value="0" aria-pressed="false">No</button>
+                </div>
+              </div></div>
+            <div class="vi-texts">
+              <div class="vi-text">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="vi-intro" data-vi-text="intro" data-shows="#vi-intro-text">
+                  <label class="form-check-label" for="vi-intro">Intro screen text</label>
+                </div>
+                <textarea class="form-control" id="vi-intro-text" rows="3" maxlength="2000" aria-label="Intro screen text" placeholder="Enter the intro screen text" hidden></textarea>
+              </div>
+              <div class="vi-text">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="vi-terminate" data-vi-text="terminate" data-shows="#vi-terminate-text">
+                  <label class="form-check-label" for="vi-terminate">Terminate &amp; quotafull screen text</label>
+                </div>
+                <textarea class="form-control" id="vi-terminate-text" rows="3" maxlength="2000" aria-label="Terminate &amp; quotafull screen text" placeholder="Enter the terminate &amp; quotafull screen text" hidden></textarea>
+              </div>
+              <div class="vi-text">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="vi-complete" data-vi-text="complete" checked data-shows="#vi-complete-text">
+                  <label class="form-check-label" for="vi-complete">Complete screen text</label>
+                </div>
+                <textarea class="form-control" id="vi-complete-text" rows="3" maxlength="2000" aria-label="Complete screen text" placeholder="Enter the complete screen text">Thank you for completing this survey!</textarea>
+              </div>
+              <div class="vi-text">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="vi-closed" data-vi-text="closed" data-shows="#vi-closed-text">
+                  <label class="form-check-label" for="vi-closed">Closed screen text</label>
+                </div>
+                <textarea class="form-control" id="vi-closed-text" rows="3" maxlength="2000" aria-label="Closed screen text" placeholder="Enter the closed screen text" hidden></textarea>
+              </div></div>
+            <div class="vi-row">
+              <label class="vi-label" for="viStatus">Status</label>
+              <select class="form-select vi-status" id="viStatus"><option value="active" selected>active</option><option value="paused">paused</option><option value="closed">closed</option></select>
+            </div>
+            <div class="vi-row">
+              <span class="vi-label">Vendor live link</span>
+              <div class="vi-link">
+                <span class="mono">https://fwredirect.com/v/6nBZP4H62aCW7va</span>
+                <button type="button" class="icon-btn-sm" data-vi-copy="https://fwredirect.com/v/6nBZP4H62aCW7va" title="Copy" aria-label="Copy vendor live link"><i class="bi bi-copy"></i></button>
+              </div>
+            </div>
+            <div class="vi-row">
+              <span class="vi-label">Vendor live link formatted</span>
+              <div class="vi-link">
+                <span class="mono">https://fwredirect.com/v/6nBZP4H62aCW7va?vid=1&amp;rid={RID}</span>
+                <button type="button" class="icon-btn-sm" data-vi-copy="https://fwredirect.com/v/6nBZP4H62aCW7va?vid=1&amp;rid={RID}" title="Copy" aria-label="Copy vendor live link formatted"><i class="bi bi-copy"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="newCampaignModal" tabindex="-1" aria-labelledby="newCampaignModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="newCampaignModalTitle">Create Campaign</h5>
+            <p class="panel-subtitle">Invite panelists to Back to school spending.</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="cf">
+            <div class="cf-row">
+              <label class="cf-label" for="cfName">Name</label>
+              <div class="cf-field cf-w-md">
+                <input class="form-control" id="cfName" name="name" required maxlength="60" value="Campaign 03">
+                <div class="invalid-feedback">Enter a campaign name.</div>
+              </div>
+            </div>
+            <div class="cf-row">
+              <label class="cf-label" for="cfVendor">Vendor</label>
+              <div class="cf-field cf-w-md">
+                <div id="cfVendorBox" class="combo">
+                  <i class="bi bi-search combo-icon" aria-hidden="true"></i>
+                  <input type="text" class="form-control combo-input" id="cfVendor" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="cfVendor-list" autocomplete="off" spellcheck="false" placeholder="Select vendor..." title="">
+                  <button type="button" class="combo-clear" aria-label="Clear" hidden><i class="bi bi-x-lg"></i></button>
+                  <ul class="combo-menu" id="cfVendor-list" role="listbox" hidden>
+                    <li role="option" id="cfVendor-opt-0" data-value="GAV" class="active" aria-selected="false">
+                      <span>Gavenze</span><small>GAV</small>
+                    </li>
+                    <li role="option" id="cfVendor-opt-1" data-value="JAF" aria-selected="false">
+                      <span>Jafenzi</span><small>JAF</small>
+                    </li>
+                    <li role="option" id="cfVendor-opt-2" data-value="ENC" aria-selected="false">
+                      <span>Encuestat</span><small>ENC</small>
+                    </li>
+                    <li role="option" id="cfVendor-opt-3" data-value="SDD" aria-selected="false">
+                      <span>Sondage Direct</span><small>SDD</small>
+                    </li>
+                    <li role="option" id="cfVendor-opt-4" data-value="MVD" aria-selected="false">
+                      <span>Mening Vandaag</span><small>MVD</small>
+                    </li>
+                    <li role="option" id="cfVendor-opt-5" data-value="OPT" aria-selected="false">
+                      <span>Opinion Today</span><small>OPT</small>
+                    </li>
+                    <li role="option" id="cfVendor-opt-6" data-value="SEP" aria-selected="false">
+                      <span>Sondaggi &amp; premi</span><small>SEP</small>
+                    </li></ul></div>
+                <div class="invalid-feedback" id="cfVendorMsg">Select a vendor.</div>
+              </div>
+            </div>
+            <div class="cf-row cf-pair">
+              <label class="cf-label" for="cfPoints">Survey points</label>
+              <div class="cf-field">
+                <input class="form-control cf-auto" id="cfPoints" type="number" min="0" max="100000" step="1" required value="" title="From Panel management ▸ Survey points, for the vendor and survey length">
+                <div class="invalid-feedback">Enter the points.</div>
+              </div>
+              <label class="cf-label" for="cfLength">Survey length</label>
+              <div class="cf-field">
+                <input class="form-control cf-auto" id="cfLength" type="number" min="1" max="90" step="1" required value="12" title="Minutes, from the project">
+                <div class="invalid-feedback">1–90 minutes.</div>
+              </div>
+            </div>
+            <div class="cf-row">
+              <label class="cf-label" for="cfExtraOn">Extra invite texts</label>
+              <div class="cf-field"><input class="form-check-input" type="checkbox" id="cfExtraOn" data-shows="#cfExtra"></div>
+            </div>
+            <div class="cf-extra" id="cfExtra" hidden>
+              <div class="cf-row cf-top">
+                <label class="cf-label" for="cfInviteText">Invite text</label>
+                <div class="cf-field"><textarea class="form-control" id="cfInviteText" rows="3" maxlength="4000" placeholder="Enter invite text"></textarea></div>
+              </div>
+              <div class="cf-row cf-top">
+                <label class="cf-label" for="cfInviteHtml">Invite HTML</label>
+                <div class="cf-field"><textarea class="form-control mono" id="cfInviteHtml" rows="3" maxlength="20000" spellcheck="false" placeholder="Enter invite HTML"></textarea></div>
+              </div>
+            </div>
+            <div id="cfSource"></div>
+            <div class="cf-row">
+              <label class="cf-label" for="cfBatch">Create a batch</label>
+              <div class="cf-field"><input class="form-check-input" type="checkbox" id="cfBatch" checked></div>
+            </div>
+            <div class="cf-batch" id="cfBatchBox">
+              <div class="cf-row">
+                <span class="cf-label">Filters</span>
+                <div class="cf-field">
+                  <button type="button" class="cf-round add" data-cf="filter-add" title="Add a filter" aria-label="Add a filter" aria-expanded="false" aria-controls="cfPicker"><i class="bi bi-plus-circle-fill"></i></button>
+                </div>
+              </div>
+              <div class="cf-picker" id="cfPicker" hidden></div>
+              <div class="cf-filters" id="cfFilters">
+                <div class="cf-filter">
+                  <button type="button" class="cf-round del" data-cf="filter-del" data-i="0" title="Remove" aria-label="Remove the Reliable filter"><i class="bi bi-dash-circle-fill"></i></button>
+                  <span class="cf-filter-label">Reliable</span>
+                  <select class="form-select" data-cf-f="op" data-i="0" aria-label="Reliable: condition"><option value="=" selected>=</option></select>
+                  <div class="cf-filter-value"><select class="form-select" data-cf-f="a" data-i="0" aria-label="Reliable"><option value="yes" selected>Yes</option><option value="no">No</option></select></div>
+                </div></div>
+              <div class="cf-sub">Samples</div>
+              <div class="cf-samples" id="cfSamples">
+                <table class="cf-sample-table">
+                  <thead><tr>
+                      <th>Gender</th><th>Age</th><th>Requested</th><th><span class="visually-hidden">Refresh</span></th><th>Available</th><th><span class="visually-hidden">Remove</span></th>
+                    </tr></thead>
+                  <tbody>
+                  </tbody>
+                  <tfoot><tr>
+                      <td>Total</td><td></td><td><span class="cf-pill is-total" id="cfReqTotal" title="Requested in total">0</span></td><td></td>
+                      <td><span class="cf-pill is-total" id="cfAvailTotal" title="Available in total">0</span></td>
+                      <td><button type="button" class="cf-round add" data-cf="sample-add" title="Add a sample" aria-label="Add a sample"><i class="bi bi-plus-circle-fill"></i></button></td>
+                    </tr></tfoot>
+                </table></div></div>
+            <div class="cf-row cf-pair">
+              <label class="cf-label" for="cfStatus">Status</label>
+              <div class="cf-field"><select class="form-select cf-w-sm" id="cfStatus"><option value="active" selected>active</option><option value="paused">paused</option><option value="closed">closed</option></select></div>
+              <span class="cf-label" id="cfAutoLabel">Auto sample</span>
+              <div class="cf-field">
+                <div class="segmented seg-sm" role="group" aria-labelledby="cfAutoLabel" data-cf-seg="autoSample">
+                  <button type="button" data-value="1" aria-pressed="false">Yes</button><button type="button" data-value="0" class="active" aria-pressed="true">No</button>
+                </div></div>
+            </div>
+            <div class="cf-note" id="cfAutoNote" role="note" hidden><i class="bi bi-info-circle"></i><span>With auto sample newly registered panelist will be automatically invited if they fit one of the samples!</span></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="campaignInfoModal" tabindex="-1" aria-labelledby="campaignInfoModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="campaignInfoModalTitle">Campaign info</h5>
+            <p class="panel-subtitle">Campaign 02 · created 2026-11-04 07:28</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="cf">
+            <div class="cf-row">
+              <label class="cf-label" for="cfName-campaignInfoModal">Name</label>
+              <div class="cf-field cf-w-md">
+                <input class="form-control" id="cfName-campaignInfoModal" name="name" required maxlength="60" value="Campaign 02">
+                <div class="invalid-feedback">Enter a campaign name.</div>
+              </div>
+            </div>
+            <div class="cf-row">
+              <label class="cf-label" for="cfVendor-campaignInfoModal">Vendor</label>
+              <div class="cf-field cf-w-md">
+                <input class="form-control" id="cfVendor-campaignInfoModal" value="Gavenze" disabled>
+                <div class="invalid-feedback" id="cfVendorMsg-campaignInfoModal">Select a vendor.</div>
+              </div>
+            </div>
+            <div class="cf-row cf-pair">
+              <label class="cf-label" for="cfPoints-campaignInfoModal">Survey points</label>
+              <div class="cf-field">
+                <input class="form-control cf-auto" id="cfPoints-campaignInfoModal" type="number" min="0" max="100000" step="1" required value="15" title="From Panel management ▸ Survey points, for the vendor and survey length">
+                <div class="invalid-feedback">Enter the points.</div>
+              </div>
+              <label class="cf-label" for="cfLength-campaignInfoModal">Survey length</label>
+              <div class="cf-field">
+                <input class="form-control cf-auto" id="cfLength-campaignInfoModal" type="number" min="1" max="90" step="1" required value="12" title="Minutes, from the project">
+                <div class="invalid-feedback">1–90 minutes.</div>
+              </div>
+            </div>
+            <div class="cf-row">
+              <label class="cf-label" for="cfExtraOn-campaignInfoModal">Extra invite texts</label>
+              <div class="cf-field"><input class="form-check-input" type="checkbox" id="cfExtraOn-campaignInfoModal" data-shows="#cfExtra-campaignInfoModal"></div>
+            </div>
+            <div class="cf-extra" id="cfExtra-campaignInfoModal" hidden>
+              <div class="cf-row cf-top">
+                <label class="cf-label" for="cfInviteText-campaignInfoModal">Invite text</label>
+                <div class="cf-field"><textarea class="form-control" id="cfInviteText-campaignInfoModal" rows="3" maxlength="4000" placeholder="Enter invite text"></textarea></div>
+              </div>
+              <div class="cf-row cf-top">
+                <label class="cf-label" for="cfInviteHtml-campaignInfoModal">Invite HTML</label>
+                <div class="cf-field"><textarea class="form-control mono" id="cfInviteHtml-campaignInfoModal" rows="3" maxlength="20000" spellcheck="false" placeholder="Enter invite HTML"></textarea></div>
+              </div>
+            </div>
+            <div id="cfSource-campaignInfoModal"></div>
+            <div class="cf-row">
+              <label class="cf-label" for="cfBatch-campaignInfoModal">Create a batch</label>
+              <div class="cf-field"><input class="form-check-input" type="checkbox" id="cfBatch-campaignInfoModal" checked disabled></div>
+            </div>
+            <div class="cf-batch" id="cfBatchBox-campaignInfoModal">
+              <div class="cf-row">
+                <span class="cf-label">Filters</span>
+                <div class="cf-field">
+                </div>
+              </div>
+              <div class="cf-picker" id="cfPicker-campaignInfoModal" hidden></div>
+              <div class="cf-filters" id="cfFilters-campaignInfoModal">
+                <div class="cf-filter">
+                  <span></span>
+                  <span class="cf-filter-label">Reliable</span>
+                  <select class="form-select" data-cf-f="op" data-i="0" aria-label="Reliable: condition" disabled><option value="=" selected>=</option></select>
+                  <div class="cf-filter-value"><select class="form-select" data-cf-f="a" data-i="0" aria-label="Reliable" disabled><option value="yes" selected>Yes</option><option value="no">No</option></select></div>
+                </div></div>
+              <div class="cf-sub">Samples</div>
+              <div class="cf-samples" id="cfSamples-campaignInfoModal">
+                <table class="cf-sample-table">
+                  <thead><tr>
+                      <th>Gender</th><th>Age</th><th>Requested</th><th><span class="visually-hidden">Refresh</span></th><th>Available</th><th><span class="visually-hidden">Remove</span></th>
+                    </tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><select class="form-select" data-cf-s="gender" data-i="0" required aria-label="Sample 1, gender" disabled>
+                          <option value="">-- Select --</option><option value="Male" selected>Male</option><option value="Female">Female</option></select></td>
+                      <td><div class="cf-range">
+                          <input class="form-control" type="number" min="1" max="120" step="1" required data-cf-s="from" data-i="0" value="18" placeholder="Start" aria-label="Sample 1, age from" disabled><span>-</span>
+                          <input class="form-control" type="number" min="1" max="120" step="1" required data-cf-s="to" data-i="0" value="99" placeholder="End" aria-label="Sample 1, age to" disabled></div></td>
+                      <td><input class="form-control cf-req" type="number" min="1" max="100000" step="1" required data-cf-s="requested" data-i="0" value="999" aria-label="Sample 1, requested" disabled></td>
+                      <td class="cf-refresh-cell" rowspan="2"></td>
+                      <td><span class="cf-pill is-short" id="cfAvail-0" title="Only 391 of the 999 requested fit this sample">391</span></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><select class="form-select" data-cf-s="gender" data-i="1" required aria-label="Sample 2, gender" disabled>
+                          <option value="">-- Select --</option><option value="Male">Male</option><option value="Female" selected>Female</option></select></td>
+                      <td><div class="cf-range">
+                          <input class="form-control" type="number" min="1" max="120" step="1" required data-cf-s="from" data-i="1" value="18" placeholder="Start" aria-label="Sample 2, age from" disabled><span>-</span>
+                          <input class="form-control" type="number" min="1" max="120" step="1" required data-cf-s="to" data-i="1" value="99" placeholder="End" aria-label="Sample 2, age to" disabled></div></td>
+                      <td><input class="form-control cf-req" type="number" min="1" max="100000" step="1" required data-cf-s="requested" data-i="1" value="999" aria-label="Sample 2, requested" disabled></td>
+                      <td><span class="cf-pill is-short" id="cfAvail-1" title="Only 424 of the 999 requested fit this sample">424</span></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                  <tfoot><tr>
+                      <td>Total</td><td></td><td><span class="cf-pill is-total" id="cfReqTotal-campaignInfoModal" title="Requested in total">1,998</span></td><td></td>
+                      <td><span class="cf-pill is-total" id="cfAvailTotal-campaignInfoModal" title="Available in total">815</span></td>
+                      <td></td>
+                    </tr></tfoot>
+                </table></div></div>
+            <div class="cf-row cf-pair">
+              <label class="cf-label" for="cfStatus-campaignInfoModal">Status</label>
+              <div class="cf-field"><select class="form-select cf-w-sm" id="cfStatus-campaignInfoModal"><option value="active" selected>active</option><option value="paused">paused</option><option value="closed">closed</option></select></div>
+              <span class="cf-label" id="cfAutoLabel-campaignInfoModal">Auto sample</span>
+              <div class="cf-field">
+                <div class="segmented seg-sm" role="group" aria-labelledby="cfAutoLabel-campaignInfoModal" data-cf-seg="autoSample">
+                  <button type="button" data-value="1" aria-pressed="false">Yes</button><button type="button" data-value="0" class="active" aria-pressed="true">No</button>
+                </div></div>
+            </div>
+            <div class="cf-note" id="cfAutoNote-campaignInfoModal" role="note" hidden><i class="bi bi-info-circle"></i><span>With auto sample newly registered panelist will be automatically invited if they fit one of the samples!</span></div>
+            <ul class="cf-stats" aria-label="Statuses of Campaign 02">
+              <li><span>EB</span><span class="cf-count">282</span></li><li><span>EC</span><span class="cf-count">171</span></li><li><span>Incomplete</span><span class="cf-count">59</span></li><li><span>C1</span><span class="cf-count">102</span></li><li><span>S1</span><span class="cf-count is-zero">0</span></li><li><span>S2</span><span class="cf-count is-zero">0</span></li><li><span>Q1</span><span class="cf-count is-zero">0</span></li><li><span>Q2</span><span class="cf-count">43</span></li><li><span>DUP1</span><span class="cf-count">1</span></li><li><span>DUP2</span><span class="cf-count">1</span></li><li><span>DUP3</span><span class="cf-count is-zero">0</span></li><li><span>GEO1</span><span class="cf-count">2</span></li><li><span>QFAIL1</span><span class="cf-count is-zero">0</span></li><li><span>QFAIL2</span><span class="cf-count is-zero">0</span></li><li><span>EX1</span><span class="cf-count is-zero">0</span></li><li><span>EX2</span><span class="cf-count is-zero">0</span></li><li><span>DEV1</span><span class="cf-count is-zero">0</span></li><li><span>No unique code</span><span class="cf-count is-zero">0</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="screenerLibraryModal" tabindex="-1" aria-labelledby="screenerLibraryModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="screenerLibraryModalTitle">Add Library question</h5>
+            <p class="panel-subtitle">From the Screener Library for France, with its answers and actions.</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label" for="mqLibrary">Question</label>
+          <select class="form-select" id="mqLibrary" name="question" required><option value="30" selected>France - Gender</option><option value="31">France - Age</option><option value="32">France - Region</option><option value="33">France - Education</option><option value="34">France - Employment</option></select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Add question</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="pollLibraryModal" tabindex="-1" aria-labelledby="pollLibraryModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="pollLibraryModalTitle">Add Library question</h5>
+            <p class="panel-subtitle">A ready-made post poll question with its answers.</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label" for="mqLibrary-pollLibraryModal">Question</label>
+          <select class="form-select" id="mqLibrary-pollLibraryModal" name="question" required><option value="length" selected>How did you find the length of the survey?</option><option value="device">Did the survey work well on your device?</option><option value="again">Would you take part in a similar survey again?</option><option value="feedback">Is there anything you would like to tell us about this survey?</option></select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Add question</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Daily completes per vendor for the Progress over time chart (assets/js/project-chart.js) -->
+  <script type="application/json" id="progressData">
+  {"days": ["2026-11-05", "2026-11-06", "2026-11-07"], "labels": ["Nov 5", "Nov 6", "Nov 7"], "series": [{"name": "Gavenze", "color": "var(--series-1)", "values": [13, 12, 4]}, {"name": "Quickpoll Panels", "color": "var(--series-2)", "values": [14, 15, 7]}]}
+  </script>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/project-chart.js"></script>
+</body>
+</html>

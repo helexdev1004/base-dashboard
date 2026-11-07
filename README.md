@@ -2,26 +2,44 @@
 
 Front end for Base, our tool for running survey projects: the project list, project setup and fieldwork tracking, vendors, panels and their members, rewards, framework accounts and ratecards.
 
-It's a static site. Plain HTML, CSS and JavaScript on top of Bootstrap 5.3 and Bootstrap Icons, with no build step and no backend yet. All the data you see is sample data generated in the browser from a fixed seed, so every reload shows the same numbers.
+It's a static site: one HTML file per page, styled with CSS on top of Bootstrap 5.3 and Bootstrap Icons. The markup of every page is written out in its HTML file; a few small scripts only switch what's visible (tabs, menus, toggles) and show confirmation toasts. There's no build step and no backend yet, so nothing is saved, searched or sorted for real.
 
 Live: https://helexdev1004.github.io/base-dashboard/
 
 ## Running it locally
 
-Any static file server will do. From the project folder:
+Open `index.html` in a browser, or serve the folder (closer to how it's deployed):
 
 ```
 python -m http.server 8000
 ```
 
-Then open http://localhost:8000. Opening `index.html` straight from disk mostly works too, but a server is closer to how it's deployed.
+Then open http://localhost:8000. Bootstrap, the icons, the flag icons and the Inter font come from CDNs, so you need to be online.
 
-Bootstrap, the icons, the flag icons and the Inter font come from CDNs, so you need to be online.
-
-## Layout
+## What is here
 
 ```
-index.html                  the app shell: sidebar, top bar, page containers, shared modal
+index.html                  Projects (the project list)
+project.html                a project, with all its tabs (project.html#vendors opens a tab)
+project-new.html            New project
+feasibility.html            MF+A Feasibility
+exports.html                Exports
+vendors.html                Vendors list         vendor.html, vendor-new.html
+vendor-groups.html          Vendor groups
+blacklist.html              Blacklisted RESPIDs
+screener-library.html       Screener Library     screener-question.html, screener-question-new.html
+first-surveys.html          First surveys
+panels.html                 Panels               panel.html, panelist.html
+rewards.html  redeem.html  translations.html  survey-points.html
+recruiters.html             Recruiters           recruiter.html, recruiter-new.html
+fw-accounts.html            FW - Accounts        fw-account.html, fw-account-new.html
+fw-projects.html            FW - Active/Closed   fw-project.html (#targets for the Targets tab)
+fw-ratecards.html           FW - Ratecard        fw-ratecard.html, fw-ratecard-new.html
+fw-feasibilities.html       FW - Feasibilities
+statistics.html             Statistics           user-statistics.html, my-statistics.html
+users.html                  Users                user.html, user-new.html
+clients.html  profiling.html  external-surveys.html     "Coming soon" pages
+
 assets/
   css/
     main.css                imports everything below in the right order
@@ -30,25 +48,26 @@ assets/
     components/             buttons, modals, pagination, selects, toasts...
     pages/                  one file per page, project/ and panel-management/ have their own folders
   js/
-    core/utils.js           DOM helpers, seeded random numbers, formatting
-    data/                   countries, clients, PMs and the sample project list
-    components/             toast, pagination, form modal, multi-select, combo box, file upload
-    layout/                 theme picker and sidebar
-    app/router.js           hash routes, which page renders where, unsaved-changes guard
-    app/main.js             start-up, loads last
-    pages/                  one file per page
-      projects/             project list: KPI cards, progress chart, table
-      project/              a single project and its tabs (Main, Vendors, Exclusions, Campaigns...)
-      panel-management/     panels, members, panelists, rewards, redeem, translations, survey points
-      framework/            FW accounts, active/closed projects, ratecards, feasibilities
+    layout.js               every page: theme picker and sidebar (collapse, mobile drawer, menu groups)
+    ui.js                   every page: tabs, toggles, menus, folding rows, two-step delete, toasts
+    projects.js             index.html: KPI count-up, Progress chart tooltip, My projects, More filters
+    project-chart.js        project.html: the Progress over time chart, redrawn to fit its width
   images/                   logos and favicon
 docs/design/                screenshots of the dashboard
 ```
 
 ## Things worth knowing
 
-- The scripts are plain `<script>` tags that share globals, so the order in `index.html` matters. Shared stuff first, then pages, then `app/main.js`. If something needs a function at load time (lookup tables like `RENDERERS` or `PAGE_RENDERERS`), the file that defines it has to come earlier.
-- Routing is hash based (`#/project/8650/vendors`, `#/panels/gavenze` and so on). Every page registers its render function in `PAGE_RENDERERS` in `app/router.js`.
-- Themes are CSS variables keyed on `html[data-theme]`. The inline script in `index.html` applies the saved theme before first paint so there's no flash. To add a theme, add its block to `base/themes.css` and an entry to `THEMES` in `layout/themes.js`.
-- The theme, the collapsed sidebar and the saved feasibility templates are kept in localStorage. Everything else resets on reload.
-- Menu items without a page yet (Clients, Profiling, External surveys) open a shared "Coming soon" page.
+- Every page repeats the same sidebar and top bar. When you add or rename a menu item, change it in every HTML file. The current page's link has `active` and `aria-current="page"`, and its menu group is open.
+- Detail pages show one sample record each: every project row opens `project.html`, every vendor opens `vendor.html`, and so on.
+- Modals, dropdowns and the More filters panel are plain Bootstrap markup in the page, opened with `data-bs-toggle`.
+- `ui.js` reads a few `data-*` hooks in the markup:
+  - `data-variant-of` / `data-variant`: blocks that replace each other in place (Live/Closed lists, Chart/Table, Hourly/Daily). The buttons that swap them have `data-variant-target="group:key"`.
+  - `data-hash`: a tab or button the address can open, e.g. `project.html#campaigns`.
+  - `data-toast`, `data-toast-tone`: the message shown when the button is clicked or the form is saved.
+  - `data-confirm`: a delete button that asks once, with `data-confirm-remove` (what to remove) or `data-confirm-href` (where to go).
+  - `data-add-row` / `data-remove-row`: buttons that add a blank copy of the last row, or remove their own row.
+  - `data-href` on a table row: the whole row is a link.
+  - `data-spin`, `data-shows`, `data-answers`: a refresh spin, a checkbox that shows a field, a question type that hides the answers.
+- Themes are CSS variables keyed on `html[data-theme]`. The inline script in each page's `<head>` applies the saved theme before first paint so there's no flash. To add a theme, add its block to `base/themes.css`, its mode to that inline script, and its tile to the theme menu in every page.
+- The theme and the collapsed sidebar are kept in localStorage.

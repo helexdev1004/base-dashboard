@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pet owners U&amp;A · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link" href="index.html"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="feasibility.html"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels" hidden>
+              <li><a class="nav-link" href="panels.html"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="rewards.html"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="redeem.html"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="profiling.html"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group has-active">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework">
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link active" href="fw-projects.html" aria-current="page"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="fw-ratecards.html"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link" href="users.html"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="page-view" id="fwProjectView"><div data-variant-of="fw-tab" data-variant="overview" style="display: contents;">
+            <header class="page-head page-head-back">
+              <a class="pv-back-btn" href="fw-projects.html" title="Back to projects" aria-label="Back to projects"><i class="bi bi-arrow-left"></i></a>
+              <div>
+                <h1 class="page-title">Pet owners U&amp;A</h1>
+                <p class="page-sub">#4 · Cobalt Strategy · jonas.berg@cobalt-strategy.example.com · closed · created 2025-04-12 20:36</p>
+              </div>
+            </header>
+            <section class="pv-card fwd-card">
+              <div class="pv-tabs fw-tabs" role="tablist" aria-label="Project">
+                <a class="pv-tab active" role="tab" href="#overview" aria-selected="true" aria-current="page" data-hash="overview" data-variant-target="fw-tab:overview">Overview</a>
+                <a class="pv-tab" role="tab" href="#overview" aria-selected="false" data-hash="overview" data-variant-target="fw-tab:overview">Targets <span class="fw-tab-count">3</span></a>
+              </div>
+              <div class="fwd-body" role="tabpanel">
+                <div class="fwd-overview">
+                  <div class="uf-row">
+                    <label class="form-label" for="fwdName">Project name</label>
+                    <input class="form-control" id="fwdName" value="Pet owners U&amp;A" readonly>
+                  </div>
+                  <div class="uf-row">
+                    <label class="form-label" for="fwdJn">Job number</label>
+                    <input class="form-control fwd-short" id="fwdJn" value="10349" readonly>
+                  </div>
+                  <div class="uf-row">
+                    <label class="form-label" for="fwdPo">PO</label>
+                    <input class="form-control fwd-short" id="fwdPo" value="PO-6710" readonly>
+                  </div>
+                </div>
+                <div class="fwd-actions">
+                  <a class="btn btn-ghost" href="fw-projects.html">Cancel</a>
+                  <div class="form-check m-0">
+                    <input class="form-check-input" type="checkbox" id="fwdTerms" checked disabled>
+                    <label class="form-check-label" for="fwdTerms">I agree to the terms and conditions</label>
+                  </div>
+                </div>
+              </div>
+            </section></div>
+          <div data-variant-of="fw-tab" data-variant="targets" hidden style="display: contents;">
+            <header class="page-head page-head-back">
+              <a class="pv-back-btn" href="fw-projects.html" title="Back to projects" aria-label="Back to projects"><i class="bi bi-arrow-left"></i></a>
+              <div>
+                <h1 class="page-title">Pet owners U&amp;A</h1>
+                <p class="page-sub">#4 · Cobalt Strategy · jonas.berg@cobalt-strategy.example.com · closed · created 2025-04-12 20:36</p>
+              </div>
+            </header>
+            <section class="pv-card fwd-card">
+              <div class="pv-tabs fw-tabs" role="tablist" aria-label="Project">
+                <a class="pv-tab" role="tab" href="#overview" aria-selected="false" data-hash="overview" data-variant-target="fw-tab:overview">Overview</a>
+                <a class="pv-tab active" role="tab" href="#targets" aria-selected="true" aria-current="page" data-hash="targets" data-variant-target="fw-tab:targets">Targets <span class="fw-tab-count">3</span></a>
+              </div>
+              <div class="fwd-body" role="tabpanel">
+                <div class="fwt-list">
+                  <div class="fwt-item">
+                    <button type="button" class="fwt-head" data-fwt="1" aria-expanded="false" aria-controls="fwt-1">
+                      <span>Mexico - 100 LOI: 16-20 min IR: 70-79 %</span><i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="fwt-body" id="fwt-1" hidden>
+                      <div class="fwt-grid">
+                        <div class="fwt-field"><label class="form-label" for="fwt1-country">Country</label>
+                          <select class="form-select" id="fwt1-country" disabled><option selected>Mexico</option></select></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt1-completes">Completes</label>
+                          <input class="form-control" id="fwt1-completes" value="100" readonly></div>
+                        <div class="fwt-field fwt-wide"><span class="form-label" id="fwt1-devices">Allowed devices</span>
+                          <div class="fwt-chips" role="list" aria-labelledby="fwt1-devices"><span class="ms-chip" role="listitem">Desktop/laptop</span><span class="ms-chip" role="listitem">Tablets</span><span class="ms-chip" role="listitem">Mobile phones</span></div></div>
+                        <div class="fwt-field"><span class="form-label" id="fwt1-pii">PII collection</span>
+                          <div class="segmented seg-field" role="group" aria-labelledby="fwt1-pii" data-fw-seg="pii">
+                            <button type="button" data-value="1" aria-pressed="false" disabled>Yes</button><button type="button" data-value="0" class="active" aria-pressed="true" disabled>No</button>
+                          </div></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt1-ir">Incidence rate</label>
+                          <select class="form-select" id="fwt1-ir" disabled><option selected>70-79%</option></select></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt1-loi">Survey length</label>
+                          <select class="form-select" id="fwt1-loi" disabled><option selected>16-20 min</option></select></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt1-cpi">CPI</label>
+                          <div class="input-group"><span class="input-group-text">EUR</span><input class="form-control" id="fwt1-cpi" value="4.8" readonly></div></div>
+                      </div>
+                      <div class="cf-sub">Quotas</div>
+                      <div class="cf-samples">
+                        <table class="cf-sample-table fwt-quotas">
+                          <thead><tr><th>Gender</th><th>Age</th><th>Requested</th><th>Available</th></tr></thead>
+                          <tbody>
+                            <tr>
+                              <td><select class="form-select" disabled aria-label="Quota 1, gender"><option selected>Male</option></select></td>
+                              <td><div class="cf-range"><input class="form-control" value="18" readonly aria-label="Quota 1, age from"><span>-</span><input class="form-control" value="99" readonly aria-label="Quota 1, age to"></div></td>
+                              <td><input class="form-control cf-req" value="50" readonly aria-label="Quota 1, requested"></td>
+                              <td><span class="cf-pill is-ok">4,040</span></td>
+                            </tr>
+                            <tr>
+                              <td><select class="form-select" disabled aria-label="Quota 2, gender"><option selected>Female</option></select></td>
+                              <td><div class="cf-range"><input class="form-control" value="18" readonly aria-label="Quota 2, age from"><span>-</span><input class="form-control" value="99" readonly aria-label="Quota 2, age to"></div></td>
+                              <td><input class="form-control cf-req" value="50" readonly aria-label="Quota 2, requested"></td>
+                              <td><span class="cf-pill is-ok">4,376</span></td>
+                            </tr>
+                          </tbody>
+                          <tfoot><tr><td>Total</td><td></td><td><span class="cf-pill is-total">100</span></td><td><span class="cf-pill is-total">8,416</span></td></tr></tfoot>
+                        </table>
+                      </div>
+                      <div class="fwt-field fwt-block"><label class="form-label" for="fwt1-info">Target and quota information</label>
+                        <textarea class="form-control" id="fwt1-info" rows="3" readonly aria-describedby="fwt1-infoHelp">Nat rep on age and gender.</textarea>
+                        <div class="field-help" id="fwt1-infoHelp">Describe your requirements for the specific quota</div></div>
+                      <div class="uf-row fwt-row"><label class="form-label" for="fwt1-test">Test link</label>
+                        <input class="form-control mono" id="fwt1-test" value="https://survey.example.com/t/CRzFpXKhtW?id=xxxx" readonly></div>
+                      <div class="uf-row fwt-row"><label class="form-label" for="fwt1-live">Live link</label>
+                        <input class="form-control mono" id="fwt1-live" value="https://survey.example.com/s/SCMhQHiXu2?id=xxxx" readonly></div>
+                      <div class="uf-row fwt-row"><label class="form-label" for="fwtBaseInput-1">BASE project</label>
+                        <div class="fwt-base"><div id="fwtBase-1" class="combo">
+                            <i class="bi bi-search combo-icon" aria-hidden="true"></i>
+                            <input type="text" class="form-control combo-input" id="fwtBaseInput-1" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="fwtBaseInput-1-list" autocomplete="off" spellcheck="false" placeholder="Select project..." title="#27698 Sports betting attitudes" value="#27698 Sports betting attitudes">
+                            <button type="button" class="combo-clear" aria-label="Clear"><i class="bi bi-x-lg"></i></button>
+                            <ul class="combo-menu" id="fwtBaseInput-1-list" role="listbox" hidden>
+                              <li role="option" id="fwtBaseInput-1-opt-0" data-value="8650" class="active" aria-selected="false">
+                                <span>#33732 Test concepts assurance auto</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-1" data-value="8648" aria-selected="false">
+                                <span>#33711 HelloOmnibus 2026-Oct</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-2" data-value="8647" aria-selected="false">
+                                <span>#33700 The impact of influencers</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-3" data-value="8644" aria-selected="false">
+                                <span>#33687 Men's basketball followers</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-4" data-value="8642" aria-selected="false">
+                                <span>#33472 Employed individuals</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-5" data-value="8641" aria-selected="false">
+                                <span>#33470 SurveyR</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-6" data-value="8638" aria-selected="false">
+                                <span>#33463 Grocery delivery habits</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-7" data-value="8636" aria-selected="false">
+                                <span>#33460 Electric vehicle purchase intent</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-8" data-value="8634" aria-selected="false">
+                                <span>#32768 Streaming service churn drivers</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-9" data-value="8633" aria-selected="false">
+                                <span>#32742 Banking app satisfaction</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-10" data-value="8630" aria-selected="false">
+                                <span>#32726 Pet food brand tracker</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-11" data-value="8629" aria-selected="false">
+                                <span>#32723 Holiday travel planning</span><small>Spain</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-12" data-value="8627" aria-selected="false">
+                                <span>#32686 Smart home device usage</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-13" data-value="8625" aria-selected="false">
+                                <span>#31786 Coffee shop loyalty</span><small>United States</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-14" data-value="8622" aria-selected="false">
+                                <span>#31767 Sustainable packaging attitudes</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-15" data-value="8621" aria-selected="false">
+                                <span>#31756 Mobile gaming spend</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-16" data-value="8620" aria-selected="false">
+                                <span>#31754 Fitness tracker adoption</span><small>United States</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-17" data-value="8618" aria-selected="false">
+                                <span>#31753 Skincare routine U&amp;A</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-18" data-value="8615" aria-selected="false">
+                                <span>#31478 B2B IT decision makers</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-19" data-value="8614" aria-selected="false">
+                                <span>#31455 Fast food menu test</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-20" data-value="8611" aria-selected="false">
+                                <span>#31446 Home insurance switching</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-21" data-value="8610" aria-selected="false">
+                                <span>#31061 Craft beer preferences</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-22" data-value="8609" aria-selected="false">
+                                <span>#30269 Parents of toddlers</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-23" data-value="8608" aria-selected="false">
+                                <span>#30259 Online fashion returns</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-24" data-value="8605" aria-selected="false">
+                                <span>#29793 Public transport commuters</span><small>Netherlands</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-25" data-value="8604" aria-selected="false">
+                                <span>#29790 Energy supplier perceptions</span><small>Portugal</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-26" data-value="8603" aria-selected="false">
+                                <span>#29788 Podcast listening habits</span><small>Czech Republic</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-27" data-value="8601" aria-selected="false">
+                                <span>#29763 Plant-based dairy trial</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-28" data-value="8599" aria-selected="false">
+                                <span>#28968 Small business owners pulse</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-29" data-value="8596" aria-selected="false">
+                                <span>#28931 Ad recall wave 3</span><small>Portugal</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-30" data-value="8593" aria-selected="false">
+                                <span>#28906 Premium chocolate packaging test</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-31" data-value="8592" aria-selected="false">
+                                <span>#28898 Healthcare professionals panel</span><small>United States</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-32" data-value="8590" aria-selected="false">
+                                <span>#28672 Gen Z social media</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-33" data-value="8588" aria-selected="false">
+                                <span>#28652 Retirement planning attitudes</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-34" data-value="8585" aria-selected="false">
+                                <span>#28625 Car rental experience</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-35" data-value="8582" aria-selected="false">
+                                <span>#28611 Luxury watch buyers</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-36" data-value="8579" aria-selected="false">
+                                <span>#28573 Back to school spending</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-37" data-value="8576" aria-selected="false">
+                                <span>#28009 Mattress purchase journey</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-38" data-value="8574" aria-selected="false">
+                                <span>#27783 Telecom NPS tracker</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-39" data-value="8571" aria-selected="false">
+                                <span>#27749 Frozen meals concept screen</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-40" data-value="8568" aria-selected="false">
+                                <span>#27716 Home improvement DIYers</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-41" data-value="8566" class=" selected" aria-selected="true">
+                                <span>#27698 Sports betting attitudes</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-42" data-value="8563" aria-selected="false">
+                                <span>#27689 Grocery delivery habits W2</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-43" data-value="8562" aria-selected="false">
+                                <span>#27651 Electric vehicle purchase intent W2</span><small>Netherlands</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-44" data-value="8559" aria-selected="false">
+                                <span>#27630 Streaming service churn drivers W2</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-45" data-value="8556" aria-selected="false">
+                                <span>#27610 Banking app satisfaction W2</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-46" data-value="8555" aria-selected="false">
+                                <span>#27601 Pet food brand tracker W2</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-47" data-value="8552" aria-selected="false">
+                                <span>#27598 Holiday travel planning W2</span><small>Italy</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-48" data-value="8551" aria-selected="false">
+                                <span>#27221 Smart home device usage W2</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-49" data-value="8550" aria-selected="false">
+                                <span>#27217 Coffee shop loyalty W2</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-50" data-value="8549" aria-selected="false">
+                                <span>#27187 Sustainable packaging attitudes W2</span><small>Spain</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-51" data-value="8546" aria-selected="false">
+                                <span>#27167 Mobile gaming spend W2</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-52" data-value="8545" aria-selected="false">
+                                <span>#27132 Fitness tracker adoption W2</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-53" data-value="8542" aria-selected="false">
+                                <span>#27131 Skincare routine U&amp;A W2</span><small>Italy</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-54" data-value="8539" aria-selected="false">
+                                <span>#27105 B2B IT decision makers W2</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-55" data-value="8536" aria-selected="false">
+                                <span>#27065 Fast food menu test W2</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-56" data-value="8535" aria-selected="false">
+                                <span>#27048 Home insurance switching W2</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-57" data-value="8533" aria-selected="false">
+                                <span>#26397 Craft beer preferences W2</span><small>Spain</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-58" data-value="8531" aria-selected="false">
+                                <span>#26379 Parents of toddlers W2</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-1-opt-59" data-value="8528" aria-selected="false">
+                                <span>#26343 Online fashion returns W2</span><small>France</small>
+                              </li></ul></div></div></div>
+                    </div>
+                  </div>
+                  <div class="fwt-item">
+                    <button type="button" class="fwt-head" data-fwt="2" aria-expanded="false" aria-controls="fwt-2">
+                      <span>Mexico - 400 LOI: 16-20 min IR: 90-100 %</span><i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="fwt-body" id="fwt-2" hidden>
+                      <div class="fwt-grid">
+                        <div class="fwt-field"><label class="form-label" for="fwt2-country">Country</label>
+                          <select class="form-select" id="fwt2-country" disabled><option selected>Mexico</option></select></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt2-completes">Completes</label>
+                          <input class="form-control" id="fwt2-completes" value="400" readonly></div>
+                        <div class="fwt-field fwt-wide"><span class="form-label" id="fwt2-devices">Allowed devices</span>
+                          <div class="fwt-chips" role="list" aria-labelledby="fwt2-devices"><span class="ms-chip" role="listitem">Mobile phones</span></div></div>
+                        <div class="fwt-field"><span class="form-label" id="fwt2-pii">PII collection</span>
+                          <div class="segmented seg-field" role="group" aria-labelledby="fwt2-pii" data-fw-seg="pii">
+                            <button type="button" data-value="1" aria-pressed="false" disabled>Yes</button><button type="button" data-value="0" class="active" aria-pressed="true" disabled>No</button>
+                          </div></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt2-ir">Incidence rate</label>
+                          <select class="form-select" id="fwt2-ir" disabled><option selected>90-100%</option></select></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt2-loi">Survey length</label>
+                          <select class="form-select" id="fwt2-loi" disabled><option selected>16-20 min</option></select></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt2-cpi">CPI</label>
+                          <div class="input-group"><span class="input-group-text">EUR</span><input class="form-control" id="fwt2-cpi" value="4.3" readonly></div></div>
+                      </div>
+                      <div class="cf-sub">Quotas</div>
+                      <div class="cf-samples">
+                        <table class="cf-sample-table fwt-quotas">
+                          <thead><tr><th>Gender</th><th>Age</th><th>Requested</th><th>Available</th></tr></thead>
+                          <tbody>
+                            <tr>
+                              <td><select class="form-select" disabled aria-label="Quota 1, gender"><option selected>Male</option></select></td>
+                              <td><div class="cf-range"><input class="form-control" value="18" readonly aria-label="Quota 1, age from"><span>-</span><input class="form-control" value="99" readonly aria-label="Quota 1, age to"></div></td>
+                              <td><input class="form-control cf-req" value="200" readonly aria-label="Quota 1, requested"></td>
+                              <td><span class="cf-pill is-ok">4,040</span></td>
+                            </tr>
+                            <tr>
+                              <td><select class="form-select" disabled aria-label="Quota 2, gender"><option selected>Female</option></select></td>
+                              <td><div class="cf-range"><input class="form-control" value="18" readonly aria-label="Quota 2, age from"><span>-</span><input class="form-control" value="99" readonly aria-label="Quota 2, age to"></div></td>
+                              <td><input class="form-control cf-req" value="200" readonly aria-label="Quota 2, requested"></td>
+                              <td><span class="cf-pill is-ok">4,376</span></td>
+                            </tr>
+                          </tbody>
+                          <tfoot><tr><td>Total</td><td></td><td><span class="cf-pill is-total">400</span></td><td><span class="cf-pill is-total">8,416</span></td></tr></tfoot>
+                        </table>
+                      </div>
+                      <div class="fwt-field fwt-block"><label class="form-label" for="fwt2-info">Target and quota information</label>
+                        <textarea class="form-control" id="fwt2-info" rows="3" readonly aria-describedby="fwt2-infoHelp">test</textarea>
+                        <div class="field-help" id="fwt2-infoHelp">Describe your requirements for the specific quota</div></div>
+                      <div class="uf-row fwt-row"><label class="form-label" for="fwt2-test">Test link</label>
+                        <input class="form-control mono" id="fwt2-test" value="https://survey.example.com/t/QGsAP9Eoee?id=xxxx" readonly></div>
+                      <div class="uf-row fwt-row"><label class="form-label" for="fwt2-live">Live link</label>
+                        <input class="form-control mono" id="fwt2-live" value="https://survey.example.com/s/uykjpWpETo?id=xxxx" readonly></div>
+                      <div class="uf-row fwt-row"><label class="form-label" for="fwtBaseInput-2">BASE project</label>
+                        <div class="fwt-base"><div id="fwtBase-2" class="combo">
+                            <i class="bi bi-search combo-icon" aria-hidden="true"></i>
+                            <input type="text" class="form-control combo-input" id="fwtBaseInput-2" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="fwtBaseInput-2-list" autocomplete="off" spellcheck="false" placeholder="Select project..." title="">
+                            <button type="button" class="combo-clear" aria-label="Clear" hidden><i class="bi bi-x-lg"></i></button>
+                            <ul class="combo-menu" id="fwtBaseInput-2-list" role="listbox" hidden>
+                              <li role="option" id="fwtBaseInput-2-opt-0" data-value="8650" class="active" aria-selected="false">
+                                <span>#33732 Test concepts assurance auto</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-1" data-value="8648" aria-selected="false">
+                                <span>#33711 HelloOmnibus 2026-Oct</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-2" data-value="8647" aria-selected="false">
+                                <span>#33700 The impact of influencers</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-3" data-value="8644" aria-selected="false">
+                                <span>#33687 Men's basketball followers</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-4" data-value="8642" aria-selected="false">
+                                <span>#33472 Employed individuals</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-5" data-value="8641" aria-selected="false">
+                                <span>#33470 SurveyR</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-6" data-value="8638" aria-selected="false">
+                                <span>#33463 Grocery delivery habits</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-7" data-value="8636" aria-selected="false">
+                                <span>#33460 Electric vehicle purchase intent</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-8" data-value="8634" aria-selected="false">
+                                <span>#32768 Streaming service churn drivers</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-9" data-value="8633" aria-selected="false">
+                                <span>#32742 Banking app satisfaction</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-10" data-value="8630" aria-selected="false">
+                                <span>#32726 Pet food brand tracker</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-11" data-value="8629" aria-selected="false">
+                                <span>#32723 Holiday travel planning</span><small>Spain</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-12" data-value="8627" aria-selected="false">
+                                <span>#32686 Smart home device usage</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-13" data-value="8625" aria-selected="false">
+                                <span>#31786 Coffee shop loyalty</span><small>United States</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-14" data-value="8622" aria-selected="false">
+                                <span>#31767 Sustainable packaging attitudes</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-15" data-value="8621" aria-selected="false">
+                                <span>#31756 Mobile gaming spend</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-16" data-value="8620" aria-selected="false">
+                                <span>#31754 Fitness tracker adoption</span><small>United States</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-17" data-value="8618" aria-selected="false">
+                                <span>#31753 Skincare routine U&amp;A</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-18" data-value="8615" aria-selected="false">
+                                <span>#31478 B2B IT decision makers</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-19" data-value="8614" aria-selected="false">
+                                <span>#31455 Fast food menu test</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-20" data-value="8611" aria-selected="false">
+                                <span>#31446 Home insurance switching</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-21" data-value="8610" aria-selected="false">
+                                <span>#31061 Craft beer preferences</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-22" data-value="8609" aria-selected="false">
+                                <span>#30269 Parents of toddlers</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-23" data-value="8608" aria-selected="false">
+                                <span>#30259 Online fashion returns</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-24" data-value="8605" aria-selected="false">
+                                <span>#29793 Public transport commuters</span><small>Netherlands</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-25" data-value="8604" aria-selected="false">
+                                <span>#29790 Energy supplier perceptions</span><small>Portugal</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-26" data-value="8603" aria-selected="false">
+                                <span>#29788 Podcast listening habits</span><small>Czech Republic</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-27" data-value="8601" aria-selected="false">
+                                <span>#29763 Plant-based dairy trial</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-28" data-value="8599" aria-selected="false">
+                                <span>#28968 Small business owners pulse</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-29" data-value="8596" aria-selected="false">
+                                <span>#28931 Ad recall wave 3</span><small>Portugal</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-30" data-value="8593" aria-selected="false">
+                                <span>#28906 Premium chocolate packaging test</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-31" data-value="8592" aria-selected="false">
+                                <span>#28898 Healthcare professionals panel</span><small>United States</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-32" data-value="8590" aria-selected="false">
+                                <span>#28672 Gen Z social media</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-33" data-value="8588" aria-selected="false">
+                                <span>#28652 Retirement planning attitudes</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-34" data-value="8585" aria-selected="false">
+                                <span>#28625 Car rental experience</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-35" data-value="8582" aria-selected="false">
+                                <span>#28611 Luxury watch buyers</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-36" data-value="8579" aria-selected="false">
+                                <span>#28573 Back to school spending</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-37" data-value="8576" aria-selected="false">
+                                <span>#28009 Mattress purchase journey</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-38" data-value="8574" aria-selected="false">
+                                <span>#27783 Telecom NPS tracker</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-39" data-value="8571" aria-selected="false">
+                                <span>#27749 Frozen meals concept screen</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-40" data-value="8568" aria-selected="false">
+                                <span>#27716 Home improvement DIYers</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-41" data-value="8566" aria-selected="false">
+                                <span>#27698 Sports betting attitudes</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-42" data-value="8563" aria-selected="false">
+                                <span>#27689 Grocery delivery habits W2</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-43" data-value="8562" aria-selected="false">
+                                <span>#27651 Electric vehicle purchase intent W2</span><small>Netherlands</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-44" data-value="8559" aria-selected="false">
+                                <span>#27630 Streaming service churn drivers W2</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-45" data-value="8556" aria-selected="false">
+                                <span>#27610 Banking app satisfaction W2</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-46" data-value="8555" aria-selected="false">
+                                <span>#27601 Pet food brand tracker W2</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-47" data-value="8552" aria-selected="false">
+                                <span>#27598 Holiday travel planning W2</span><small>Italy</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-48" data-value="8551" aria-selected="false">
+                                <span>#27221 Smart home device usage W2</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-49" data-value="8550" aria-selected="false">
+                                <span>#27217 Coffee shop loyalty W2</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-50" data-value="8549" aria-selected="false">
+                                <span>#27187 Sustainable packaging attitudes W2</span><small>Spain</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-51" data-value="8546" aria-selected="false">
+                                <span>#27167 Mobile gaming spend W2</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-52" data-value="8545" aria-selected="false">
+                                <span>#27132 Fitness tracker adoption W2</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-53" data-value="8542" aria-selected="false">
+                                <span>#27131 Skincare routine U&amp;A W2</span><small>Italy</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-54" data-value="8539" aria-selected="false">
+                                <span>#27105 B2B IT decision makers W2</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-55" data-value="8536" aria-selected="false">
+                                <span>#27065 Fast food menu test W2</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-56" data-value="8535" aria-selected="false">
+                                <span>#27048 Home insurance switching W2</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-57" data-value="8533" aria-selected="false">
+                                <span>#26397 Craft beer preferences W2</span><small>Spain</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-58" data-value="8531" aria-selected="false">
+                                <span>#26379 Parents of toddlers W2</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-2-opt-59" data-value="8528" aria-selected="false">
+                                <span>#26343 Online fashion returns W2</span><small>France</small>
+                              </li></ul></div></div></div>
+                    </div>
+                  </div>
+                  <div class="fwt-item">
+                    <button type="button" class="fwt-head" data-fwt="3" aria-expanded="false" aria-controls="fwt-3">
+                      <span>Canada - 300 LOI: 11-15 min IR: 60-69 %</span><i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="fwt-body" id="fwt-3" hidden>
+                      <div class="fwt-grid">
+                        <div class="fwt-field"><label class="form-label" for="fwt3-country">Country</label>
+                          <select class="form-select" id="fwt3-country" disabled><option selected>Canada</option></select></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt3-completes">Completes</label>
+                          <input class="form-control" id="fwt3-completes" value="300" readonly></div>
+                        <div class="fwt-field fwt-wide"><span class="form-label" id="fwt3-devices">Allowed devices</span>
+                          <div class="fwt-chips" role="list" aria-labelledby="fwt3-devices"><span class="ms-chip" role="listitem">Mobile phones</span></div></div>
+                        <div class="fwt-field"><span class="form-label" id="fwt3-pii">PII collection</span>
+                          <div class="segmented seg-field" role="group" aria-labelledby="fwt3-pii" data-fw-seg="pii">
+                            <button type="button" data-value="1" aria-pressed="false" disabled>Yes</button><button type="button" data-value="0" class="active" aria-pressed="true" disabled>No</button>
+                          </div></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt3-ir">Incidence rate</label>
+                          <select class="form-select" id="fwt3-ir" disabled><option selected>60-69%</option></select></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt3-loi">Survey length</label>
+                          <select class="form-select" id="fwt3-loi" disabled><option selected>11-15 min</option></select></div>
+                        <div class="fwt-field"><label class="form-label" for="fwt3-cpi">CPI</label>
+                          <div class="input-group"><span class="input-group-text">EUR</span><input class="form-control" id="fwt3-cpi" value="5.7" readonly></div></div>
+                      </div>
+                      <div class="cf-sub">Quotas</div>
+                      <div class="cf-samples">
+                        <table class="cf-sample-table fwt-quotas">
+                          <thead><tr><th>Gender</th><th>Age</th><th>Requested</th><th>Available</th></tr></thead>
+                          <tbody>
+                            <tr>
+                              <td><select class="form-select" disabled aria-label="Quota 1, gender"><option selected>Male</option></select></td>
+                              <td><div class="cf-range"><input class="form-control" value="18" readonly aria-label="Quota 1, age from"><span>-</span><input class="form-control" value="99" readonly aria-label="Quota 1, age to"></div></td>
+                              <td><input class="form-control cf-req" value="150" readonly aria-label="Quota 1, requested"></td>
+                              <td><span class="cf-pill is-ok">3,516</span></td>
+                            </tr>
+                            <tr>
+                              <td><select class="form-select" disabled aria-label="Quota 2, gender"><option selected>Female</option></select></td>
+                              <td><div class="cf-range"><input class="form-control" value="18" readonly aria-label="Quota 2, age from"><span>-</span><input class="form-control" value="99" readonly aria-label="Quota 2, age to"></div></td>
+                              <td><input class="form-control cf-req" value="150" readonly aria-label="Quota 2, requested"></td>
+                              <td><span class="cf-pill is-ok">3,809</span></td>
+                            </tr>
+                          </tbody>
+                          <tfoot><tr><td>Total</td><td></td><td><span class="cf-pill is-total">300</span></td><td><span class="cf-pill is-total">7,325</span></td></tr></tfoot>
+                        </table>
+                      </div>
+                      <div class="fwt-field fwt-block"><label class="form-label" for="fwt3-info">Target and quota information</label>
+                        <textarea class="form-control" id="fwt3-info" rows="3" readonly aria-describedby="fwt3-infoHelp">test</textarea>
+                        <div class="field-help" id="fwt3-infoHelp">Describe your requirements for the specific quota</div></div>
+                      <div class="uf-row fwt-row"><label class="form-label" for="fwt3-test">Test link</label>
+                        <input class="form-control mono" id="fwt3-test" value="https://survey.example.com/t/AiiqyCttUJ?id=xxxx" readonly></div>
+                      <div class="uf-row fwt-row"><label class="form-label" for="fwt3-live">Live link</label>
+                        <input class="form-control mono" id="fwt3-live" value="https://survey.example.com/s/URYVQ6sQSF?id=xxxx" readonly></div>
+                      <div class="uf-row fwt-row"><label class="form-label" for="fwtBaseInput-3">BASE project</label>
+                        <div class="fwt-base"><div id="fwtBase-3" class="combo">
+                            <i class="bi bi-search combo-icon" aria-hidden="true"></i>
+                            <input type="text" class="form-control combo-input" id="fwtBaseInput-3" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="fwtBaseInput-3-list" autocomplete="off" spellcheck="false" placeholder="Select project..." title="#26325 Public transport commuters W2" value="#26325 Public transport commuters W2">
+                            <button type="button" class="combo-clear" aria-label="Clear"><i class="bi bi-x-lg"></i></button>
+                            <ul class="combo-menu" id="fwtBaseInput-3-list" role="listbox" hidden>
+                              <li role="option" id="fwtBaseInput-3-opt-0" data-value="8650" class="active" aria-selected="false">
+                                <span>#33732 Test concepts assurance auto</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-1" data-value="8648" aria-selected="false">
+                                <span>#33711 HelloOmnibus 2026-Oct</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-2" data-value="8647" aria-selected="false">
+                                <span>#33700 The impact of influencers</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-3" data-value="8644" aria-selected="false">
+                                <span>#33687 Men's basketball followers</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-4" data-value="8642" aria-selected="false">
+                                <span>#33472 Employed individuals</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-5" data-value="8641" aria-selected="false">
+                                <span>#33470 SurveyR</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-6" data-value="8638" aria-selected="false">
+                                <span>#33463 Grocery delivery habits</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-7" data-value="8636" aria-selected="false">
+                                <span>#33460 Electric vehicle purchase intent</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-8" data-value="8634" aria-selected="false">
+                                <span>#32768 Streaming service churn drivers</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-9" data-value="8633" aria-selected="false">
+                                <span>#32742 Banking app satisfaction</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-10" data-value="8630" aria-selected="false">
+                                <span>#32726 Pet food brand tracker</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-11" data-value="8629" aria-selected="false">
+                                <span>#32723 Holiday travel planning</span><small>Spain</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-12" data-value="8627" aria-selected="false">
+                                <span>#32686 Smart home device usage</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-13" data-value="8625" aria-selected="false">
+                                <span>#31786 Coffee shop loyalty</span><small>United States</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-14" data-value="8622" aria-selected="false">
+                                <span>#31767 Sustainable packaging attitudes</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-15" data-value="8621" aria-selected="false">
+                                <span>#31756 Mobile gaming spend</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-16" data-value="8620" aria-selected="false">
+                                <span>#31754 Fitness tracker adoption</span><small>United States</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-17" data-value="8618" aria-selected="false">
+                                <span>#31753 Skincare routine U&amp;A</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-18" data-value="8615" aria-selected="false">
+                                <span>#31478 B2B IT decision makers</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-19" data-value="8614" aria-selected="false">
+                                <span>#31455 Fast food menu test</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-20" data-value="8611" aria-selected="false">
+                                <span>#31446 Home insurance switching</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-21" data-value="8610" aria-selected="false">
+                                <span>#31061 Craft beer preferences</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-22" data-value="8609" aria-selected="false">
+                                <span>#30269 Parents of toddlers</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-23" data-value="8608" aria-selected="false">
+                                <span>#30259 Online fashion returns</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-24" data-value="8605" aria-selected="false">
+                                <span>#29793 Public transport commuters</span><small>Netherlands</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-25" data-value="8604" aria-selected="false">
+                                <span>#29790 Energy supplier perceptions</span><small>Portugal</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-26" data-value="8603" aria-selected="false">
+                                <span>#29788 Podcast listening habits</span><small>Czech Republic</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-27" data-value="8601" aria-selected="false">
+                                <span>#29763 Plant-based dairy trial</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-28" data-value="8599" aria-selected="false">
+                                <span>#28968 Small business owners pulse</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-29" data-value="8596" aria-selected="false">
+                                <span>#28931 Ad recall wave 3</span><small>Portugal</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-30" data-value="8593" aria-selected="false">
+                                <span>#28906 Premium chocolate packaging test</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-31" data-value="8592" aria-selected="false">
+                                <span>#28898 Healthcare professionals panel</span><small>United States</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-32" data-value="8590" aria-selected="false">
+                                <span>#28672 Gen Z social media</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-33" data-value="8588" aria-selected="false">
+                                <span>#28652 Retirement planning attitudes</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-34" data-value="8585" aria-selected="false">
+                                <span>#28625 Car rental experience</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-35" data-value="8582" aria-selected="false">
+                                <span>#28611 Luxury watch buyers</span><small>United Kingdom</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-36" data-value="8579" aria-selected="false">
+                                <span>#28573 Back to school spending</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-37" data-value="8576" aria-selected="false">
+                                <span>#28009 Mattress purchase journey</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-38" data-value="8574" aria-selected="false">
+                                <span>#27783 Telecom NPS tracker</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-39" data-value="8571" aria-selected="false">
+                                <span>#27749 Frozen meals concept screen</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-40" data-value="8568" aria-selected="false">
+                                <span>#27716 Home improvement DIYers</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-41" data-value="8566" aria-selected="false">
+                                <span>#27698 Sports betting attitudes</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-42" data-value="8563" aria-selected="false">
+                                <span>#27689 Grocery delivery habits W2</span><small>Belgium</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-43" data-value="8562" aria-selected="false">
+                                <span>#27651 Electric vehicle purchase intent W2</span><small>Netherlands</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-44" data-value="8559" aria-selected="false">
+                                <span>#27630 Streaming service churn drivers W2</span><small>Poland</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-45" data-value="8556" aria-selected="false">
+                                <span>#27610 Banking app satisfaction W2</span><small>France</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-46" data-value="8555" aria-selected="false">
+                                <span>#27601 Pet food brand tracker W2</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-47" data-value="8552" aria-selected="false">
+                                <span>#27598 Holiday travel planning W2</span><small>Italy</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-48" data-value="8551" aria-selected="false">
+                                <span>#27221 Smart home device usage W2</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-49" data-value="8550" aria-selected="false">
+                                <span>#27217 Coffee shop loyalty W2</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-50" data-value="8549" aria-selected="false">
+                                <span>#27187 Sustainable packaging attitudes W2</span><small>Spain</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-51" data-value="8546" aria-selected="false">
+                                <span>#27167 Mobile gaming spend W2</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-52" data-value="8545" aria-selected="false">
+                                <span>#27132 Fitness tracker adoption W2</span><small>Sweden</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-53" data-value="8542" aria-selected="false">
+                                <span>#27131 Skincare routine U&amp;A W2</span><small>Italy</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-54" data-value="8539" aria-selected="false">
+                                <span>#27105 B2B IT decision makers W2</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-55" data-value="8536" aria-selected="false">
+                                <span>#27065 Fast food menu test W2</span><small>Hungary</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-56" data-value="8535" aria-selected="false">
+                                <span>#27048 Home insurance switching W2</span><small>Romania</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-57" data-value="8533" aria-selected="false">
+                                <span>#26397 Craft beer preferences W2</span><small>Spain</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-58" data-value="8531" aria-selected="false">
+                                <span>#26379 Parents of toddlers W2</span><small>Germany</small>
+                              </li>
+                              <li role="option" id="fwtBaseInput-3-opt-59" data-value="8528" aria-selected="false">
+                                <span>#26343 Online fashion returns W2</span><small>France</small>
+                              </li></ul></div></div></div>
+                    </div>
+                  </div></div>
+                <div class="fwd-actions">
+                  <a class="btn btn-ghost" href="fw-projects.html">Cancel</a>
+                  <div class="form-check m-0">
+                    <input class="form-check-input" type="checkbox" id="fwdTerms-targets" checked disabled>
+                    <label class="form-check-label" for="fwdTerms-targets">I agree to the terms and conditions</label>
+                  </div>
+                </div>
+              </div>
+            </section></div></div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+</body>
+</html>

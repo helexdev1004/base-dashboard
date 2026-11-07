@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MF+A Feasibility · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link" href="index.html"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link active" href="feasibility.html" aria-current="page"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels" hidden>
+              <li><a class="nav-link" href="panels.html"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="rewards.html"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="redeem.html"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="profiling.html"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework" hidden>
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="fw-projects.html"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="fw-ratecards.html"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link" href="users.html"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="page-view" id="feasibilityView">
+          <header class="page-head">
+            <h1 class="page-title">MF+A Feasibility</h1>
+            <p class="page-sub">Estimate available completes and cost per interview by country and quota.</p>
+          </header>
+          <section class="pv-card fz-filters" aria-label="Feasibility settings">
+            <div class="fz-filter-row">
+              <div class="fz-field fz-w-client">
+                <label class="form-label" for="fzClient">Client</label>
+                <select class="form-select" id="fzClient" data-fz-setting="client"><option value="Bluepeak Insights">Bluepeak Insights</option><option value="Cobalt Strategy">Cobalt Strategy</option><option value="Kestrel Analytics">Kestrel Analytics</option><option value="Meridian Panels">Meridian Panels</option><option value="Northwind Research" selected>Northwind Research</option><option value="Orbit Consumer Lab">Orbit Consumer Lab</option><option value="Vantage Media Group">Vantage Media Group</option></select>
+              </div>
+              <div class="fz-field fz-grow">
+                <label class="form-label" for="fzCountries">Country</label>
+                <div id="fzCountrySelect" class="ms">
+                  <div class="ms-control">
+                    <span class="ms-chips">
+                      <span class="ms-chip">United States<button type="button" data-remove="us" aria-label="Remove United States"><i class="bi bi-x"></i></button></span>
+                      <span class="ms-chip">Canada<button type="button" data-remove="ca" aria-label="Remove Canada"><i class="bi bi-x"></i></button></span>
+                      <span class="ms-chip">Germany<button type="button" data-remove="de" aria-label="Remove Germany"><i class="bi bi-x"></i></button></span></span>
+                    <input type="text" class="ms-input" id="fzCountries" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="fzCountries-list" autocomplete="off" spellcheck="false" placeholder="">
+                  </div>
+                  <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
+                  <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+                  <ul class="ms-menu" id="fzCountries-list" role="listbox" aria-multiselectable="true" hidden><li role="option" id="fzCountries-opt-0" data-value="gb" aria-selected="false">United Kingdom</li><li role="option" id="fzCountries-opt-1" data-value="fr" aria-selected="false">France</li><li role="option" id="fzCountries-opt-2" data-value="es" aria-selected="false">Spain</li><li role="option" id="fzCountries-opt-3" data-value="it" aria-selected="false">Italy</li><li role="option" id="fzCountries-opt-4" data-value="nl" aria-selected="false">Netherlands</li><li role="option" id="fzCountries-opt-5" data-value="be" aria-selected="false">Belgium</li><li role="option" id="fzCountries-opt-6" data-value="se" aria-selected="false">Sweden</li><li role="option" id="fzCountries-opt-7" data-value="pl" aria-selected="false">Poland</li><li role="option" id="fzCountries-opt-8" data-value="cz" aria-selected="false">Czech Republic</li><li role="option" id="fzCountries-opt-9" data-value="hu" aria-selected="false">Hungary</li><li role="option" id="fzCountries-opt-10" data-value="ro" aria-selected="false">Romania</li><li role="option" id="fzCountries-opt-11" data-value="pt" aria-selected="false">Portugal</li><li role="option" id="fzCountries-opt-12" data-value="au" aria-selected="false">Australia</li><li role="option" id="fzCountries-opt-13" data-value="mx" aria-selected="false">Mexico</li><li role="option" id="fzCountries-opt-14" data-value="br" aria-selected="false">Brazil</li><li role="option" id="fzCountries-opt-15" data-value="jp" aria-selected="false">Japan</li></ul></div>
+              </div>
+              <div class="fz-field fz-w-break">
+                <label class="form-label" for="fzIr">Incidence rate</label>
+                <select class="form-select" id="fzIr" data-fz-setting="ir"><option value="90-100" selected>90-100%</option><option value="80-89">80-89%</option><option value="70-79">70-79%</option><option value="60-69">60-69%</option><option value="50-59">50-59%</option><option value="40-49">40-49%</option><option value="30-39">30-39%</option><option value="20-29">20-29%</option><option value="15-19">15-19%</option><option value="10-14">10-14%</option><option value="5-9">5-9%</option><option value="1-4">1-4%</option></select>
+              </div>
+              <div class="fz-field fz-w-break">
+                <label class="form-label" for="fzLoi">Survey length</label>
+                <select class="form-select" id="fzLoi" data-fz-setting="loi"><option value="1-5">1-5 minutes</option><option value="6-10" selected>6-10 minutes</option><option value="11-15">11-15 minutes</option><option value="16-20">16-20 minutes</option><option value="21-25">21-25 minutes</option><option value="26-30">26-30 minutes</option><option value="31-35">31-35 minutes</option><option value="36-40">36-40 minutes</option><option value="41-45">41-45 minutes</option><option value="46+">46+ minutes</option></select>
+              </div>
+              <div class="fz-field">
+                <span class="form-label d-block" id="fzDeviceLabel">Devices</span>
+                <div class="segmented seg-field" role="group" aria-labelledby="fzDeviceLabel">
+                  <button type="button" data-fz-action="device" data-value="DA" title="Device agnostic: desktop, tablet and mobile" class="active" aria-pressed="true">DA</button>
+                  <button type="button" data-fz-action="device" data-value="non-DA" title="Desktop only" aria-pressed="false">non-DA</button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="pv-card flush fz-quotas" aria-label="Quotas">
+            <div class="pv-toolbar">
+              <span class="pv-toolbar-title">Quotas</span>
+              <div class="dropdown">
+                <button type="button" class="btn btn-sm-h btn-dark-chip" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" id="fzTemplatesBtn">
+                  <i class="bi bi-list-ul"></i> Templates <i class="bi bi-caret-down-fill fz-caret"></i>
+                </button>
+                <div class="dropdown-menu fz-templates" id="fzTemplates">
+                  <button type="button" class="dropdown-item" data-fz-action="template-save" data-bs-toggle="modal" data-bs-target="#saveTemplateModal"><i class="bi bi-floppy"></i> Save as template</button>
+                  <div class="dropdown-divider"></div>
+                  <div class="fz-template">
+                    <button type="button" class="dropdown-item" data-fz-action="template-apply" data-id="mf-6" data-toast="Applied &quot;MF - 6 age breaks 12 quotas&quot;.">MF - 6 age breaks
+                      <span class="fz-template-meta">12 quotas</span></button>
+                    <button type="button" class="icon-btn-sm danger" data-fz-action="template-delete" data-id="mf-6" aria-label="Delete template MF - 6 age breaks" data-confirm="" data-confirm-remove="li" data-confirm-toast="Template deleted."><i class="bi bi-trash3"></i></button>
+                  </div>
+                  <div class="fz-template">
+                    <button type="button" class="dropdown-item" data-fz-action="template-apply" data-id="mf-totals" data-toast="Applied &quot;MF - totals 2 quotas&quot;.">MF - totals
+                      <span class="fz-template-meta">2 quotas</span></button>
+                    <button type="button" class="icon-btn-sm danger" data-fz-action="template-delete" data-id="mf-totals" aria-label="Delete template MF - totals" data-confirm="" data-confirm-remove="li" data-confirm-toast="Template deleted."><i class="bi bi-trash3"></i></button>
+                  </div>
+                  <div class="fz-template">
+                    <button type="button" class="dropdown-item" data-fz-action="template-apply" data-id="mf-4" data-toast="Applied &quot;MF - 4 breaks 8 quotas&quot;.">MF - 4 breaks
+                      <span class="fz-template-meta">8 quotas</span></button>
+                    <button type="button" class="icon-btn-sm danger" data-fz-action="template-delete" data-id="mf-4" aria-label="Delete template MF - 4 breaks" data-confirm="" data-confirm-remove="li" data-confirm-toast="Template deleted."><i class="bi bi-trash3"></i></button>
+                  </div></div>
+              </div>
+              <span class="pv-toolbar-note ms-auto" id="fzSummary">8 quotas · 3 countries · 90-100% IR · 6-10 minutes</span>
+            </div>
+            <div class="table-responsive">
+              <table class="pv-table fz-table" id="fzTable">
+                <thead>
+                  <tr class="fz-head-countries">
+                    <th colspan="3"></th>
+                    <th class="fz-country"><span class="fi fi-us"></span> United States</th><th class="fz-country"><span class="fi fi-ca"></span> Canada</th><th class="fz-country"><span class="fi fi-de"></span> Germany</th>
+                    <th></th>
+                  </tr>
+                  <tr class="fz-head-cpi">
+                    <th colspan="3" class="fz-cpi-label">Cost per interview</th>
+                    <th>
+                      <div class="input-group fz-cpi">
+                        <input class="form-control" type="number" min="0" step="0.01" data-fz-cpi="us" aria-label="Cost per interview in euros, United States" title="Suggested cost per interview" value="1.30">
+                        <span class="input-group-text">€</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="input-group fz-cpi">
+                        <input class="form-control" type="number" min="0" step="0.01" data-fz-cpi="ca" aria-label="Cost per interview in euros, Canada" title="Suggested cost per interview" value="1.30">
+                        <span class="input-group-text">€</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="input-group fz-cpi">
+                        <input class="form-control" type="number" min="0" step="0.01" data-fz-cpi="de" aria-label="Cost per interview in euros, Germany" title="Suggested cost per interview" value="1.30">
+                        <span class="input-group-text">€</span>
+                      </div>
+                    </th>
+                    <th></th>
+                  </tr>
+                  <tr class="fz-head-cols">
+                    <th>Gender</th><th>Age</th><th><span class="visually-hidden">Recalculate</span></th>
+                    <th>Available</th><th>Available</th><th>Available</th>
+                    <th><span class="visually-hidden">Remove</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-row="1">
+                    <td><select class="form-select fz-gender" data-fz-row="gender" aria-label="Gender, quota 1"><option value="All">All</option><option value="Male" selected>Male</option><option value="Female">Female</option></select></td>
+                    <td>
+                      <div class="fz-age">
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="18" data-fz-row="from" aria-label="Age from, quota 1">
+                        <span aria-hidden="true">–</span>
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="24" data-fz-row="to" aria-label="Age to, quota 1">
+                      </div>
+                    </td>
+                    <td class="fz-recalc-cell" rowspan="8">
+                      <button type="button" class="icon-btn-sm fz-recalc" data-fz-action="recalc" title="Recalculate and reset costs per interview" aria-label="Recalculate" data-toast="Recalculated. Costs per interview are back to the suggested rates." data-toast-tone="info"><i class="bi bi-arrow-repeat"></i></button>
+                    </td>
+                    <td><span class="fz-avail" data-cell="1:us" title="">233</span></td><td><span class="fz-avail" data-cell="1:ca" title="">151</span></td><td><span class="fz-avail" data-cell="1:de" title="">540</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-fz-action="remove-row" data-id="1" title="Remove quota" aria-label="Remove quota 1" data-remove-row="tr"><i class="bi bi-dash-circle"></i></button></td>
+                  </tr>
+                  <tr data-row="2">
+                    <td><select class="form-select fz-gender" data-fz-row="gender" aria-label="Gender, quota 2"><option value="All">All</option><option value="Male" selected>Male</option><option value="Female">Female</option></select></td>
+                    <td>
+                      <div class="fz-age">
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="25" data-fz-row="from" aria-label="Age from, quota 2">
+                        <span aria-hidden="true">–</span>
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="34" data-fz-row="to" aria-label="Age to, quota 2">
+                      </div>
+                    </td>
+                    <td><span class="fz-avail" data-cell="2:us" title="">534</span></td><td><span class="fz-avail" data-cell="2:ca" title="">240</span></td><td><span class="fz-avail" data-cell="2:de" title="">662</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-fz-action="remove-row" data-id="2" title="Remove quota" aria-label="Remove quota 2" data-remove-row="tr"><i class="bi bi-dash-circle"></i></button></td>
+                  </tr>
+                  <tr data-row="3">
+                    <td><select class="form-select fz-gender" data-fz-row="gender" aria-label="Gender, quota 3"><option value="All">All</option><option value="Male" selected>Male</option><option value="Female">Female</option></select></td>
+                    <td>
+                      <div class="fz-age">
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="35" data-fz-row="from" aria-label="Age from, quota 3">
+                        <span aria-hidden="true">–</span>
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="44" data-fz-row="to" aria-label="Age to, quota 3">
+                      </div>
+                    </td>
+                    <td><span class="fz-avail" data-cell="3:us" title="">688</span></td><td><span class="fz-avail" data-cell="3:ca" title="">236</span></td><td><span class="fz-avail" data-cell="3:de" title="">530</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-fz-action="remove-row" data-id="3" title="Remove quota" aria-label="Remove quota 3" data-remove-row="tr"><i class="bi bi-dash-circle"></i></button></td>
+                  </tr>
+                  <tr data-row="4">
+                    <td><select class="form-select fz-gender" data-fz-row="gender" aria-label="Gender, quota 4"><option value="All">All</option><option value="Male" selected>Male</option><option value="Female">Female</option></select></td>
+                    <td>
+                      <div class="fz-age">
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="45" data-fz-row="from" aria-label="Age from, quota 4">
+                        <span aria-hidden="true">–</span>
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="99" data-fz-row="to" aria-label="Age to, quota 4">
+                      </div>
+                    </td>
+                    <td><span class="fz-avail" data-cell="4:us" title="">2,444</span></td><td><span class="fz-avail" data-cell="4:ca" title="">650</span></td><td><span class="fz-avail" data-cell="4:de" title="">1,148</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-fz-action="remove-row" data-id="4" title="Remove quota" aria-label="Remove quota 4" data-remove-row="tr"><i class="bi bi-dash-circle"></i></button></td>
+                  </tr>
+                  <tr data-row="5">
+                    <td><select class="form-select fz-gender" data-fz-row="gender" aria-label="Gender, quota 5"><option value="All">All</option><option value="Male">Male</option><option value="Female" selected>Female</option></select></td>
+                    <td>
+                      <div class="fz-age">
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="18" data-fz-row="from" aria-label="Age from, quota 5">
+                        <span aria-hidden="true">–</span>
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="24" data-fz-row="to" aria-label="Age to, quota 5">
+                      </div>
+                    </td>
+                    <td><span class="fz-avail" data-cell="5:us" title="">379</span></td><td><span class="fz-avail" data-cell="5:ca" title="">208</span></td><td><span class="fz-avail" data-cell="5:de" title="">609</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-fz-action="remove-row" data-id="5" title="Remove quota" aria-label="Remove quota 5" data-remove-row="tr"><i class="bi bi-dash-circle"></i></button></td>
+                  </tr>
+                  <tr data-row="6">
+                    <td><select class="form-select fz-gender" data-fz-row="gender" aria-label="Gender, quota 6"><option value="All">All</option><option value="Male">Male</option><option value="Female" selected>Female</option></select></td>
+                    <td>
+                      <div class="fz-age">
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="25" data-fz-row="from" aria-label="Age from, quota 6">
+                        <span aria-hidden="true">–</span>
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="34" data-fz-row="to" aria-label="Age to, quota 6">
+                      </div>
+                    </td>
+                    <td><span class="fz-avail" data-cell="6:us" title="">872</span></td><td><span class="fz-avail" data-cell="6:ca" title="">332</span></td><td><span class="fz-avail" data-cell="6:de" title="">746</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-fz-action="remove-row" data-id="6" title="Remove quota" aria-label="Remove quota 6" data-remove-row="tr"><i class="bi bi-dash-circle"></i></button></td>
+                  </tr>
+                  <tr data-row="7">
+                    <td><select class="form-select fz-gender" data-fz-row="gender" aria-label="Gender, quota 7"><option value="All">All</option><option value="Male">Male</option><option value="Female" selected>Female</option></select></td>
+                    <td>
+                      <div class="fz-age">
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="35" data-fz-row="from" aria-label="Age from, quota 7">
+                        <span aria-hidden="true">–</span>
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="44" data-fz-row="to" aria-label="Age to, quota 7">
+                      </div>
+                    </td>
+                    <td><span class="fz-avail" data-cell="7:us" title="">1,122</span></td><td><span class="fz-avail" data-cell="7:ca" title="">325</span></td><td><span class="fz-avail" data-cell="7:de" title="">597</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-fz-action="remove-row" data-id="7" title="Remove quota" aria-label="Remove quota 7" data-remove-row="tr"><i class="bi bi-dash-circle"></i></button></td>
+                  </tr>
+                  <tr data-row="8">
+                    <td><select class="form-select fz-gender" data-fz-row="gender" aria-label="Gender, quota 8"><option value="All">All</option><option value="Male">Male</option><option value="Female" selected>Female</option></select></td>
+                    <td>
+                      <div class="fz-age">
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="45" data-fz-row="from" aria-label="Age from, quota 8">
+                        <span aria-hidden="true">–</span>
+                        <input class="form-control" type="number" min="18" max="99" step="1" value="99" data-fz-row="to" aria-label="Age to, quota 8">
+                      </div>
+                    </td>
+                    <td><span class="fz-avail" data-cell="8:us" title="">3,988</span></td><td><span class="fz-avail" data-cell="8:ca" title="">897</span></td><td><span class="fz-avail" data-cell="8:de" title="">1,295</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-fz-action="remove-row" data-id="8" title="Remove quota" aria-label="Remove quota 8" data-remove-row="tr"><i class="bi bi-dash-circle"></i></button></td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" class="fz-total-label">Total available:</td>
+                    <td><span class="fz-total" data-total="us">10,260</span></td><td><span class="fz-total" data-total="ca">3,039</span></td><td><span class="fz-total" data-total="de">6,127</span></td>
+                    <td><button type="button" class="icon-btn-sm success" data-fz-action="add-row" title="Add quota" aria-label="Add quota"><i class="bi bi-plus-circle"></i></button></td>
+                  </tr>
+                </tfoot></table>
+            </div>
+          </section></div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="modal fade" id="saveTemplateModal" tabindex="-1" aria-labelledby="saveTemplateModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="saveTemplateModalTitle">Save as template</h5>
+            <p class="panel-subtitle">Saves the 8 quotas currently in the table. A template with the same name is replaced.</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label" for="fzTemplateName">Template name</label>
+          <input class="form-control" id="fzTemplateName" name="name" required maxlength="60" placeholder="e.g. MF - 5 age breaks">
+          <div class="invalid-feedback">Enter a name.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-floppy"></i> Save template</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+</body>
+</html>

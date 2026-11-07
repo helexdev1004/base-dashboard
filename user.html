@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruth Gallagher · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link" href="index.html"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="feasibility.html"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels" hidden>
+              <li><a class="nav-link" href="panels.html"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="rewards.html"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="redeem.html"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="profiling.html"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework" hidden>
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="fw-projects.html"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="fw-ratecards.html"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link active" href="users.html" aria-current="page"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="page-view" id="userView">
+          <header class="page-head page-head-back">
+            <a class="pv-back-btn" href="users.html" title="Back to users" aria-label="Back to users"><i class="bi bi-arrow-left"></i></a>
+            <div>
+              <h1 class="page-title">User</h1>
+              <p class="page-sub">Ruth Gallagher · user #1 · last login 2026-11-04 20:19</p>
+            </div>
+          </header>
+          <form id="userForm" class="vendor-form" novalidate autocomplete="off" data-toast="Changes saved.">
+            <section class="pv-card">
+              <div class="pv-card-head">
+                <h2 class="pv-card-title">Details</h2>
+                <span class="dirty-flag" id="ufDirty" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+              </div>
+              <div class="uf-grid">
+                <div class="uf-row">
+                  <label class="form-label" for="ufName">Name</label>
+                  <div><input class="form-control" id="ufName" name="name" required maxlength="60" value="Ruth Gallagher">
+                    <div class="invalid-feedback">Enter a name.</div></div>
+                </div>
+                <div class="uf-row">
+                  <label class="form-label" for="ufInitials">Initials</label>
+                  <div><input class="form-control uf-initials" id="ufInitials" name="initials" required maxlength="3" pattern="[A-Za-z]{1,3}" value="RG">
+                    <div class="invalid-feedback" id="ufInitialsFeedback">Enter 1–3 letters.</div></div>
+                </div>
+                <div class="uf-row">
+                  <label class="form-label" for="ufColor">Color</label>
+                  <div class="uf-color"><input class="form-control form-control-color" type="color" id="ufColor" name="color" value="#2f7d32" title="Badge colour">
+                    <span id="ufBadge"><span class="user-badge" style="--badge:#2f7d32;--badge-fg:#fff" title="Ruth Gallagher">RG</span></span></div>
+                </div>
+                <div class="uf-row uf-span-2">
+                  <label class="form-label" for="ufEmail">Email</label>
+                  <div><input class="form-control" type="email" id="ufEmail" name="email" required maxlength="120" value="ruth.gallagher@base.example.com">
+                    <div class="invalid-feedback" id="ufEmailFeedback">Enter a valid email address.</div></div>
+                </div>
+                <div class="uf-row">
+                  <label class="form-label" for="ufPassword">Password</label>
+                  <div><input class="form-control" type="password" id="ufPassword" name="password" minlength="8" maxlength="100" autocomplete="new-password" placeholder="••••••••••••" aria-describedby="ufPasswordHelp">
+                    <div class="field-help" id="ufPasswordHelp">Leave empty to keep the current password.</div>
+                    <div class="invalid-feedback">Use at least 8 characters.</div></div>
+                </div>
+                <div class="uf-row">
+                  <span class="form-label">Status</span>
+                  <div class="segmented seg-field" role="group" aria-label="Status" data-uf-seg="enabled">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Enabled</button><button type="button" data-value="0" aria-pressed="false">Disabled</button>
+                  </div>
+                </div>
+                <div class="uf-row">
+                  <span class="form-label">Role</span>
+                  <div class="segmented seg-field" role="group" aria-label="Role" data-uf-seg="role">
+                    <button type="button" data-value="admin" class="active" aria-pressed="true">Admin</button><button type="button" data-value="user" aria-pressed="false">User</button><button type="button" data-value="visitor" aria-pressed="false">Visitor</button>
+                  </div>
+                </div>
+                <div class="uf-row">
+                  <span class="form-label">Project creator</span>
+                  <div class="segmented seg-field" role="group" aria-label="Project creator" data-uf-seg="projectCreator">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Show</button><button type="button" data-value="0" aria-pressed="false">Hide</button>
+                  </div>
+                </div>
+                <div class="uf-row uf-col-3">
+                  <span class="form-label">Progress over time</span>
+                  <div class="segmented seg-field" role="group" aria-label="Progress over time" data-uf-seg="progressView">
+                    <button type="button" data-value="chart" class="active" aria-pressed="true">Chart</button><button type="button" data-value="table" aria-pressed="false">Table</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="pv-card ac-card">
+              <button type="button" class="ac-toggle" data-uf-action="access" aria-expanded="true" aria-controls="ufAccess">
+                <i class="bi bi-chevron-down ac-caret"></i>
+                <span class="ac-title">Access control</span>
+                <span class="ac-count" id="ufAccessCount" title="Menu items this user can open">26</span>
+              </button>
+              <ul class="ac-list" id="ufAccess">
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-projects"><i class="bi bi-folder2-open"></i>Projects</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-projects" data-access="projects">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-feasibility"><i class="bi bi-sliders"></i>MF+A Feasibility</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-feasibility" data-access="feasibility">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-exports"><i class="bi bi-download"></i>Exports</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-exports" data-access="exports">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-clients"><i class="bi bi-people"></i>Clients</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-clients" data-access="clients">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li><li class="ac-group">Vendors</li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-vendors"><i class="bi bi-list-ul"></i>Vendors list</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-vendors" data-access="vendors">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-vendor-groups"><i class="bi bi-folder2"></i>Vendor groups</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-vendor-groups" data-access="vendor-groups">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-blacklist"><i class="bi bi-slash-circle"></i>Blacklisted RESPIDs</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-blacklist" data-access="blacklist">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-screener-library"><i class="bi bi-shield-check"></i>Screener Library</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-screener-library" data-access="screener-library">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-first-surveys"><i class="bi bi-globe2"></i>First surveys</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-first-surveys" data-access="first-surveys">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-response-rates"><i class="bi bi-percent"></i>Response rates</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-response-rates" data-access="response-rates">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li><li class="ac-group">Panel management</li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-panels"><i class="bi bi-people-fill"></i>Panels</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-panels" data-access="panels">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-rewards"><i class="bi bi-gift"></i>Rewards</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-rewards" data-access="rewards">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-redeem"><i class="bi bi-cart3"></i>Redeem</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-redeem" data-access="redeem">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-translations"><i class="bi bi-translate"></i>Translations</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-translations" data-access="translations">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-survey-points"><i class="bi bi-arrow-down-up"></i>Survey points</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-survey-points" data-access="survey-points">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-profiling"><i class="bi bi-window-sidebar"></i>Profiling</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-profiling" data-access="profiling">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-recruiters"><i class="bi bi-person-badge"></i>Recruiters</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-recruiters" data-access="recruiters">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li><li class="ac-group">Framework</li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-fw-accounts"><i class="bi bi-asterisk"></i>FW - Accounts</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-fw-accounts" data-access="fw-accounts">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-fw-active"><i class="bi bi-asterisk"></i>FW - Active/Closed</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-fw-active" data-access="fw-active">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-fw-ratecard"><i class="bi bi-asterisk"></i>FW - Ratecard</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-fw-ratecard" data-access="fw-ratecard">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-fw-feasibilities"><i class="bi bi-asterisk"></i>FW - Feasibilities</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-fw-feasibilities" data-access="fw-feasibilities">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li><li class="ac-group">External surveys</li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-toluna"><i class="bi bi-box-arrow-up-right"></i>Toluna</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-toluna" data-access="toluna">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-ipsos"><i class="bi bi-box-arrow-up-right"></i>Ipsos</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-ipsos" data-access="ipsos">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row ac-sub">
+                  <span class="ac-label" id="ac-dynata"><i class="bi bi-box-arrow-up-right"></i>Dynata</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-dynata" data-access="dynata">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-statistics"><i class="bi bi-bar-chart-line"></i>Statistics</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-statistics" data-access="statistics">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li>
+                <li class="ac-row">
+                  <span class="ac-label" id="ac-users"><i class="bi bi-person-lines-fill"></i>Users</span>
+                  <div class="segmented seg-xs" role="group" aria-labelledby="ac-users" data-access="users">
+                    <button type="button" data-value="1" class="active" aria-pressed="true">Active</button>
+                    <button type="button" data-value="0" aria-pressed="false">Inactive</button>
+                  </div>
+                </li></ul>
+            </section>
+            <div class="form-actions-bar">
+              <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+              <button type="button" class="btn btn-ghost" data-uf-action="cancel">Cancel</button>
+            </div>
+          </form></div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+</body>
+</html>

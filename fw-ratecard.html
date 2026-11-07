@@ -1,0 +1,1465 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ratecard01 · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link" href="index.html"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="feasibility.html"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels" hidden>
+              <li><a class="nav-link" href="panels.html"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="rewards.html"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="redeem.html"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="profiling.html"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group has-active">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework">
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="fw-projects.html"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link active" href="fw-ratecards.html" aria-current="page"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link" href="users.html"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="page-view" id="fwRatecardView">
+          <header class="page-head page-head-back">
+            <a class="pv-back-btn" href="fw-ratecards.html" title="Back to ratecards" aria-label="Back to ratecards"><i class="bi bi-arrow-left"></i></a>
+            <div>
+              <h1 class="page-title">Ratecard</h1>
+              <p class="page-sub">Ratecard01 · ratecard #14 · 12 markets</p>
+            </div>
+          </header>
+          <section class="pv-card">
+            <form id="fwrForm" novalidate autocomplete="off" data-toast="Changes saved.">
+              <div class="uf-row fwr-name">
+                <label class="form-label" for="fwrName">Name</label>
+                <div><input class="form-control" id="fwrName" name="name" required maxlength="60" value="Ratecard01">
+                  <div class="invalid-feedback" id="fwrNameFeedback">Enter a name.</div></div>
+              </div>
+              <div class="pv-form-actions">
+                <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+                <button type="button" class="btn btn-ghost" data-fwr-action="cancel">Cancel</button>
+                <span class="dirty-flag" id="fwrDirty" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+              </div>
+            </form>
+          </section>
+          <section class="pv-card flush">
+            <div class="pv-toolbar">
+              <button type="button" class="btn btn-ghost btn-sm-h" data-fwr-action="new-market" data-bs-toggle="modal" data-bs-target="#newMarketModal"><i class="bi bi-plus-circle"></i> New Market</button>
+            </div>
+            <div class="list-filters">
+              <div class="input-group search-group" role="search">
+                <input class="form-control" type="search" data-search="fw-markets" value="" placeholder="Search markets…" aria-label="Search markets…" autocomplete="off">
+                <button type="button" class="btn btn-ghost" data-search-go="fw-markets" title="Search" aria-label="Search"><i class="bi bi-search"></i></button>
+                <button type="button" class="btn btn-ghost" data-search-clear="fw-markets" title="Clear search" aria-label="Clear search"><i class="bi bi-x-circle"></i></button>
+              </div></div>
+            <div class="table-responsive">
+              <table class="pv-table list-table fwm-table">
+                <thead id="fwmHead">
+                  <tr>
+                    <th aria-sort="descending"><button type="button" class="th-sort" data-fwm-action="sort">ID <i class="bi bi-caret-down-fill"></i></button></th>
+                    <th>Markets</th>
+                  </tr></thead>
+                <tbody id="fwmRows">
+                  <tr class="row-link" data-market="41" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">41</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">China</button></td>
+                  </tr>
+                  <tr class="row-link" data-market="11" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">11</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">Kazakhstan</button></td>
+                  </tr>
+                  <tr class="row-link" data-market="10" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">10</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">Norway</button></td>
+                  </tr>
+                  <tr class="row-link" data-market="9" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">9</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">New Zealand, Switzerland</button></td>
+                  </tr>
+                  <tr class="row-link" data-market="8" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">8</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">Denmark, Finland, Ireland, Sweden</button></td>
+                  </tr>
+                  <tr class="row-link" data-market="7" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">7</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">Egypt, Jordan, Lebanon, Lithuania, Morocco, Saudi Arabia, South Africa, Tunisia, United Arab Emirates</button></td>
+                  </tr>
+                  <tr class="row-link" data-market="6" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">6</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">Hong Kong, Singapore, South Korea</button></td>
+                  </tr>
+                  <tr class="row-link" data-market="5" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">5</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">Austria</button></td>
+                  </tr>
+                  <tr class="row-link" data-market="4" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">4</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">Estonia, Latvia, Slovenia, Taiwan</button></td>
+                  </tr>
+                  <tr class="row-link" data-market="3" data-bs-toggle="modal" data-bs-target="#marketModal">
+                    <td class="col-id">3</td>
+                    <td class="fwm-countries"><button type="button" class="cell-link fwm-link">Belgium, Bolivia, Croatia, Dominican Republic, Ecuador, Guatemala, Honduras, Kenya, Malaysia, Netherlands, Panama, Philippines, Venezuela</button></td>
+                  </tr></tbody>
+              </table>
+            </div>
+            <div class="table-footer" id="fwmFooter">
+              <span class="page-info">Showing <strong>1–10</strong> of <strong>12</strong> markets</span>
+              <nav aria-label="Market pages">
+                <ul class="pagination-dark">
+                  <li><button type="button" data-fwm-page="1" disabled aria-label="First page">«</button></li>
+                  <li><button type="button" data-fwm-page="0" disabled aria-label="Previous page">‹</button></li>
+                  <li><button type="button" data-fwm-page="1" class="active" aria-current="page">1</button></li><li><button type="button" data-fwm-page="2">2</button></li>
+                  <li><button type="button" data-fwm-page="2" aria-label="Next page">›</button></li>
+                  <li><button type="button" data-fwm-page="2" aria-label="Last page">»</button></li>
+                </ul></nav></div>
+          </section></div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="modal fade" id="newMarketModal" tabindex="-1" aria-labelledby="newMarketModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="newMarketModalTitle">Ratecard details</h5>
+            <p class="panel-subtitle">Ratecard01 · new market</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="rc-import">
+            <div class="input-group">
+              <input class="form-control" type="file" id="rcFile" accept=".xlsx,.xls" aria-describedby="rcFileHelp">
+              <button type="button" class="btn btn-import" id="rcImport" disabled><i class="bi bi-upload"></i> Import</button>
+            </div>
+            <div class="field-help" id="rcFileHelp">Select XLSX file to import CPI data</div>
+          </div>
+          <label class="form-label mt-3" for="rcMarketsInput">Market</label>
+          <div id="rcMarkets" class="ms">
+            <div class="ms-control">
+              <span class="ms-chips"></span>
+              <input type="text" class="ms-input" id="rcMarketsInput" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="rcMarketsInput-list" autocomplete="off" spellcheck="false" placeholder="Select...">
+            </div>
+            <button type="button" class="ms-clear" aria-label="Clear all" hidden><i class="bi bi-x-lg"></i></button>
+            <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+            <ul class="ms-menu" id="rcMarketsInput-list" role="listbox" aria-multiselectable="true" hidden><li role="option" id="rcMarketsInput-opt-0" data-value="Argentina" aria-selected="false">Argentina</li><li role="option" id="rcMarketsInput-opt-1" data-value="Australia" aria-selected="false">Australia</li><li role="option" id="rcMarketsInput-opt-2" data-value="Austria" aria-selected="false">Austria</li><li role="option" id="rcMarketsInput-opt-3" data-value="Belgium" aria-selected="false">Belgium</li><li role="option" id="rcMarketsInput-opt-4" data-value="Bolivia" aria-selected="false">Bolivia</li><li role="option" id="rcMarketsInput-opt-5" data-value="Brazil" aria-selected="false">Brazil</li><li role="option" id="rcMarketsInput-opt-6" data-value="Bulgaria" aria-selected="false">Bulgaria</li><li role="option" id="rcMarketsInput-opt-7" data-value="Canada" aria-selected="false">Canada</li><li role="option" id="rcMarketsInput-opt-8" data-value="Chile" aria-selected="false">Chile</li><li role="option" id="rcMarketsInput-opt-9" data-value="China" aria-selected="false">China</li><li role="option" id="rcMarketsInput-opt-10" data-value="Colombia" aria-selected="false">Colombia</li><li role="option" id="rcMarketsInput-opt-11" data-value="Croatia" aria-selected="false">Croatia</li><li role="option" id="rcMarketsInput-opt-12" data-value="Czech Republic" aria-selected="false">Czech Republic</li><li role="option" id="rcMarketsInput-opt-13" data-value="Denmark" aria-selected="false">Denmark</li><li role="option" id="rcMarketsInput-opt-14" data-value="Dominican Republic" aria-selected="false">Dominican Republic</li><li role="option" id="rcMarketsInput-opt-15" data-value="Ecuador" aria-selected="false">Ecuador</li><li role="option" id="rcMarketsInput-opt-16" data-value="Egypt" aria-selected="false">Egypt</li><li role="option" id="rcMarketsInput-opt-17" data-value="Estonia" aria-selected="false">Estonia</li><li role="option" id="rcMarketsInput-opt-18" data-value="Finland" aria-selected="false">Finland</li><li role="option" id="rcMarketsInput-opt-19" data-value="France" aria-selected="false">France</li><li role="option" id="rcMarketsInput-opt-20" data-value="Germany" aria-selected="false">Germany</li><li role="option" id="rcMarketsInput-opt-21" data-value="Greece" aria-selected="false">Greece</li><li role="option" id="rcMarketsInput-opt-22" data-value="Guatemala" aria-selected="false">Guatemala</li><li role="option" id="rcMarketsInput-opt-23" data-value="Honduras" aria-selected="false">Honduras</li><li role="option" id="rcMarketsInput-opt-24" data-value="Hong Kong" aria-selected="false">Hong Kong</li><li role="option" id="rcMarketsInput-opt-25" data-value="Hungary" aria-selected="false">Hungary</li><li role="option" id="rcMarketsInput-opt-26" data-value="India" aria-selected="false">India</li><li role="option" id="rcMarketsInput-opt-27" data-value="Indonesia" aria-selected="false">Indonesia</li><li role="option" id="rcMarketsInput-opt-28" data-value="Ireland" aria-selected="false">Ireland</li><li role="option" id="rcMarketsInput-opt-29" data-value="Israel" aria-selected="false">Israel</li><li role="option" id="rcMarketsInput-opt-30" data-value="Italy" aria-selected="false">Italy</li><li role="option" id="rcMarketsInput-opt-31" data-value="Japan" aria-selected="false">Japan</li><li role="option" id="rcMarketsInput-opt-32" data-value="Jordan" aria-selected="false">Jordan</li><li role="option" id="rcMarketsInput-opt-33" data-value="Kazakhstan" aria-selected="false">Kazakhstan</li><li role="option" id="rcMarketsInput-opt-34" data-value="Kenya" aria-selected="false">Kenya</li><li role="option" id="rcMarketsInput-opt-35" data-value="Latvia" aria-selected="false">Latvia</li><li role="option" id="rcMarketsInput-opt-36" data-value="Lebanon" aria-selected="false">Lebanon</li><li role="option" id="rcMarketsInput-opt-37" data-value="Lithuania" aria-selected="false">Lithuania</li><li role="option" id="rcMarketsInput-opt-38" data-value="Malaysia" aria-selected="false">Malaysia</li><li role="option" id="rcMarketsInput-opt-39" data-value="Mexico" aria-selected="false">Mexico</li><li role="option" id="rcMarketsInput-opt-40" data-value="Morocco" aria-selected="false">Morocco</li><li role="option" id="rcMarketsInput-opt-41" data-value="Netherlands" aria-selected="false">Netherlands</li><li role="option" id="rcMarketsInput-opt-42" data-value="New Zealand" aria-selected="false">New Zealand</li><li role="option" id="rcMarketsInput-opt-43" data-value="Nigeria" aria-selected="false">Nigeria</li><li role="option" id="rcMarketsInput-opt-44" data-value="Norway" aria-selected="false">Norway</li><li role="option" id="rcMarketsInput-opt-45" data-value="Panama" aria-selected="false">Panama</li><li role="option" id="rcMarketsInput-opt-46" data-value="Peru" aria-selected="false">Peru</li><li role="option" id="rcMarketsInput-opt-47" data-value="Philippines" aria-selected="false">Philippines</li><li role="option" id="rcMarketsInput-opt-48" data-value="Poland" aria-selected="false">Poland</li><li role="option" id="rcMarketsInput-opt-49" data-value="Portugal" aria-selected="false">Portugal</li><li role="option" id="rcMarketsInput-opt-50" data-value="Romania" aria-selected="false">Romania</li><li role="option" id="rcMarketsInput-opt-51" data-value="Saudi Arabia" aria-selected="false">Saudi Arabia</li><li role="option" id="rcMarketsInput-opt-52" data-value="Serbia" aria-selected="false">Serbia</li><li role="option" id="rcMarketsInput-opt-53" data-value="Singapore" aria-selected="false">Singapore</li><li role="option" id="rcMarketsInput-opt-54" data-value="Slovakia" aria-selected="false">Slovakia</li><li role="option" id="rcMarketsInput-opt-55" data-value="Slovenia" aria-selected="false">Slovenia</li><li role="option" id="rcMarketsInput-opt-56" data-value="South Africa" aria-selected="false">South Africa</li><li role="option" id="rcMarketsInput-opt-57" data-value="South Korea" aria-selected="false">South Korea</li><li role="option" id="rcMarketsInput-opt-58" data-value="Spain" aria-selected="false">Spain</li><li role="option" id="rcMarketsInput-opt-59" data-value="Sweden" aria-selected="false">Sweden</li></ul></div>
+          <div class="invalid-feedback" id="rcMarketsFeedback">Select at least one market.</div>
+          <div class="rc-wrap">
+            <table class="rc-grid">
+              <thead>
+                <tr><th class="rc-corner"></th><th class="rc-ir-title" colspan="12">Incidence Rate</th></tr>
+                <tr><th class="rc-loi-head">LOI</th><th>90-100%</th><th>80-89%</th><th>70-79%</th><th>60-69%</th><th>50-59%</th><th>40-49%</th><th>30-39%</th><th>20-29%</th><th>15-19%</th><th>10-14%</th><th>5-9%</th><th>1-4%</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th class="rc-loi" scope="row">1-5 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="0" value="0" aria-label="1-5 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="0" value="0" aria-label="1-5 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="0" value="0" aria-label="1-5 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="1" value="0" aria-label="1-5 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="1" value="0" aria-label="1-5 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="1" value="0" aria-label="1-5 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="2" value="0" aria-label="1-5 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="2" value="0" aria-label="1-5 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="2" value="0" aria-label="1-5 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="3" value="0" aria-label="1-5 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="3" value="0" aria-label="1-5 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="3" value="0" aria-label="1-5 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="4" value="0" aria-label="1-5 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="4" value="0" aria-label="1-5 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="4" value="0" aria-label="1-5 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="5" value="0" aria-label="1-5 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="5" value="0" aria-label="1-5 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="5" value="0" aria-label="1-5 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="6" value="0" aria-label="1-5 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="6" value="0" aria-label="1-5 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="6" value="0" aria-label="1-5 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="7" value="0" aria-label="1-5 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="7" value="0" aria-label="1-5 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="7" value="0" aria-label="1-5 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="8" value="0" aria-label="1-5 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="8" value="0" aria-label="1-5 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="8" value="0" aria-label="1-5 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="9" value="0" aria-label="1-5 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="9" value="0" aria-label="1-5 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="9" value="0" aria-label="1-5 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="10" value="0" aria-label="1-5 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="10" value="0" aria-label="1-5 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="10" value="0" aria-label="1-5 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="11" value="0" aria-label="1-5 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="11" value="0" aria-label="1-5 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="11" value="0" aria-label="1-5 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">6-10 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="0" value="0" aria-label="6-10 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="0" value="0" aria-label="6-10 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="0" value="0" aria-label="6-10 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="1" value="0" aria-label="6-10 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="1" value="0" aria-label="6-10 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="1" value="0" aria-label="6-10 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="2" value="0" aria-label="6-10 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="2" value="0" aria-label="6-10 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="2" value="0" aria-label="6-10 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="3" value="0" aria-label="6-10 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="3" value="0" aria-label="6-10 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="3" value="0" aria-label="6-10 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="4" value="0" aria-label="6-10 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="4" value="0" aria-label="6-10 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="4" value="0" aria-label="6-10 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="5" value="0" aria-label="6-10 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="5" value="0" aria-label="6-10 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="5" value="0" aria-label="6-10 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="6" value="0" aria-label="6-10 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="6" value="0" aria-label="6-10 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="6" value="0" aria-label="6-10 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="7" value="0" aria-label="6-10 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="7" value="0" aria-label="6-10 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="7" value="0" aria-label="6-10 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="8" value="0" aria-label="6-10 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="8" value="0" aria-label="6-10 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="8" value="0" aria-label="6-10 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="9" value="0" aria-label="6-10 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="9" value="0" aria-label="6-10 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="9" value="0" aria-label="6-10 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="10" value="0" aria-label="6-10 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="10" value="0" aria-label="6-10 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="10" value="0" aria-label="6-10 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="11" value="0" aria-label="6-10 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="11" value="0" aria-label="6-10 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="11" value="0" aria-label="6-10 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">11-15 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="0" value="0" aria-label="11-15 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="0" value="0" aria-label="11-15 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="0" value="0" aria-label="11-15 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="1" value="0" aria-label="11-15 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="1" value="0" aria-label="11-15 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="1" value="0" aria-label="11-15 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="2" value="0" aria-label="11-15 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="2" value="0" aria-label="11-15 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="2" value="0" aria-label="11-15 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="3" value="0" aria-label="11-15 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="3" value="0" aria-label="11-15 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="3" value="0" aria-label="11-15 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="4" value="0" aria-label="11-15 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="4" value="0" aria-label="11-15 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="4" value="0" aria-label="11-15 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="5" value="0" aria-label="11-15 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="5" value="0" aria-label="11-15 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="5" value="0" aria-label="11-15 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="6" value="0" aria-label="11-15 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="6" value="0" aria-label="11-15 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="6" value="0" aria-label="11-15 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="7" value="0" aria-label="11-15 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="7" value="0" aria-label="11-15 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="7" value="0" aria-label="11-15 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="8" value="0" aria-label="11-15 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="8" value="0" aria-label="11-15 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="8" value="0" aria-label="11-15 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="9" value="0" aria-label="11-15 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="9" value="0" aria-label="11-15 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="9" value="0" aria-label="11-15 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="10" value="0" aria-label="11-15 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="10" value="0" aria-label="11-15 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="10" value="0" aria-label="11-15 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="11" value="0" aria-label="11-15 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="11" value="0" aria-label="11-15 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="11" value="0" aria-label="11-15 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">16-20 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="0" value="0" aria-label="16-20 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="0" value="0" aria-label="16-20 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="0" value="0" aria-label="16-20 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="1" value="0" aria-label="16-20 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="1" value="0" aria-label="16-20 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="1" value="0" aria-label="16-20 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="2" value="0" aria-label="16-20 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="2" value="0" aria-label="16-20 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="2" value="0" aria-label="16-20 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="3" value="0" aria-label="16-20 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="3" value="0" aria-label="16-20 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="3" value="0" aria-label="16-20 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="4" value="0" aria-label="16-20 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="4" value="0" aria-label="16-20 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="4" value="0" aria-label="16-20 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="5" value="0" aria-label="16-20 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="5" value="0" aria-label="16-20 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="5" value="0" aria-label="16-20 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="6" value="0" aria-label="16-20 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="6" value="0" aria-label="16-20 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="6" value="0" aria-label="16-20 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="7" value="0" aria-label="16-20 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="7" value="0" aria-label="16-20 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="7" value="0" aria-label="16-20 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="8" value="0" aria-label="16-20 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="8" value="0" aria-label="16-20 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="8" value="0" aria-label="16-20 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="9" value="0" aria-label="16-20 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="9" value="0" aria-label="16-20 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="9" value="0" aria-label="16-20 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="10" value="0" aria-label="16-20 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="10" value="0" aria-label="16-20 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="10" value="0" aria-label="16-20 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="11" value="0" aria-label="16-20 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="11" value="0" aria-label="16-20 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="11" value="0" aria-label="16-20 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">21-25 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="0" value="0" aria-label="21-25 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="0" value="0" aria-label="21-25 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="0" value="0" aria-label="21-25 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="1" value="0" aria-label="21-25 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="1" value="0" aria-label="21-25 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="1" value="0" aria-label="21-25 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="2" value="0" aria-label="21-25 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="2" value="0" aria-label="21-25 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="2" value="0" aria-label="21-25 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="3" value="0" aria-label="21-25 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="3" value="0" aria-label="21-25 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="3" value="0" aria-label="21-25 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="4" value="0" aria-label="21-25 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="4" value="0" aria-label="21-25 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="4" value="0" aria-label="21-25 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="5" value="0" aria-label="21-25 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="5" value="0" aria-label="21-25 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="5" value="0" aria-label="21-25 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="6" value="0" aria-label="21-25 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="6" value="0" aria-label="21-25 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="6" value="0" aria-label="21-25 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="7" value="0" aria-label="21-25 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="7" value="0" aria-label="21-25 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="7" value="0" aria-label="21-25 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="8" value="0" aria-label="21-25 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="8" value="0" aria-label="21-25 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="8" value="0" aria-label="21-25 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="9" value="0" aria-label="21-25 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="9" value="0" aria-label="21-25 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="9" value="0" aria-label="21-25 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="10" value="0" aria-label="21-25 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="10" value="0" aria-label="21-25 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="10" value="0" aria-label="21-25 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="11" value="0" aria-label="21-25 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="11" value="0" aria-label="21-25 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="11" value="0" aria-label="21-25 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">26-30 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="0" value="0" aria-label="26-30 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="0" value="0" aria-label="26-30 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="0" value="0" aria-label="26-30 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="1" value="0" aria-label="26-30 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="1" value="0" aria-label="26-30 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="1" value="0" aria-label="26-30 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="2" value="0" aria-label="26-30 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="2" value="0" aria-label="26-30 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="2" value="0" aria-label="26-30 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="3" value="0" aria-label="26-30 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="3" value="0" aria-label="26-30 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="3" value="0" aria-label="26-30 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="4" value="0" aria-label="26-30 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="4" value="0" aria-label="26-30 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="4" value="0" aria-label="26-30 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="5" value="0" aria-label="26-30 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="5" value="0" aria-label="26-30 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="5" value="0" aria-label="26-30 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="6" value="0" aria-label="26-30 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="6" value="0" aria-label="26-30 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="6" value="0" aria-label="26-30 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="7" value="0" aria-label="26-30 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="7" value="0" aria-label="26-30 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="7" value="0" aria-label="26-30 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="8" value="0" aria-label="26-30 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="8" value="0" aria-label="26-30 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="8" value="0" aria-label="26-30 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="9" value="0" aria-label="26-30 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="9" value="0" aria-label="26-30 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="9" value="0" aria-label="26-30 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="10" value="0" aria-label="26-30 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="10" value="0" aria-label="26-30 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="10" value="0" aria-label="26-30 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="11" value="0" aria-label="26-30 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="11" value="0" aria-label="26-30 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="11" value="0" aria-label="26-30 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">31-35 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="0" value="0" aria-label="31-35 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="0" value="0" aria-label="31-35 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="0" value="0" aria-label="31-35 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="1" value="0" aria-label="31-35 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="1" value="0" aria-label="31-35 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="1" value="0" aria-label="31-35 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="2" value="0" aria-label="31-35 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="2" value="0" aria-label="31-35 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="2" value="0" aria-label="31-35 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="3" value="0" aria-label="31-35 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="3" value="0" aria-label="31-35 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="3" value="0" aria-label="31-35 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="4" value="0" aria-label="31-35 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="4" value="0" aria-label="31-35 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="4" value="0" aria-label="31-35 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="5" value="0" aria-label="31-35 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="5" value="0" aria-label="31-35 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="5" value="0" aria-label="31-35 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="6" value="0" aria-label="31-35 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="6" value="0" aria-label="31-35 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="6" value="0" aria-label="31-35 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="7" value="0" aria-label="31-35 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="7" value="0" aria-label="31-35 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="7" value="0" aria-label="31-35 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="8" value="0" aria-label="31-35 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="8" value="0" aria-label="31-35 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="8" value="0" aria-label="31-35 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="9" value="0" aria-label="31-35 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="9" value="0" aria-label="31-35 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="9" value="0" aria-label="31-35 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="10" value="0" aria-label="31-35 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="10" value="0" aria-label="31-35 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="10" value="0" aria-label="31-35 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="11" value="0" aria-label="31-35 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="11" value="0" aria-label="31-35 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="11" value="0" aria-label="31-35 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">36- min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="0" value="0" aria-label="36- min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="0" value="0" aria-label="36- min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="0" value="0" aria-label="36- min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="1" value="0" aria-label="36- min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="1" value="0" aria-label="36- min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="1" value="0" aria-label="36- min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="2" value="0" aria-label="36- min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="2" value="0" aria-label="36- min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="2" value="0" aria-label="36- min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="3" value="0" aria-label="36- min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="3" value="0" aria-label="36- min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="3" value="0" aria-label="36- min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="4" value="0" aria-label="36- min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="4" value="0" aria-label="36- min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="4" value="0" aria-label="36- min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="5" value="0" aria-label="36- min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="5" value="0" aria-label="36- min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="5" value="0" aria-label="36- min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="6" value="0" aria-label="36- min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="6" value="0" aria-label="36- min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="6" value="0" aria-label="36- min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="7" value="0" aria-label="36- min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="7" value="0" aria-label="36- min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="7" value="0" aria-label="36- min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="8" value="0" aria-label="36- min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="8" value="0" aria-label="36- min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="8" value="0" aria-label="36- min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="9" value="0" aria-label="36- min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="9" value="0" aria-label="36- min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="9" value="0" aria-label="36- min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="10" value="0" aria-label="36- min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="10" value="0" aria-label="36- min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="10" value="0" aria-label="36- min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="11" value="0" aria-label="36- min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="11" value="0" aria-label="36- min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="11" value="0" aria-label="36- min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="marketModal" tabindex="-1" aria-labelledby="marketModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="marketModalTitle">Ratecard details</h5>
+            <p class="panel-subtitle">Ratecard01 · market #41</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="rc-import">
+            <div class="input-group">
+              <input class="form-control" type="file" id="rcFile-marketModal" accept=".xlsx,.xls" aria-describedby="rcFileHelp-marketModal">
+              <button type="button" class="btn btn-import" id="rcImport-marketModal" disabled><i class="bi bi-upload"></i> Import</button>
+            </div>
+            <div class="field-help" id="rcFileHelp-marketModal">Select XLSX file to import CPI data</div>
+          </div>
+          <label class="form-label mt-3" for="rcMarketsInput-marketModal">Market</label>
+          <div id="rcMarkets-marketModal" class="ms">
+            <div class="ms-control">
+              <span class="ms-chips">
+                <span class="ms-chip">China<button type="button" data-remove="China" aria-label="Remove China"><i class="bi bi-x"></i></button></span></span>
+              <input type="text" class="ms-input" id="rcMarketsInput-marketModal" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="rcMarketsInput-list-marketModal" autocomplete="off" spellcheck="false" placeholder="">
+            </div>
+            <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
+            <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+            <ul class="ms-menu" id="rcMarketsInput-list-marketModal" role="listbox" aria-multiselectable="true" hidden><li role="option" id="rcMarketsInput-opt-0-marketModal" data-value="Argentina" aria-selected="false">Argentina</li><li role="option" id="rcMarketsInput-opt-1-marketModal" data-value="Australia" aria-selected="false">Australia</li><li role="option" id="rcMarketsInput-opt-2-marketModal" data-value="Austria" aria-selected="false">Austria</li><li role="option" id="rcMarketsInput-opt-3-marketModal" data-value="Belgium" aria-selected="false">Belgium</li><li role="option" id="rcMarketsInput-opt-4-marketModal" data-value="Bolivia" aria-selected="false">Bolivia</li><li role="option" id="rcMarketsInput-opt-5-marketModal" data-value="Brazil" aria-selected="false">Brazil</li><li role="option" id="rcMarketsInput-opt-6-marketModal" data-value="Bulgaria" aria-selected="false">Bulgaria</li><li role="option" id="rcMarketsInput-opt-7-marketModal" data-value="Canada" aria-selected="false">Canada</li><li role="option" id="rcMarketsInput-opt-8-marketModal" data-value="Chile" aria-selected="false">Chile</li><li role="option" id="rcMarketsInput-opt-9-marketModal" data-value="Colombia" aria-selected="false">Colombia</li><li role="option" id="rcMarketsInput-opt-10-marketModal" data-value="Croatia" aria-selected="false">Croatia</li><li role="option" id="rcMarketsInput-opt-11-marketModal" data-value="Czech Republic" aria-selected="false">Czech Republic</li><li role="option" id="rcMarketsInput-opt-12-marketModal" data-value="Denmark" aria-selected="false">Denmark</li><li role="option" id="rcMarketsInput-opt-13-marketModal" data-value="Dominican Republic" aria-selected="false">Dominican Republic</li><li role="option" id="rcMarketsInput-opt-14-marketModal" data-value="Ecuador" aria-selected="false">Ecuador</li><li role="option" id="rcMarketsInput-opt-15-marketModal" data-value="Egypt" aria-selected="false">Egypt</li><li role="option" id="rcMarketsInput-opt-16-marketModal" data-value="Estonia" aria-selected="false">Estonia</li><li role="option" id="rcMarketsInput-opt-17-marketModal" data-value="Finland" aria-selected="false">Finland</li><li role="option" id="rcMarketsInput-opt-18-marketModal" data-value="France" aria-selected="false">France</li><li role="option" id="rcMarketsInput-opt-19-marketModal" data-value="Germany" aria-selected="false">Germany</li><li role="option" id="rcMarketsInput-opt-20-marketModal" data-value="Greece" aria-selected="false">Greece</li><li role="option" id="rcMarketsInput-opt-21-marketModal" data-value="Guatemala" aria-selected="false">Guatemala</li><li role="option" id="rcMarketsInput-opt-22-marketModal" data-value="Honduras" aria-selected="false">Honduras</li><li role="option" id="rcMarketsInput-opt-23-marketModal" data-value="Hong Kong" aria-selected="false">Hong Kong</li><li role="option" id="rcMarketsInput-opt-24-marketModal" data-value="Hungary" aria-selected="false">Hungary</li><li role="option" id="rcMarketsInput-opt-25-marketModal" data-value="India" aria-selected="false">India</li><li role="option" id="rcMarketsInput-opt-26-marketModal" data-value="Indonesia" aria-selected="false">Indonesia</li><li role="option" id="rcMarketsInput-opt-27-marketModal" data-value="Ireland" aria-selected="false">Ireland</li><li role="option" id="rcMarketsInput-opt-28-marketModal" data-value="Israel" aria-selected="false">Israel</li><li role="option" id="rcMarketsInput-opt-29-marketModal" data-value="Italy" aria-selected="false">Italy</li><li role="option" id="rcMarketsInput-opt-30-marketModal" data-value="Japan" aria-selected="false">Japan</li><li role="option" id="rcMarketsInput-opt-31-marketModal" data-value="Jordan" aria-selected="false">Jordan</li><li role="option" id="rcMarketsInput-opt-32-marketModal" data-value="Kazakhstan" aria-selected="false">Kazakhstan</li><li role="option" id="rcMarketsInput-opt-33-marketModal" data-value="Kenya" aria-selected="false">Kenya</li><li role="option" id="rcMarketsInput-opt-34-marketModal" data-value="Latvia" aria-selected="false">Latvia</li><li role="option" id="rcMarketsInput-opt-35-marketModal" data-value="Lebanon" aria-selected="false">Lebanon</li><li role="option" id="rcMarketsInput-opt-36-marketModal" data-value="Lithuania" aria-selected="false">Lithuania</li><li role="option" id="rcMarketsInput-opt-37-marketModal" data-value="Malaysia" aria-selected="false">Malaysia</li><li role="option" id="rcMarketsInput-opt-38-marketModal" data-value="Mexico" aria-selected="false">Mexico</li><li role="option" id="rcMarketsInput-opt-39-marketModal" data-value="Morocco" aria-selected="false">Morocco</li><li role="option" id="rcMarketsInput-opt-40-marketModal" data-value="Netherlands" aria-selected="false">Netherlands</li><li role="option" id="rcMarketsInput-opt-41-marketModal" data-value="New Zealand" aria-selected="false">New Zealand</li><li role="option" id="rcMarketsInput-opt-42-marketModal" data-value="Nigeria" aria-selected="false">Nigeria</li><li role="option" id="rcMarketsInput-opt-43-marketModal" data-value="Norway" aria-selected="false">Norway</li><li role="option" id="rcMarketsInput-opt-44-marketModal" data-value="Panama" aria-selected="false">Panama</li><li role="option" id="rcMarketsInput-opt-45-marketModal" data-value="Peru" aria-selected="false">Peru</li><li role="option" id="rcMarketsInput-opt-46-marketModal" data-value="Philippines" aria-selected="false">Philippines</li><li role="option" id="rcMarketsInput-opt-47-marketModal" data-value="Poland" aria-selected="false">Poland</li><li role="option" id="rcMarketsInput-opt-48-marketModal" data-value="Portugal" aria-selected="false">Portugal</li><li role="option" id="rcMarketsInput-opt-49-marketModal" data-value="Romania" aria-selected="false">Romania</li><li role="option" id="rcMarketsInput-opt-50-marketModal" data-value="Saudi Arabia" aria-selected="false">Saudi Arabia</li><li role="option" id="rcMarketsInput-opt-51-marketModal" data-value="Serbia" aria-selected="false">Serbia</li><li role="option" id="rcMarketsInput-opt-52-marketModal" data-value="Singapore" aria-selected="false">Singapore</li><li role="option" id="rcMarketsInput-opt-53-marketModal" data-value="Slovakia" aria-selected="false">Slovakia</li><li role="option" id="rcMarketsInput-opt-54-marketModal" data-value="Slovenia" aria-selected="false">Slovenia</li><li role="option" id="rcMarketsInput-opt-55-marketModal" data-value="South Africa" aria-selected="false">South Africa</li><li role="option" id="rcMarketsInput-opt-56-marketModal" data-value="South Korea" aria-selected="false">South Korea</li><li role="option" id="rcMarketsInput-opt-57-marketModal" data-value="Spain" aria-selected="false">Spain</li><li role="option" id="rcMarketsInput-opt-58-marketModal" data-value="Sweden" aria-selected="false">Sweden</li><li role="option" id="rcMarketsInput-opt-59-marketModal" data-value="Switzerland" aria-selected="false">Switzerland</li></ul></div>
+          <div class="invalid-feedback" id="rcMarketsFeedback-marketModal">Select at least one market.</div>
+          <div class="rc-wrap">
+            <table class="rc-grid">
+              <thead>
+                <tr><th class="rc-corner"></th><th class="rc-ir-title" colspan="12">Incidence Rate</th></tr>
+                <tr><th class="rc-loi-head">LOI</th><th>90-100%</th><th>80-89%</th><th>70-79%</th><th>60-69%</th><th>50-59%</th><th>40-49%</th><th>30-39%</th><th>20-29%</th><th>15-19%</th><th>10-14%</th><th>5-9%</th><th>1-4%</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th class="rc-loi" scope="row">1-5 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="0" value="4.6" aria-label="1-5 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="0" value="5.06" aria-label="1-5 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="0" value="3.91" aria-label="1-5 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="1" value="5.9" aria-label="1-5 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="1" value="6.49" aria-label="1-5 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="1" value="5.02" aria-label="1-5 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="2" value="5.9" aria-label="1-5 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="2" value="6.49" aria-label="1-5 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="2" value="5.02" aria-label="1-5 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="3" value="6.6" aria-label="1-5 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="3" value="7.26" aria-label="1-5 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="3" value="5.61" aria-label="1-5 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="4" value="7.7" aria-label="1-5 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="4" value="8.47" aria-label="1-5 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="4" value="6.55" aria-label="1-5 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="5" value="9" aria-label="1-5 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="5" value="9.9" aria-label="1-5 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="5" value="7.65" aria-label="1-5 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="6" value="10.3" aria-label="1-5 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="6" value="11.33" aria-label="1-5 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="6" value="8.76" aria-label="1-5 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="7" value="12.4" aria-label="1-5 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="7" value="13.64" aria-label="1-5 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="7" value="10.54" aria-label="1-5 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="8" value="14.7" aria-label="1-5 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="8" value="16.17" aria-label="1-5 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="8" value="12.5" aria-label="1-5 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="9" value="18.2" aria-label="1-5 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="9" value="20.02" aria-label="1-5 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="9" value="15.47" aria-label="1-5 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="10" value="31.2" aria-label="1-5 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="10" value="34.32" aria-label="1-5 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="10" value="26.52" aria-label="1-5 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="0" data-c="11" value="46.8" aria-label="1-5 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="0" data-c="11" value="51.48" aria-label="1-5 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="0" data-c="11" value="39.78" aria-label="1-5 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">6-10 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="0" value="4.6" aria-label="6-10 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="0" value="5.06" aria-label="6-10 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="0" value="3.91" aria-label="6-10 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="1" value="5.9" aria-label="6-10 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="1" value="6.49" aria-label="6-10 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="1" value="5.02" aria-label="6-10 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="2" value="5.9" aria-label="6-10 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="2" value="6.49" aria-label="6-10 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="2" value="5.02" aria-label="6-10 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="3" value="6.6" aria-label="6-10 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="3" value="7.26" aria-label="6-10 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="3" value="5.61" aria-label="6-10 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="4" value="7.7" aria-label="6-10 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="4" value="8.47" aria-label="6-10 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="4" value="6.55" aria-label="6-10 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="5" value="9" aria-label="6-10 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="5" value="9.9" aria-label="6-10 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="5" value="7.65" aria-label="6-10 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="6" value="10.3" aria-label="6-10 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="6" value="11.33" aria-label="6-10 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="6" value="8.76" aria-label="6-10 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="7" value="12.4" aria-label="6-10 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="7" value="13.64" aria-label="6-10 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="7" value="10.54" aria-label="6-10 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="8" value="14.7" aria-label="6-10 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="8" value="16.17" aria-label="6-10 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="8" value="12.5" aria-label="6-10 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="9" value="18.2" aria-label="6-10 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="9" value="20.02" aria-label="6-10 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="9" value="15.47" aria-label="6-10 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="10" value="31.2" aria-label="6-10 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="10" value="34.32" aria-label="6-10 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="10" value="26.52" aria-label="6-10 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="1" data-c="11" value="46.8" aria-label="6-10 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="1" data-c="11" value="51.48" aria-label="6-10 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="1" data-c="11" value="39.78" aria-label="6-10 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">11-15 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="0" value="5.7" aria-label="11-15 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="0" value="6.27" aria-label="11-15 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="0" value="4.85" aria-label="11-15 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="1" value="6.6" aria-label="11-15 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="1" value="7.26" aria-label="11-15 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="1" value="5.61" aria-label="11-15 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="2" value="6.6" aria-label="11-15 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="2" value="7.26" aria-label="11-15 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="2" value="5.61" aria-label="11-15 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="3" value="7.4" aria-label="11-15 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="3" value="8.14" aria-label="11-15 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="3" value="6.29" aria-label="11-15 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="4" value="8.5" aria-label="11-15 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="4" value="9.35" aria-label="11-15 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="4" value="7.23" aria-label="11-15 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="5" value="9.8" aria-label="11-15 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="5" value="10.78" aria-label="11-15 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="5" value="8.33" aria-label="11-15 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="6" value="11.1" aria-label="11-15 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="6" value="12.21" aria-label="11-15 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="6" value="9.44" aria-label="11-15 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="7" value="13.1" aria-label="11-15 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="7" value="14.41" aria-label="11-15 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="7" value="11.14" aria-label="11-15 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="8" value="15.5" aria-label="11-15 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="8" value="17.05" aria-label="11-15 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="8" value="13.18" aria-label="11-15 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="9" value="18.7" aria-label="11-15 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="9" value="20.57" aria-label="11-15 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="9" value="15.9" aria-label="11-15 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="10" value="32.5" aria-label="11-15 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="10" value="35.75" aria-label="11-15 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="10" value="27.63" aria-label="11-15 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="2" data-c="11" value="47.6" aria-label="11-15 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="2" data-c="11" value="52.36" aria-label="11-15 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="2" data-c="11" value="40.46" aria-label="11-15 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">16-20 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="0" value="6.5" aria-label="16-20 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="0" value="7.15" aria-label="16-20 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="0" value="5.53" aria-label="16-20 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="1" value="7.4" aria-label="16-20 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="1" value="8.14" aria-label="16-20 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="1" value="6.29" aria-label="16-20 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="2" value="7.4" aria-label="16-20 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="2" value="8.14" aria-label="16-20 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="2" value="6.29" aria-label="16-20 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="3" value="8.2" aria-label="16-20 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="3" value="9.02" aria-label="16-20 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="3" value="6.97" aria-label="16-20 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="4" value="9.2" aria-label="16-20 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="4" value="10.12" aria-label="16-20 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="4" value="7.82" aria-label="16-20 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="5" value="10.5" aria-label="16-20 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="5" value="11.55" aria-label="16-20 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="5" value="8.93" aria-label="16-20 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="6" value="11.8" aria-label="16-20 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="6" value="12.98" aria-label="16-20 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="6" value="10.03" aria-label="16-20 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="7" value="13.9" aria-label="16-20 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="7" value="15.29" aria-label="16-20 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="7" value="11.82" aria-label="16-20 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="8" value="16.3" aria-label="16-20 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="8" value="17.93" aria-label="16-20 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="8" value="13.86" aria-label="16-20 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="9" value="19.2" aria-label="16-20 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="9" value="21.12" aria-label="16-20 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="9" value="16.32" aria-label="16-20 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="10" value="33.8" aria-label="16-20 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="10" value="37.18" aria-label="16-20 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="10" value="28.73" aria-label="16-20 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="3" data-c="11" value="48.4" aria-label="16-20 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="3" data-c="11" value="53.24" aria-label="16-20 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="3" data-c="11" value="41.14" aria-label="16-20 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">21-25 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="0" value="7.8" aria-label="21-25 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="0" value="8.58" aria-label="21-25 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="0" value="6.63" aria-label="21-25 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="1" value="8.7" aria-label="21-25 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="1" value="9.57" aria-label="21-25 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="1" value="7.4" aria-label="21-25 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="2" value="8.7" aria-label="21-25 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="2" value="9.57" aria-label="21-25 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="2" value="7.4" aria-label="21-25 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="3" value="9.5" aria-label="21-25 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="3" value="10.45" aria-label="21-25 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="3" value="8.08" aria-label="21-25 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="4" value="10.5" aria-label="21-25 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="4" value="11.55" aria-label="21-25 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="4" value="8.93" aria-label="21-25 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="5" value="11.8" aria-label="21-25 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="5" value="12.98" aria-label="21-25 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="5" value="10.03" aria-label="21-25 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="6" value="13.1" aria-label="21-25 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="6" value="14.41" aria-label="21-25 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="6" value="11.14" aria-label="21-25 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="7" value="15.2" aria-label="21-25 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="7" value="16.72" aria-label="21-25 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="7" value="12.92" aria-label="21-25 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="8" value="17.6" aria-label="21-25 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="8" value="19.36" aria-label="21-25 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="8" value="14.96" aria-label="21-25 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="9" value="20.5" aria-label="21-25 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="9" value="22.55" aria-label="21-25 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="9" value="17.43" aria-label="21-25 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="10" value="35.1" aria-label="21-25 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="10" value="38.61" aria-label="21-25 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="10" value="29.84" aria-label="21-25 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="4" data-c="11" value="49.1" aria-label="21-25 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="4" data-c="11" value="54.01" aria-label="21-25 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="4" data-c="11" value="41.74" aria-label="21-25 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">26-30 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="0" value="9.1" aria-label="26-30 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="0" value="10.01" aria-label="26-30 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="0" value="7.74" aria-label="26-30 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="1" value="10" aria-label="26-30 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="1" value="11" aria-label="26-30 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="1" value="8.5" aria-label="26-30 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="2" value="10" aria-label="26-30 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="2" value="11" aria-label="26-30 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="2" value="8.5" aria-label="26-30 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="3" value="10.8" aria-label="26-30 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="3" value="11.88" aria-label="26-30 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="3" value="9.18" aria-label="26-30 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="4" value="11.8" aria-label="26-30 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="4" value="12.98" aria-label="26-30 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="4" value="10.03" aria-label="26-30 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="5" value="13.1" aria-label="26-30 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="5" value="14.41" aria-label="26-30 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="5" value="11.14" aria-label="26-30 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="6" value="14.4" aria-label="26-30 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="6" value="15.84" aria-label="26-30 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="6" value="12.24" aria-label="26-30 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="7" value="16.5" aria-label="26-30 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="7" value="18.15" aria-label="26-30 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="7" value="14.03" aria-label="26-30 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="8" value="18.9" aria-label="26-30 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="8" value="20.79" aria-label="26-30 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="8" value="16.07" aria-label="26-30 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="9" value="21.8" aria-label="26-30 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="9" value="23.98" aria-label="26-30 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="9" value="18.53" aria-label="26-30 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="10" value="36.4" aria-label="26-30 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="10" value="40.04" aria-label="26-30 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="10" value="30.94" aria-label="26-30 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="5" data-c="11" value="50.4" aria-label="26-30 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="5" data-c="11" value="55.44" aria-label="26-30 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="5" data-c="11" value="42.84" aria-label="26-30 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">31-35 min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="0" value="10.4" aria-label="31-35 min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="0" value="11.44" aria-label="31-35 min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="0" value="8.84" aria-label="31-35 min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="1" value="11.3" aria-label="31-35 min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="1" value="12.43" aria-label="31-35 min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="1" value="9.61" aria-label="31-35 min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="2" value="11.3" aria-label="31-35 min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="2" value="12.43" aria-label="31-35 min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="2" value="9.61" aria-label="31-35 min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="3" value="12.1" aria-label="31-35 min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="3" value="13.31" aria-label="31-35 min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="3" value="10.29" aria-label="31-35 min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="4" value="13.1" aria-label="31-35 min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="4" value="14.41" aria-label="31-35 min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="4" value="11.14" aria-label="31-35 min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="5" value="14.4" aria-label="31-35 min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="5" value="15.84" aria-label="31-35 min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="5" value="12.24" aria-label="31-35 min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="6" value="15.7" aria-label="31-35 min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="6" value="17.27" aria-label="31-35 min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="6" value="13.35" aria-label="31-35 min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="7" value="17.8" aria-label="31-35 min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="7" value="19.58" aria-label="31-35 min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="7" value="15.13" aria-label="31-35 min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="8" value="20.2" aria-label="31-35 min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="8" value="22.22" aria-label="31-35 min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="8" value="17.17" aria-label="31-35 min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="9" value="23.1" aria-label="31-35 min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="9" value="25.41" aria-label="31-35 min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="9" value="19.64" aria-label="31-35 min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="10" value="37.7" aria-label="31-35 min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="10" value="41.47" aria-label="31-35 min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="10" value="32.05" aria-label="31-35 min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="6" data-c="11" value="51.7" aria-label="31-35 min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="6" data-c="11" value="56.87" aria-label="31-35 min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="6" data-c="11" value="43.95" aria-label="31-35 min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+                <tr>
+                  <th class="rc-loi" scope="row">36- min</th>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="0" value="11.7" aria-label="36- min, 90-100%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="0" value="12.87" aria-label="36- min, 90-100%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="0" value="9.95" aria-label="36- min, 90-100%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="1" value="12.6" aria-label="36- min, 80-89%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="1" value="13.86" aria-label="36- min, 80-89%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="1" value="10.71" aria-label="36- min, 80-89%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="2" value="12.6" aria-label="36- min, 70-79%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="2" value="13.86" aria-label="36- min, 70-79%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="2" value="10.71" aria-label="36- min, 70-79%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="3" value="13.4" aria-label="36- min, 60-69%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="3" value="14.74" aria-label="36- min, 60-69%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="3" value="11.39" aria-label="36- min, 60-69%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="4" value="14.4" aria-label="36- min, 50-59%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="4" value="15.84" aria-label="36- min, 50-59%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="4" value="12.24" aria-label="36- min, 50-59%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="5" value="15.7" aria-label="36- min, 40-49%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="5" value="17.27" aria-label="36- min, 40-49%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="5" value="13.35" aria-label="36- min, 40-49%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="6" value="17" aria-label="36- min, 30-39%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="6" value="18.7" aria-label="36- min, 30-39%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="6" value="14.45" aria-label="36- min, 30-39%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="7" value="19.1" aria-label="36- min, 20-29%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="7" value="21.01" aria-label="36- min, 20-29%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="7" value="16.24" aria-label="36- min, 20-29%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="8" value="21.5" aria-label="36- min, 15-19%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="8" value="23.65" aria-label="36- min, 15-19%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="8" value="18.28" aria-label="36- min, 15-19%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="9" value="24.4" aria-label="36- min, 10-14%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="9" value="26.84" aria-label="36- min, 10-14%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="9" value="20.74" aria-label="36- min, 10-14%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="10" value="39" aria-label="36- min, 5-9%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="10" value="42.9" aria-label="36- min, 5-9%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="10" value="33.15" aria-label="36- min, 5-9%, GBP"></label>
+                    </div></td>
+                  <td><div class="rc-cell">
+                      <label class="rc-price"><span aria-hidden="true">€</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="eur" data-r="7" data-c="11" value="53" aria-label="36- min, 1-4%, EUR"></label>
+                      <label class="rc-price"><span aria-hidden="true">$</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="usd" data-r="7" data-c="11" value="58.3" aria-label="36- min, 1-4%, USD"></label>
+                      <label class="rc-price"><span aria-hidden="true">£</span><input type="number" min="0" step="0.01" inputmode="decimal" data-cur="gbp" data-r="7" data-c="11" value="45.05" aria-label="36- min, 1-4%, GBP"></label>
+                    </div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+</body>
+</html>

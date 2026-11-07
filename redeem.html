@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redeem · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link" href="index.html"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="feasibility.html"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li class="nav-group has-active">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels">
+              <li><a class="nav-link" href="panels.html"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="rewards.html"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link active" href="redeem.html" aria-current="page"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="profiling.html"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework" hidden>
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="fw-projects.html"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="fw-ratecards.html"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link" href="users.html"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="page-view" id="redeemView">
+          <header class="page-head">
+            <h1 class="page-title">Redeem</h1>
+            <p class="page-sub">Requests to exchange points for rewards. Rejecting a request gives the points back to the panelist.</p>
+          </header>
+          <section class="pv-card flush">
+            <div class="list-filters">
+              <div class="input-group search-group" role="search">
+                <input class="form-control" type="search" data-search="redeem" value="" placeholder="Search requests…" aria-label="Search requests…" autocomplete="off">
+                <button type="button" class="btn btn-ghost" data-search-go="redeem" title="Search" aria-label="Search"><i class="bi bi-search"></i></button>
+                <button type="button" class="btn btn-ghost" data-search-clear="redeem" title="Clear search" aria-label="Clear search"><i class="bi bi-x-circle"></i></button>
+              </div>
+              <select class="form-select pv-filter" data-rd-filter="" aria-label="Status filter">
+                <option value="" selected>All statuses</option>
+                <option value="pending">Pending</option><option value="completed">Completed</option><option value="rejected">Rejected</option>
+              </select>
+              <span class="pv-toolbar-note" id="rdPending"><strong>6</strong> waiting for review</span>
+              <button type="button" class="btn btn-export btn-sm-h ms-auto" data-rd-action="export" data-toast="Requests exported."><i class="bi bi-download"></i> Export</button>
+            </div>
+            <div class="table-responsive">
+              <table class="pv-table list-table rd-table">
+                <thead id="rdHead">
+                  <tr>
+                    <th>ID</th><th>Panelist ID</th><th>Reward</th><th>Email</th><th>First name</th><th>Country</th><th>Value</th><th>Points</th><th>Status</th>
+                    <th aria-sort="descending"><button type="button" class="th-sort" data-rd-action="sort">Requested <i class="bi bi-caret-down-fill"></i></button></th>
+                  </tr></thead>
+                <tbody id="rdRows">
+                  <tr>
+                    <td class="col-id">4295</td>
+                    <td><a class="cell-link" href="panelist.html" title="Encuestat panel">645803</a></td>
+                    <td>Éxito - gift card</td>
+                    <td class="pl-email">jfernandez96@gmail.com</td>
+                    <td>Javier</td>
+                    <td>CO</td>
+                    <td class="num-l">80,000 COP</td>
+                    <td class="num-l">450</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="pending" data-rd-id="4295" aria-label="Status of request 4295">
+                        <option value="pending" selected>pending</option><option value="completed">completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/7/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4293</td>
+                    <td><a class="cell-link" href="panelist.html" title="Gavenze panel">446001</a></td>
+                    <td>Zalando - gift card</td>
+                    <td class="pl-email">jonas.becker@hotmail.com</td>
+                    <td>Jonas</td>
+                    <td>DE</td>
+                    <td class="num-l">30 EUR</td>
+                    <td class="num-l">550</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="completed" data-rd-id="4293" aria-label="Status of request 4293">
+                        <option value="pending">pending</option><option value="completed" selected>completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/6/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4291</td>
+                    <td><a class="cell-link" href="panelist.html" title="Gavenze panel">402423</a></td>
+                    <td>Adidas - gift card</td>
+                    <td class="pl-email">milan.marek@yahoo.com</td>
+                    <td>Milan</td>
+                    <td>CZ</td>
+                    <td class="num-l">500 KČ</td>
+                    <td class="num-l">400</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="pending" data-rd-id="4291" aria-label="Status of request 4291">
+                        <option value="pending" selected>pending</option><option value="completed">completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/6/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4289</td>
+                    <td><a class="cell-link" href="panelist.html" title="Opinion Today panel">929175</a></td>
+                    <td>PayPal</td>
+                    <td class="pl-email">daniel.taylor@outlook.com</td>
+                    <td>Daniel</td>
+                    <td>US</td>
+                    <td class="num-l">25 USD</td>
+                    <td class="num-l">550</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="pending" data-rd-id="4289" aria-label="Status of request 4289">
+                        <option value="pending" selected>pending</option><option value="completed">completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/5/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4288</td>
+                    <td><a class="cell-link" href="panelist.html" title="Gavenze panel">426393</a></td>
+                    <td>EMAG - gift card</td>
+                    <td class="pl-email">mihai.matei@outlook.com</td>
+                    <td>Mihai</td>
+                    <td>RO</td>
+                    <td class="num-l">100 LEI</td>
+                    <td class="num-l">370</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="completed" data-rd-id="4288" aria-label="Status of request 4288">
+                        <option value="pending">pending</option><option value="completed" selected>completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/5/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4287</td>
+                    <td><a class="cell-link" href="panelist.html" title="Gavenze panel">409442</a></td>
+                    <td>Decathlon - gift card</td>
+                    <td class="pl-email">gabriela_8597@outlook.com</td>
+                    <td>Gabriela</td>
+                    <td>RO</td>
+                    <td class="num-l">100 LEI</td>
+                    <td class="num-l">370</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="completed" data-rd-id="4287" aria-label="Status of request 4287">
+                        <option value="pending">pending</option><option value="completed" selected>completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/4/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4285</td>
+                    <td><a class="cell-link" href="panelist.html" title="Sondaggi &amp; premi panel">1020228</a></td>
+                    <td>Esselunga - buono spesa</td>
+                    <td class="pl-email">elena.russo@outlook.com</td>
+                    <td>Elena</td>
+                    <td>IT</td>
+                    <td class="num-l">25 EUR</td>
+                    <td class="num-l">450</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="rejected" data-rd-id="4285" aria-label="Status of request 4285">
+                        <option value="pending">pending</option><option value="completed">completed</option><option value="rejected" selected>rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/4/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4283</td>
+                    <td><a class="cell-link" href="panelist.html" title="Sondage Direct panel">704082</a></td>
+                    <td>Decathlon - gift card</td>
+                    <td class="pl-email">sophie.lefebvre842@gmail.com</td>
+                    <td>Sophie</td>
+                    <td>BE</td>
+                    <td class="num-l">25 EUR</td>
+                    <td class="num-l">450</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="completed" data-rd-id="4283" aria-label="Status of request 4283">
+                        <option value="pending">pending</option><option value="completed" selected>completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/3/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4282</td>
+                    <td><a class="cell-link" href="panelist.html" title="Gavenze panel">454959</a></td>
+                    <td>EMAG - gift card</td>
+                    <td class="pl-email">aciobanu78@outlook.com</td>
+                    <td>Alexandru</td>
+                    <td>RO</td>
+                    <td class="num-l">100 LEI</td>
+                    <td class="num-l">370</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="pending" data-rd-id="4282" aria-label="Status of request 4282">
+                        <option value="pending" selected>pending</option><option value="completed">completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/3/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4280</td>
+                    <td><a class="cell-link" href="panelist.html" title="Gavenze panel">457329</a></td>
+                    <td>Amazon - gift card</td>
+                    <td class="pl-email">magdalena.dabrowska619@onet.pl</td>
+                    <td>Magdalena</td>
+                    <td>PL</td>
+                    <td class="num-l">130 ZŁ</td>
+                    <td class="num-l">550</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="completed" data-rd-id="4280" aria-label="Status of request 4280">
+                        <option value="pending">pending</option><option value="completed" selected>completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/3/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4278</td>
+                    <td><a class="cell-link" href="panelist.html" title="Gavenze panel">448231</a></td>
+                    <td>eMAG.bg - gift card</td>
+                    <td class="pl-email">milena.petrova@abv.bg</td>
+                    <td>Милена</td>
+                    <td>BG</td>
+                    <td class="num-l">20 EUR</td>
+                    <td class="num-l">370</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="completed" data-rd-id="4278" aria-label="Status of request 4278">
+                        <option value="pending">pending</option><option value="completed" selected>completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/2/2026</td>
+                  </tr>
+                  <tr>
+                    <td class="col-id">4277</td>
+                    <td><a class="cell-link" href="panelist.html" title="Gavenze panel">440282</a></td>
+                    <td>PayPal</td>
+                    <td class="pl-email">alessia_5670@gmail.com</td>
+                    <td>Alessia</td>
+                    <td>IT</td>
+                    <td class="num-l">15 EUR</td>
+                    <td class="num-l">275</td>
+                    <td>
+                      <select class="form-select status-select rd-status" data-status="completed" data-rd-id="4277" aria-label="Status of request 4277">
+                        <option value="pending">pending</option><option value="completed" selected>completed</option><option value="rejected">rejected</option>
+                      </select>
+                    </td>
+                    <td class="t-muted">11/2/2026</td>
+                  </tr></tbody>
+              </table>
+            </div>
+            <div class="table-footer" id="rdFooter">
+              <span class="page-info">Showing <strong>1–12</strong> of <strong>263</strong> requests</span>
+              <nav aria-label="Request pages">
+                <ul class="pagination-dark">
+                  <li><button type="button" data-rd-page="1" disabled aria-label="First page">«</button></li>
+                  <li><button type="button" data-rd-page="0" disabled aria-label="Previous page">‹</button></li>
+                  <li><button type="button" data-rd-page="1" class="active" aria-current="page">1</button></li><li><button type="button" data-rd-page="2">2</button></li><li><button type="button" data-rd-page="3">3</button></li><li><button type="button" data-rd-page="4">4</button></li><li><span class="ellipsis">…</span></li><li><button type="button" data-rd-page="22">22</button></li>
+                  <li><button type="button" data-rd-page="2" aria-label="Next page">›</button></li>
+                  <li><button type="button" data-rd-page="22" aria-label="Last page">»</button></li>
+                </ul></nav></div>
+          </section></div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+</body>
+</html>

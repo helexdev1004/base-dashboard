@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gavenze panel · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link" href="index.html"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="feasibility.html"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li class="nav-group has-active">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels">
+              <li><a class="nav-link active" href="panels.html" aria-current="page"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="rewards.html"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="redeem.html"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="profiling.html"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework" hidden>
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="fw-projects.html"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="fw-ratecards.html"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link" href="users.html"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="page-view" id="panelView">
+          <header class="page-head page-head-back pl-head">
+            <a class="pv-back-btn" href="panels.html" title="Back to panels" aria-label="Back to panels"><i class="bi bi-arrow-left"></i></a>
+            <div class="pl-head-title">
+              <h1 class="page-title">Gavenze panel</h1>
+              <p class="page-sub">Search for an account, or open one to see its profile and history.</p>
+            </div>
+            <div class="pl-head-actions">
+              <button type="button" class="btn btn-ghost btn-sm-h" data-pl-action="stats" data-bs-toggle="modal" data-bs-target="#panelStatsModal"><i class="bi bi-bar-chart-fill"></i> Panel statistics</button>
+              <button type="button" class="btn btn-ghost btn-sm-h" data-pl-action="import" data-bs-toggle="modal" data-bs-target="#importMembersModal"><i class="bi bi-upload"></i> Import data</button>
+              <button type="button" class="btn btn-export btn-sm-h" data-pl-action="export" data-toast="Member list exported."><i class="bi bi-download"></i> Export data</button>
+              <div class="dropdown">
+                <button type="button" class="icon-btn-sm pl-mail" data-bs-toggle="dropdown" aria-expanded="false" title="Email members" aria-label="Email members"><i class="bi bi-envelope"></i></button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><button type="button" class="dropdown-item" data-pl-action="mail-active" data-bs-toggle="modal" data-bs-target="#mailActiveModal"><i class="bi bi-envelope"></i> Email all active members…</button></li>
+                  <li><button type="button" class="dropdown-item" data-pl-action="mail-pending" data-bs-toggle="modal" data-bs-target="#mailPendingModal"><i class="bi bi-envelope-exclamation"></i> Remind pending members to confirm…</button></li>
+                </ul>
+              </div>
+            </div>
+          </header>
+          <section class="pl-strip" id="plStrip" aria-label="Members by status">
+            <button type="button" class="pl-strip-item" data-pl-status="pending" aria-pressed="false" title="Show only pending members">
+              <span class="pl-strip-label">Pending</span>
+              <span class="pl-strip-value">28,701</span>
+            </button>
+            <button type="button" class="pl-strip-item" data-pl-status="active" aria-pressed="false" title="Show only active members">
+              <span class="pl-strip-label">Active</span>
+              <span class="pl-strip-value">47,126</span>
+            </button>
+            <button type="button" class="pl-strip-item" data-pl-status="deleted" aria-pressed="false" title="Show only deleted members">
+              <span class="pl-strip-label">Deleted</span>
+              <span class="pl-strip-value">18,038</span>
+            </button></section>
+          <section class="pv-card flush">
+            <div class="list-filters">
+              <div class="input-group search-group" role="search">
+                <input class="form-control" type="search" data-search="members" value="" placeholder="Search by ID, name or email…" aria-label="Search by ID, name or email…" autocomplete="off">
+                <button type="button" class="btn btn-ghost" data-search-go="members" title="Search" aria-label="Search"><i class="bi bi-search"></i></button>
+                <button type="button" class="btn btn-ghost" data-search-clear="members" title="Clear search" aria-label="Clear search"><i class="bi bi-x-circle"></i></button>
+              </div>
+              <button type="button" class="btn btn-dark-chip btn-sm-h pl-filter-btn" data-pl-action="filters" aria-expanded="false" aria-controls="plFilterRow">
+                <i class="bi bi-funnel"></i> Filter <span class="pl-filter-count" id="plFilterCount" hidden>0</span>
+              </button>
+            </div>
+            <div class="list-filters pl-filter-row" id="plFilterRow" hidden>
+              <select class="form-select pv-filter" data-pl-filter="status" aria-label="Status">
+                <option value="" selected>All statuses</option>
+                <option value="pending">Pending</option><option value="active">Active</option><option value="deleted">Deleted</option>
+              </select>
+              <select class="form-select pv-filter" data-pl-filter="country" aria-label="Country">
+                <option value="" selected>All countries</option>
+                <option value="at">Austria</option><option value="be">Belgium</option><option value="br">Brazil</option><option value="bg">Bulgaria</option><option value="hr">Croatia</option><option value="cz">Czech Republic</option><option value="ee">Estonia</option><option value="fr">France</option><option value="de">Germany</option><option value="gr">Greece</option><option value="hu">Hungary</option><option value="it">Italy</option><option value="nl">Netherlands</option><option value="pl">Poland</option><option value="pt">Portugal</option><option value="ro">Romania</option><option value="sk">Slovakia</option><option value="si">Slovenia</option><option value="es">Spain</option><option value="se">Sweden</option>
+              </select>
+              <button type="button" class="btn btn-ghost btn-sm-h" data-pl-action="clear-filters">Clear filters</button>
+            </div>
+            <div class="table-responsive">
+              <table class="pv-table list-table pl-table">
+                <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Country</th><th>Status</th><th class="t-end">Points</th><th>Created</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+                <tbody id="plRows">
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400001</td>
+                    <td><a class="cell-link" href="panelist.html">Inês Almeida</a></td>
+                    <td class="pl-email">ines.almeida@uol.com.br</td>
+                    <td>BR</td>
+                    <td><span class="m-status is-pending">pending</span></td>
+                    <td class="t-end num">0</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end"></td>
+                  </tr>
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400002</td>
+                    <td><a class="cell-link" href="panelist.html">Christos Papadopoulos</a></td>
+                    <td class="pl-email">christos.papadopoulos@yahoo.com</td>
+                    <td>GR</td>
+                    <td><span class="m-status is-active">active</span></td>
+                    <td class="t-end num">70</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end">
+                      <div class="dropdown">
+                        <button type="button" class="icon-btn-sm pl-mail" data-bs-toggle="dropdown" data-bs-popper-config="{&quot;strategy&quot;:&quot;fixed&quot;}" aria-expanded="false" title="Email Christos Papadopoulos" aria-label="Email Christos Papadopoulos"><i class="bi bi-envelope"></i><i class="bi bi-caret-down-fill pl-mail-caret"></i></button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                          <li><button type="button" class="dropdown-item" data-pl-action="mail-reset" data-index="1" data-toast="Password reset email sent to christos.papadopoulos@yahoo.com."><i class="bi bi-key"></i> Send password reset</button></li>
+                          <li><button type="button" class="dropdown-item" data-pl-action="mail-one" data-index="1" data-bs-toggle="modal" data-bs-target="#mailOneModal"><i class="bi bi-envelope"></i> Send a message…</button></li>
+                        </ul>
+                      </div></td>
+                  </tr>
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400003</td>
+                    <td><a class="cell-link" href="panelist.html">Петър Иванов</a></td>
+                    <td class="pl-email">petar_9253@outlook.com</td>
+                    <td>BG</td>
+                    <td><span class="m-status is-pending">pending</span></td>
+                    <td class="t-end num">0</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end"></td>
+                  </tr>
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400004</td>
+                    <td><a class="cell-link" href="panelist.html">Joanna Szymańska</a></td>
+                    <td class="pl-email">joanna.szymanska@outlook.com</td>
+                    <td>PL</td>
+                    <td><span class="m-status is-pending">pending</span></td>
+                    <td class="t-end num">0</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end"></td>
+                  </tr>
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400005</td>
+                    <td><a class="cell-link" href="panelist.html">Jana Dvořáková</a></td>
+                    <td class="pl-email">janadvorakova13@hotmail.com</td>
+                    <td>CZ</td>
+                    <td><span class="m-status is-pending">pending</span></td>
+                    <td class="t-end num">0</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end"></td>
+                  </tr>
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400006</td>
+                    <td><a class="cell-link" href="panelist.html">Десислава Стоянова</a></td>
+                    <td class="pl-email">desislavastoyanova70@gmail.com</td>
+                    <td>BG</td>
+                    <td><span class="m-status is-active">active</span></td>
+                    <td class="t-end num">60</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end">
+                      <div class="dropdown">
+                        <button type="button" class="icon-btn-sm pl-mail" data-bs-toggle="dropdown" data-bs-popper-config="{&quot;strategy&quot;:&quot;fixed&quot;}" aria-expanded="false" title="Email Десислава Стоянова" aria-label="Email Десислава Стоянова"><i class="bi bi-envelope"></i><i class="bi bi-caret-down-fill pl-mail-caret"></i></button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                          <li><button type="button" class="dropdown-item" data-pl-action="mail-reset" data-index="5" data-toast="Password reset email sent to desislavastoyanova70@gmail.com."><i class="bi bi-key"></i> Send password reset</button></li>
+                          <li><button type="button" class="dropdown-item" data-pl-action="mail-one" data-index="5" data-bs-toggle="modal" data-bs-target="#mailOneModal"><i class="bi bi-envelope"></i> Send a message…</button></li>
+                        </ul>
+                      </div></td>
+                  </tr>
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400007</td>
+                    <td><a class="cell-link" href="panelist.html">Ivan Krajnc</a></td>
+                    <td class="pl-email">ikrajnc87@gmail.com</td>
+                    <td>HR</td>
+                    <td><span class="m-status is-pending">pending</span></td>
+                    <td class="t-end num">0</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end"></td>
+                  </tr>
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400008</td>
+                    <td><a class="cell-link" href="panelist.html">Петър Стоянов</a></td>
+                    <td class="pl-email">petar_0179@gmail.com</td>
+                    <td>BG</td>
+                    <td><span class="m-status is-pending">pending</span></td>
+                    <td class="t-end num">0</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end"></td>
+                  </tr>
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400009</td>
+                    <td><a class="cell-link" href="panelist.html">Miroslav Černý</a></td>
+                    <td class="pl-email">miroslavcerny90@gmail.com</td>
+                    <td>SK</td>
+                    <td><span class="m-status is-pending">pending</span></td>
+                    <td class="t-end num">0</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end"></td>
+                  </tr>
+                  <tr class="row-link" data-href="panelist.html">
+                    <td class="col-id">400010</td>
+                    <td><a class="cell-link" href="panelist.html">Katharina Schmidt</a></td>
+                    <td class="pl-email">katharinaschmidt03@gmx.at</td>
+                    <td>AT</td>
+                    <td><span class="m-status is-deleted">deleted</span></td>
+                    <td class="t-end num">80</td>
+                    <td class="t-muted">4/21/2022</td>
+                    <td class="t-end"></td>
+                  </tr></tbody>
+              </table>
+            </div>
+            <div class="table-footer" id="plFooter">
+              <span class="page-info">Showing <strong>1–10</strong> of <strong>93,865</strong> members</span>
+              <nav aria-label="Member pages">
+                <ul class="pagination-dark">
+                  <li><button type="button" data-pl-page="1" disabled aria-label="First page">«</button></li>
+                  <li><button type="button" data-pl-page="0" disabled aria-label="Previous page">‹</button></li>
+                  <li><button type="button" data-pl-page="1" class="active" aria-current="page">1</button></li><li><button type="button" data-pl-page="2">2</button></li><li><button type="button" data-pl-page="3">3</button></li><li><button type="button" data-pl-page="4">4</button></li><li><span class="ellipsis">…</span></li><li><button type="button" data-pl-page="9387">9387</button></li>
+                  <li><button type="button" data-pl-page="2" aria-label="Next page">›</button></li>
+                  <li><button type="button" data-pl-page="9387" aria-label="Last page">»</button></li>
+                </ul></nav></div>
+          </section></div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="modal fade" id="panelStatsModal" tabindex="-1" aria-labelledby="panelStatsModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <form class="modal-content" novalidate>
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="panelStatsModalTitle">Panel statistics</h5>
+            <p class="panel-subtitle">Gavenze panel · launched 4/21/2022</p>
+          </div>
+          <div class="modal-head-extra"><div class="segmented pl-period" role="group" aria-label="New members in the">
+              <button type="button" data-period="week" aria-pressed="false">Last week</button>
+              <button type="button" data-period="month" class="active" aria-pressed="true">Last month</button></div></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="pv-table-frame table-responsive pl-stats-table">
+            <table class="pv-table" id="plStatsTable">
+              <thead><tr><th>Country</th><th>Pending</th><th>Active</th><th>Deleted</th><th>Total</th><th class="pl-new" title="Signed up in the last 30 days">New (30 days)</th></tr></thead>
+              <tbody><tr><td>Poland</td><td>4,530</td><td>7,509</td><td>2,990</td><td>15,029</td>
+                  <td class="pl-new">304</td></tr><tr><td>Romania</td><td>4,000</td><td>6,659</td><td>2,476</td><td>13,135</td>
+                  <td class="pl-new">224</td></tr><tr><td>Czech Republic</td><td>3,156</td><td>5,173</td><td>1,966</td><td>10,295</td>
+                  <td class="pl-new">179</td></tr><tr><td>Hungary</td><td>2,877</td><td>4,755</td><td>1,792</td><td>9,424</td>
+                  <td class="pl-new">163</td></tr><tr><td>Bulgaria</td><td>2,902</td><td>4,689</td><td>1,711</td><td>9,302</td>
+                  <td class="pl-new">181</td></tr><tr><td>Spain</td><td>1,434</td><td>2,422</td><td>914</td><td>4,770</td>
+                  <td class="pl-new">65</td></tr><tr><td>Brazil</td><td>1,194</td><td>1,936</td><td>721</td><td>3,851</td>
+                  <td class="pl-new">81</td></tr><tr><td>Slovakia</td><td>1,194</td><td>1,873</td><td>699</td><td>3,766</td>
+                  <td class="pl-new">76</td></tr><tr><td>Croatia</td><td>850</td><td>1,445</td><td>566</td><td>2,861</td>
+                  <td class="pl-new">42</td></tr><tr><td>Portugal</td><td>878</td><td>1,400</td><td>566</td><td>2,844</td>
+                  <td class="pl-new">47</td></tr><tr><td>Germany</td><td>879</td><td>1,367</td><td>557</td><td>2,803</td>
+                  <td class="pl-new">58</td></tr><tr><td>Greece</td><td>858</td><td>1,395</td><td>530</td><td>2,783</td>
+                  <td class="pl-new">37</td></tr><tr><td>Italy</td><td>862</td><td>1,387</td><td>531</td><td>2,780</td>
+                  <td class="pl-new">48</td></tr><tr><td>Austria</td><td>593</td><td>922</td><td>382</td><td>1,897</td>
+                  <td class="pl-new">32</td></tr><tr><td>Slovenia</td><td>546</td><td>973</td><td>378</td><td>1,897</td>
+                  <td class="pl-new">41</td></tr><tr><td>Estonia</td><td>592</td><td>928</td><td>367</td><td>1,887</td>
+                  <td class="pl-new">41</td></tr><tr><td>France</td><td>531</td><td>907</td><td>340</td><td>1,778</td>
+                  <td class="pl-new">33</td></tr><tr><td>Netherlands</td><td>283</td><td>471</td><td>194</td><td>948</td>
+                  <td class="pl-new">16</td></tr><tr><td>Sweden</td><td>267</td><td>460</td><td>186</td><td>913</td>
+                  <td class="pl-new">12</td></tr><tr><td>Belgium</td><td>275</td><td>455</td><td>172</td><td>902</td>
+                  <td class="pl-new">16</td></tr></tbody>
+              <tfoot><tr><td>Total</td><td>28,701</td><td>47,126</td><td>18,038</td><td>93,865</td>
+                  <td class="pl-new">1,696</td></tr></tfoot></table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="importMembersModal" tabindex="-1" aria-labelledby="importMembersModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="importMembersModalTitle">Import data</h5>
+            <p class="panel-subtitle">Add members to Gavenze panel from a CSV or Excel file.</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label" for="imFile">File</label>
+          <input class="form-control" type="file" id="imFile" name="file" required accept=".csv,.txt,.xlsx,.xls">
+          <div class="invalid-feedback">Choose a file.</div>
+          <div class="field-help">Columns: email (required), first name, last name and country (a 2-letter code such as PL). A header row is optional.</div>
+          <span class="form-label d-block mt-3" id="imStatusLabel">New members are</span>
+          <div class="segmented seg-field" role="group" aria-labelledby="imStatusLabel" data-im-status="">
+            <button type="button" class="active" data-value="pending" aria-pressed="true">Pending</button>
+            <button type="button" data-value="active" aria-pressed="false">Active</button>
+          </div>
+          <div class="field-help">Pending members get an email asking them to confirm their account.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-upload"></i> Import</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="mailActiveModal" tabindex="-1" aria-labelledby="mailActiveModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="mailActiveModalTitle">Email active members</h5>
+            <p class="panel-subtitle">All active members of Gavenze panel (47,126)</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label" for="mailSubject">Subject</label>
+          <input class="form-control" id="mailSubject" name="subject" required maxlength="120" value="">
+          <div class="invalid-feedback">Enter a subject.</div>
+          <label class="form-label mt-3" for="mailBody">Message</label>
+          <textarea class="form-control" id="mailBody" name="body" rows="6" required maxlength="4000"></textarea>
+          <div class="invalid-feedback">Write a message.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-send"></i> Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="mailPendingModal" tabindex="-1" aria-labelledby="mailPendingModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="mailPendingModalTitle">Remind pending members</h5>
+            <p class="panel-subtitle">All pending members of Gavenze panel (28,701)</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label" for="mailSubject-mailPendingModal">Subject</label>
+          <input class="form-control" id="mailSubject-mailPendingModal" name="subject" required maxlength="120" value="Please confirm your Gavenze account">
+          <div class="invalid-feedback">Enter a subject.</div>
+          <label class="form-label mt-3" for="mailBody-mailPendingModal">Message</label>
+          <textarea class="form-control" id="mailBody-mailPendingModal" name="body" rows="6" required maxlength="4000">Hi,
+
+You signed up but haven't confirmed your email address yet. Click the link in this email to activate your account and start earning points.
+
+Thank you!</textarea>
+          <div class="invalid-feedback">Write a message.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-send"></i> Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="mailOneModal" tabindex="-1" aria-labelledby="mailOneModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="mailOneModalTitle">Send a message</h5>
+            <p class="panel-subtitle">Christos Papadopoulos &lt;christos.papadopoulos@yahoo.com&gt;</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label" for="mailSubject-mailOneModal">Subject</label>
+          <input class="form-control" id="mailSubject-mailOneModal" name="subject" required maxlength="120" value="">
+          <div class="invalid-feedback">Enter a subject.</div>
+          <label class="form-label mt-3" for="mailBody-mailOneModal">Message</label>
+          <textarea class="form-control" id="mailBody-mailOneModal" name="body" rows="6" required maxlength="4000"></textarea>
+          <div class="invalid-feedback">Write a message.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-send"></i> Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+</body>
+</html>

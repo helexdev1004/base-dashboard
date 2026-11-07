@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rewards · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link" href="index.html"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="feasibility.html"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li class="nav-group has-active">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels">
+              <li><a class="nav-link" href="panels.html"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link active" href="rewards.html" aria-current="page"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="redeem.html"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="profiling.html"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework" hidden>
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="fw-projects.html"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="fw-ratecards.html"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link" href="users.html"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="page-view" id="rewardsView">
+          <header class="page-head">
+            <h1 class="page-title">Rewards</h1>
+            <p class="page-sub">What panelists can exchange their survey points for, per panel and country.</p>
+          </header>
+          <section class="pv-card flush">
+            <div class="pv-toolbar">
+              <button type="button" class="btn btn-ghost btn-sm-h" data-rw-action="new" data-bs-toggle="modal" data-bs-target="#newRewardModal"><i class="bi bi-plus-circle"></i> New Reward</button>
+              <select class="form-select pv-filter rw-country" data-rw-filter="" aria-label="Filter on country">
+                <option value="" selected>All countries</option>
+                <option value="ar">Argentina</option><option value="au">Australia</option><option value="at">Austria</option><option value="be">Belgium</option><option value="bo">Bolivia</option><option value="br">Brazil</option><option value="bg">Bulgaria</option><option value="ca">Canada</option><option value="cl">Chile</option><option value="co">Colombia</option><option value="hr">Croatia</option><option value="cz">Czech Republic</option><option value="eg">Egypt</option><option value="fr">France</option><option value="de">Germany</option><option value="gr">Greece</option><option value="hu">Hungary</option><option value="ie">Ireland</option><option value="it">Italy</option><option value="mx">Mexico</option><option value="ma">Morocco</option><option value="nl">Netherlands</option><option value="pe">Peru</option><option value="pl">Poland</option><option value="pt">Portugal</option><option value="ro">Romania</option><option value="sa">Saudi Arabia</option><option value="sk">Slovakia</option><option value="si">Slovenia</option><option value="es">Spain</option><option value="se">Sweden</option><option value="ch">Switzerland</option><option value="ae">United Arab Emirates</option><option value="gb">United Kingdom</option><option value="us">United States</option>
+              </select>
+            </div>
+            <div class="table-responsive">
+              <table class="pv-table list-table rw-table">
+                <thead id="rwHead">
+                  <tr>
+                    <th aria-sort="ascending">
+                      <button type="button" class="th-sort" data-rw-sort="id">ID <i class="bi bi-caret-up-fill"></i></button>
+                    </th>
+                    <th aria-sort="none">
+                      <button type="button" class="th-sort" data-rw-sort="name">Name</button>
+                    </th>
+                    <th aria-sort="none">
+                      <button type="button" class="th-sort" data-rw-sort="panel">Panel</button>
+                    </th>
+                    <th aria-sort="none">
+                      <button type="button" class="th-sort" data-rw-sort="points">Points</button>
+                    </th>
+                    <th aria-sort="none">
+                      <button type="button" class="th-sort" data-rw-sort="value">Value</button>
+                    </th><th>Countries</th>
+                    <th aria-sort="none">
+                      <button type="button" class="th-sort" data-rw-sort="status">Status</button>
+                    </th>
+                  </tr></thead>
+                <tbody id="rwRows">
+                  <tr class="row-link" data-reward="1" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">1</td>
+                    <td><button type="button" class="cell-link" data-reward-open="1">PayPal</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">550</td>
+                    <td class="num-l">30 EUR</td>
+                    <td class="rw-countries">AT, BE, BG, HR, CZ, FR, DE, GR, HU, IT, NL, PL, PT, RO, SK, SI, ES, SE</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr>
+                  <tr class="row-link" data-reward="2" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">2</td>
+                    <td><button type="button" class="cell-link" data-reward-open="2">Allegro - gift card</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">430</td>
+                    <td class="num-l">100 ZŁ</td>
+                    <td class="rw-countries">PL</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr>
+                  <tr class="row-link" data-reward="3" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">3</td>
+                    <td><button type="button" class="cell-link" data-reward-open="3">Amazon - gift card</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">430</td>
+                    <td class="num-l">100 ZŁ</td>
+                    <td class="rw-countries">PL</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr>
+                  <tr class="row-link" data-reward="4" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">4</td>
+                    <td><button type="button" class="cell-link" data-reward-open="4">Amazon - gift card</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">550</td>
+                    <td class="num-l">130 ZŁ</td>
+                    <td class="rw-countries">PL</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr>
+                  <tr class="row-link" data-reward="5" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">5</td>
+                    <td><button type="button" class="cell-link" data-reward-open="5">H&amp;M - gift card - 125 lei</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">450</td>
+                    <td class="num-l">125 LEI</td>
+                    <td class="rw-countries">RO</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr>
+                  <tr class="row-link" data-reward="6" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">6</td>
+                    <td><button type="button" class="cell-link" data-reward-open="6">EMAG - gift card</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">370</td>
+                    <td class="num-l">100 LEI</td>
+                    <td class="rw-countries">RO</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr>
+                  <tr class="row-link" data-reward="7" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">7</td>
+                    <td><button type="button" class="cell-link" data-reward-open="7">PayPal</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">275</td>
+                    <td class="num-l">15 EUR</td>
+                    <td class="rw-countries">AT, BE, HR, FR, DE, IT, NL, PT, SI, SE, ES</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr>
+                  <tr class="row-link" data-reward="8" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">8</td>
+                    <td><button type="button" class="cell-link" data-reward-open="8">IKEA - gift card</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">370</td>
+                    <td class="num-l">100 LEI</td>
+                    <td class="rw-countries">RO</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr>
+                  <tr class="row-link" data-reward="9" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">9</td>
+                    <td><button type="button" class="cell-link" data-reward-open="9">PlayStation - gift card</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">370</td>
+                    <td class="num-l">100 LEI</td>
+                    <td class="rw-countries">RO</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr>
+                  <tr class="row-link" data-reward="10" data-bs-toggle="modal" data-bs-target="#rewardModal">
+                    <td class="col-id">10</td>
+                    <td><button type="button" class="cell-link" data-reward-open="10">Decathlon - gift card</button></td>
+                    <td>Gavenze panel</td>
+                    <td class="num-l">370</td>
+                    <td class="num-l">100 LEI</td>
+                    <td class="rw-countries">RO</td>
+                    <td><span class="rw-status is-on">Active</span></td>
+                  </tr></tbody>
+              </table>
+            </div>
+            <div class="table-footer" id="rwFooter">
+              <span class="page-info">Showing <strong>1–10</strong> of <strong>61</strong> rewards</span>
+              <nav aria-label="Reward pages">
+                <ul class="pagination-dark">
+                  <li><button type="button" data-rw-page="1" disabled aria-label="First page">«</button></li>
+                  <li><button type="button" data-rw-page="0" disabled aria-label="Previous page">‹</button></li>
+                  <li><button type="button" data-rw-page="1" class="active" aria-current="page">1</button></li><li><button type="button" data-rw-page="2">2</button></li><li><button type="button" data-rw-page="3">3</button></li><li><button type="button" data-rw-page="4">4</button></li><li><button type="button" data-rw-page="5">5</button></li><li><button type="button" data-rw-page="6">6</button></li><li><button type="button" data-rw-page="7">7</button></li>
+                  <li><button type="button" data-rw-page="2" aria-label="Next page">›</button></li>
+                  <li><button type="button" data-rw-page="7" aria-label="Last page">»</button></li>
+                </ul></nav></div>
+          </section></div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="modal fade" id="newRewardModal" tabindex="-1" aria-labelledby="newRewardModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="newRewardModalTitle">New reward</h5>
+            <p class="panel-subtitle">Panelists can exchange their points for it once it is active.</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label" for="rwName">Name</label>
+              <input class="form-control" id="rwName" name="name" required maxlength="80" value="" placeholder="e.g. IKEA - gift card">
+              <div class="invalid-feedback">Enter a name.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="rwPanel">Panel</label>
+              <select class="form-select" id="rwPanel" name="panel" required>
+                <option value="" selected>Select a panel</option>
+                <option value="gavenze">Gavenze panel</option><option value="jafenzi">Jafenzi panel</option><option value="encuestat">Encuestat panel</option><option value="sondage">Sondage Direct panel</option><option value="mening">Mening Vandaag panel</option><option value="opinion">Opinion Today panel</option><option value="sondaggi">Sondaggi &amp; premi panel</option>
+              </select>
+              <div class="invalid-feedback">Select a panel.</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="rwPoints">Points</label>
+              <input class="form-control" type="number" id="rwPoints" name="points" required min="1" max="1000000" step="1" value="">
+              <div class="invalid-feedback">Enter the points needed (a whole number above 0).</div>
+            </div>
+            <div class="col-6">
+              <span class="form-label d-block" id="rwActiveLabel">Active</span>
+              <div class="segmented seg-field" role="group" aria-labelledby="rwActiveLabel" data-rw-active="">
+                <button type="button" data-value="1" class="active" aria-pressed="true">Yes</button>
+                <button type="button" data-value="0" aria-pressed="false">No</button>
+              </div>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="rwValue">Currency value</label>
+              <input class="form-control" type="number" id="rwValue" name="value" required min="0.01" max="100000000" step="0.01" value="">
+              <div class="invalid-feedback">Enter the value.</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="rwCurrency">Currency code</label>
+              <input class="form-control" id="rwCurrency" name="currency" required maxlength="4" pattern="\S{2,4}" value="" placeholder="e.g. EUR" autocapitalize="characters">
+              <div class="invalid-feedback">Enter a 2–4 letter code.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="rwCountriesInput">Countries</label>
+              <div id="rwCountries" class="ms">
+                <div class="ms-control">
+                  <span class="ms-chips"></span>
+                  <input type="text" class="ms-input" id="rwCountriesInput" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="rwCountriesInput-list" autocomplete="off" spellcheck="false" placeholder="Select countries…">
+                </div>
+                <button type="button" class="ms-clear" aria-label="Clear all" hidden><i class="bi bi-x-lg"></i></button>
+                <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+                <ul class="ms-menu" id="rwCountriesInput-list" role="listbox" aria-multiselectable="true" hidden><li role="option" id="rwCountriesInput-opt-0" data-value="ar" aria-selected="false">Argentina</li><li role="option" id="rwCountriesInput-opt-1" data-value="au" aria-selected="false">Australia</li><li role="option" id="rwCountriesInput-opt-2" data-value="at" aria-selected="false">Austria</li><li role="option" id="rwCountriesInput-opt-3" data-value="be" aria-selected="false">Belgium</li><li role="option" id="rwCountriesInput-opt-4" data-value="bo" aria-selected="false">Bolivia</li><li role="option" id="rwCountriesInput-opt-5" data-value="br" aria-selected="false">Brazil</li><li role="option" id="rwCountriesInput-opt-6" data-value="bg" aria-selected="false">Bulgaria</li><li role="option" id="rwCountriesInput-opt-7" data-value="ca" aria-selected="false">Canada</li><li role="option" id="rwCountriesInput-opt-8" data-value="cl" aria-selected="false">Chile</li><li role="option" id="rwCountriesInput-opt-9" data-value="co" aria-selected="false">Colombia</li><li role="option" id="rwCountriesInput-opt-10" data-value="hr" aria-selected="false">Croatia</li><li role="option" id="rwCountriesInput-opt-11" data-value="cz" aria-selected="false">Czech Republic</li><li role="option" id="rwCountriesInput-opt-12" data-value="eg" aria-selected="false">Egypt</li><li role="option" id="rwCountriesInput-opt-13" data-value="ee" aria-selected="false">Estonia</li><li role="option" id="rwCountriesInput-opt-14" data-value="fr" aria-selected="false">France</li><li role="option" id="rwCountriesInput-opt-15" data-value="de" aria-selected="false">Germany</li><li role="option" id="rwCountriesInput-opt-16" data-value="gr" aria-selected="false">Greece</li><li role="option" id="rwCountriesInput-opt-17" data-value="hu" aria-selected="false">Hungary</li><li role="option" id="rwCountriesInput-opt-18" data-value="ie" aria-selected="false">Ireland</li><li role="option" id="rwCountriesInput-opt-19" data-value="it" aria-selected="false">Italy</li><li role="option" id="rwCountriesInput-opt-20" data-value="mx" aria-selected="false">Mexico</li><li role="option" id="rwCountriesInput-opt-21" data-value="ma" aria-selected="false">Morocco</li><li role="option" id="rwCountriesInput-opt-22" data-value="nl" aria-selected="false">Netherlands</li><li role="option" id="rwCountriesInput-opt-23" data-value="pe" aria-selected="false">Peru</li><li role="option" id="rwCountriesInput-opt-24" data-value="pl" aria-selected="false">Poland</li><li role="option" id="rwCountriesInput-opt-25" data-value="pt" aria-selected="false">Portugal</li><li role="option" id="rwCountriesInput-opt-26" data-value="ro" aria-selected="false">Romania</li><li role="option" id="rwCountriesInput-opt-27" data-value="sa" aria-selected="false">Saudi Arabia</li><li role="option" id="rwCountriesInput-opt-28" data-value="sk" aria-selected="false">Slovakia</li><li role="option" id="rwCountriesInput-opt-29" data-value="si" aria-selected="false">Slovenia</li><li role="option" id="rwCountriesInput-opt-30" data-value="es" aria-selected="false">Spain</li><li role="option" id="rwCountriesInput-opt-31" data-value="se" aria-selected="false">Sweden</li><li role="option" id="rwCountriesInput-opt-32" data-value="ch" aria-selected="false">Switzerland</li><li role="option" id="rwCountriesInput-opt-33" data-value="ae" aria-selected="false">United Arab Emirates</li><li role="option" id="rwCountriesInput-opt-34" data-value="gb" aria-selected="false">United Kingdom</li><li role="option" id="rwCountriesInput-opt-35" data-value="us" aria-selected="false">United States</li></ul></div>
+              <div class="invalid-feedback" id="rwCountriesFeedback">Select at least one country.</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Create reward</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="rewardModal" tabindex="-1" aria-labelledby="rewardModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="rewardModalTitle">Reward</h5>
+            <p class="panel-subtitle">Reward #1 · redeemed 11 times</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label" for="rwName-rewardModal">Name</label>
+              <input class="form-control" id="rwName-rewardModal" name="name" required maxlength="80" value="PayPal" placeholder="e.g. IKEA - gift card">
+              <div class="invalid-feedback">Enter a name.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="rwPanel-rewardModal">Panel</label>
+              <select class="form-select" id="rwPanel-rewardModal" name="panel" required>
+                <option value="">Select a panel</option>
+                <option value="gavenze" selected>Gavenze panel</option><option value="jafenzi">Jafenzi panel</option><option value="encuestat">Encuestat panel</option><option value="sondage">Sondage Direct panel</option><option value="mening">Mening Vandaag panel</option><option value="opinion">Opinion Today panel</option><option value="sondaggi">Sondaggi &amp; premi panel</option>
+              </select>
+              <div class="invalid-feedback">Select a panel.</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="rwPoints-rewardModal">Points</label>
+              <input class="form-control" type="number" id="rwPoints-rewardModal" name="points" required min="1" max="1000000" step="1" value="550">
+              <div class="invalid-feedback">Enter the points needed (a whole number above 0).</div>
+            </div>
+            <div class="col-6">
+              <span class="form-label d-block" id="rwActiveLabel-rewardModal">Active</span>
+              <div class="segmented seg-field" role="group" aria-labelledby="rwActiveLabel-rewardModal" data-rw-active="">
+                <button type="button" data-value="1" class="active" aria-pressed="true">Yes</button>
+                <button type="button" data-value="0" aria-pressed="false">No</button>
+              </div>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="rwValue-rewardModal">Currency value</label>
+              <input class="form-control" type="number" id="rwValue-rewardModal" name="value" required min="0.01" max="100000000" step="0.01" value="30">
+              <div class="invalid-feedback">Enter the value.</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="rwCurrency-rewardModal">Currency code</label>
+              <input class="form-control" id="rwCurrency-rewardModal" name="currency" required maxlength="4" pattern="\S{2,4}" value="EUR" placeholder="e.g. EUR" autocapitalize="characters">
+              <div class="invalid-feedback">Enter a 2–4 letter code.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="rwCountriesInput-rewardModal">Countries</label>
+              <div id="rwCountries-rewardModal" class="ms">
+                <div class="ms-control">
+                  <span class="ms-chips">
+                    <span class="ms-chip">Austria<button type="button" data-remove="at" aria-label="Remove Austria"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Belgium<button type="button" data-remove="be" aria-label="Remove Belgium"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Bulgaria<button type="button" data-remove="bg" aria-label="Remove Bulgaria"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Croatia<button type="button" data-remove="hr" aria-label="Remove Croatia"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Czech Republic<button type="button" data-remove="cz" aria-label="Remove Czech Republic"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">France<button type="button" data-remove="fr" aria-label="Remove France"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Germany<button type="button" data-remove="de" aria-label="Remove Germany"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Greece<button type="button" data-remove="gr" aria-label="Remove Greece"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Hungary<button type="button" data-remove="hu" aria-label="Remove Hungary"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Italy<button type="button" data-remove="it" aria-label="Remove Italy"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Netherlands<button type="button" data-remove="nl" aria-label="Remove Netherlands"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Poland<button type="button" data-remove="pl" aria-label="Remove Poland"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Portugal<button type="button" data-remove="pt" aria-label="Remove Portugal"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Romania<button type="button" data-remove="ro" aria-label="Remove Romania"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Slovakia<button type="button" data-remove="sk" aria-label="Remove Slovakia"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Slovenia<button type="button" data-remove="si" aria-label="Remove Slovenia"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Spain<button type="button" data-remove="es" aria-label="Remove Spain"><i class="bi bi-x"></i></button></span>
+                    <span class="ms-chip">Sweden<button type="button" data-remove="se" aria-label="Remove Sweden"><i class="bi bi-x"></i></button></span></span>
+                  <input type="text" class="ms-input" id="rwCountriesInput-rewardModal" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="rwCountriesInput-list-rewardModal" autocomplete="off" spellcheck="false" placeholder="">
+                </div>
+                <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
+                <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+                <ul class="ms-menu" id="rwCountriesInput-list-rewardModal" role="listbox" aria-multiselectable="true" hidden><li role="option" id="rwCountriesInput-opt-0-rewardModal" data-value="ar" aria-selected="false">Argentina</li><li role="option" id="rwCountriesInput-opt-1-rewardModal" data-value="au" aria-selected="false">Australia</li><li role="option" id="rwCountriesInput-opt-2-rewardModal" data-value="bo" aria-selected="false">Bolivia</li><li role="option" id="rwCountriesInput-opt-3-rewardModal" data-value="br" aria-selected="false">Brazil</li><li role="option" id="rwCountriesInput-opt-4-rewardModal" data-value="ca" aria-selected="false">Canada</li><li role="option" id="rwCountriesInput-opt-5-rewardModal" data-value="cl" aria-selected="false">Chile</li><li role="option" id="rwCountriesInput-opt-6-rewardModal" data-value="co" aria-selected="false">Colombia</li><li role="option" id="rwCountriesInput-opt-7-rewardModal" data-value="eg" aria-selected="false">Egypt</li><li role="option" id="rwCountriesInput-opt-8-rewardModal" data-value="ee" aria-selected="false">Estonia</li><li role="option" id="rwCountriesInput-opt-9-rewardModal" data-value="ie" aria-selected="false">Ireland</li><li role="option" id="rwCountriesInput-opt-10-rewardModal" data-value="mx" aria-selected="false">Mexico</li><li role="option" id="rwCountriesInput-opt-11-rewardModal" data-value="ma" aria-selected="false">Morocco</li><li role="option" id="rwCountriesInput-opt-12-rewardModal" data-value="pe" aria-selected="false">Peru</li><li role="option" id="rwCountriesInput-opt-13-rewardModal" data-value="sa" aria-selected="false">Saudi Arabia</li><li role="option" id="rwCountriesInput-opt-14-rewardModal" data-value="ch" aria-selected="false">Switzerland</li><li role="option" id="rwCountriesInput-opt-15-rewardModal" data-value="ae" aria-selected="false">United Arab Emirates</li><li role="option" id="rwCountriesInput-opt-16-rewardModal" data-value="gb" aria-selected="false">United Kingdom</li><li role="option" id="rwCountriesInput-opt-17-rewardModal" data-value="us" aria-selected="false">United States</li></ul></div>
+              <div class="invalid-feedback" id="rwCountriesFeedback-rewardModal">Select at least one country.</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+</body>
+</html>
