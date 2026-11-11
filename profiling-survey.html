@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Household &amp; family · Profiling · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link" href="index.html"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="feasibility.html"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li class="nav-group has-active">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels">
+              <li><a class="nav-link" href="panels.html"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="rewards.html"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="redeem.html"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link active" href="profiling.html" aria-current="page"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework" hidden>
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="fw-projects.html"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="fw-ratecards.html"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link" href="users.html"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="page-view" id="profilingSurveyView">
+          <header class="pv-header">
+            <div class="pv-title-row">
+              <a class="pv-back-btn" href="profiling.html" title="Back to profiling" aria-label="Back to profiling"><i class="bi bi-arrow-left"></i></a>
+              <div class="pv-title-block">
+                <h1 class="pv-title">Household &amp; family</h1>
+                <div class="pv-meta">
+                  <span class="status-badge status-draft" data-variant-of="survey-status" data-variant="draft">Draft</span>
+                  <span class="status-badge status-live" data-variant-of="survey-status" data-variant="live" hidden>Live</span>
+                  <span class="status-badge status-closed" data-variant-of="survey-status" data-variant="closed" hidden>Closed</span>
+                  <span class="pv-job" title="Survey number">#4108</span>
+                  <span class="prf-inline"><span class="prf-mark sm" style="--mark:#d9381e" aria-hidden="true">G</span> Gavenze</span>
+                  <span><span class="fi fi-nl"></span> Netherlands</span>
+                  <span><i class="bi bi-translate"></i> Dutch</span>
+                  <span><i class="bi bi-clock-history"></i> Updated 2026-11-11 09:12</span>
+                </div>
+              </div>
+              <div class="pv-quick">
+                <div class="pv-chip"><span class="pv-chip-label">Questions</span><span class="pv-chip-value">8</span></div>
+                <div class="pv-chip"><span class="pv-chip-label">Shown</span><span class="pv-chip-value">7</span></div>
+                <div class="pv-chip"><span class="pv-chip-label">Answers</span><span class="pv-chip-value">32</span></div>
+                <div class="pv-chip"><span class="pv-chip-label">Takes about</span><span class="pv-chip-value">2 min</span></div>
+              </div>
+            </div>
+          </header>
+          <section class="prf-status is-draft" data-variant-of="survey-status" data-variant="draft" aria-label="Survey status">
+            <i class="bi bi-pencil-square" aria-hidden="true"></i>
+            <p><strong>Draft.</strong> Respondents can't see this survey yet. Publish it to make it live as profiling survey <strong>#4108</strong>.</p>
+            <div class="prf-status-actions">
+              <button type="button" class="btn btn-ghost btn-sm-h" data-bs-toggle="modal" data-bs-target="#previewModal"><i class="bi bi-phone"></i> Preview</button>
+              <button type="button" class="btn btn-primary-grad btn-sm-h" data-bs-toggle="modal" data-bs-target="#publishModal"><i class="bi bi-broadcast"></i> Publish to live</button>
+            </div>
+          </section>
+          <section class="prf-status is-live" data-variant-of="survey-status" data-variant="live" aria-label="Survey status" hidden>
+            <i class="bi bi-broadcast" aria-hidden="true"></i>
+            <p><strong>Live since 2026-11-11.</strong> Active members in the Netherlands who haven't answered it see it as profiling survey <strong>#4108</strong>. Question and answer IDs are locked; you can still hide questions.</p>
+            <div class="prf-status-actions">
+              <button type="button" class="btn btn-ghost btn-sm-h" data-bs-toggle="modal" data-bs-target="#previewModal"><i class="bi bi-phone"></i> Preview</button>
+              <button type="button" class="btn btn-ghost btn-sm-h" data-variant-target="survey-status:closed" data-toast="Survey #4108 closed. Answers already given stay in the members' profiles." data-toast-tone="info"><i class="bi bi-stop-circle"></i> Close survey</button>
+            </div>
+          </section>
+          <section class="prf-status is-closed" data-variant-of="survey-status" data-variant="closed" aria-label="Survey status" hidden>
+            <i class="bi bi-archive" aria-hidden="true"></i>
+            <p><strong>Closed.</strong> No new respondents get survey <strong>#4108</strong>. The answers already given stay in the members' profiles.</p>
+            <div class="prf-status-actions">
+              <button type="button" class="btn btn-ghost btn-sm-h" data-variant-target="survey-status:live" data-toast="Survey #4108 is live again."><i class="bi bi-arrow-counterclockwise"></i> Reopen</button>
+            </div>
+          </section>
+          <nav class="pv-tabs" role="tablist" aria-label="Survey sections">
+            <button type="button" class="pv-tab active" role="tab" id="prfsTab-questions" aria-controls="prfsPanel-questions" aria-selected="true" data-hash="questions">Questions</button>
+            <button type="button" class="pv-tab" role="tab" id="prfsTab-settings" aria-controls="prfsPanel-settings" aria-selected="false" tabindex="-1" data-hash="settings">Settings</button>
+          </nav>
+          <!-- Questions: the survey on the left, the question bank on the right -->
+          <section class="pv-panel" id="prfsPanel-questions" role="tabpanel" aria-labelledby="prfsTab-questions">
+            <div class="prf-builder">
+              <div class="prf-main">
+                <div class="prf-main-head">
+                  <div>
+                    <h2 class="pv-card-title">Questions in this survey</h2>
+                    <p class="pv-card-sub">Asked in this order. A hidden question stays in the survey, with its IDs, but isn't asked.</p>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm-h" data-bs-toggle="modal" data-bs-target="#newQuestionModal"><i class="bi bi-plus-circle"></i> New question</button>
+                </div>
+                <div class="prf-qlist">
+                  <article class="pv-card prf-q" data-move-item aria-label="Question 1: Q41">
+                    <div class="prf-q-head">
+                      <span class="q-num" data-order>1</span>
+                      <span class="prf-qid">Q41</span>
+                      <h3 class="prf-q-text">How many people live in your household, including yourself?</h3>
+                      <div class="prf-q-tools">
+                        <div class="segmented seg-xs prf-show" role="group" aria-label="Show Q41 to respondents">
+                          <button type="button" data-value="show" class="active" aria-pressed="true"><i class="bi bi-eye"></i> Shown</button>
+                          <button type="button" data-value="hide" aria-pressed="false"><i class="bi bi-eye-slash"></i> Hidden</button>
+                        </div>
+                        <button type="button" class="icon-btn-sm" data-move="up" title="Move up" aria-label="Move Q41 up" disabled><i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="icon-btn-sm" data-move="down" title="Move down" aria-label="Move Q41 down"><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" class="icon-btn-sm" data-bs-toggle="modal" data-bs-target="#questionModal" title="Edit question" aria-label="Edit Q41"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="icon-btn-sm danger" data-confirm="Remove?" data-confirm-remove=".prf-q" data-confirm-toast="Q41 removed from the survey. It stays in the question bank." title="Remove from this survey" aria-label="Remove Q41 from this survey"><i class="bi bi-x-lg"></i></button>
+                      </div>
+                    </div>
+                    <div class="prf-q-meta">
+                      <span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span>
+                      <span>5 answers</span>
+                    </div>
+                    <ol class="prf-ans"><li><span class="prf-aid">Q41_1</span><span>1 person</span></li><li><span class="prf-aid">Q41_2</span><span>2 people</span></li><li><span class="prf-aid">Q41_3</span><span>3 people</span></li><li><span class="prf-aid">Q41_4</span><span>4 people</span></li><li><span class="prf-aid">Q41_5</span><span>5 or more</span></li></ol>
+                  </article>
+                  <article class="pv-card prf-q" data-move-item aria-label="Question 2: Q42">
+                    <div class="prf-q-head">
+                      <span class="q-num" data-order>2</span>
+                      <span class="prf-qid">Q42</span>
+                      <h3 class="prf-q-text">Do you have children living at home?</h3>
+                      <div class="prf-q-tools">
+                        <div class="segmented seg-xs prf-show" role="group" aria-label="Show Q42 to respondents">
+                          <button type="button" data-value="show" class="active" aria-pressed="true"><i class="bi bi-eye"></i> Shown</button>
+                          <button type="button" data-value="hide" aria-pressed="false"><i class="bi bi-eye-slash"></i> Hidden</button>
+                        </div>
+                        <button type="button" class="icon-btn-sm" data-move="up" title="Move up" aria-label="Move Q42 up"><i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="icon-btn-sm" data-move="down" title="Move down" aria-label="Move Q42 down"><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" class="icon-btn-sm" data-bs-toggle="modal" data-bs-target="#questionModal" title="Edit question" aria-label="Edit Q42"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="icon-btn-sm danger" data-confirm="Remove?" data-confirm-remove=".prf-q" data-confirm-toast="Q42 removed from the survey. It stays in the question bank." title="Remove from this survey" aria-label="Remove Q42 from this survey"><i class="bi bi-x-lg"></i></button>
+                      </div>
+                    </div>
+                    <div class="prf-q-meta">
+                      <span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span>
+                      <span>2 answers</span>
+                    </div>
+                    <ol class="prf-ans"><li><span class="prf-aid">Q42_1</span><span>Yes</span></li><li><span class="prf-aid">Q42_2</span><span>No</span></li></ol>
+                  </article>
+                  <article class="pv-card prf-q" data-move-item aria-label="Question 3: Q43">
+                    <div class="prf-q-head">
+                      <span class="q-num" data-order>3</span>
+                      <span class="prf-qid">Q43</span>
+                      <h3 class="prf-q-text">How old are the children living at home?</h3>
+                      <div class="prf-q-tools">
+                        <div class="segmented seg-xs prf-show" role="group" aria-label="Show Q43 to respondents">
+                          <button type="button" data-value="show" class="active" aria-pressed="true"><i class="bi bi-eye"></i> Shown</button>
+                          <button type="button" data-value="hide" aria-pressed="false"><i class="bi bi-eye-slash"></i> Hidden</button>
+                        </div>
+                        <button type="button" class="icon-btn-sm" data-move="up" title="Move up" aria-label="Move Q43 up"><i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="icon-btn-sm" data-move="down" title="Move down" aria-label="Move Q43 down"><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" class="icon-btn-sm" data-bs-toggle="modal" data-bs-target="#questionModal" title="Edit question" aria-label="Edit Q43"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="icon-btn-sm danger" data-confirm="Remove?" data-confirm-remove=".prf-q" data-confirm-toast="Q43 removed from the survey. It stays in the question bank." title="Remove from this survey" aria-label="Remove Q43 from this survey"><i class="bi bi-x-lg"></i></button>
+                      </div>
+                    </div>
+                    <div class="prf-q-meta">
+                      <span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span>
+                      <span>5 answers</span>
+                      <span class="prf-cond" title="Only asked when this answer was given"><i class="bi bi-signpost-split"></i> Only if <span class="prf-aid">Q42_1</span> Yes</span>
+                    </div>
+                    <ol class="prf-ans"><li><span class="prf-aid">Q43_1</span><span>Under 2</span></li><li><span class="prf-aid">Q43_2</span><span>2–4</span></li><li><span class="prf-aid">Q43_3</span><span>5–11</span></li><li><span class="prf-aid">Q43_4</span><span>12–17</span></li><li><span class="prf-aid">Q43_5</span><span>18 or older</span></li></ol>
+                  </article>
+                  <article class="pv-card prf-q" data-move-item aria-label="Question 4: Q44">
+                    <div class="prf-q-head">
+                      <span class="q-num" data-order>4</span>
+                      <span class="prf-qid">Q44</span>
+                      <h3 class="prf-q-text">What best describes your home?</h3>
+                      <div class="prf-q-tools">
+                        <div class="segmented seg-xs prf-show" role="group" aria-label="Show Q44 to respondents">
+                          <button type="button" data-value="show" class="active" aria-pressed="true"><i class="bi bi-eye"></i> Shown</button>
+                          <button type="button" data-value="hide" aria-pressed="false"><i class="bi bi-eye-slash"></i> Hidden</button>
+                        </div>
+                        <button type="button" class="icon-btn-sm" data-move="up" title="Move up" aria-label="Move Q44 up"><i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="icon-btn-sm" data-move="down" title="Move down" aria-label="Move Q44 down"><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" class="icon-btn-sm" data-bs-toggle="modal" data-bs-target="#questionModal" title="Edit question" aria-label="Edit Q44"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="icon-btn-sm danger" data-confirm="Remove?" data-confirm-remove=".prf-q" data-confirm-toast="Q44 removed from the survey. It stays in the question bank." title="Remove from this survey" aria-label="Remove Q44 from this survey"><i class="bi bi-x-lg"></i></button>
+                      </div>
+                    </div>
+                    <div class="prf-q-meta">
+                      <span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span>
+                      <span>5 answers</span>
+                    </div>
+                    <ol class="prf-ans"><li><span class="prf-aid">Q44_1</span><span>Apartment</span></li><li><span class="prf-aid">Q44_2</span><span>Terraced house</span></li><li><span class="prf-aid">Q44_3</span><span>Semi-detached house</span></li><li><span class="prf-aid">Q44_4</span><span>Detached house</span></li><li><span class="prf-aid">Q44_5</span><span>Other</span></li></ol>
+                  </article>
+                  <article class="pv-card prf-q" data-move-item aria-label="Question 5: Q45">
+                    <div class="prf-q-head">
+                      <span class="q-num" data-order>5</span>
+                      <span class="prf-qid">Q45</span>
+                      <h3 class="prf-q-text">Do you own or rent your home?</h3>
+                      <div class="prf-q-tools">
+                        <div class="segmented seg-xs prf-show" role="group" aria-label="Show Q45 to respondents">
+                          <button type="button" data-value="show" class="active" aria-pressed="true"><i class="bi bi-eye"></i> Shown</button>
+                          <button type="button" data-value="hide" aria-pressed="false"><i class="bi bi-eye-slash"></i> Hidden</button>
+                        </div>
+                        <button type="button" class="icon-btn-sm" data-move="up" title="Move up" aria-label="Move Q45 up"><i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="icon-btn-sm" data-move="down" title="Move down" aria-label="Move Q45 down"><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" class="icon-btn-sm" data-bs-toggle="modal" data-bs-target="#questionModal" title="Edit question" aria-label="Edit Q45"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="icon-btn-sm danger" data-confirm="Remove?" data-confirm-remove=".prf-q" data-confirm-toast="Q45 removed from the survey. It stays in the question bank." title="Remove from this survey" aria-label="Remove Q45 from this survey"><i class="bi bi-x-lg"></i></button>
+                      </div>
+                    </div>
+                    <div class="prf-q-meta">
+                      <span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span>
+                      <span>5 answers</span>
+                    </div>
+                    <ol class="prf-ans"><li><span class="prf-aid">Q45_1</span><span>Own</span></li><li><span class="prf-aid">Q45_2</span><span>Rent – social housing</span></li><li><span class="prf-aid">Q45_3</span><span>Rent – private</span></li><li><span class="prf-aid">Q45_4</span><span>Live with my parents</span></li><li><span class="prf-aid">Q45_5</span><span>Other</span></li></ol>
+                  </article>
+                  <article class="pv-card prf-q" data-move-item aria-label="Question 6: Q46">
+                    <div class="prf-q-head">
+                      <span class="q-num" data-order>6</span>
+                      <span class="prf-qid">Q46</span>
+                      <h3 class="prf-q-text">Which pets do you have?</h3>
+                      <div class="prf-q-tools">
+                        <div class="segmented seg-xs prf-show" role="group" aria-label="Show Q46 to respondents">
+                          <button type="button" data-value="show" class="active" aria-pressed="true"><i class="bi bi-eye"></i> Shown</button>
+                          <button type="button" data-value="hide" aria-pressed="false"><i class="bi bi-eye-slash"></i> Hidden</button>
+                        </div>
+                        <button type="button" class="icon-btn-sm" data-move="up" title="Move up" aria-label="Move Q46 up"><i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="icon-btn-sm" data-move="down" title="Move down" aria-label="Move Q46 down"><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" class="icon-btn-sm" data-bs-toggle="modal" data-bs-target="#questionModal" title="Edit question" aria-label="Edit Q46"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="icon-btn-sm danger" data-confirm="Remove?" data-confirm-remove=".prf-q" data-confirm-toast="Q46 removed from the survey. It stays in the question bank." title="Remove from this survey" aria-label="Remove Q46 from this survey"><i class="bi bi-x-lg"></i></button>
+                      </div>
+                    </div>
+                    <div class="prf-q-meta">
+                      <span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span>
+                      <span>7 answers</span>
+                      <span class="t-muted">Also in #4136</span>
+                    </div>
+                    <ol class="prf-ans"><li><span class="prf-aid">Q46_1</span><span>Dog</span></li><li><span class="prf-aid">Q46_2</span><span>Cat</span></li><li><span class="prf-aid">Q46_3</span><span>Bird</span></li><li><span class="prf-aid">Q46_4</span><span>Fish</span></li><li><span class="prf-aid">Q46_5</span><span>Rabbit or rodent</span></li><li><span class="prf-aid">Q46_6</span><span>Other pet</span></li><li><span class="prf-aid">Q46_7</span><span>No pets</span></li></ol>
+                  </article>
+                  <article class="pv-card prf-q" data-move-item aria-label="Question 7: Q47">
+                    <div class="prf-q-head">
+                      <span class="q-num" data-order>7</span>
+                      <span class="prf-qid">Q47</span>
+                      <h3 class="prf-q-text">Who does most of the grocery shopping in your household?</h3>
+                      <div class="prf-q-tools">
+                        <div class="segmented seg-xs prf-show" role="group" aria-label="Show Q47 to respondents">
+                          <button type="button" data-value="show" class="active" aria-pressed="true"><i class="bi bi-eye"></i> Shown</button>
+                          <button type="button" data-value="hide" aria-pressed="false"><i class="bi bi-eye-slash"></i> Hidden</button>
+                        </div>
+                        <button type="button" class="icon-btn-sm" data-move="up" title="Move up" aria-label="Move Q47 up"><i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="icon-btn-sm" data-move="down" title="Move down" aria-label="Move Q47 down"><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" class="icon-btn-sm" data-bs-toggle="modal" data-bs-target="#questionModal" title="Edit question" aria-label="Edit Q47"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="icon-btn-sm danger" data-confirm="Remove?" data-confirm-remove=".prf-q" data-confirm-toast="Q47 removed from the survey. It stays in the question bank." title="Remove from this survey" aria-label="Remove Q47 from this survey"><i class="bi bi-x-lg"></i></button>
+                      </div>
+                    </div>
+                    <div class="prf-q-meta">
+                      <span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span>
+                      <span>3 answers</span>
+                      <span class="t-muted">Also in #4136</span>
+                    </div>
+                    <ol class="prf-ans"><li><span class="prf-aid">Q47_1</span><span>I do</span></li><li><span class="prf-aid">Q47_2</span><span>We share it equally</span></li><li><span class="prf-aid">Q47_3</span><span>Someone else</span></li></ol>
+                  </article>
+                  <article class="pv-card prf-q" data-move-item aria-label="Question 8: Q48">
+                    <div class="prf-q-head">
+                      <span class="q-num" data-order>8</span>
+                      <span class="prf-qid">Q48</span>
+                      <h3 class="prf-q-text">What is your household&#x27;s net monthly income?</h3>
+                      <div class="prf-q-tools">
+                        <div class="segmented seg-xs prf-show" role="group" aria-label="Show Q48 to respondents">
+                          <button type="button" data-value="show" aria-pressed="false"><i class="bi bi-eye"></i> Shown</button>
+                          <button type="button" data-value="hide" class="active" aria-pressed="true"><i class="bi bi-eye-slash"></i> Hidden</button>
+                        </div>
+                        <button type="button" class="icon-btn-sm" data-move="up" title="Move up" aria-label="Move Q48 up"><i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="icon-btn-sm" data-move="down" title="Move down" aria-label="Move Q48 down" disabled><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" class="icon-btn-sm" data-bs-toggle="modal" data-bs-target="#questionModal" title="Edit question" aria-label="Edit Q48"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="icon-btn-sm danger" data-confirm="Remove?" data-confirm-remove=".prf-q" data-confirm-toast="Q48 removed from the survey. It stays in the question bank." title="Remove from this survey" aria-label="Remove Q48 from this survey"><i class="bi bi-x-lg"></i></button>
+                      </div>
+                    </div>
+                    <div class="prf-q-meta">
+                      <span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span>
+                      <span>6 answers</span>
+                      <span class="t-muted">Also in #4115</span>
+                    </div>
+                    <ol class="prf-ans"><li><span class="prf-aid">Q48_1</span><span>Under €1,500</span></li><li><span class="prf-aid">Q48_2</span><span>€1,500–2,499</span></li><li><span class="prf-aid">Q48_3</span><span>€2,500–3,499</span></li><li><span class="prf-aid">Q48_4</span><span>€3,500–4,999</span></li><li><span class="prf-aid">Q48_5</span><span>€5,000 or more</span></li><li><span class="prf-aid">Q48_6</span><span>Prefer not to say</span></li></ol>
+                  </article>
+                </div>
+              </div>
+              <aside class="pv-card prf-bank" aria-labelledby="prfBankTitle">
+                <div class="pv-card-head">
+                  <div>
+                    <h2 class="pv-card-title" id="prfBankTitle">Question bank</h2>
+                    <p class="pv-card-sub">Gavenze · Netherlands · 45 not in this survey</p>
+                  </div>
+                </div>
+                <div class="search-box prf-bank-search">
+                  <i class="bi bi-search"></i>
+                  <input type="search" placeholder="Search by ID or question…" aria-label="Search the question bank" autocomplete="off">
+                </div>
+                <select class="form-select pv-filter prf-bank-filter" aria-label="Question type">
+                  <option selected>All types</option><option>Single choice</option><option>Multiple choice</option><option>Dropdown</option><option>Numeric</option><option>Open text</option>
+                </select>
+                <ul class="prf-bank-list">
+                  <li class="prf-bank-item">
+                    <div class="prf-bank-top"><span class="prf-qid">Q49</span><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice · 4 answers</span></div>
+                    <p class="prf-bank-text">How many cars does your household have?</p>
+                    <div class="prf-bank-foot">
+                      <span class="t-muted">Not in a survey yet</span>
+                      <button type="button" class="btn btn-ghost btn-xs prf-add" aria-pressed="false" aria-label="Add Q49 to this survey">
+                        <span class="prf-add-off"><i class="bi bi-plus-lg"></i> Add</span><span class="prf-add-on"><i class="bi bi-check2"></i> Added</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li class="prf-bank-item">
+                    <div class="prf-bank-top"><span class="prf-qid">Q50</span><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice · 3 answers</span></div>
+                    <p class="prf-bank-text">Is anyone in your household expecting a baby?</p>
+                    <div class="prf-bank-foot">
+                      <span class="t-muted">Not in a survey yet</span>
+                      <button type="button" class="btn btn-ghost btn-xs prf-add" aria-pressed="false" aria-label="Add Q50 to this survey">
+                        <span class="prf-add-off"><i class="bi bi-plus-lg"></i> Add</span><span class="prf-add-on"><i class="bi bi-check2"></i> Added</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li class="prf-bank-item">
+                    <div class="prf-bank-top"><span class="prf-qid">Q51</span><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice · 4 answers</span></div>
+                    <p class="prf-bank-text">Does your home have a garden, balcony or terrace?</p>
+                    <div class="prf-bank-foot">
+                      <span class="t-muted">Not in a survey yet</span>
+                      <button type="button" class="btn btn-ghost btn-xs prf-add" aria-pressed="false" aria-label="Add Q51 to this survey">
+                        <span class="prf-add-off"><i class="bi bi-plus-lg"></i> Add</span><span class="prf-add-on"><i class="bi bi-check2"></i> Added</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li class="prf-bank-item">
+                    <div class="prf-bank-top"><span class="prf-qid">Q52</span><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice · 5 answers</span></div>
+                    <p class="prf-bank-text">What kind of energy contract does your household have?</p>
+                    <div class="prf-bank-foot">
+                      <span class="t-muted">Not in a survey yet</span>
+                      <button type="button" class="btn btn-ghost btn-xs prf-add" aria-pressed="false" aria-label="Add Q52 to this survey">
+                        <span class="prf-add-off"><i class="bi bi-plus-lg"></i> Add</span><span class="prf-add-on"><i class="bi bi-check2"></i> Added</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li class="prf-bank-item">
+                    <div class="prf-bank-top"><span class="prf-qid">Q53</span><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice · 5 answers</span></div>
+                    <p class="prf-bank-text">How long have you lived at your current address?</p>
+                    <div class="prf-bank-foot">
+                      <span class="t-muted">Not in a survey yet</span>
+                      <button type="button" class="btn btn-ghost btn-xs prf-add" aria-pressed="false" aria-label="Add Q53 to this survey">
+                        <span class="prf-add-off"><i class="bi bi-plus-lg"></i> Add</span><span class="prf-add-on"><i class="bi bi-check2"></i> Added</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li class="prf-bank-item">
+                    <div class="prf-bank-top"><span class="prf-qid">Q38</span><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice · 6 answers</span></div>
+                    <p class="prf-bank-text">What is your marital status?</p>
+                    <div class="prf-bank-foot">
+                      <span class="t-muted">In #4101</span>
+                      <button type="button" class="btn btn-ghost btn-xs prf-add" aria-pressed="false" aria-label="Add Q38 to this survey">
+                        <span class="prf-add-off"><i class="bi bi-plus-lg"></i> Add</span><span class="prf-add-on"><i class="bi bi-check2"></i> Added</span>
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+                <a class="prf-bank-more" href="profiling.html#questions">All 53 questions in the bank <i class="bi bi-arrow-right"></i></a>
+                <p class="prf-bank-note"><i class="bi bi-info-circle"></i> Questions belong to the panel and country, so a question keeps its ID in every survey that uses it.</p>
+              </aside>
+            </div>
+          </section>
+          <!-- Settings -->
+          <section class="pv-panel" id="prfsPanel-settings" role="tabpanel" aria-labelledby="prfsTab-settings" hidden>
+            <form class="pv-card prf-settings" novalidate data-toast="Survey settings saved.">
+              <div class="pv-card-head">
+                <div>
+                  <h2 class="pv-card-title">Survey settings</h2>
+                  <p class="pv-card-sub">What respondents see around the questions, and who gets the survey.</p>
+                </div>
+                <span class="dirty-flag" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+              </div>
+              <div class="prf-form-grid">
+                <div>
+                  <label class="form-label" for="psNumber">Survey number</label>
+                  <input class="form-control" id="psNumber" value="#4108" readonly aria-describedby="psNumberHelp">
+                  <div class="field-help" id="psNumberHelp">Given when the survey was created. Respondents see the survey under this number.</div>
+                </div>
+                <div>
+                  <label class="form-label" for="psName">Name</label>
+                  <input class="form-control" id="psName" name="name" value="Household &amp; family" maxlength="80" required>
+                  <div class="invalid-feedback">Give the survey a name.</div>
+                </div>
+                <div>
+                  <label class="form-label" for="psPanel">Panel</label>
+                  <input class="form-control" id="psPanel" value="Gavenze" readonly>
+                </div>
+                <div>
+                  <label class="form-label" for="psCountry">Country</label>
+                  <input class="form-control" id="psCountry" value="Netherlands" readonly>
+                </div>
+                <div>
+                  <label class="form-label" for="psLanguage">Language</label>
+                  <select class="form-select" id="psLanguage" name="language"><option selected>Dutch</option><option>English</option></select>
+                </div>
+                <div>
+                  <label class="form-label" for="psPoints">Reward points</label>
+                  <input class="form-control" id="psPoints" name="points" type="number" min="0" max="100" value="5" required>
+                </div>
+                <div>
+                  <span class="form-label d-block" id="psWhoLabel">Who gets it</span>
+                  <div class="segmented seg-field prf-seg-wrap" role="group" aria-labelledby="psWhoLabel">
+                    <button type="button" aria-pressed="false">New members</button>
+                    <button type="button" class="active" aria-pressed="true">Not answered yet</button>
+                    <button type="button" aria-pressed="false">Everyone</button>
+                  </div>
+                </div>
+                <div>
+                  <label class="form-label" for="psRepeat">Ask again after</label>
+                  <select class="form-select" id="psRepeat" name="repeat"><option>Never</option><option>6 months</option><option selected>12 months</option><option>24 months</option></select>
+                </div>
+                <div class="prf-wide">
+                  <label class="form-label" for="psIntro">Intro text</label>
+                  <textarea class="form-control" id="psIntro" name="intro" rows="2" maxlength="600">Tell us a little about your household. It takes about 2 minutes and helps us send you surveys that suit you.</textarea>
+                </div>
+                <div class="prf-wide">
+                  <label class="form-label" for="psThanks">Thank-you text</label>
+                  <textarea class="form-control" id="psThanks" name="thanks" rows="2" maxlength="600">Thank you! Your 5 points have been added to your account.</textarea>
+                </div>
+              </div>
+              <div class="pv-form-actions">
+                <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save settings</button>
+              </div>
+            </form>
+          </section>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <form class="modal-content" novalidate>
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="previewModalTitle">Preview</h5>
+            <p class="panel-subtitle">What respondents see. Hidden questions are left out.</p>
+          </div>
+          <div class="modal-head-extra">
+            <div class="form-check form-switch m-0 prf-ids-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="pvShowIds" checked>
+              <label class="form-check-label" for="pvShowIds">Show IDs</label>
+            </div></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="prf-preview">
+            <div class="prf-preview-head">
+              <span class="prf-mark" style="--mark:#d9381e" aria-hidden="true">G</span>
+              <div class="prf-preview-title">
+                <strong>Household &amp; family</strong>
+                <span>Profiling survey 4108 · Gavenze</span>
+              </div>
+              <span class="prf-preview-points"><i class="bi bi-coin"></i> 5 points</span>
+            </div>
+            <p class="prf-preview-intro">Tell us a little about your household. It takes about 2 minutes and helps us send you surveys that suit you.</p>
+            <fieldset class="prf-preview-q">
+              <legend><span class="prf-preview-no">1.</span> How many people live in your household, including yourself? <span class="prf-preview-id">Q41</span></legend>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv41" id="pv41_1">
+                <label class="form-check-label" for="pv41_1">1 person <span class="prf-preview-id">Q41_1</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv41" id="pv41_2">
+                <label class="form-check-label" for="pv41_2">2 people <span class="prf-preview-id">Q41_2</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv41" id="pv41_3">
+                <label class="form-check-label" for="pv41_3">3 people <span class="prf-preview-id">Q41_3</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv41" id="pv41_4">
+                <label class="form-check-label" for="pv41_4">4 people <span class="prf-preview-id">Q41_4</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv41" id="pv41_5">
+                <label class="form-check-label" for="pv41_5">5 or more <span class="prf-preview-id">Q41_5</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="prf-preview-q">
+              <legend><span class="prf-preview-no">2.</span> Do you have children living at home? <span class="prf-preview-id">Q42</span></legend>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv42" id="pv42_1">
+                <label class="form-check-label" for="pv42_1">Yes <span class="prf-preview-id">Q42_1</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv42" id="pv42_2">
+                <label class="form-check-label" for="pv42_2">No <span class="prf-preview-id">Q42_2</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="prf-preview-q">
+              <legend><span class="prf-preview-no">3.</span> How old are the children living at home? <span class="prf-preview-id">Q43</span></legend>
+              <span class="prf-preview-cond">Only asked if the answer to Q42 was "Yes"</span>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv43" id="pv43_1">
+                <label class="form-check-label" for="pv43_1">Under 2 <span class="prf-preview-id">Q43_1</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv43" id="pv43_2">
+                <label class="form-check-label" for="pv43_2">2–4 <span class="prf-preview-id">Q43_2</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv43" id="pv43_3">
+                <label class="form-check-label" for="pv43_3">5–11 <span class="prf-preview-id">Q43_3</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv43" id="pv43_4">
+                <label class="form-check-label" for="pv43_4">12–17 <span class="prf-preview-id">Q43_4</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv43" id="pv43_5">
+                <label class="form-check-label" for="pv43_5">18 or older <span class="prf-preview-id">Q43_5</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="prf-preview-q">
+              <legend><span class="prf-preview-no">4.</span> What best describes your home? <span class="prf-preview-id">Q44</span></legend>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv44" id="pv44_1">
+                <label class="form-check-label" for="pv44_1">Apartment <span class="prf-preview-id">Q44_1</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv44" id="pv44_2">
+                <label class="form-check-label" for="pv44_2">Terraced house <span class="prf-preview-id">Q44_2</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv44" id="pv44_3">
+                <label class="form-check-label" for="pv44_3">Semi-detached house <span class="prf-preview-id">Q44_3</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv44" id="pv44_4">
+                <label class="form-check-label" for="pv44_4">Detached house <span class="prf-preview-id">Q44_4</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv44" id="pv44_5">
+                <label class="form-check-label" for="pv44_5">Other <span class="prf-preview-id">Q44_5</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="prf-preview-q">
+              <legend><span class="prf-preview-no">5.</span> Do you own or rent your home? <span class="prf-preview-id">Q45</span></legend>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv45" id="pv45_1">
+                <label class="form-check-label" for="pv45_1">Own <span class="prf-preview-id">Q45_1</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv45" id="pv45_2">
+                <label class="form-check-label" for="pv45_2">Rent – social housing <span class="prf-preview-id">Q45_2</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv45" id="pv45_3">
+                <label class="form-check-label" for="pv45_3">Rent – private <span class="prf-preview-id">Q45_3</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv45" id="pv45_4">
+                <label class="form-check-label" for="pv45_4">Live with my parents <span class="prf-preview-id">Q45_4</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv45" id="pv45_5">
+                <label class="form-check-label" for="pv45_5">Other <span class="prf-preview-id">Q45_5</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="prf-preview-q">
+              <legend><span class="prf-preview-no">6.</span> Which pets do you have? <span class="prf-preview-id">Q46</span></legend>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv46" id="pv46_1">
+                <label class="form-check-label" for="pv46_1">Dog <span class="prf-preview-id">Q46_1</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv46" id="pv46_2">
+                <label class="form-check-label" for="pv46_2">Cat <span class="prf-preview-id">Q46_2</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv46" id="pv46_3">
+                <label class="form-check-label" for="pv46_3">Bird <span class="prf-preview-id">Q46_3</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv46" id="pv46_4">
+                <label class="form-check-label" for="pv46_4">Fish <span class="prf-preview-id">Q46_4</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv46" id="pv46_5">
+                <label class="form-check-label" for="pv46_5">Rabbit or rodent <span class="prf-preview-id">Q46_5</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv46" id="pv46_6">
+                <label class="form-check-label" for="pv46_6">Other pet <span class="prf-preview-id">Q46_6</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="pv46" id="pv46_7">
+                <label class="form-check-label" for="pv46_7">No pets <span class="prf-preview-id">Q46_7</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="prf-preview-q">
+              <legend><span class="prf-preview-no">7.</span> Who does most of the grocery shopping in your household? <span class="prf-preview-id">Q47</span></legend>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv47" id="pv47_1">
+                <label class="form-check-label" for="pv47_1">I do <span class="prf-preview-id">Q47_1</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv47" id="pv47_2">
+                <label class="form-check-label" for="pv47_2">We share it equally <span class="prf-preview-id">Q47_2</span></label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pv47" id="pv47_3">
+                <label class="form-check-label" for="pv47_3">Someone else <span class="prf-preview-id">Q47_3</span></label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="publishModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Survey #4108 is live." data-variant-target="survey-status:live">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="publishModalTitle">Publish to live</h5>
+            <p class="panel-subtitle">Profiling survey #4108 · Household &amp; family</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <dl class="prf-summary">
+            <div><dt>Survey number</dt><dd><span class="prf-no">#4108</span> <span class="t-muted">respondents see this number</span></dd></div>
+            <div><dt>Panel</dt><dd><span class="prf-inline"><span class="prf-mark sm" style="--mark:#d9381e" aria-hidden="true">G</span> Gavenze</span></dd></div>
+            <div><dt>Country</dt><dd><span class="fi fi-nl"></span> Netherlands · Dutch</dd></div>
+            <div><dt>Questions</dt><dd>7 shown, 1 hidden <span class="t-muted">(Q48)</span> · 32 answers</dd></div>
+            <div><dt>Who gets it</dt><dd>Active members who haven't answered it · 18,204</dd></div>
+            <div><dt>Reward</dt><dd>5 points</dd></div>
+          </dl>
+          <div class="tr-note prf-publish-note" role="note">
+            <i class="bi bi-lock"></i>
+            <span>Once the survey is live, its question and answer IDs are locked. You can still hide questions or close the survey.</span>
+          </div>
+          <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" id="pbInvite" checked>
+            <label class="form-check-label" for="pbInvite">Email these members an invitation</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-broadcast"></i> Publish to live</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Q45 saved.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="questionModalTitle">Question Q45</h5>
+            <p class="panel-subtitle">Gavenze · Netherlands · in #4108 Household &amp; family</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="prf-qform">
+            <div class="prf-qform-id">
+              <span class="prf-qid lg">Q45</span>
+              <span class="field-help m-0">Used in #4108. Answers are numbered Q45_1, Q45_2… and keep their IDs once a survey is live.</span>
+            </div>
+            <div>
+              <label class="form-label" for="qmText">Question</label>
+              <textarea class="form-control" id="qmText" name="text" rows="2" maxlength="300" required placeholder="Type the question">Do you own or rent your home?</textarea>
+              <div class="invalid-feedback">Enter the question.</div>
+            </div>
+            <div class="prf-form-pair">
+              <div>
+                <label class="form-label" for="qmType">Type</label>
+                <select class="form-select" id="qmType" name="type" data-answers="#qmAnswers"><option selected>Single choice</option><option>Multiple choice</option><option>Dropdown</option><option>Numeric</option><option>Open text</option></select>
+              </div>
+              <div>
+                <label class="form-label" for="qmShow">Ask this question</label>
+                <select class="form-select" id="qmShow" name="showIf"><option selected>Always</option><option>Only if Q42 = Q42_1 (Yes)</option><option>Only if Q41 = Q41_2 – Q41_5 (2 or more people)</option></select>
+              </div>
+            </div>
+            <div class="prf-ans-edit" id="qmAnswers">
+              <div class="prf-ans-head">
+                <span class="form-label m-0">Answers</span>
+                <button type="button" class="btn btn-ghost btn-xs" data-add-row=".prf-ans-edit|.prf-ans-rows"><i class="bi bi-plus-circle"></i> Add answer</button>
+              </div>
+              <div class="prf-ans-rows">
+                <div class="prf-ans-row">
+                  <span class="prf-aid" data-seq>Q45_1</span>
+                  <input class="form-control" name="answer" value="Own" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_1" required>
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_1"><i class="bi bi-trash3"></i></button>
+                </div>
+                <div class="prf-ans-row">
+                  <span class="prf-aid" data-seq>Q45_2</span>
+                  <input class="form-control" name="answer" value="Rent – social housing" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_2" required>
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_2"><i class="bi bi-trash3"></i></button>
+                </div>
+                <div class="prf-ans-row">
+                  <span class="prf-aid" data-seq>Q45_3</span>
+                  <input class="form-control" name="answer" value="Rent – private" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_3">
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_3"><i class="bi bi-trash3"></i></button>
+                </div>
+                <div class="prf-ans-row">
+                  <span class="prf-aid" data-seq>Q45_4</span>
+                  <input class="form-control" name="answer" value="Live with my parents" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_4">
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_4"><i class="bi bi-trash3"></i></button>
+                </div>
+                <div class="prf-ans-row">
+                  <span class="prf-aid" data-seq>Q45_5</span>
+                  <input class="form-control" name="answer" value="Other" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_5">
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_5"><i class="bi bi-trash3"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save question</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal fade" id="newQuestionModal" tabindex="-1" aria-labelledby="newQuestionModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" novalidate data-toast="Q54 added to the survey.">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="newQuestionModalTitle">New question</h5>
+            <p class="panel-subtitle">Added to this survey and to the Gavenze · Netherlands question bank</p>
+          </div>
+          <div class="modal-head-extra"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="prf-qform">
+            <div class="prf-qform-id">
+              <span class="prf-qid lg">Q54</span>
+              <span class="field-help m-0">The ID is given when the question is created. Answers are numbered Q54_1, Q54_2… and keep their IDs once a survey is live.</span>
+            </div>
+            <div>
+              <label class="form-label" for="nqText">Question</label>
+              <textarea class="form-control" id="nqText" name="text" rows="2" maxlength="300" required placeholder="Type the question"></textarea>
+              <div class="invalid-feedback">Enter the question.</div>
+            </div>
+            <div class="prf-form-pair">
+              <div>
+                <label class="form-label" for="nqType">Type</label>
+                <select class="form-select" id="nqType" name="type" data-answers="#nqAnswers"><option selected>Single choice</option><option>Multiple choice</option><option>Dropdown</option><option>Numeric</option><option>Open text</option></select>
+              </div>
+              <div>
+                <label class="form-label" for="nqShow">Ask this question</label>
+                <select class="form-select" id="nqShow" name="showIf"><option selected>Always</option><option>Only if Q42 = Q42_1 (Yes)</option><option>Only if Q41 = Q41_2 – Q41_5 (2 or more people)</option></select>
+              </div>
+            </div>
+            <div class="prf-ans-edit" id="nqAnswers">
+              <div class="prf-ans-head">
+                <span class="form-label m-0">Answers</span>
+                <button type="button" class="btn btn-ghost btn-xs" data-add-row=".prf-ans-edit|.prf-ans-rows"><i class="bi bi-plus-circle"></i> Add answer</button>
+              </div>
+              <div class="prf-ans-rows">
+                <div class="prf-ans-row">
+                  <span class="prf-aid" data-seq>Q54_1</span>
+                  <input class="form-control" name="answer" value="" maxlength="200" placeholder="Answer text" aria-label="Answer Q54_1" required>
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q54_1"><i class="bi bi-trash3"></i></button>
+                </div>
+                <div class="prf-ans-row">
+                  <span class="prf-aid" data-seq>Q54_2</span>
+                  <input class="form-control" name="answer" value="" maxlength="200" placeholder="Answer text" aria-label="Answer Q54_2" required>
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q54_2"><i class="bi bi-trash3"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Add question</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+</body>
+</html>

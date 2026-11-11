@@ -94,10 +94,35 @@ function addRow(btn) {
   if (!last) return;
   const row = last.cloneNode(true);
   $$('[id]', row).forEach((el) => el.removeAttribute('id'));
+  // Numbered labels (answer IDs like Q45_5) go up by one, here and in the labels that name them.
+  $$('[data-seq]', row).forEach((el) => {
+    const before = el.textContent.trim();
+    const after = before.replace(/\d+$/, (n) => Number(n) + 1);
+    el.textContent = after;
+    $$('[aria-label]', row).forEach((x) => x.setAttribute('aria-label', x.getAttribute('aria-label').replace(before, after)));
+  });
   $$('input:not([type="checkbox"]):not([type="radio"]), textarea', row).forEach((el) => { el.value = ''; el.removeAttribute('value'); });
   into.append(row);
   $('input, textarea', row)?.focus();
   markDirty(row);
+}
+
+// Up/down buttons move their [data-move-item] past its neighbour; [data-order] numbers and the
+// first/last buttons follow.
+function moveItem(btn) {
+  const item = btn.closest('[data-move-item]');
+  const other = btn.dataset.move === 'up' ? item.previousElementSibling : item.nextElementSibling;
+  if (!other?.matches('[data-move-item]')) return;
+  if (btn.dataset.move === 'up') other.before(item);
+  else other.after(item);
+  const items = $$(':scope > [data-move-item]', item.parentElement);
+  items.forEach((el, i) => {
+    $$('[data-order]', el).forEach((n) => { n.textContent = i + 1; });
+    $('[data-move="up"]', el).disabled = i === 0;
+    $('[data-move="down"]', el).disabled = i === items.length - 1;
+  });
+  const focus = $(`[data-move="${btn.dataset.move}"]`, item);
+  (focus.disabled ? $(`[data-move="${btn.dataset.move === 'up' ? 'down' : 'up'}"]`, item) : focus).focus();
 }
 
 // Exclusive button groups (Live/Closed, Yes/No, Active/Inactive...) and single on/off buttons.
@@ -359,6 +384,7 @@ document.addEventListener('click', (e) => {
     if (variant.getAttribute('role') === 'tab' && variant.dataset.hash) history.replaceState(null, '', `#${variant.dataset.hash}`);
     if (variant.matches('a[href^="#"]')) e.preventDefault();
     if (variant.dataset.pfAction === 'to-points') $('#phPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toastFrom(variant);
     return;
   }
   const tab = t.closest('[role="tab"]');
@@ -367,6 +393,7 @@ document.addEventListener('click', (e) => {
   const btn = t.closest('button, a');
   if (btn?.hasAttribute('data-confirm')) { confirmClick(btn); return; }
   if (btn?.dataset.addRow) { addRow(btn); return; }
+  if (btn?.dataset.move) { moveItem(btn); return; }
   if (btn?.dataset.removeRow) { const row = btn.closest(btn.dataset.removeRow); const form = row?.closest('form'); row?.remove(); if (form) markDirty(form); return; }
   if (btn?.classList.contains('camp-caret')) { toggleSegments(btn); return; }
   if (btn?.matches('.pagination-dark button:not(:disabled)')) { pickPage(btn); return; }
@@ -417,6 +444,7 @@ document.addEventListener('submit', (e) => {
     return;
   }
   form.classList.remove('was-validated', 'is-dirty');
+  if (form.dataset.variantTarget) showVariant(form.dataset.variantTarget); // e.g. Publish moves the survey to Live
   const modal = form.closest('.modal');
   if (modal) bootstrap.Modal.getInstance(modal)?.hide();
   else {
