@@ -93,7 +93,16 @@ function addRow(btn) {
   const last = into?.lastElementChild;
   if (!last) return;
   const row = last.cloneNode(true);
-  $$('[id]', row).forEach((el) => el.removeAttribute('id'));
+  // Ids get a new suffix, and the labels and buttons in the row that point at them follow
+  // (an answer's Edit button opens its own options).
+  addRow.count = (addRow.count || 0) + 1;
+  $$('[id]', row).forEach((el) => {
+    const old = el.id;
+    el.id = `${old}-new${addRow.count}`;
+    ['for', 'aria-controls', 'aria-labelledby', 'aria-describedby'].forEach((attr) => {
+      $$(`[${attr}="${old}"]`, row).forEach((ref) => ref.setAttribute(attr, el.id));
+    });
+  });
   // Numbered labels (answer IDs like Q45_5) go up by one, here and in the labels that name them.
   $$('[data-seq]', row).forEach((el) => {
     const before = el.textContent.trim();
@@ -102,6 +111,12 @@ function addRow(btn) {
     $$('[aria-label]', row).forEach((x) => x.setAttribute('aria-label', x.getAttribute('aria-label').replace(before, after)));
   });
   $$('input:not([type="checkbox"]):not([type="radio"]), textarea', row).forEach((el) => { el.value = ''; el.removeAttribute('value'); });
+  $$('[role="switch"]', row).forEach((el) => { el.checked = false; el.removeAttribute('checked'); }); // a new answer isn't exclusive
+  $$('[aria-expanded="true"][aria-controls]', row).forEach((btn) => {
+    btn.setAttribute('aria-expanded', 'false');
+    const panel = $(`#${CSS.escape(btn.getAttribute('aria-controls'))}`, row);
+    if (panel) panel.hidden = true;
+  });
   into.append(row);
   $('input, textarea', row)?.focus();
   markDirty(row);
