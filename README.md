@@ -64,6 +64,7 @@ docs/design/                screenshots of the dashboard
 - Detail pages show one sample record each: every project row opens `project.html`, every vendor opens `vendor.html`, and so on.
 - Profiling: every profiling category has its own number (#1, #2…), which respondents see once it's live. Questions sit in a question bank with their own ID (Q64), and each answer has one too (Q64_1, Q64_2…). A category combines questions from the bank, and a question can be in one category only: once it's in one, the others can't add it.
   In the question editor, Edit on an answer can make it exclusive (multiple-choice questions only), "Ask this question" takes custom conditions, and the Translations tab holds the question and its answers in each language.
+  Questions are edited only in the question bank; a category page orders, shows/hides and removes them. Preview shows the category the way respondents see it on the panel's site (laid out like Sondage Direct's profiling survey), with a switch for the IDs and logic.
 - Modals, dropdowns and the More filters panel are plain Bootstrap markup in the page, opened with `data-bs-toggle`.
 - `ui.js` reads a few `data-*` hooks in the markup:
   - `data-variant-of` / `data-variant`: blocks that replace each other in place (Live/Closed lists, Chart/Table, Hourly/Daily, a profiling category's Draft/Live/Closed). The buttons that swap them have `data-variant-target="group:key"`; a form with it swaps them when it's submitted (Publish to live).
@@ -73,6 +74,7 @@ docs/design/                screenshots of the dashboard
   - `data-add-row` / `data-remove-row`: buttons that add a blank copy of the last row, or remove their own row. A `data-seq` label in the copy counts up by one (answer Q64_6 → Q64_7), ids get a new suffix that the row's labels and buttons follow, and switches start off.
   - `data-move="up|down"`: moves its `[data-move-item]` past the next one; `[data-order]` numbers follow.
   - `data-href` on a table row: the whole row is a link.
+  - `data-exclusive` on a checkbox: ticking it clears the other boxes with the same name, and ticking one of those clears it ("None of these").
   - `data-bs-toggle="tooltip"`: a Bootstrap tooltip. With `data-bs-html` its `data-bs-title` can hold a list, like the countries behind a "+3".
   - `data-spin`, `data-shows`, `data-answers`: a refresh spin, a checkbox that shows a field, a question type that hides the answers.
 - Themes are CSS variables keyed on `html[data-theme]`. The inline script in each page's `<head>` applies the saved theme before first paint so there's no flash. To add a theme, add its block to `base/themes.css`, its mode to that inline script, and its tile to the theme menu in every page.

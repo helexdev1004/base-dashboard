@@ -628,180 +628,232 @@
         <div class="modal-header">
           <div>
             <h5 class="modal-title" id="previewModalTitle">Preview</h5>
-            <p class="panel-subtitle">What respondents see. Hidden questions are left out.</p>
+            <p class="panel-subtitle">What respondents see on the panel&#x27;s site. Hidden questions are left out; the IDs and logic are only shown here, for you.</p>
           </div>
           <div class="modal-head-extra">
             <div class="form-check form-switch m-0 prf-ids-switch">
               <input class="form-check-input" type="checkbox" role="switch" id="pvShowIds" checked>
-              <label class="form-check-label" for="pvShowIds">Show IDs</label>
+              <label class="form-check-label" for="pvShowIds">Show IDs &amp; logic</label>
             </div></div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="prf-preview">
-            <div class="prf-preview-head">
-              <span class="prf-mark" style="--mark:#d9381e" aria-hidden="true">G</span>
-              <div class="prf-preview-title">
-                <strong>Household &amp; family</strong>
-                <span>Profiling · category 3 · Gavenze</span>
-              </div>
-              <span class="prf-preview-points"><i class="bi bi-coin"></i> 5 points</span>
+          <div class="prf-rv">
+            <div class="prf-rv-top">
+              <span class="prf-rv-brand"><span class="prf-rv-mark" aria-hidden="true"><i class="bi bi-check-lg"></i></span>SondageDirect</span>
+              <span class="prf-rv-back"><i class="bi bi-chevron-left"></i> Back to surveys</span>
             </div>
-            <p class="prf-preview-intro">Tell us a little about your household. It takes about 2 minutes and helps us send you surveys that suit you.</p>
-            <fieldset class="prf-preview-q">
-              <legend><span class="prf-preview-no">1.</span> How many people live in your household, including yourself? <span class="prf-preview-id">Q62</span></legend>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv62" id="pv62_1">
-                <label class="form-check-label" for="pv62_1">1 person <span class="prf-preview-id">Q62_1</span></label>
+            <div class="prf-rv-head">
+              <div>
+                <h3 class="prf-rv-title">Profiling survey #3</h3>
+                <p class="prf-rv-sub">Tell us a little about your household. It takes about 2 minutes and helps us send you surveys that suit you.</p>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv62" id="pv62_2">
-                <label class="form-check-label" for="pv62_2">2 people <span class="prf-preview-id">Q62_2</span></label>
+              <span class="prf-rv-pay">
+                <span class="prf-rv-pay-figure">5 <small>points</small></span>
+                <span class="prf-rv-pay-note"><i class="bi bi-clock"></i> about 2 minutes</span>
+              </span>
+            </div>
+            <div class="prf-rv-quiz">
+              <fieldset class="prf-rv-q">
+                <legend class="prf-rv-q-head">
+                  <span class="prf-rv-q-num">Question 1 of 7 <span class="prf-rv-id">Q62</span></span>
+                  <span class="prf-rv-q-text">How many people live in your household, including yourself?</span>
+                  <span class="prf-rv-q-note">Choose one.</span>
+                </legend>
+                <div class="prf-rv-choices">
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv62" value="1">
+                    <span class="prf-rv-choice-text">1 person</span><span class="prf-rv-id">Q62_1</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv62" value="2">
+                    <span class="prf-rv-choice-text">2 people</span><span class="prf-rv-id">Q62_2</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv62" value="3">
+                    <span class="prf-rv-choice-text">3 people</span><span class="prf-rv-id">Q62_3</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv62" value="4">
+                    <span class="prf-rv-choice-text">4 people</span><span class="prf-rv-id">Q62_4</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv62" value="5">
+                    <span class="prf-rv-choice-text">5 or more</span><span class="prf-rv-id">Q62_5</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="prf-rv-q">
+                <legend class="prf-rv-q-head">
+                  <span class="prf-rv-q-num">Question 2 of 7 <span class="prf-rv-id">Q63</span></span>
+                  <span class="prf-rv-q-text">Do you have children living at home?</span>
+                  <span class="prf-rv-q-note">Choose one.</span>
+                </legend>
+                <div class="prf-rv-choices">
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv63" value="1">
+                    <span class="prf-rv-choice-text">Yes</span><span class="prf-rv-id">Q63_1</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv63" value="2">
+                    <span class="prf-rv-choice-text">No</span><span class="prf-rv-id">Q63_2</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="prf-rv-q">
+                <legend class="prf-rv-q-head">
+                  <span class="prf-rv-q-num">Question 3 of 7 <span class="prf-rv-id">Q64</span></span>
+                  <span class="prf-rv-q-text">How old are the children living at home?</span>
+                  <span class="prf-rv-q-note">Choose as many as apply.</span>
+                </legend>
+                <p class="prf-rv-logic"><i class="bi bi-signpost-split"></i> Only asked when <span class="prf-rv-id">Q63_1</span> Yes was picked and <span class="prf-rv-id">Q62_1</span> 1 person wasn't.</p>
+                <div class="prf-rv-choices">
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv64" value="1">
+                    <span class="prf-rv-choice-text">Under 2</span><span class="prf-rv-id">Q64_1</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv64" value="2">
+                    <span class="prf-rv-choice-text">2–4</span><span class="prf-rv-id">Q64_2</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv64" value="3">
+                    <span class="prf-rv-choice-text">5–11</span><span class="prf-rv-id">Q64_3</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv64" value="4">
+                    <span class="prf-rv-choice-text">12–17</span><span class="prf-rv-id">Q64_4</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv64" value="5">
+                    <span class="prf-rv-choice-text">18 or older</span><span class="prf-rv-id">Q64_5</span>
+                  </label>
+                  <label class="prf-rv-choice is-apart">
+                    <input type="checkbox" name="rv64" value="6" data-exclusive>
+                    <span class="prf-rv-choice-text">Prefer not to say</span><span class="prf-rv-id">Q64_6</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="prf-rv-q">
+                <legend class="prf-rv-q-head">
+                  <span class="prf-rv-q-num">Question 4 of 7 <span class="prf-rv-id">Q65</span></span>
+                  <span class="prf-rv-q-text">What best describes your home?</span>
+                  <span class="prf-rv-q-note">Choose one.</span>
+                </legend>
+                <div class="prf-rv-choices">
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv65" value="1">
+                    <span class="prf-rv-choice-text">Apartment</span><span class="prf-rv-id">Q65_1</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv65" value="2">
+                    <span class="prf-rv-choice-text">Terraced house</span><span class="prf-rv-id">Q65_2</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv65" value="3">
+                    <span class="prf-rv-choice-text">Semi-detached house</span><span class="prf-rv-id">Q65_3</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv65" value="4">
+                    <span class="prf-rv-choice-text">Detached house</span><span class="prf-rv-id">Q65_4</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv65" value="5">
+                    <span class="prf-rv-choice-text">Other</span><span class="prf-rv-id">Q65_5</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="prf-rv-q">
+                <legend class="prf-rv-q-head">
+                  <span class="prf-rv-q-num">Question 5 of 7 <span class="prf-rv-id">Q66</span></span>
+                  <span class="prf-rv-q-text">Do you own or rent your home?</span>
+                  <span class="prf-rv-q-note">Choose one.</span>
+                </legend>
+                <div class="prf-rv-choices">
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv66" value="1">
+                    <span class="prf-rv-choice-text">Own</span><span class="prf-rv-id">Q66_1</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv66" value="2">
+                    <span class="prf-rv-choice-text">Rent – social housing</span><span class="prf-rv-id">Q66_2</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv66" value="3">
+                    <span class="prf-rv-choice-text">Rent – private</span><span class="prf-rv-id">Q66_3</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv66" value="4">
+                    <span class="prf-rv-choice-text">Live with my parents</span><span class="prf-rv-id">Q66_4</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv66" value="5">
+                    <span class="prf-rv-choice-text">Other</span><span class="prf-rv-id">Q66_5</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="prf-rv-q">
+                <legend class="prf-rv-q-head">
+                  <span class="prf-rv-q-num">Question 6 of 7 <span class="prf-rv-id">Q67</span></span>
+                  <span class="prf-rv-q-text">Which pets do you have?</span>
+                  <span class="prf-rv-q-note">Choose as many as apply.</span>
+                </legend>
+                <div class="prf-rv-choices">
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv67" value="1">
+                    <span class="prf-rv-choice-text">Dog</span><span class="prf-rv-id">Q67_1</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv67" value="2">
+                    <span class="prf-rv-choice-text">Cat</span><span class="prf-rv-id">Q67_2</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv67" value="3">
+                    <span class="prf-rv-choice-text">Bird</span><span class="prf-rv-id">Q67_3</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv67" value="4">
+                    <span class="prf-rv-choice-text">Fish</span><span class="prf-rv-id">Q67_4</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv67" value="5">
+                    <span class="prf-rv-choice-text">Rabbit or rodent</span><span class="prf-rv-id">Q67_5</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="checkbox" name="rv67" value="6">
+                    <span class="prf-rv-choice-text">Other pet</span><span class="prf-rv-id">Q67_6</span>
+                  </label>
+                  <label class="prf-rv-choice is-apart">
+                    <input type="checkbox" name="rv67" value="7" data-exclusive>
+                    <span class="prf-rv-choice-text">No pets</span><span class="prf-rv-id">Q67_7</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="prf-rv-q">
+                <legend class="prf-rv-q-head">
+                  <span class="prf-rv-q-num">Question 7 of 7 <span class="prf-rv-id">Q68</span></span>
+                  <span class="prf-rv-q-text">Who does most of the grocery shopping in your household?</span>
+                  <span class="prf-rv-q-note">Choose one.</span>
+                </legend>
+                <div class="prf-rv-choices">
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv68" value="1">
+                    <span class="prf-rv-choice-text">I do</span><span class="prf-rv-id">Q68_1</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv68" value="2">
+                    <span class="prf-rv-choice-text">We share it equally</span><span class="prf-rv-id">Q68_2</span>
+                  </label>
+                  <label class="prf-rv-choice">
+                    <input type="radio" name="rv68" value="3">
+                    <span class="prf-rv-choice-text">Someone else</span><span class="prf-rv-id">Q68_3</span>
+                  </label>
+                </div>
+              </fieldset>
+              <div class="prf-rv-foot">
+                <button type="button" class="prf-rv-submit" data-toast="This is a preview: answers aren't sent anywhere." data-toast-tone="info">Submit answers <span aria-hidden="true">&rarr;</span></button>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv62" id="pv62_3">
-                <label class="form-check-label" for="pv62_3">3 people <span class="prf-preview-id">Q62_3</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv62" id="pv62_4">
-                <label class="form-check-label" for="pv62_4">4 people <span class="prf-preview-id">Q62_4</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv62" id="pv62_5">
-                <label class="form-check-label" for="pv62_5">5 or more <span class="prf-preview-id">Q62_5</span></label>
-              </div>
-            </fieldset>
-            <fieldset class="prf-preview-q">
-              <legend><span class="prf-preview-no">2.</span> Do you have children living at home? <span class="prf-preview-id">Q63</span></legend>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv63" id="pv63_1">
-                <label class="form-check-label" for="pv63_1">Yes <span class="prf-preview-id">Q63_1</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv63" id="pv63_2">
-                <label class="form-check-label" for="pv63_2">No <span class="prf-preview-id">Q63_2</span></label>
-              </div>
-            </fieldset>
-            <fieldset class="prf-preview-q">
-              <legend><span class="prf-preview-no">3.</span> How old are the children living at home? <span class="prf-preview-id">Q64</span></legend>
-              <span class="prf-preview-cond">Only asked if the answer to Q63 was "Yes"</span>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv64" id="pv64_1">
-                <label class="form-check-label" for="pv64_1">Under 2 <span class="prf-preview-id">Q64_1</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv64" id="pv64_2">
-                <label class="form-check-label" for="pv64_2">2–4 <span class="prf-preview-id">Q64_2</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv64" id="pv64_3">
-                <label class="form-check-label" for="pv64_3">5–11 <span class="prf-preview-id">Q64_3</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv64" id="pv64_4">
-                <label class="form-check-label" for="pv64_4">12–17 <span class="prf-preview-id">Q64_4</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv64" id="pv64_5">
-                <label class="form-check-label" for="pv64_5">18 or older <span class="prf-preview-id">Q64_5</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv64" id="pv64_6">
-                <label class="form-check-label" for="pv64_6">Prefer not to say <span class="prf-preview-id">Q64_6</span> <span class="prf-preview-id">exclusive</span></label>
-              </div>
-            </fieldset>
-            <fieldset class="prf-preview-q">
-              <legend><span class="prf-preview-no">4.</span> What best describes your home? <span class="prf-preview-id">Q65</span></legend>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv65" id="pv65_1">
-                <label class="form-check-label" for="pv65_1">Apartment <span class="prf-preview-id">Q65_1</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv65" id="pv65_2">
-                <label class="form-check-label" for="pv65_2">Terraced house <span class="prf-preview-id">Q65_2</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv65" id="pv65_3">
-                <label class="form-check-label" for="pv65_3">Semi-detached house <span class="prf-preview-id">Q65_3</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv65" id="pv65_4">
-                <label class="form-check-label" for="pv65_4">Detached house <span class="prf-preview-id">Q65_4</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv65" id="pv65_5">
-                <label class="form-check-label" for="pv65_5">Other <span class="prf-preview-id">Q65_5</span></label>
-              </div>
-            </fieldset>
-            <fieldset class="prf-preview-q">
-              <legend><span class="prf-preview-no">5.</span> Do you own or rent your home? <span class="prf-preview-id">Q66</span></legend>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv66" id="pv66_1">
-                <label class="form-check-label" for="pv66_1">Own <span class="prf-preview-id">Q66_1</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv66" id="pv66_2">
-                <label class="form-check-label" for="pv66_2">Rent – social housing <span class="prf-preview-id">Q66_2</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv66" id="pv66_3">
-                <label class="form-check-label" for="pv66_3">Rent – private <span class="prf-preview-id">Q66_3</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv66" id="pv66_4">
-                <label class="form-check-label" for="pv66_4">Live with my parents <span class="prf-preview-id">Q66_4</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv66" id="pv66_5">
-                <label class="form-check-label" for="pv66_5">Other <span class="prf-preview-id">Q66_5</span></label>
-              </div>
-            </fieldset>
-            <fieldset class="prf-preview-q">
-              <legend><span class="prf-preview-no">6.</span> Which pets do you have? <span class="prf-preview-id">Q67</span></legend>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv67" id="pv67_1">
-                <label class="form-check-label" for="pv67_1">Dog <span class="prf-preview-id">Q67_1</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv67" id="pv67_2">
-                <label class="form-check-label" for="pv67_2">Cat <span class="prf-preview-id">Q67_2</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv67" id="pv67_3">
-                <label class="form-check-label" for="pv67_3">Bird <span class="prf-preview-id">Q67_3</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv67" id="pv67_4">
-                <label class="form-check-label" for="pv67_4">Fish <span class="prf-preview-id">Q67_4</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv67" id="pv67_5">
-                <label class="form-check-label" for="pv67_5">Rabbit or rodent <span class="prf-preview-id">Q67_5</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv67" id="pv67_6">
-                <label class="form-check-label" for="pv67_6">Other pet <span class="prf-preview-id">Q67_6</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="pv67" id="pv67_7">
-                <label class="form-check-label" for="pv67_7">No pets <span class="prf-preview-id">Q67_7</span> <span class="prf-preview-id">exclusive</span></label>
-              </div>
-            </fieldset>
-            <fieldset class="prf-preview-q">
-              <legend><span class="prf-preview-no">7.</span> Who does most of the grocery shopping in your household? <span class="prf-preview-id">Q68</span></legend>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv68" id="pv68_1">
-                <label class="form-check-label" for="pv68_1">I do <span class="prf-preview-id">Q68_1</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv68" id="pv68_2">
-                <label class="form-check-label" for="pv68_2">We share it equally <span class="prf-preview-id">Q68_2</span></label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="pv68" id="pv68_3">
-                <label class="form-check-label" for="pv68_3">Someone else <span class="prf-preview-id">Q68_3</span></label>
-              </div>
-            </fieldset>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
