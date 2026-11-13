@@ -62,7 +62,7 @@ docs/design/                screenshots of the dashboard
 
 - Every page repeats the same sidebar and top bar. When you add or rename a menu item, change it in every HTML file. The current page's link has `active` and `aria-current="page"`, and its menu group is open.
 - Detail pages show one sample record each: every project row opens `project.html`, every vendor opens `vendor.html`, and so on.
-- Profiling: every profiling category has its own number (#1, #2…), which respondents see once it's live. Questions sit in a question bank with their own ID (Q64), and each answer has one too (Q64_1, Q64_2…). A category combines questions from the bank.
+- Profiling: every profiling category has its own number (#1, #2…), which respondents see once it's live. Questions sit in a question bank with their own ID (Q64), and each answer has one too (Q64_1, Q64_2…). A category combines questions from the bank, and a question can be in one category only: once it's in one, the others can't add it.
 - Modals, dropdowns and the More filters panel are plain Bootstrap markup in the page, opened with `data-bs-toggle`.
 - `ui.js` reads a few `data-*` hooks in the markup:
   - `data-variant-of` / `data-variant`: blocks that replace each other in place (Live/Closed lists, Chart/Table, Hourly/Daily, a profiling category's Draft/Live/Closed). The buttons that swap them have `data-variant-target="group:key"`; a form with it swaps them when it's submitted (Publish to live).

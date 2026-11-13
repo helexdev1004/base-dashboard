@@ -632,12 +632,15 @@
             <div class="pv-card flush">
               <div class="pv-toolbar">
                 <button type="button" class="btn btn-ghost btn-sm-h" data-bs-toggle="modal" data-bs-target="#newQuestionModal"><i class="bi bi-plus-circle"></i> New question</button>
-                <select class="form-select pv-filter" aria-label="Question type">
-                  <option selected>All types</option><option>Single choice</option><option>Multiple choice</option><option>Dropdown</option><option>Numeric</option><option>Open text</option>
+                <select class="form-select pv-filter" aria-label="Language">
+                  <option selected>All languages</option><option>English</option><option>Dutch</option><option>French</option><option>German</option><option>Spanish</option><option>Italian</option><option>Polish</option><option>Arabic</option>
                 </select>
-                <select class="form-select pv-filter" aria-label="Used in">
-                  <option selected>In any category or none</option>
+                <select class="form-select pv-filter" aria-label="Used in category">
+                  <option selected>Any category or none</option>
                   <option>Not in a category yet</option><option>#1 Basics (2023)</option><option>#2 Basics</option><option>#3 Household &amp; family</option><option>#4 Work &amp; income</option><option>#5 Health &amp; lifestyle</option><option>#6 Mobile &amp; technology</option><option>#7 Shopping &amp; brands</option><option>#8 Travel &amp; holidays</option>
+                </select>
+                <select class="form-select pv-filter" aria-label="Used in panel">
+                  <option selected>All panels</option><option>Gavenze</option><option>Jafenzi</option><option>Encuestat</option><option>Sondage Direct</option><option>Mening Vandaag</option><option>Opinion Today</option><option>Sondaggi &amp; premi</option>
                 </select>
                 <div class="input-group search-group prf-search ms-auto" role="search">
                   <input class="form-control" type="search" placeholder="Search by ID or question…" aria-label="Search by ID or question…" autocomplete="off">
@@ -653,6 +656,7 @@
                       <th aria-sort="none"><button type="button" class="th-sort">Question</button></th>
                       <th>Type</th>
                       <th>Answers</th>
+                      <th>Language</th>
                       <th>Used in</th>
                       <th aria-sort="none"><button type="button" class="th-sort">Updated</button></th>
                     </tr>
@@ -663,6 +667,7 @@
                       <td class="prf-qtext">How long have you lived at your current address?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">5 <span class="prf-aid-range">Q74_1 – Q74_5</span></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span></span></td>
                       <td><span class="t-muted">Not in a category yet</span></td>
                       <td class="t-muted">2026-11-13</td>
                     </tr>
@@ -671,6 +676,7 @@
                       <td class="prf-qtext">What kind of energy contract does your household have?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">5 <span class="prf-aid-range">Q73_1 – Q73_5</span></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span></span></td>
                       <td><span class="t-muted">Not in a category yet</span></td>
                       <td class="t-muted">2026-11-13</td>
                     </tr>
@@ -679,6 +685,7 @@
                       <td class="prf-qtext">Does your home have a garden, balcony or terrace?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
                       <td class="num-l">4 <span class="prf-aid-range">Q72_1 – Q72_4</span></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span></span></td>
                       <td><span class="t-muted">Not in a category yet</span></td>
                       <td class="t-muted">2026-11-12</td>
                     </tr>
@@ -687,6 +694,7 @@
                       <td class="prf-qtext">Is anyone in your household expecting a baby?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">3 <span class="prf-aid-range">Q71_1 – Q71_3</span></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
                       <td><span class="t-muted">Not in a category yet</span></td>
                       <td class="t-muted">2026-11-12</td>
                     </tr>
@@ -695,6 +703,7 @@
                       <td class="prf-qtext">How many cars does your household have?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">4 <span class="prf-aid-range">Q70_1 – Q70_4</span></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
                       <td><span class="t-muted">Not in a category yet</span></td>
                       <td class="t-muted">2026-11-10</td>
                     </tr>
@@ -703,7 +712,8 @@
                       <td class="prf-qtext">What is your household&#x27;s net monthly income?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">6 <span class="prf-aid-range">Q69_1 – Q69_6</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3"><span class="prf-no">#3</span> Household &amp; family</a><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></span></td>
                       <td class="t-muted">2026-11-11</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -711,7 +721,8 @@
                       <td class="prf-qtext">Who does most of the grocery shopping in your household?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">3 <span class="prf-aid-range">Q68_1 – Q68_3</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3"><span class="prf-no">#3</span> Household &amp; family</a><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></span></td>
                       <td class="t-muted">2026-11-11</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -719,7 +730,8 @@
                       <td class="prf-qtext">Which pets do you have?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
                       <td class="num-l">7 <span class="prf-aid-range">Q67_1 – Q67_7</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3"><span class="prf-no">#3</span> Household &amp; family</a><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></span></td>
                       <td class="t-muted">2026-11-11</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -727,7 +739,8 @@
                       <td class="prf-qtext">Do you own or rent your home?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">5 <span class="prf-aid-range">Q66_1 – Q66_5</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3"><span class="prf-no">#3</span> Household &amp; family</a><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></span></td>
                       <td class="t-muted">2026-11-10</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -735,7 +748,8 @@
                       <td class="prf-qtext">What best describes your home?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">5 <span class="prf-aid-range">Q65_1 – Q65_5</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3"><span class="prf-no">#3</span> Household &amp; family</a><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></span></td>
                       <td class="t-muted">2026-11-10</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -743,7 +757,8 @@
                       <td class="prf-qtext">How old are the children living at home?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
                       <td class="num-l">6 <span class="prf-aid-range">Q64_1 – Q64_6</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3"><span class="prf-no">#3</span> Household &amp; family</a><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></span></td>
                       <td class="t-muted">2026-11-14</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -751,7 +766,8 @@
                       <td class="prf-qtext">Do you have children living at home?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">2 <span class="prf-aid-range">Q63_1 – Q63_2</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3"><span class="prf-no">#3</span> Household &amp; family</a><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></span></td>
                       <td class="t-muted">2026-11-10</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -759,7 +775,8 @@
                       <td class="prf-qtext">How many people live in your household, including yourself?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">5 <span class="prf-aid-range">Q62_1 – Q62_5</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3"><span class="prf-no">#3</span> Household &amp; family</a><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></span></td>
                       <td class="t-muted">2026-11-10</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -767,7 +784,8 @@
                       <td class="prf-qtext">How do you usually travel to your holiday destination?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
                       <td class="num-l">6 <span class="prf-aid-range">Q61_1 – Q61_6</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #8">#8</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #8"><span class="prf-no">#8</span> Travel &amp; holidays</a><span class="prf-marks"><span class="prf-mark is-ink" role="img" aria-label="Opinion Today" title="Opinion Today">O</span></span></span></td>
                       <td class="t-muted">2026-11-13</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -775,7 +793,8 @@
                       <td class="prf-qtext">How do you usually book your holidays?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
                       <td class="num-l">5 <span class="prf-aid-range">Q60_1 – Q60_5</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #8">#8</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #8"><span class="prf-no">#8</span> Travel &amp; holidays</a><span class="prf-marks"><span class="prf-mark is-ink" role="img" aria-label="Opinion Today" title="Opinion Today">O</span></span></span></td>
                       <td class="t-muted">2026-11-13</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
@@ -783,7 +802,8 @@
                       <td class="prf-qtext">Where did you go on your last holiday?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
                       <td class="num-l">4 <span class="prf-aid-range">Q59_1 – Q59_4</span></td>
-                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #8">#8</a></td>
+                      <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span></span></td>
+                      <td><span class="prf-used"><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #8"><span class="prf-no">#8</span> Travel &amp; holidays</a><span class="prf-marks"><span class="prf-mark is-ink" role="img" aria-label="Opinion Today" title="Opinion Today">O</span></span></span></td>
                       <td class="t-muted">2026-11-13</td>
                     </tr>
                   </tbody>

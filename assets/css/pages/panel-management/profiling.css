@@ -198,17 +198,21 @@
 .prf-meter-bar { flex: 0 0 72px; height: 6px; overflow: hidden; background: color-mix(in srgb, var(--overlay) 8%, transparent); border-radius: 3px; }
 .prf-meter-bar > span { display: block; height: 100%; background: var(--grad-primary); border-radius: inherit; }
 .prf-meter-val { font-weight: 600; color: var(--text-strong); font-variant-numeric: tabular-nums; }
-.prf-used { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.prf-used { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
 .prf-cat-chip {
-  padding: 1px 7px;
-  font-size: 11.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--text-2);
+  color: var(--text);
   text-decoration: none;
   background: color-mix(in srgb, var(--overlay) 5%, transparent);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 7px;
 }
+.prf-cat-chip .prf-no { font-size: 11.5px; }
 .prf-cat-chip:hover { color: var(--text-strong); border-color: var(--border-strong); }
 
 /* Category page: status bar (Draft / Live / Closed) */
@@ -282,6 +286,7 @@
 .prf-bank-top .prf-type { font-size: 11.5px; }
 .prf-bank-text { margin: 6px 0 8px; font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--text); }
 .prf-bank-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11.5px; }
+.prf-bank-foot .prf-flags .fi { width: 18px; height: 13px; }
 .prf-add .prf-add-on,
 .prf-add[aria-pressed="true"] .prf-add-off { display: none; }
 .prf-add[aria-pressed="true"] .prf-add-on { display: inline; }
