@@ -63,13 +63,14 @@ docs/design/                screenshots of the dashboard
 - Every page repeats the same sidebar and top bar. When you add or rename a menu item, change it in every HTML file. The current page's link has `active` and `aria-current="page"`, and its menu group is open.
 - Detail pages show one sample record each: every project row opens `project.html`, every vendor opens `vendor.html`, and so on.
 - Profiling: every profiling category has its own number (#1, #2…), which respondents see once it's live. Questions sit in a question bank with their own ID (Q64), and each answer has one too (Q64_1, Q64_2…). A category combines questions from the bank, and a question can be in one category only: once it's in one, the others can't add it.
+  In the question editor, Edit on an answer can make it exclusive (multiple-choice questions only), "Ask this question" takes custom conditions, and the Translations tab holds the question and its answers in each language.
 - Modals, dropdowns and the More filters panel are plain Bootstrap markup in the page, opened with `data-bs-toggle`.
 - `ui.js` reads a few `data-*` hooks in the markup:
   - `data-variant-of` / `data-variant`: blocks that replace each other in place (Live/Closed lists, Chart/Table, Hourly/Daily, a profiling category's Draft/Live/Closed). The buttons that swap them have `data-variant-target="group:key"`; a form with it swaps them when it's submitted (Publish to live).
   - `data-hash`: a tab or button the address can open, e.g. `project.html#campaigns`.
   - `data-toast`, `data-toast-tone`: the message shown when the button is clicked or the form is saved.
   - `data-confirm`: a delete button that asks once, with `data-confirm-remove` (what to remove) or `data-confirm-href` (where to go).
-  - `data-add-row` / `data-remove-row`: buttons that add a blank copy of the last row, or remove their own row. A `data-seq` label in the copy counts up by one (answer Q45_5 → Q45_6).
+  - `data-add-row` / `data-remove-row`: buttons that add a blank copy of the last row, or remove their own row. A `data-seq` label in the copy counts up by one (answer Q64_6 → Q64_7), ids get a new suffix that the row's labels and buttons follow, and switches start off.
   - `data-move="up|down"`: moves its `[data-move-item]` past the next one; `[data-order]` numbers follow.
   - `data-href` on a table row: the whole row is a link.
   - `data-bs-toggle="tooltip"`: a Bootstrap tooltip. With `data-bs-html` its `data-bs-title` can hold a list, like the countries behind a "+3".
