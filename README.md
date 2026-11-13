@@ -72,6 +72,7 @@ docs/design/                screenshots of the dashboard
   - `data-add-row` / `data-remove-row`: buttons that add a blank copy of the last row, or remove their own row. A `data-seq` label in the copy counts up by one (answer Q45_5 → Q45_6).
   - `data-move="up|down"`: moves its `[data-move-item]` past the next one; `[data-order]` numbers follow.
   - `data-href` on a table row: the whole row is a link.
+  - `data-bs-toggle="tooltip"`: a Bootstrap tooltip. With `data-bs-html` its `data-bs-title` can hold a list, like the countries behind a "+3".
   - `data-spin`, `data-shows`, `data-answers`: a refresh spin, a checkbox that shows a field, a question type that hides the answers.
 - Themes are CSS variables keyed on `html[data-theme]`. The inline script in each page's `<head>` applies the saved theme before first paint so there's no flash. To add a theme, add its block to `base/themes.css`, its mode to that inline script, and its tile to the theme menu in every page.
 - The theme and the collapsed sidebar are kept in localStorage.
