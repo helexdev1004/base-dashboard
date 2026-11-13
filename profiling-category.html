@@ -565,21 +565,21 @@
               <div class="pv-card-head">
                 <div>
                   <h2 class="pv-card-title">Category settings</h2>
-                  <p class="pv-card-sub">Where it runs, what respondents see around the questions, and who gets it.</p>
+                  <p class="pv-card-sub">Where it runs and what respondents see around the questions. Languages come from each question's translations.</p>
                 </div>
                 <span class="dirty-flag" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
               </div>
-              <div class="prf-form-grid">
+              <div class="prf-settings-grid">
                 <div>
-                  <label class="form-label" for="psNumber">Category number</label>
+                  <label class="form-label" for="psNumber">Category no.</label>
                   <input class="form-control" id="psNumber" value="#3" readonly aria-describedby="psNumberHelp">
-                  <div class="field-help" id="psNumberHelp">Given when the category was created. Respondents see it under this number.</div>
                 </div>
                 <div>
                   <label class="form-label" for="psName">Name</label>
                   <input class="form-control" id="psName" name="name" value="Household &amp; family" maxlength="80" required>
                   <div class="invalid-feedback">Give the category a name.</div>
                 </div>
+                <div class="field-help prf-wide" id="psNumberHelp">The number is given when the category is created. Respondents see the category under this number.</div>
                 <div class="prf-wide">
                   <label class="form-label" for="psPanels">Panels</label>
                   <div class="ms">
@@ -589,7 +589,7 @@
                     <ul class="ms-menu" id="psPanels-list" role="listbox" aria-multiselectable="true" hidden><li role="option" data-value="j" aria-selected="false">Jafenzi</li><li role="option" data-value="e" aria-selected="false">Encuestat</li><li role="option" data-value="ot" aria-selected="false">Opinion Today</li><li role="option" data-value="sp" aria-selected="false">Sondaggi &amp; premi</li></ul>
                   </div>
                 </div>
-                <div>
+                <div class="prf-wide">
                   <label class="form-label" for="psCountries">Countries</label>
                   <div class="ms">
                     <div class="ms-control"><span class="ms-chips"><span class="ms-chip">Netherlands<button type="button" data-remove="nl" aria-label="Remove Netherlands"><i class="bi bi-x"></i></button></span><span class="ms-chip">France<button type="button" data-remove="fr" aria-label="Remove France"><i class="bi bi-x"></i></button></span><span class="ms-chip">Germany<button type="button" data-remove="de" aria-label="Remove Germany"><i class="bi bi-x"></i></button></span><span class="ms-chip">Belgium<button type="button" data-remove="be" aria-label="Remove Belgium"><i class="bi bi-x"></i></button></span><span class="ms-chip">Austria<button type="button" data-remove="at" aria-label="Remove Austria"><i class="bi bi-x"></i></button></span><span class="ms-chip">Switzerland<button type="button" data-remove="ch" aria-label="Remove Switzerland"><i class="bi bi-x"></i></button></span></span><input type="text" class="ms-input" id="psCountries" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="psCountries-list" autocomplete="off" spellcheck="false"></div>
@@ -599,29 +599,8 @@
                   </div>
                 </div>
                 <div>
-                  <label class="form-label" for="psLanguages">Languages</label>
-                  <div class="ms">
-                    <div class="ms-control"><span class="ms-chips"><span class="ms-chip">Dutch<button type="button" data-remove="nl" aria-label="Remove Dutch"><i class="bi bi-x"></i></button></span><span class="ms-chip">French<button type="button" data-remove="fr" aria-label="Remove French"><i class="bi bi-x"></i></button></span><span class="ms-chip">German<button type="button" data-remove="de" aria-label="Remove German"><i class="bi bi-x"></i></button></span></span><input type="text" class="ms-input" id="psLanguages" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="psLanguages-list" autocomplete="off" spellcheck="false"></div>
-                    <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
-                    <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
-                    <ul class="ms-menu" id="psLanguages-list" role="listbox" aria-multiselectable="true" hidden><li role="option" data-value="en" aria-selected="false">English</li><li role="option" data-value="es" aria-selected="false">Spanish</li><li role="option" data-value="it" aria-selected="false">Italian</li><li role="option" data-value="pl" aria-selected="false">Polish</li><li role="option" data-value="ar" aria-selected="false">Arabic</li></ul>
-                  </div>
-                </div>
-                <div>
                   <label class="form-label" for="psPoints">Reward points</label>
                   <input class="form-control" id="psPoints" name="points" type="number" min="0" max="100" value="5" required>
-                </div>
-                <div>
-                  <label class="form-label" for="psRepeat">Ask again after</label>
-                  <select class="form-select" id="psRepeat" name="repeat"><option>Never</option><option>6 months</option><option selected>12 months</option><option>24 months</option></select>
-                </div>
-                <div class="prf-wide">
-                  <span class="form-label d-block" id="psWhoLabel">Who gets it</span>
-                  <div class="segmented seg-field prf-seg-wrap" role="group" aria-labelledby="psWhoLabel">
-                    <button type="button" aria-pressed="false">New members</button>
-                    <button type="button" class="active" aria-pressed="true">Not answered yet</button>
-                    <button type="button" aria-pressed="false">Everyone</button>
-                  </div>
                 </div>
                 <div class="prf-wide">
                   <label class="form-label" for="psIntro">Intro text</label>
