@@ -136,6 +136,40 @@
   border-radius: 9px;
 }
 
+/* Where a category runs: panel marks, country and language flags, "+N" with a hover list */
+.prf-marks { display: inline-flex; flex-wrap: nowrap; gap: 4px; vertical-align: middle; }
+.prf-flags { display: inline-flex; align-items: center; gap: 5px; vertical-align: middle; }
+.prf-flags .fi { width: 20px; height: 14px; border-radius: 2px; background-size: cover; box-shadow: 0 0 0 1px color-mix(in srgb, var(--overlay) 14%, transparent); }
+.prf-more {
+  height: 20px;
+  padding: 0 7px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  color: var(--text-2);
+  background: color-mix(in srgb, var(--overlay) 7%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: default;
+}
+.prf-more:hover,
+.prf-more:focus-visible { color: var(--text-strong); border-color: var(--border-strong); outline: 0; }
+.prf-tip { --bs-tooltip-max-width: 260px; }
+.prf-tip .tooltip-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 9px 12px;
+  text-align: left;
+  color: var(--text);
+  background: var(--menu-bg);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--float-shadow);
+}
+.prf-tip { --bs-tooltip-bg: var(--menu-bg); --bs-tooltip-opacity: 1; }
+.prf-tip-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; white-space: nowrap; }
+.prf-tip-row .fi { width: 18px; height: 13px; border-radius: 2px; background-size: cover; }
+
 /* Category list and question bank tables */
 .prf-table td { vertical-align: middle; }
 .prf-table .prf-name { white-space: normal; min-width: 220px; }

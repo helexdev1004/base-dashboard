@@ -264,9 +264,9 @@
                   <span class="status-badge status-live" data-variant-of="cat-status" data-variant="live" hidden>Live</span>
                   <span class="status-badge status-closed" data-variant-of="cat-status" data-variant="closed" hidden>Closed</span>
                   <span class="pv-job" title="Category number">#3</span>
-                  <span class="prf-inline"><span class="prf-mark sm" style="--mark:#d9381e" aria-hidden="true">G</span> Gavenze</span>
-                  <span><span class="fi fi-nl"></span> Netherlands</span>
-                  <span><i class="bi bi-translate"></i> Dutch</span>
+                  <span class="prf-inline" title="Panels"><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></span>
+                  <span class="prf-inline" title="Countries"><span class="prf-flags"><span class="fi fi-nl" role="img" title="Netherlands" aria-label="Netherlands"></span><span class="fi fi-fr" role="img" title="France" aria-label="France"></span><span class="fi fi-de" role="img" title="Germany" aria-label="Germany"></span><span class="fi fi-be" role="img" title="Belgium" aria-label="Belgium"></span><button type="button" class="prf-more" data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="prf-tip" data-bs-title="&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-at&quot;&gt;&lt;/span&gt;Austria&lt;/span&gt;&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-ch&quot;&gt;&lt;/span&gt;Switzerland&lt;/span&gt;" aria-label="2 more: Austria, Switzerland">+2</button></span></span>
+                  <span class="prf-inline"><i class="bi bi-translate"></i><span class="prf-flags"><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></span>
                   <span><i class="bi bi-clock-history"></i> Updated 2026-11-14 09:12</span>
                 </div>
               </div>
@@ -588,17 +588,32 @@
                   <input class="form-control" id="psName" name="name" value="Household &amp; family" maxlength="80" required>
                   <div class="invalid-feedback">Give the category a name.</div>
                 </div>
-                <div>
-                  <label class="form-label" for="psPanel">Panel</label>
-                  <input class="form-control" id="psPanel" value="Gavenze" readonly>
+                <div class="prf-wide">
+                  <label class="form-label" for="psPanels">Panels</label>
+                  <div class="ms">
+                    <div class="ms-control"><span class="ms-chips"><span class="ms-chip">Gavenze<button type="button" data-remove="g" aria-label="Remove Gavenze"><i class="bi bi-x"></i></button></span><span class="ms-chip">Sondage Direct<button type="button" data-remove="sd" aria-label="Remove Sondage Direct"><i class="bi bi-x"></i></button></span><span class="ms-chip">Mening Vandaag<button type="button" data-remove="mv" aria-label="Remove Mening Vandaag"><i class="bi bi-x"></i></button></span></span><input type="text" class="ms-input" id="psPanels" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="psPanels-list" autocomplete="off" spellcheck="false"></div>
+                    <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
+                    <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+                    <ul class="ms-menu" id="psPanels-list" role="listbox" aria-multiselectable="true" hidden><li role="option" data-value="j" aria-selected="false">Jafenzi</li><li role="option" data-value="e" aria-selected="false">Encuestat</li><li role="option" data-value="ot" aria-selected="false">Opinion Today</li><li role="option" data-value="sp" aria-selected="false">Sondaggi &amp; premi</li></ul>
+                  </div>
                 </div>
                 <div>
-                  <label class="form-label" for="psCountry">Country</label>
-                  <input class="form-control" id="psCountry" value="Netherlands" readonly>
+                  <label class="form-label" for="psCountries">Countries</label>
+                  <div class="ms">
+                    <div class="ms-control"><span class="ms-chips"><span class="ms-chip">Netherlands<button type="button" data-remove="nl" aria-label="Remove Netherlands"><i class="bi bi-x"></i></button></span><span class="ms-chip">France<button type="button" data-remove="fr" aria-label="Remove France"><i class="bi bi-x"></i></button></span><span class="ms-chip">Germany<button type="button" data-remove="de" aria-label="Remove Germany"><i class="bi bi-x"></i></button></span><span class="ms-chip">Belgium<button type="button" data-remove="be" aria-label="Remove Belgium"><i class="bi bi-x"></i></button></span><span class="ms-chip">Austria<button type="button" data-remove="at" aria-label="Remove Austria"><i class="bi bi-x"></i></button></span><span class="ms-chip">Switzerland<button type="button" data-remove="ch" aria-label="Remove Switzerland"><i class="bi bi-x"></i></button></span></span><input type="text" class="ms-input" id="psCountries" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="psCountries-list" autocomplete="off" spellcheck="false"></div>
+                    <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
+                    <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+                    <ul class="ms-menu" id="psCountries-list" role="listbox" aria-multiselectable="true" hidden><li role="option" data-value="gb" aria-selected="false">United Kingdom</li><li role="option" data-value="es" aria-selected="false">Spain</li><li role="option" data-value="it" aria-selected="false">Italy</li><li role="option" data-value="mx" aria-selected="false">Mexico</li><li role="option" data-value="sa" aria-selected="false">Saudi Arabia</li><li role="option" data-value="ie" aria-selected="false">Ireland</li><li role="option" data-value="ae" aria-selected="false">United Arab Emirates</li><li role="option" data-value="pl" aria-selected="false">Poland</li><li role="option" data-value="eg" aria-selected="false">Egypt</li><li role="option" data-value="ar" aria-selected="false">Argentina</li><li role="option" data-value="co" aria-selected="false">Colombia</li><li role="option" data-value="ma" aria-selected="false">Morocco</li></ul>
+                  </div>
                 </div>
                 <div>
-                  <label class="form-label" for="psLanguage">Language</label>
-                  <select class="form-select" id="psLanguage" name="language"><option selected>Dutch</option><option>English</option></select>
+                  <label class="form-label" for="psLanguages">Languages</label>
+                  <div class="ms">
+                    <div class="ms-control"><span class="ms-chips"><span class="ms-chip">Dutch<button type="button" data-remove="nl" aria-label="Remove Dutch"><i class="bi bi-x"></i></button></span><span class="ms-chip">French<button type="button" data-remove="fr" aria-label="Remove French"><i class="bi bi-x"></i></button></span><span class="ms-chip">German<button type="button" data-remove="de" aria-label="Remove German"><i class="bi bi-x"></i></button></span></span><input type="text" class="ms-input" id="psLanguages" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="psLanguages-list" autocomplete="off" spellcheck="false"></div>
+                    <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
+                    <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+                    <ul class="ms-menu" id="psLanguages-list" role="listbox" aria-multiselectable="true" hidden><li role="option" data-value="en" aria-selected="false">English</li><li role="option" data-value="es" aria-selected="false">Spanish</li><li role="option" data-value="it" aria-selected="false">Italian</li><li role="option" data-value="pl" aria-selected="false">Polish</li><li role="option" data-value="ar" aria-selected="false">Arabic</li></ul>
+                  </div>
                 </div>
                 <div>
                   <label class="form-label" for="psPoints">Reward points</label>
@@ -838,10 +853,11 @@
         <div class="modal-body">
           <dl class="prf-summary">
             <div><dt>Category number</dt><dd><span class="prf-no">#3</span> <span class="t-muted">respondents see this number</span></dd></div>
-            <div><dt>Panel</dt><dd><span class="prf-inline"><span class="prf-mark sm" style="--mark:#d9381e" aria-hidden="true">G</span> Gavenze</span></dd></div>
-            <div><dt>Country</dt><dd><span class="fi fi-nl"></span> Netherlands · Dutch</dd></div>
+            <div><dt>Panels</dt><dd><span class="prf-inline"><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span> Gavenze, Mening Vandaag, Sondage Direct</span></dd></div>
+            <div><dt>Countries</dt><dd><span class="prf-flags"><span class="fi fi-nl" role="img" title="Netherlands" aria-label="Netherlands"></span><span class="fi fi-fr" role="img" title="France" aria-label="France"></span><span class="fi fi-de" role="img" title="Germany" aria-label="Germany"></span><span class="fi fi-be" role="img" title="Belgium" aria-label="Belgium"></span><span class="fi fi-at" role="img" title="Austria" aria-label="Austria"></span><span class="fi fi-ch" role="img" title="Switzerland" aria-label="Switzerland"></span></span></dd></div>
+            <div><dt>Languages</dt><dd><span class="prf-inline"><span class="prf-flags"><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span> Dutch, French, German</span></dd></div>
             <div><dt>Questions</dt><dd>7 shown, 1 hidden <span class="t-muted">(Q69)</span> · 33 answers</dd></div>
-            <div><dt>Who gets it</dt><dd>Active members who haven't answered it · 18,204</dd></div>
+            <div><dt>Who gets it</dt><dd>Active members who haven't answered it · 96,577</dd></div>
             <div><dt>Reward</dt><dd>5 points</dd></div>
           </dl>
           <div class="tr-note prf-publish-note" role="note">
@@ -866,7 +882,7 @@
         <div class="modal-header">
           <div>
             <h5 class="modal-title" id="questionModalTitle">Question Q64</h5>
-            <p class="panel-subtitle">Gavenze · Netherlands · in #3 Household &amp; family</p>
+            <p class="panel-subtitle">in #3 Household &amp; family · Gavenze, Mening Vandaag, Sondage Direct</p>
           </div>
           <div class="modal-head-extra"></div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

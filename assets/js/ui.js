@@ -475,6 +475,8 @@ document.addEventListener('DOMContentLoaded', () => {
   $$('.ms').forEach(initMultiSelect);
   $$('.combo').forEach(initComboBox);
   $$('.chk').forEach(initCheckSelect);
+  // Hover lists, e.g. the countries behind a "+3" (data-bs-title can hold markup with data-bs-html).
+  $$('[data-bs-toggle="tooltip"]').forEach((el) => new bootstrap.Tooltip(el));
   openFromHash();
 });
 window.addEventListener('hashchange', openFromHash);
