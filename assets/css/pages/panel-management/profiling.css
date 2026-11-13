@@ -398,13 +398,6 @@
 .prf-tr-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 26px 12px; font-size: 13px; color: var(--muted); text-align: center; }
 .prf-tr-empty .bi { font-size: 22px; color: var(--muted-2); }
 
-/* Publish summary */
-.prf-summary { display: flex; flex-direction: column; margin: 0 0 14px; }
-.prf-summary > div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
-.prf-summary dt { font-size: 12.5px; font-weight: 500; color: var(--muted); }
-.prf-summary dd { margin: 0; font-size: 13px; color: var(--text); }
-.prf-summary .fi { width: 18px; height: 13px; border-radius: 2px; background-size: cover; vertical-align: -1px; }
-
 /* Preview: the category as a respondent sees it */
 .prf-ids-switch { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-2); }
 .prf-preview { display: flex; flex-direction: column; gap: 14px; }
@@ -441,5 +434,4 @@
   .prf-ans-opts { margin-left: 0; }
   .prf-form-grid,
   .prf-form-pair { grid-template-columns: minmax(0, 1fr); }
-  .prf-summary > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
 }
