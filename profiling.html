@@ -256,53 +256,211 @@
         <div class="page-view" id="profilingView">
           <header class="page-head">
             <h1 class="page-title">Profiling</h1>
-            <p class="page-sub">Profiling categories for each panel and country. Questions from the bank are combined into a category, and respondents see a live category under its number.</p>
+            <p class="page-sub">Questions from the bank are combined into profiling categories, and respondents see a live category under its number. Filter both lists by panel and country.</p>
           </header>
-          <section class="pv-card prf-picker" aria-label="Panel and country">
+          <!-- Filters. Any number of panels and countries can be picked; All clears them. Countries that don't fit
+       on two rows move into Others (assets/js/profiling.js). -->
+          <section class="pv-card prf-picker" aria-label="Filter by panel and country">
             <div class="prf-step">
               <span class="prf-step-label"><span class="prf-step-no">1</span>Panel</span>
-              <div class="prf-chips" role="group" aria-label="Panel">
-                <button type="button" class="prf-chip active" aria-pressed="true">
+              <div class="prf-chips" role="group" aria-label="Panel" data-multi>
+                <button type="button" class="prf-chip prf-chip-all active" aria-pressed="true" data-all><span class="prf-chip-name">All</span><span class="prf-chip-count">5 live</span></button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="g">
                   <span class="prf-mark" style="--mark:#d9381e" aria-hidden="true">G</span><span class="prf-chip-name">Gavenze</span><span class="prf-chip-count">4 live</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="j">
                   <span class="prf-mark" style="--mark:#b42b3c" aria-hidden="true">J</span><span class="prf-chip-name">Jafenzi</span><span class="prf-chip-count">2 live</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="e">
                   <span class="prf-mark" style="--mark:#2f9e44" aria-hidden="true">E</span><span class="prf-chip-name">Encuestat</span><span class="prf-chip-count">3 live</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="sd">
                   <span class="prf-mark" style="--mark:#4c1fb8" aria-hidden="true">S</span><span class="prf-chip-name">Sondage Direct</span><span class="prf-chip-count">3 live</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="mv">
                   <span class="prf-mark is-ink" aria-hidden="true">M</span><span class="prf-chip-name">Mening Vandaag</span><span class="prf-chip-count">2 live</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="ot">
                   <span class="prf-mark is-ink" aria-hidden="true">O</span><span class="prf-chip-name">Opinion Today</span><span class="prf-chip-count">3 live</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="sp">
                   <span class="prf-mark" style="--mark:#e0452b" aria-hidden="true">S</span><span class="prf-chip-name">Sondaggi &amp; premi</span><span class="prf-chip-count">2 live</span>
                 </button>
               </div>
             </div>
             <div class="prf-step">
               <span class="prf-step-label"><span class="prf-step-no">2</span>Country</span>
-              <div class="prf-chips" role="group" aria-label="Country">
-                <button type="button" class="prf-chip active" aria-pressed="true">
-                  <span class="fi fi-nl"></span><span class="prf-chip-name">Netherlands</span><span class="prf-chip-count">18,204</span>
+              <div class="prf-chips" role="group" aria-label="Country" data-multi data-max-rows="2">
+                <button type="button" class="prf-chip prf-chip-all active" aria-pressed="true" data-all><span class="prf-chip-name">All</span><span class="prf-chip-count">209,442</span></button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="nl" data-members="31240">
+                  <span class="fi fi-nl"></span><span class="prf-chip-name">Netherlands</span><span class="prf-chip-count">31,240</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
-                  <span class="fi fi-be"></span><span class="prf-chip-name">Belgium</span><span class="prf-chip-count">9,876</span>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="gb" data-members="27915">
+                  <span class="fi fi-gb"></span><span class="prf-chip-name">United Kingdom</span><span class="prf-chip-count">27,915</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
-                  <span class="fi fi-de"></span><span class="prf-chip-name">Germany</span><span class="prf-chip-count">11,532</span>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="fr" data-members="21470">
+                  <span class="fi fi-fr"></span><span class="prf-chip-name">France</span><span class="prf-chip-count">21,470</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="de" data-members="19632">
+                  <span class="fi fi-de"></span><span class="prf-chip-name">Germany</span><span class="prf-chip-count">19,632</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="es" data-members="18104">
+                  <span class="fi fi-es"></span><span class="prf-chip-name">Spain</span><span class="prf-chip-count">18,104</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="it" data-members="17883">
+                  <span class="fi fi-it"></span><span class="prf-chip-name">Italy</span><span class="prf-chip-count">17,883</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="be" data-members="16205">
+                  <span class="fi fi-be"></span><span class="prf-chip-name">Belgium</span><span class="prf-chip-count">16,205</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="mx" data-members="9876">
+                  <span class="fi fi-mx"></span><span class="prf-chip-name">Mexico</span><span class="prf-chip-count">9,876</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="sa" data-members="8412">
+                  <span class="fi fi-sa"></span><span class="prf-chip-name">Saudi Arabia</span><span class="prf-chip-count">8,412</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="ie" data-members="7305">
+                  <span class="fi fi-ie"></span><span class="prf-chip-name">Ireland</span><span class="prf-chip-count">7,305</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="ae" data-members="6980">
+                  <span class="fi fi-ae"></span><span class="prf-chip-name">United Arab Emirates</span><span class="prf-chip-count">6,980</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="pl" data-members="5334">
+                  <span class="fi fi-pl"></span><span class="prf-chip-name">Poland</span><span class="prf-chip-count">5,334</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="at" data-members="4190">
                   <span class="fi fi-at"></span><span class="prf-chip-name">Austria</span><span class="prf-chip-count">4,190</span>
                 </button>
-                <button type="button" class="prf-chip" aria-pressed="false">
-                  <span class="fi fi-pl"></span><span class="prf-chip-name">Poland</span><span class="prf-chip-count">3,324</span>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="ch" data-members="3840">
+                  <span class="fi fi-ch"></span><span class="prf-chip-name">Switzerland</span><span class="prf-chip-count">3,840</span>
                 </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="eg" data-members="3127">
+                  <span class="fi fi-eg"></span><span class="prf-chip-name">Egypt</span><span class="prf-chip-count">3,127</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="ar" data-members="2904">
+                  <span class="fi fi-ar"></span><span class="prf-chip-name">Argentina</span><span class="prf-chip-count">2,904</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="co" data-members="2615">
+                  <span class="fi fi-co"></span><span class="prf-chip-name">Colombia</span><span class="prf-chip-count">2,615</span>
+                </button>
+                <button type="button" class="prf-chip" aria-pressed="false" data-chip="ma" data-members="2410">
+                  <span class="fi fi-ma"></span><span class="prf-chip-name">Morocco</span><span class="prf-chip-count">2,410</span>
+                </button>
+                <div class="dropdown prf-others" hidden>
+                  <button type="button" class="prf-chip prf-others-btn" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" title="Countries that don't fit here">
+                    <span class="prf-chip-name">Others</span><span class="prf-chip-count" data-others-count>0</span><i class="bi bi-chevron-down prf-others-caret" aria-hidden="true"></i>
+                  </button>
+                  <ul class="dropdown-menu prf-others-menu">
+                    <li data-chip="nl" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="nl">
+                        <span class="fi fi-nl"></span><span class="prf-chip-name">Netherlands</span><span class="prf-chip-count">31,240</span>
+                      </label>
+                    </li>
+                    <li data-chip="gb" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="gb">
+                        <span class="fi fi-gb"></span><span class="prf-chip-name">United Kingdom</span><span class="prf-chip-count">27,915</span>
+                      </label>
+                    </li>
+                    <li data-chip="fr" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="fr">
+                        <span class="fi fi-fr"></span><span class="prf-chip-name">France</span><span class="prf-chip-count">21,470</span>
+                      </label>
+                    </li>
+                    <li data-chip="de" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="de">
+                        <span class="fi fi-de"></span><span class="prf-chip-name">Germany</span><span class="prf-chip-count">19,632</span>
+                      </label>
+                    </li>
+                    <li data-chip="es" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="es">
+                        <span class="fi fi-es"></span><span class="prf-chip-name">Spain</span><span class="prf-chip-count">18,104</span>
+                      </label>
+                    </li>
+                    <li data-chip="it" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="it">
+                        <span class="fi fi-it"></span><span class="prf-chip-name">Italy</span><span class="prf-chip-count">17,883</span>
+                      </label>
+                    </li>
+                    <li data-chip="be" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="be">
+                        <span class="fi fi-be"></span><span class="prf-chip-name">Belgium</span><span class="prf-chip-count">16,205</span>
+                      </label>
+                    </li>
+                    <li data-chip="mx" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="mx">
+                        <span class="fi fi-mx"></span><span class="prf-chip-name">Mexico</span><span class="prf-chip-count">9,876</span>
+                      </label>
+                    </li>
+                    <li data-chip="sa" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="sa">
+                        <span class="fi fi-sa"></span><span class="prf-chip-name">Saudi Arabia</span><span class="prf-chip-count">8,412</span>
+                      </label>
+                    </li>
+                    <li data-chip="ie" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="ie">
+                        <span class="fi fi-ie"></span><span class="prf-chip-name">Ireland</span><span class="prf-chip-count">7,305</span>
+                      </label>
+                    </li>
+                    <li data-chip="ae" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="ae">
+                        <span class="fi fi-ae"></span><span class="prf-chip-name">United Arab Emirates</span><span class="prf-chip-count">6,980</span>
+                      </label>
+                    </li>
+                    <li data-chip="pl" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="pl">
+                        <span class="fi fi-pl"></span><span class="prf-chip-name">Poland</span><span class="prf-chip-count">5,334</span>
+                      </label>
+                    </li>
+                    <li data-chip="at" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="at">
+                        <span class="fi fi-at"></span><span class="prf-chip-name">Austria</span><span class="prf-chip-count">4,190</span>
+                      </label>
+                    </li>
+                    <li data-chip="ch" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="ch">
+                        <span class="fi fi-ch"></span><span class="prf-chip-name">Switzerland</span><span class="prf-chip-count">3,840</span>
+                      </label>
+                    </li>
+                    <li data-chip="eg" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="eg">
+                        <span class="fi fi-eg"></span><span class="prf-chip-name">Egypt</span><span class="prf-chip-count">3,127</span>
+                      </label>
+                    </li>
+                    <li data-chip="ar" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="ar">
+                        <span class="fi fi-ar"></span><span class="prf-chip-name">Argentina</span><span class="prf-chip-count">2,904</span>
+                      </label>
+                    </li>
+                    <li data-chip="co" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="co">
+                        <span class="fi fi-co"></span><span class="prf-chip-name">Colombia</span><span class="prf-chip-count">2,615</span>
+                      </label>
+                    </li>
+                    <li data-chip="ma" hidden>
+                      <label class="dropdown-item prf-others-item">
+                        <input class="form-check-input" type="checkbox" data-chip="ma">
+                        <span class="fi fi-ma"></span><span class="prf-chip-name">Morocco</span><span class="prf-chip-count">2,410</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </section>
@@ -834,5 +992,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/layout.js"></script>
   <script src="assets/js/ui.js"></script>
+  <script src="assets/js/profiling.js"></script>
 </body>
 </html>

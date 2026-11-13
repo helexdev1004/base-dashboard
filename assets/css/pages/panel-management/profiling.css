@@ -58,12 +58,13 @@
 
 /* Panel > Country picker */
 .prf-picker { display: flex; flex-direction: column; gap: 14px; }
-.prf-step { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.prf-step { display: flex; align-items: flex-start; gap: 14px; min-width: 0; }
 .prf-step-label {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   flex: 0 0 96px;
+  height: 38px; /* level with the first row of chips */
   font-size: 12px;
   font-weight: 600;
   letter-spacing: .05em;
@@ -116,6 +117,14 @@
   border-radius: 9px;
 }
 .prf-chip.active .prf-chip-count { color: var(--text); }
+.prf-chip-all { padding-left: 12px; }
+.prf-chip.prf-others-btn::after { display: none; } /* no Bootstrap dropdown caret: it has its own */
+.prf-others-caret { font-size: 11px; color: var(--muted); }
+.prf-others-menu { min-width: 280px; max-height: 340px; padding: 6px; overflow-y: auto; }
+.prf-others-item { display: flex; align-items: center; gap: 9px; padding: 7px 10px; font-size: 13px; border-radius: 8px; cursor: pointer; }
+.prf-others-item .form-check-input { flex: 0 0 auto; margin: 0; }
+.prf-others-item .fi { width: 20px; height: 14px; border-radius: 3px; background-size: cover; }
+.prf-others-item .prf-chip-count { margin-left: auto; }
 
 .prf-tab-count {
   margin-left: 4px;

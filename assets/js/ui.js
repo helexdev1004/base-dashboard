@@ -400,7 +400,7 @@ document.addEventListener('click', (e) => {
   if (btn?.matches('.th-sort')) { sortBy(btn); return; }
   if (btn?.matches('[data-search-clear]')) { const input = $('input', btn.closest('.search-group')); input.value = ''; input.focus(); return; }
   if (btn?.matches('[data-search-go]')) { $('input', btn.closest('.search-group')).focus(); return; }
-  if (btn?.matches('button[aria-pressed]')) pressButton(btn);
+  if (btn?.matches('button[aria-pressed]') && !btn.closest('[data-multi]')) pressButton(btn); // [data-multi] filters: their page script
   else if (btn?.matches('[role="radio"][aria-checked]')) checkRadio(btn);
   else if (btn?.matches('button[aria-expanded][aria-controls]:not([data-bs-toggle]):not(.chk-toggle):not(.nav-toggle)')) toggleDisclosure(btn);
   // A menu item that opens a modal closes its menu first (menus that stay open while you click inside).
