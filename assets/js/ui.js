@@ -437,6 +437,12 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('change', (e) => {
   const el = e.target;
+  // An exclusive answer ("None of these") clears the other ticks in its question, and they clear it.
+  if (el.type === 'checkbox' && el.checked && el.name) {
+    $$(`input[type="checkbox"][name="${CSS.escape(el.name)}"]`, el.closest('fieldset') || el.form || document).forEach((box) => {
+      if (box !== el && (el.hasAttribute('data-exclusive') || box.hasAttribute('data-exclusive'))) box.checked = false;
+    });
+  }
   if (el.matches('select[data-status]')) el.dataset.status = el.value;
   if (el.dataset.shows) $(el.dataset.shows).hidden = !el.checked;
   if (el.dataset.answers) {

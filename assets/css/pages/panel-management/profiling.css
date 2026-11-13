@@ -398,23 +398,89 @@
 .prf-tr-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 26px 12px; font-size: 13px; color: var(--muted); text-align: center; }
 .prf-tr-empty .bi { font-size: 22px; color: var(--muted-2); }
 
-/* Preview: the category as a respondent sees it */
-.prf-ids-switch { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-2); }
-.prf-preview { display: flex; flex-direction: column; gap: 14px; }
-.prf-preview-head { display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-.prf-preview-head .prf-mark { width: 36px; height: 36px; font-size: 18px; border-radius: 9px; }
-.prf-preview-title { display: flex; flex-direction: column; flex: 1 1 auto; }
-.prf-preview-title strong { font-size: 15px; color: var(--text-strong); }
-.prf-preview-title span { font-size: 12px; color: var(--muted); }
-.prf-preview-points { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: 12.5px; font-weight: 600; color: #241a00; background: linear-gradient(180deg, var(--amber) 0%, var(--amber-2) 100%); border-radius: 14px; }
-.prf-preview-intro { margin: 0; font-size: 13.5px; color: var(--text-2); }
-.prf-preview-q { margin: 0; padding: 12px 14px; background: color-mix(in srgb, var(--overlay) 3%, transparent); border: 1px solid var(--border); border-radius: 10px; }
-.prf-preview-q legend { margin-bottom: 8px; font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--text-strong); }
-.prf-preview-no { color: var(--muted); }
-.prf-preview-cond { display: block; margin: -4px 0 8px; font-size: 12px; color: var(--muted); }
-.prf-preview-q .form-check { margin-bottom: 4px; font-size: 13.5px; color: var(--text); }
-.prf-preview-id { margin-left: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; font-weight: 600; color: var(--muted); }
-.modal-content:not(:has(#pvShowIds:checked)) .prf-preview-id { display: none; }
+/* Preview: the category the way respondents see it on the panel's site, laid out like Sondage Direct's
+   profiling survey. It keeps the site's own light colours whatever the dashboard theme. */
+.prf-ids-switch { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-2); white-space: nowrap; }
+.prf-rv {
+  --rv-navy: #0b1437;
+  --rv-blue: #0874fc;
+  --rv-blue-btn: #0b55ce;
+  --rv-bg: #f3f9fe;
+  --rv-body: #5f6787;
+  --rv-border: #dbe8f5;
+  padding: 20px 24px 24px;
+  color: var(--rv-navy);
+  background: var(--rv-bg);
+  border-radius: 14px;
+  color-scheme: light;
+}
+.prf-rv-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.prf-rv-brand { display: inline-flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 800; letter-spacing: -.02em; }
+.prf-rv-mark { display: grid; place-items: center; width: 26px; height: 26px; font-size: 18px; color: #fff; background: #4c1fb8; border-radius: 6px; box-shadow: 2px 2px 0 #e0452b; }
+.prf-rv-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--rv-body); }
+.prf-rv-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; margin-bottom: 18px; }
+.prf-rv-title { margin: 0 0 6px; font-size: 26px; font-weight: 800; letter-spacing: -.025em; color: var(--rv-navy); }
+.prf-rv-sub { max-width: 520px; margin: 0; font-size: 14px; line-height: 1.55; color: var(--rv-body); }
+.prf-rv-pay { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.prf-rv-pay-figure { font-size: 24px; font-weight: 800; letter-spacing: -.025em; font-variant-numeric: tabular-nums; }
+.prf-rv-pay-figure small { font-size: 13px; font-weight: 600; color: var(--rv-body); }
+.prf-rv-pay-note { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--rv-body); }
+.prf-rv-quiz { display: flex; flex-direction: column; gap: 14px; }
+/* One question per card. The legend floats so it sits inside the card instead of on its border. */
+.prf-rv-q { min-width: 0; margin: 0; padding: 22px 24px; background: #fff; border: 1px solid var(--rv-border); border-radius: 20px; box-shadow: 0 6px 24px rgba(28, 82, 160, .05); }
+.prf-rv-q-head { float: left; width: 100%; margin: 0 0 16px; padding: 0; font-size: inherit; line-height: inherit; }
+.prf-rv-q-head + * { clear: both; }
+.prf-rv-q-num { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; font-size: 11.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--rv-blue-btn); }
+.prf-rv-q-text { display: block; font-size: 17.5px; font-weight: 700; line-height: 1.35; letter-spacing: -.015em; color: var(--rv-navy); }
+.prf-rv-q-note { display: block; margin-top: 5px; font-size: 13px; color: var(--rv-body); }
+/* The whole row is the target, not just the control */
+.prf-rv-choices { display: flex; flex-direction: column; gap: 8px; }
+.prf-rv-choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 12px 15px;
+  background: #fff;
+  border: 1.5px solid var(--rv-border);
+  border-radius: 13px;
+  cursor: pointer;
+  transition: border-color .18s, background-color .18s, box-shadow .18s;
+}
+.prf-rv-choice:hover { background: #fbfdff; border-color: #a9c8ec; }
+/* An exclusive answer ("No pets", "Prefer not to say") answers a different question, so it's set apart */
+.prf-rv-choice.is-apart { margin-top: 5px; border-style: dashed; }
+.prf-rv-choice input {
+  appearance: none;
+  flex: none;
+  width: 21px;
+  height: 21px;
+  margin: 0;
+  background: #fff no-repeat center / 13px 13px;
+  border: 2px solid #b9cbe4;
+  cursor: pointer;
+  transition: border-color .18s, background-color .18s, box-shadow .18s;
+}
+.prf-rv-choice input[type="radio"] { border-radius: 50%; }
+.prf-rv-choice input[type="checkbox"] { border-radius: 7px; }
+.prf-rv-choice input:checked { background-color: var(--rv-blue-btn); border-color: var(--rv-blue-btn); }
+.prf-rv-choice input[type="radio"]:checked { box-shadow: inset 0 0 0 4px #fff; }
+.prf-rv-choice input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+}
+.prf-rv-choice input:focus-visible { outline: 2px solid var(--rv-blue); outline-offset: 2px; }
+.prf-rv-choice:has(input:checked) { background: #f2f7ff; border-color: var(--rv-blue-btn); box-shadow: 0 0 0 3px rgba(11, 85, 206, .1); }
+.prf-rv-choice-text { flex: 1 1 auto; font-size: 14.5px; line-height: 1.4; color: var(--rv-navy); }
+.prf-rv-foot { display: flex; justify-content: flex-end; padding: 18px 24px; background: #fff; border: 1px solid var(--rv-border); border-radius: 20px; }
+.prf-rv-submit { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 26px; font-size: 15px; font-weight: 700; color: #fff; background: var(--rv-blue-btn); border: 0; border-radius: 12px; box-shadow: 0 8px 18px -8px rgba(11, 85, 206, .6); }
+.prf-rv-submit:hover { background: #0a4cb8; }
+/* IDs and logic are for us, not respondents: the "Show IDs and logic" switch above the preview */
+.prf-rv-id { flex: none; margin-left: auto; padding: 1px 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0; text-transform: none; color: #5b6b94; background: #eef3fb; border: 1px dashed #c7d6ec; border-radius: 5px; }
+.prf-rv-q-num .prf-rv-id,
+.prf-rv-logic .prf-rv-id { margin-left: 0; }
+.prf-rv-logic { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 12px; padding: 7px 11px; font-size: 12.5px; color: #3a4a74; background: #eef6ff; border: 1px dashed #b7d3f5; border-radius: 9px; }
+.prf-rv-logic > .bi { color: var(--rv-blue); }
+.modal-content:not(:has(#pvShowIds:checked)) :is(.prf-rv-id, .prf-rv-logic) { display: none; }
 
 @media (max-width: 1199.98px) {
   .prf-builder { grid-template-columns: minmax(0, 1fr); }
@@ -428,6 +494,11 @@
   .prf-ans { margin-left: 0; }
 }
 @media (max-width: 575.98px) {
+  .prf-rv { padding: 16px 12px 18px; }
+  .prf-rv-q { padding: 18px 14px; }
+  .prf-rv-pay { align-items: flex-start; }
+  .prf-rv-foot { padding: 14px; }
+  .prf-rv-submit { width: 100%; justify-content: center; }
   .prf-settings-grid { grid-template-columns: 110px minmax(0, 1fr); gap: 14px; }
   .prf-rule { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; }
   .prf-rule .prf-rule-q { grid-column: 1 / -1; }
