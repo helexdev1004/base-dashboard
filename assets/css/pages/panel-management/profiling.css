@@ -170,6 +170,25 @@
 .prf-tip-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; white-space: nowrap; }
 .prf-tip-row .fi { width: 18px; height: 13px; border-radius: 2px; background-size: cover; }
 
+/* Category list: tighter cells so all eleven columns fit at 1440px */
+.prf-table th:not(:first-child):not(:last-child),
+.prf-table td:not(:first-child):not(:last-child) { padding-left: 8px; padding-right: 8px; }
+.prf-table .prf-marks { gap: 3px; }
+.prf-table .prf-mark { width: 20px; height: 20px; font-size: 11px; border-radius: 5px; }
+.prf-table .prf-flags { gap: 4px; }
+.prf-table .prf-flags .fi { width: 18px; height: 13px; }
+.prf-table td.prf-name { min-width: 150px; }
+.prf-table .prf-meter.is-stacked { flex-direction: column; align-items: flex-start; gap: 5px; min-width: 0; }
+.prf-table .prf-meter.is-stacked .prf-meter-bar { flex: 0 0 auto; width: 84px; }
+.prf-qcount,
+.prf-dates,
+.prf-th-stack { display: inline-flex; flex-direction: column; line-height: 1.4; }
+.prf-qcount > span:last-child { font-size: 11.5px; }
+.prf-dates > span:last-child { font-size: 11.5px; color: var(--muted); }
+.prf-th-stack { align-items: flex-start; }
+.prf-th-stack > span:last-child { color: var(--muted-2); }
+.prf-search { flex: 1 1 200px; min-width: 200px; max-width: 440px; }
+
 /* Category list and question bank tables */
 .prf-table td { vertical-align: middle; }
 .prf-table .prf-name { white-space: normal; min-width: 220px; }

@@ -479,7 +479,7 @@
                   <button type="button" aria-pressed="false">Draft</button>
                   <button type="button" aria-pressed="false">Closed</button>
                 </div>
-                <div class="input-group search-group ms-auto" role="search">
+                <div class="input-group search-group prf-search ms-auto" role="search">
                   <input class="form-control" type="search" placeholder="Search by number or name…" aria-label="Search by number or name…" autocomplete="off">
                   <button type="button" class="btn btn-ghost" data-search-go title="Search" aria-label="Search"><i class="bi bi-search"></i></button>
                   <button type="button" class="btn btn-ghost" data-search-clear title="Clear search" aria-label="Clear search"><i class="bi bi-x-circle"></i></button>
@@ -498,8 +498,7 @@
                       <th aria-sort="none"><button type="button" class="th-sort">Status</button></th>
                       <th title="Active members who answered it">Profiled</th>
                       <th>Points</th>
-                      <th aria-sort="none"><button type="button" class="th-sort">Published</button></th>
-                      <th aria-sort="none"><button type="button" class="th-sort">Updated</button></th>
+                      <th aria-sort="none"><button type="button" class="th-sort prf-th-stack"><span>Published</span><span>Updated</span></button></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -511,13 +510,11 @@
                       <td><span class="prf-flags"><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span></span></td>
                       <td class="num-l">8</td>
                       <td><span class="status-badge status-closed">Closed</span></td>
-                      <td><div class="prf-meter" title="26,569 of 47,445 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:56%"></span></span>
-                          <span class="prf-meter-val">26,569<span class="t-muted"> 56%</span></span>
+                      <td><div class="prf-meter is-stacked" title="26,569 of 47,445 active members answered it">
+                          <span class="prf-meter-val">26,569<span class="t-muted"> 56%</span></span><span class="prf-meter-bar"><span style="width:56%"></span></span>
                         </div></td>
                       <td class="num-l">10</td>
-                      <td class="t-muted">2023-01-16</td>
-                      <td class="t-muted">2024-03-12</td>
+                      <td><span class="prf-dates"><span>2023-01-16</span><span title="Updated">2024-03-12</span></span></td>
                     </tr>
                     <tr class="row-link" data-href="profiling-category.html">
                       <td><span class="prf-no" title="Category number">#2</span></td>
@@ -527,13 +524,11 @@
                       <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span><button type="button" class="prf-more" data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="prf-tip" data-bs-title="&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-es&quot;&gt;&lt;/span&gt;Spanish&lt;/span&gt;&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-it&quot;&gt;&lt;/span&gt;Italian&lt;/span&gt;&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-pl&quot;&gt;&lt;/span&gt;Polish&lt;/span&gt;&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-sa&quot;&gt;&lt;/span&gt;Arabic&lt;/span&gt;" aria-label="4 more: Spanish, Italian, Polish, Arabic">+4</button></span></td>
                       <td class="num-l">9</td>
                       <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="142,421 of 209,442 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:68%"></span></span>
-                          <span class="prf-meter-val">142,421<span class="t-muted"> 68%</span></span>
+                      <td><div class="prf-meter is-stacked" title="142,421 of 209,442 active members answered it">
+                          <span class="prf-meter-val">142,421<span class="t-muted"> 68%</span></span><span class="prf-meter-bar"><span style="width:68%"></span></span>
                         </div></td>
                       <td class="num-l">10</td>
-                      <td class="t-muted">2024-03-12</td>
-                      <td class="t-muted">2024-03-12</td>
+                      <td><span class="prf-dates"><span>2024-03-12</span><span title="Updated">2024-03-12</span></span></td>
                     </tr>
                     <tr class="row-link" data-href="profiling-category.html">
                       <td><span class="prf-no" title="Category number">#3</span></td>
@@ -541,12 +536,11 @@
                       <td><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark is-ink" role="img" aria-label="Mening Vandaag" title="Mening Vandaag">M</span><span class="prf-mark" style="--mark:#4c1fb8" role="img" aria-label="Sondage Direct" title="Sondage Direct">S</span></span></td>
                       <td><span class="prf-flags"><span class="fi fi-nl" role="img" title="Netherlands" aria-label="Netherlands"></span><span class="fi fi-fr" role="img" title="France" aria-label="France"></span><span class="fi fi-de" role="img" title="Germany" aria-label="Germany"></span><span class="fi fi-be" role="img" title="Belgium" aria-label="Belgium"></span><button type="button" class="prf-more" data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="prf-tip" data-bs-title="&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-at&quot;&gt;&lt;/span&gt;Austria&lt;/span&gt;&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-ch&quot;&gt;&lt;/span&gt;Switzerland&lt;/span&gt;" aria-label="2 more: Austria, Switzerland">+2</button></span></td>
                       <td><span class="prf-flags"><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
-                      <td class="num-l">8<span class="t-muted"> · 1 hidden</span></td>
+                      <td class="num-l"><span class="prf-qcount"><span>8</span><span class="t-muted">1 hidden</span></span></td>
                       <td><span class="status-badge status-draft">Draft</span></td>
                       <td><span class="zero">—</span></td>
                       <td class="num-l">5</td>
-                      <td class="t-muted">Not yet</td>
-                      <td class="t-muted">2026-11-14</td>
+                      <td><span class="prf-dates"><span>Not yet</span><span title="Updated">2026-11-14</span></span></td>
                     </tr>
                     <tr class="row-link" data-href="profiling-category.html">
                       <td><span class="prf-no" title="Category number">#4</span></td>
@@ -556,13 +550,11 @@
                       <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span><button type="button" class="prf-more" data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="prf-tip" data-bs-title="&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-pl&quot;&gt;&lt;/span&gt;Polish&lt;/span&gt;" aria-label="1 more: Polish">+1</button></span></td>
                       <td class="num-l">10</td>
                       <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="71,977 of 133,291 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:54%"></span></span>
-                          <span class="prf-meter-val">71,977<span class="t-muted"> 54%</span></span>
+                      <td><div class="prf-meter is-stacked" title="71,977 of 133,291 active members answered it">
+                          <span class="prf-meter-val">71,977<span class="t-muted"> 54%</span></span><span class="prf-meter-bar"><span style="width:54%"></span></span>
                         </div></td>
                       <td class="num-l">5</td>
-                      <td class="t-muted">2024-05-21</td>
-                      <td class="t-muted">2026-10-30</td>
+                      <td><span class="prf-dates"><span>2024-05-21</span><span title="Updated">2026-10-30</span></span></td>
                     </tr>
                     <tr class="row-link" data-href="profiling-category.html">
                       <td><span class="prf-no" title="Category number">#5</span></td>
@@ -570,15 +562,13 @@
                       <td><span class="prf-marks"><span class="prf-mark" style="--mark:#d9381e" role="img" aria-label="Gavenze" title="Gavenze">G</span><span class="prf-mark" style="--mark:#2f9e44" role="img" aria-label="Encuestat" title="Encuestat">E</span><span class="prf-mark" style="--mark:#e0452b" role="img" aria-label="Sondaggi &amp; premi" title="Sondaggi &amp; premi">S</span></span></td>
                       <td><span class="prf-flags"><span class="fi fi-nl" role="img" title="Netherlands" aria-label="Netherlands"></span><span class="fi fi-de" role="img" title="Germany" aria-label="Germany"></span><span class="fi fi-es" role="img" title="Spain" aria-label="Spain"></span><span class="fi fi-it" role="img" title="Italy" aria-label="Italy"></span><button type="button" class="prf-more" data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="prf-tip" data-bs-title="&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-mx&quot;&gt;&lt;/span&gt;Mexico&lt;/span&gt;&lt;span class=&quot;prf-tip-row&quot;&gt;&lt;span class=&quot;fi fi-at&quot;&gt;&lt;/span&gt;Austria&lt;/span&gt;" aria-label="2 more: Mexico, Austria">+2</button></span></td>
                       <td><span class="prf-flags"><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span><span class="fi fi-es" role="img" title="Spanish" aria-label="Spanish"></span><span class="fi fi-it" role="img" title="Italian" aria-label="Italian"></span></span></td>
-                      <td class="num-l">12<span class="t-muted"> · 1 hidden</span></td>
+                      <td class="num-l"><span class="prf-qcount"><span>12</span><span class="t-muted">1 hidden</span></span></td>
                       <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="41,379 of 100,925 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:41%"></span></span>
-                          <span class="prf-meter-val">41,379<span class="t-muted"> 41%</span></span>
+                      <td><div class="prf-meter is-stacked" title="41,379 of 100,925 active members answered it">
+                          <span class="prf-meter-val">41,379<span class="t-muted"> 41%</span></span><span class="prf-meter-bar"><span style="width:41%"></span></span>
                         </div></td>
                       <td class="num-l">5</td>
-                      <td class="t-muted">2025-02-11</td>
-                      <td class="t-muted">2025-11-20</td>
+                      <td><span class="prf-dates"><span>2025-02-11</span><span title="Updated">2025-11-20</span></span></td>
                     </tr>
                     <tr class="row-link" data-href="profiling-category.html">
                       <td><span class="prf-no" title="Category number">#6</span></td>
@@ -588,13 +578,11 @@
                       <td><span class="prf-flags"><span class="fi fi-gb" role="img" title="English" aria-label="English"></span><span class="fi fi-es" role="img" title="Spanish" aria-label="Spanish"></span><span class="fi fi-sa" role="img" title="Arabic" aria-label="Arabic"></span></span></td>
                       <td class="num-l">7</td>
                       <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="43,928 of 89,648 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:49%"></span></span>
-                          <span class="prf-meter-val">43,928<span class="t-muted"> 49%</span></span>
+                      <td><div class="prf-meter is-stacked" title="43,928 of 89,648 active members answered it">
+                          <span class="prf-meter-val">43,928<span class="t-muted"> 49%</span></span><span class="prf-meter-bar"><span style="width:49%"></span></span>
                         </div></td>
                       <td class="num-l">5</td>
-                      <td class="t-muted">2025-06-18</td>
-                      <td class="t-muted">2025-06-18</td>
+                      <td><span class="prf-dates"><span>2025-06-18</span><span title="Updated">2025-06-18</span></span></td>
                     </tr>
                     <tr class="row-link" data-href="profiling-category.html">
                       <td><span class="prf-no" title="Category number">#7</span></td>
@@ -604,13 +592,11 @@
                       <td><span class="prf-flags"><span class="fi fi-nl" role="img" title="Dutch" aria-label="Dutch"></span><span class="fi fi-fr" role="img" title="French" aria-label="French"></span><span class="fi fi-de" role="img" title="German" aria-label="German"></span></span></td>
                       <td class="num-l">11</td>
                       <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="24,737 of 72,755 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:34%"></span></span>
-                          <span class="prf-meter-val">24,737<span class="t-muted"> 34%</span></span>
+                      <td><div class="prf-meter is-stacked" title="24,737 of 72,755 active members answered it">
+                          <span class="prf-meter-val">24,737<span class="t-muted"> 34%</span></span><span class="prf-meter-bar"><span style="width:34%"></span></span>
                         </div></td>
                       <td class="num-l">5</td>
-                      <td class="t-muted">2025-09-02</td>
-                      <td class="t-muted">2026-10-30</td>
+                      <td><span class="prf-dates"><span>2025-09-02</span><span title="Updated">2026-10-30</span></span></td>
                     </tr>
                     <tr class="row-link" data-href="profiling-category.html">
                       <td><span class="prf-no" title="Category number">#8</span></td>
@@ -622,8 +608,7 @@
                       <td><span class="status-badge status-draft">Draft</span></td>
                       <td><span class="zero">—</span></td>
                       <td class="num-l">5</td>
-                      <td class="t-muted">Not yet</td>
-                      <td class="t-muted">2026-11-13</td>
+                      <td><span class="prf-dates"><span>Not yet</span><span title="Updated">2026-11-13</span></span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -654,7 +639,7 @@
                   <option selected>In any category or none</option>
                   <option>Not in a category yet</option><option>#1 Basics (2023)</option><option>#2 Basics</option><option>#3 Household &amp; family</option><option>#4 Work &amp; income</option><option>#5 Health &amp; lifestyle</option><option>#6 Mobile &amp; technology</option><option>#7 Shopping &amp; brands</option><option>#8 Travel &amp; holidays</option>
                 </select>
-                <div class="input-group search-group ms-auto" role="search">
+                <div class="input-group search-group prf-search ms-auto" role="search">
                   <input class="form-control" type="search" placeholder="Search by ID or question…" aria-label="Search by ID or question…" autocomplete="off">
                   <button type="button" class="btn btn-ghost" data-search-go title="Search" aria-label="Search"><i class="bi bi-search"></i></button>
                   <button type="button" class="btn btn-ghost" data-search-clear title="Clear search" aria-label="Clear search"><i class="bi bi-x-circle"></i></button>
