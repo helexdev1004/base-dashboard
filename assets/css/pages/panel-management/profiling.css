@@ -296,10 +296,10 @@
 .prf-bank-note { display: flex; gap: 8px; margin: 0; padding-top: 10px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
 
 /* Settings */
-.prf-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 20px; }
+/* Number and points are short, so their fields are narrow; the rest take the full width */
+.prf-settings-grid { display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: start; gap: 16px 20px; }
+.prf-settings-grid > .field-help { margin-top: -10px; }
 .prf-wide { grid-column: 1 / -1; }
-.prf-seg-wrap { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
-.prf-seg-wrap button { flex: 0 0 auto; min-width: 0; padding: 0 14px; white-space: nowrap; }
 
 /* Question editor (modals) */
 .prf-qform { display: flex; flex-direction: column; gap: 14px; }
@@ -428,10 +428,10 @@
   .prf-ans { margin-left: 0; }
 }
 @media (max-width: 575.98px) {
+  .prf-settings-grid { grid-template-columns: 110px minmax(0, 1fr); gap: 14px; }
   .prf-rule { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; }
   .prf-rule .prf-rule-q { grid-column: 1 / -1; }
   .prf-tr-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .prf-ans-opts { margin-left: 0; }
-  .prf-form-grid,
   .prf-form-pair { grid-template-columns: minmax(0, 1fr); }
 }
