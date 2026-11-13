@@ -256,24 +256,23 @@
         <div class="page-view" id="profilingView">
           <header class="page-head">
             <h1 class="page-title">Profiling</h1>
-            <p class="page-sub">Profiling surveys for each panel and country. Questions from the bank are combined into a survey, and respondents see a live survey under its survey number.</p>
+            <p class="page-sub">Profiling categories for each panel and country. Questions from the bank are combined into a category, and respondents see a live category under its number.</p>
           </header>
-          <!-- Panel > Country -->
           <section class="pv-card prf-picker" aria-label="Panel and country">
             <div class="prf-step">
               <span class="prf-step-label"><span class="prf-step-no">1</span>Panel</span>
               <div class="prf-chips" role="group" aria-label="Panel">
                 <button type="button" class="prf-chip active" aria-pressed="true">
-                  <span class="prf-mark" style="--mark:#d9381e" aria-hidden="true">G</span><span class="prf-chip-name">Gavenze</span><span class="prf-chip-count">5 live</span>
+                  <span class="prf-mark" style="--mark:#d9381e" aria-hidden="true">G</span><span class="prf-chip-name">Gavenze</span><span class="prf-chip-count">4 live</span>
                 </button>
                 <button type="button" class="prf-chip" aria-pressed="false">
-                  <span class="prf-mark" style="--mark:#b42b3c" aria-hidden="true">J</span><span class="prf-chip-name">Jafenzi</span><span class="prf-chip-count">3 live</span>
+                  <span class="prf-mark" style="--mark:#b42b3c" aria-hidden="true">J</span><span class="prf-chip-name">Jafenzi</span><span class="prf-chip-count">2 live</span>
                 </button>
                 <button type="button" class="prf-chip" aria-pressed="false">
-                  <span class="prf-mark" style="--mark:#2f9e44" aria-hidden="true">E</span><span class="prf-chip-name">Encuestat</span><span class="prf-chip-count">4 live</span>
+                  <span class="prf-mark" style="--mark:#2f9e44" aria-hidden="true">E</span><span class="prf-chip-name">Encuestat</span><span class="prf-chip-count">3 live</span>
                 </button>
                 <button type="button" class="prf-chip" aria-pressed="false">
-                  <span class="prf-mark" style="--mark:#4c1fb8" aria-hidden="true">S</span><span class="prf-chip-name">Sondage Direct</span><span class="prf-chip-count">4 live</span>
+                  <span class="prf-mark" style="--mark:#4c1fb8" aria-hidden="true">S</span><span class="prf-chip-name">Sondage Direct</span><span class="prf-chip-count">3 live</span>
                 </button>
                 <button type="button" class="prf-chip" aria-pressed="false">
                   <span class="prf-mark is-ink" aria-hidden="true">M</span><span class="prf-chip-name">Mening Vandaag</span><span class="prf-chip-count">2 live</span>
@@ -306,32 +305,17 @@
                 </button>
               </div>
             </div>
-            <div class="prf-path">
-              <p class="prf-crumbs">
-                <span><span class="prf-mark sm" style="--mark:#d9381e" aria-hidden="true">G</span> Gavenze</span>
-                <i class="bi bi-chevron-right" aria-hidden="true"></i>
-                <span><span class="fi fi-nl"></span> Netherlands</span>
-                <i class="bi bi-chevron-right" aria-hidden="true"></i>
-                <span class="prf-crumb-now">Profiling surveys</span>
-              </p>
-              <div class="pv-quick">
-                <div class="pv-chip"><span class="pv-chip-label">Active members</span><span class="pv-chip-value">18,204</span></div>
-                <div class="pv-chip"><span class="pv-chip-label">Profiled</span><span class="pv-chip-value">68%</span></div>
-                <div class="pv-chip"><span class="pv-chip-label">Live surveys</span><span class="pv-chip-value">5</span></div>
-                <div class="pv-chip"><span class="pv-chip-label">Questions</span><span class="pv-chip-value">53</span></div>
-              </div>
-            </div>
           </section>
           <nav class="pv-tabs" role="tablist" aria-label="Profiling">
-            <button type="button" class="pv-tab active" role="tab" id="prfTab-surveys" aria-controls="prfPanel-surveys" aria-selected="true" data-hash="surveys">Surveys <span class="prf-tab-count">8</span></button>
-            <button type="button" class="pv-tab" role="tab" id="prfTab-questions" aria-controls="prfPanel-questions" aria-selected="false" tabindex="-1" data-hash="questions">Question bank <span class="prf-tab-count">53</span></button>
+            <button type="button" class="pv-tab active" role="tab" id="prfTab-categories" aria-controls="prfPanel-categories" aria-selected="true" data-hash="categories">Profiling category <span class="prf-tab-count">8</span></button>
+            <button type="button" class="pv-tab" role="tab" id="prfTab-questions" aria-controls="prfPanel-questions" aria-selected="false" tabindex="-1" data-hash="questions">Question bank <span class="prf-tab-count">74</span></button>
           </nav>
-          <!-- Surveys -->
-          <section class="pv-panel" id="prfPanel-surveys" role="tabpanel" aria-labelledby="prfTab-surveys">
+          <!-- Profiling categories -->
+          <section class="pv-panel" id="prfPanel-categories" role="tabpanel" aria-labelledby="prfTab-categories">
             <div class="pv-card flush">
               <div class="pv-toolbar">
-                <button type="button" class="btn btn-ghost btn-sm-h" data-bs-toggle="modal" data-bs-target="#newSurveyModal"><i class="bi bi-plus-circle"></i> New profiling survey</button>
-                <div class="segmented seg-sm" role="group" aria-label="Survey status">
+                <button type="button" class="btn btn-ghost btn-sm-h" data-bs-toggle="modal" data-bs-target="#newCategoryModal"><i class="bi bi-plus-circle"></i> New profiling category</button>
+                <div class="segmented seg-sm" role="group" aria-label="Category status">
                   <button type="button" class="active" aria-pressed="true">All</button>
                   <button type="button" aria-pressed="false">Live</button>
                   <button type="button" aria-pressed="false">Draft</button>
@@ -347,7 +331,7 @@
                 <table class="pv-table list-table prf-table">
                   <thead>
                     <tr>
-                      <th aria-sort="descending"><button type="button" class="th-sort">Survey no. <i class="bi bi-caret-down-fill"></i></button></th>
+                      <th aria-sort="ascending"><button type="button" class="th-sort">Category no. <i class="bi bi-caret-up-fill"></i></button></th>
                       <th aria-sort="none"><button type="button" class="th-sort">Name</button></th>
                       <th>Questions</th>
                       <th aria-sort="none"><button type="button" class="th-sort">Status</button></th>
@@ -358,110 +342,110 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="row-link" data-href="profiling-survey.html">
-                      <td><span class="prf-no" title="Survey number">#4143</span></td>
-                      <td class="prf-name"><a class="cell-link" href="profiling-survey.html">Travel &amp; holidays</a><span class="prf-sub">Trips, destinations, booking</span></td>
-                      <td class="num-l">4</td>
-                      <td><span class="status-badge status-draft">Draft</span></td>
-                      <td><span class="zero">—</span></td>
-                      <td class="num-l">5</td>
-                      <td class="t-muted">Not yet</td>
-                      <td class="t-muted">2026-11-10</td>
-                    </tr>
-                    <tr class="row-link" data-href="profiling-survey.html">
-                      <td><span class="prf-no" title="Survey number">#4136</span></td>
-                      <td class="prf-name"><a class="cell-link" href="profiling-survey.html">Shopping &amp; brands</a><span class="prf-sub">Where and how you shop</span></td>
-                      <td class="num-l">11</td>
-                      <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="6,120 of 18,204 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:34%"></span></span>
-                          <span class="prf-meter-val">6,120<span class="t-muted"> 34%</span></span>
-                        </div></td>
-                      <td class="num-l">5</td>
-                      <td class="t-muted">2025-09-02</td>
-                      <td class="t-muted">2026-10-30</td>
-                    </tr>
-                    <tr class="row-link" data-href="profiling-survey.html">
-                      <td><span class="prf-no" title="Survey number">#4129</span></td>
-                      <td class="prf-name"><a class="cell-link" href="profiling-survey.html">Mobile &amp; technology</a><span class="prf-sub">Devices, network, apps</span></td>
-                      <td class="num-l">7</td>
-                      <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="8,906 of 18,204 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:49%"></span></span>
-                          <span class="prf-meter-val">8,906<span class="t-muted"> 49%</span></span>
-                        </div></td>
-                      <td class="num-l">5</td>
-                      <td class="t-muted">2025-06-18</td>
-                      <td class="t-muted">2025-06-18</td>
-                    </tr>
-                    <tr class="row-link" data-href="profiling-survey.html">
-                      <td><span class="prf-no" title="Survey number">#4122</span></td>
-                      <td class="prf-name"><a class="cell-link" href="profiling-survey.html">Health &amp; lifestyle</a><span class="prf-sub">Sport, diet, smoking, conditions</span></td>
-                      <td class="num-l">12<span class="t-muted"> · 1 hidden</span></td>
-                      <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="7,431 of 18,204 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:41%"></span></span>
-                          <span class="prf-meter-val">7,431<span class="t-muted"> 41%</span></span>
-                        </div></td>
-                      <td class="num-l">5</td>
-                      <td class="t-muted">2025-02-11</td>
-                      <td class="t-muted">2025-11-20</td>
-                    </tr>
-                    <tr class="row-link" data-href="profiling-survey.html">
-                      <td><span class="prf-no" title="Survey number">#4115</span></td>
-                      <td class="prf-name"><a class="cell-link" href="profiling-survey.html">Work &amp; income</a><span class="prf-sub">Job, sector, income</span></td>
-                      <td class="num-l">10</td>
-                      <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="9,912 of 18,204 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:54%"></span></span>
-                          <span class="prf-meter-val">9,912<span class="t-muted"> 54%</span></span>
-                        </div></td>
-                      <td class="num-l">5</td>
-                      <td class="t-muted">2024-05-21</td>
-                      <td class="t-muted">2026-10-30</td>
-                    </tr>
-                    <tr class="row-link" data-href="profiling-survey.html">
-                      <td><span class="prf-no" title="Survey number">#4108</span></td>
-                      <td class="prf-name"><a class="cell-link" href="profiling-survey.html">Household &amp; family</a><span class="prf-sub">Household size, children, home, pets</span></td>
-                      <td class="num-l">8<span class="t-muted"> · 1 hidden</span></td>
-                      <td><span class="status-badge status-draft">Draft</span></td>
-                      <td><span class="zero">—</span></td>
-                      <td class="num-l">5</td>
-                      <td class="t-muted">Not yet</td>
-                      <td class="t-muted">2026-11-11</td>
-                    </tr>
-                    <tr class="row-link" data-href="profiling-survey.html">
-                      <td><span class="prf-no" title="Survey number">#4101</span></td>
-                      <td class="prf-name"><a class="cell-link" href="profiling-survey.html">Basics</a><span class="prf-sub">Gender, age, province, education</span></td>
-                      <td class="num-l">9</td>
-                      <td><span class="status-badge status-live">Live</span></td>
-                      <td><div class="prf-meter" title="12,388 of 18,204 active members answered it">
-                          <span class="prf-meter-bar"><span style="width:68%"></span></span>
-                          <span class="prf-meter-val">12,388<span class="t-muted"> 68%</span></span>
-                        </div></td>
-                      <td class="num-l">10</td>
-                      <td class="t-muted">2024-03-12</td>
-                      <td class="t-muted">2024-03-12</td>
-                    </tr>
-                    <tr class="row-link" data-href="profiling-survey.html">
-                      <td><span class="prf-no" title="Survey number">#4097</span></td>
-                      <td class="prf-name"><a class="cell-link" href="profiling-survey.html">Basics (2023)</a><span class="prf-sub">Replaced by #4101</span></td>
+                    <tr class="row-link" data-href="profiling-category.html">
+                      <td><span class="prf-no" title="Category number">#1</span></td>
+                      <td class="prf-name"><a class="cell-link" href="profiling-category.html">Basics (2023)</a><span class="prf-sub">Replaced by #2</span></td>
                       <td class="num-l">8</td>
                       <td><span class="status-badge status-closed">Closed</span></td>
-                      <td><div class="prf-meter" title="10,214 of 18,204 active members answered it">
+                      <td><div class="prf-meter" title="26,569 of 47,445 active members answered it">
                           <span class="prf-meter-bar"><span style="width:56%"></span></span>
-                          <span class="prf-meter-val">10,214<span class="t-muted"> 56%</span></span>
+                          <span class="prf-meter-val">26,569<span class="t-muted"> 56%</span></span>
                         </div></td>
                       <td class="num-l">10</td>
                       <td class="t-muted">2023-01-16</td>
                       <td class="t-muted">2024-03-12</td>
                     </tr>
+                    <tr class="row-link" data-href="profiling-category.html">
+                      <td><span class="prf-no" title="Category number">#2</span></td>
+                      <td class="prf-name"><a class="cell-link" href="profiling-category.html">Basics</a><span class="prf-sub">Gender, age, region, education</span></td>
+                      <td class="num-l">9</td>
+                      <td><span class="status-badge status-live">Live</span></td>
+                      <td><div class="prf-meter" title="142,421 of 209,442 active members answered it">
+                          <span class="prf-meter-bar"><span style="width:68%"></span></span>
+                          <span class="prf-meter-val">142,421<span class="t-muted"> 68%</span></span>
+                        </div></td>
+                      <td class="num-l">10</td>
+                      <td class="t-muted">2024-03-12</td>
+                      <td class="t-muted">2024-03-12</td>
+                    </tr>
+                    <tr class="row-link" data-href="profiling-category.html">
+                      <td><span class="prf-no" title="Category number">#3</span></td>
+                      <td class="prf-name"><a class="cell-link" href="profiling-category.html">Household &amp; family</a><span class="prf-sub">Household size, children, home, pets</span></td>
+                      <td class="num-l">8<span class="t-muted"> · 1 hidden</span></td>
+                      <td><span class="status-badge status-draft">Draft</span></td>
+                      <td><span class="zero">—</span></td>
+                      <td class="num-l">5</td>
+                      <td class="t-muted">Not yet</td>
+                      <td class="t-muted">2026-11-14</td>
+                    </tr>
+                    <tr class="row-link" data-href="profiling-category.html">
+                      <td><span class="prf-no" title="Category number">#4</span></td>
+                      <td class="prf-name"><a class="cell-link" href="profiling-category.html">Work &amp; income</a><span class="prf-sub">Job, sector, income</span></td>
+                      <td class="num-l">10</td>
+                      <td><span class="status-badge status-live">Live</span></td>
+                      <td><div class="prf-meter" title="71,977 of 133,291 active members answered it">
+                          <span class="prf-meter-bar"><span style="width:54%"></span></span>
+                          <span class="prf-meter-val">71,977<span class="t-muted"> 54%</span></span>
+                        </div></td>
+                      <td class="num-l">5</td>
+                      <td class="t-muted">2024-05-21</td>
+                      <td class="t-muted">2026-10-30</td>
+                    </tr>
+                    <tr class="row-link" data-href="profiling-category.html">
+                      <td><span class="prf-no" title="Category number">#5</span></td>
+                      <td class="prf-name"><a class="cell-link" href="profiling-category.html">Health &amp; lifestyle</a><span class="prf-sub">Sport, diet, smoking, conditions</span></td>
+                      <td class="num-l">12<span class="t-muted"> · 1 hidden</span></td>
+                      <td><span class="status-badge status-live">Live</span></td>
+                      <td><div class="prf-meter" title="41,379 of 100,925 active members answered it">
+                          <span class="prf-meter-bar"><span style="width:41%"></span></span>
+                          <span class="prf-meter-val">41,379<span class="t-muted"> 41%</span></span>
+                        </div></td>
+                      <td class="num-l">5</td>
+                      <td class="t-muted">2025-02-11</td>
+                      <td class="t-muted">2025-11-20</td>
+                    </tr>
+                    <tr class="row-link" data-href="profiling-category.html">
+                      <td><span class="prf-no" title="Category number">#6</span></td>
+                      <td class="prf-name"><a class="cell-link" href="profiling-category.html">Mobile &amp; technology</a><span class="prf-sub">Devices, network, apps</span></td>
+                      <td class="num-l">7</td>
+                      <td><span class="status-badge status-live">Live</span></td>
+                      <td><div class="prf-meter" title="43,928 of 89,648 active members answered it">
+                          <span class="prf-meter-bar"><span style="width:49%"></span></span>
+                          <span class="prf-meter-val">43,928<span class="t-muted"> 49%</span></span>
+                        </div></td>
+                      <td class="num-l">5</td>
+                      <td class="t-muted">2025-06-18</td>
+                      <td class="t-muted">2025-06-18</td>
+                    </tr>
+                    <tr class="row-link" data-href="profiling-category.html">
+                      <td><span class="prf-no" title="Category number">#7</span></td>
+                      <td class="prf-name"><a class="cell-link" href="profiling-category.html">Shopping &amp; brands</a><span class="prf-sub">Where and how you shop</span></td>
+                      <td class="num-l">11</td>
+                      <td><span class="status-badge status-live">Live</span></td>
+                      <td><div class="prf-meter" title="24,737 of 72,755 active members answered it">
+                          <span class="prf-meter-bar"><span style="width:34%"></span></span>
+                          <span class="prf-meter-val">24,737<span class="t-muted"> 34%</span></span>
+                        </div></td>
+                      <td class="num-l">5</td>
+                      <td class="t-muted">2025-09-02</td>
+                      <td class="t-muted">2026-10-30</td>
+                    </tr>
+                    <tr class="row-link" data-href="profiling-category.html">
+                      <td><span class="prf-no" title="Category number">#8</span></td>
+                      <td class="prf-name"><a class="cell-link" href="profiling-category.html">Travel &amp; holidays</a><span class="prf-sub">Trips, destinations, booking</span></td>
+                      <td class="num-l">4</td>
+                      <td><span class="status-badge status-draft">Draft</span></td>
+                      <td><span class="zero">—</span></td>
+                      <td class="num-l">5</td>
+                      <td class="t-muted">Not yet</td>
+                      <td class="t-muted">2026-11-13</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
               <div class="table-footer">
-                <span class="page-info">Showing <strong>1–8</strong> of <strong>8</strong> surveys</span>
-                <nav aria-label="Survey pages">
+                <span class="page-info">Showing <strong>1–8</strong> of <strong>8</strong> categories</span>
+                <nav aria-label="Category pages">
                   <ul class="pagination-dark">
                     <li><button type="button" disabled aria-label="First page">«</button></li>
                     <li><button type="button" disabled aria-label="Previous page">‹</button></li>
@@ -482,8 +466,8 @@
                   <option selected>All types</option><option>Single choice</option><option>Multiple choice</option><option>Dropdown</option><option>Numeric</option><option>Open text</option>
                 </select>
                 <select class="form-select pv-filter" aria-label="Used in">
-                  <option selected>In any survey or none</option>
-                  <option>Not in a survey yet</option><option>#4143 Travel &amp; holidays</option><option>#4136 Shopping &amp; brands</option><option>#4129 Mobile &amp; technology</option><option>#4122 Health &amp; lifestyle</option><option>#4115 Work &amp; income</option><option>#4108 Household &amp; family</option><option>#4101 Basics</option><option>#4097 Basics (2023)</option>
+                  <option selected>In any category or none</option>
+                  <option>Not in a category yet</option><option>#1 Basics (2023)</option><option>#2 Basics</option><option>#3 Household &amp; family</option><option>#4 Work &amp; income</option><option>#5 Health &amp; lifestyle</option><option>#6 Mobile &amp; technology</option><option>#7 Shopping &amp; brands</option><option>#8 Travel &amp; holidays</option>
                 </select>
                 <div class="input-group search-group ms-auto" role="search">
                   <input class="form-control" type="search" placeholder="Search by ID or question…" aria-label="Search by ID or question…" autocomplete="off">
@@ -505,143 +489,143 @@
                   </thead>
                   <tbody>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q53</span></td>
+                      <td><span class="prf-qid">Q74</span></td>
                       <td class="prf-qtext">How long have you lived at your current address?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">5 <span class="prf-aid-range">Q53_1 – Q53_5</span></td>
-                      <td><span class="prf-used"><span class="t-muted">Not in a survey yet</span></span></td>
-                      <td class="t-muted">2026-11-10</td>
+                      <td class="num-l">5 <span class="prf-aid-range">Q74_1 – Q74_5</span></td>
+                      <td><span class="t-muted">Not in a category yet</span></td>
+                      <td class="t-muted">2026-11-13</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q52</span></td>
+                      <td><span class="prf-qid">Q73</span></td>
                       <td class="prf-qtext">What kind of energy contract does your household have?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">5 <span class="prf-aid-range">Q52_1 – Q52_5</span></td>
-                      <td><span class="prf-used"><span class="t-muted">Not in a survey yet</span></span></td>
+                      <td class="num-l">5 <span class="prf-aid-range">Q73_1 – Q73_5</span></td>
+                      <td><span class="t-muted">Not in a category yet</span></td>
+                      <td class="t-muted">2026-11-13</td>
+                    </tr>
+                    <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
+                      <td><span class="prf-qid">Q72</span></td>
+                      <td class="prf-qtext">Does your home have a garden, balcony or terrace?</td>
+                      <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
+                      <td class="num-l">4 <span class="prf-aid-range">Q72_1 – Q72_4</span></td>
+                      <td><span class="t-muted">Not in a category yet</span></td>
+                      <td class="t-muted">2026-11-12</td>
+                    </tr>
+                    <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
+                      <td><span class="prf-qid">Q71</span></td>
+                      <td class="prf-qtext">Is anyone in your household expecting a baby?</td>
+                      <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
+                      <td class="num-l">3 <span class="prf-aid-range">Q71_1 – Q71_3</span></td>
+                      <td><span class="t-muted">Not in a category yet</span></td>
+                      <td class="t-muted">2026-11-12</td>
+                    </tr>
+                    <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
+                      <td><span class="prf-qid">Q70</span></td>
+                      <td class="prf-qtext">How many cars does your household have?</td>
+                      <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
+                      <td class="num-l">4 <span class="prf-aid-range">Q70_1 – Q70_4</span></td>
+                      <td><span class="t-muted">Not in a category yet</span></td>
                       <td class="t-muted">2026-11-10</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q51</span></td>
-                      <td class="prf-qtext">Does your home have a garden, balcony or terrace?</td>
-                      <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
-                      <td class="num-l">4 <span class="prf-aid-range">Q51_1 – Q51_4</span></td>
-                      <td><span class="prf-used"><span class="t-muted">Not in a survey yet</span></span></td>
-                      <td class="t-muted">2026-11-09</td>
-                    </tr>
-                    <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q50</span></td>
-                      <td class="prf-qtext">Is anyone in your household expecting a baby?</td>
-                      <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">3 <span class="prf-aid-range">Q50_1 – Q50_3</span></td>
-                      <td><span class="prf-used"><span class="t-muted">Not in a survey yet</span></span></td>
-                      <td class="t-muted">2026-11-09</td>
-                    </tr>
-                    <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q49</span></td>
-                      <td class="prf-qtext">How many cars does your household have?</td>
-                      <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">4 <span class="prf-aid-range">Q49_1 – Q49_4</span></td>
-                      <td><span class="prf-used"><span class="t-muted">Not in a survey yet</span></span></td>
-                      <td class="t-muted">2026-11-04</td>
-                    </tr>
-                    <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q48</span></td>
+                      <td><span class="prf-qid">Q69</span></td>
                       <td class="prf-qtext">What is your household&#x27;s net monthly income?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">6 <span class="prf-aid-range">Q48_1 – Q48_6</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4108">#4108</a><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4115">#4115</a></span></td>
-                      <td class="t-muted">2026-10-30</td>
+                      <td class="num-l">6 <span class="prf-aid-range">Q69_1 – Q69_6</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td class="t-muted">2026-11-11</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q47</span></td>
+                      <td><span class="prf-qid">Q68</span></td>
                       <td class="prf-qtext">Who does most of the grocery shopping in your household?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">3 <span class="prf-aid-range">Q47_1 – Q47_3</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4108">#4108</a><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4136">#4136</a></span></td>
-                      <td class="t-muted">2026-10-30</td>
+                      <td class="num-l">3 <span class="prf-aid-range">Q68_1 – Q68_3</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td class="t-muted">2026-11-11</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q46</span></td>
+                      <td><span class="prf-qid">Q67</span></td>
                       <td class="prf-qtext">Which pets do you have?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
-                      <td class="num-l">7 <span class="prf-aid-range">Q46_1 – Q46_7</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4108">#4108</a><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4136">#4136</a></span></td>
-                      <td class="t-muted">2026-10-30</td>
+                      <td class="num-l">7 <span class="prf-aid-range">Q67_1 – Q67_7</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td class="t-muted">2026-11-11</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q45</span></td>
+                      <td><span class="prf-qid">Q66</span></td>
                       <td class="prf-qtext">Do you own or rent your home?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">5 <span class="prf-aid-range">Q45_1 – Q45_5</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4108">#4108</a></span></td>
-                      <td class="t-muted">2026-10-29</td>
+                      <td class="num-l">5 <span class="prf-aid-range">Q66_1 – Q66_5</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td class="t-muted">2026-11-10</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q44</span></td>
+                      <td><span class="prf-qid">Q65</span></td>
                       <td class="prf-qtext">What best describes your home?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">5 <span class="prf-aid-range">Q44_1 – Q44_5</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4108">#4108</a></span></td>
-                      <td class="t-muted">2026-10-29</td>
+                      <td class="num-l">5 <span class="prf-aid-range">Q65_1 – Q65_5</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td class="t-muted">2026-11-10</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q43</span></td>
+                      <td><span class="prf-qid">Q64</span></td>
                       <td class="prf-qtext">How old are the children living at home?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
-                      <td class="num-l">5 <span class="prf-aid-range">Q43_1 – Q43_5</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4108">#4108</a></span></td>
-                      <td class="t-muted">2026-10-29</td>
+                      <td class="num-l">6 <span class="prf-aid-range">Q64_1 – Q64_6</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td class="t-muted">2026-11-14</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q42</span></td>
+                      <td><span class="prf-qid">Q63</span></td>
                       <td class="prf-qtext">Do you have children living at home?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">2 <span class="prf-aid-range">Q42_1 – Q42_2</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4108">#4108</a></span></td>
-                      <td class="t-muted">2026-10-29</td>
+                      <td class="num-l">2 <span class="prf-aid-range">Q63_1 – Q63_2</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td class="t-muted">2026-11-10</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q41</span></td>
+                      <td><span class="prf-qid">Q62</span></td>
                       <td class="prf-qtext">How many people live in your household, including yourself?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">5 <span class="prf-aid-range">Q41_1 – Q41_5</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4108">#4108</a></span></td>
-                      <td class="t-muted">2026-10-29</td>
+                      <td class="num-l">5 <span class="prf-aid-range">Q62_1 – Q62_5</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #3">#3</a></td>
+                      <td class="t-muted">2026-11-10</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q40</span></td>
-                      <td class="prf-qtext">Which of these devices do you own?</td>
+                      <td><span class="prf-qid">Q61</span></td>
+                      <td class="prf-qtext">How do you usually travel to your holiday destination?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
-                      <td class="num-l">8 <span class="prf-aid-range">Q40_1 – Q40_8</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4129">#4129</a></span></td>
-                      <td class="t-muted">2025-06-18</td>
+                      <td class="num-l">6 <span class="prf-aid-range">Q61_1 – Q61_6</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #8">#8</a></td>
+                      <td class="t-muted">2026-11-13</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q39</span></td>
-                      <td class="prf-qtext">Which mobile network are you with?</td>
-                      <td><span class="prf-type"><i class="bi bi-menu-button-wide"></i> Dropdown</span></td>
-                      <td class="num-l">9 <span class="prf-aid-range">Q39_1 – Q39_9</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4129">#4129</a></span></td>
-                      <td class="t-muted">2025-06-18</td>
+                      <td><span class="prf-qid">Q60</span></td>
+                      <td class="prf-qtext">How do you usually book your holidays?</td>
+                      <td><span class="prf-type"><i class="bi bi-ui-checks"></i> Multiple choice</span></td>
+                      <td class="num-l">5 <span class="prf-aid-range">Q60_1 – Q60_5</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #8">#8</a></td>
+                      <td class="t-muted">2026-11-13</td>
                     </tr>
                     <tr class="row-link" data-bs-toggle="modal" data-bs-target="#questionModal">
-                      <td><span class="prf-qid">Q38</span></td>
-                      <td class="prf-qtext">What is your marital status?</td>
+                      <td><span class="prf-qid">Q59</span></td>
+                      <td class="prf-qtext">Where did you go on your last holiday?</td>
                       <td><span class="prf-type"><i class="bi bi-ui-radios"></i> Single choice</span></td>
-                      <td class="num-l">6 <span class="prf-aid-range">Q38_1 – Q38_6</span></td>
-                      <td><span class="prf-used"><a class="prf-survey-chip" href="profiling-survey.html" title="Profiling survey #4101">#4101</a></span></td>
-                      <td class="t-muted">2024-03-12</td>
+                      <td class="num-l">4 <span class="prf-aid-range">Q59_1 – Q59_4</span></td>
+                      <td><a class="prf-cat-chip" href="profiling-category.html" title="Profiling category #8">#8</a></td>
+                      <td class="t-muted">2026-11-13</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <div class="table-footer">
-                <span class="page-info">Showing <strong>1–16</strong> of <strong>53</strong> questions</span>
+                <span class="page-info">Showing <strong>1–16</strong> of <strong>74</strong> questions</span>
                 <nav aria-label="Question pages">
                   <ul class="pagination-dark">
                     <li><button type="button" disabled aria-label="First page">«</button></li>
                     <li><button type="button" disabled aria-label="Previous page">‹</button></li>
-                    <li><button type="button" class="active" aria-current="page">1</button></li><li><button type="button">2</button></li><li><button type="button">3</button></li><li><button type="button">4</button></li>
+                    <li><button type="button" class="active" aria-current="page">1</button></li><li><button type="button">2</button></li><li><button type="button">3</button></li><li><button type="button">4</button></li><li><button type="button">5</button></li>
                     <li><button type="button" aria-label="Next page">›</button></li>
                     <li><button type="button" aria-label="Last page">»</button></li>
                   </ul>
@@ -655,12 +639,12 @@
     </div>
   </div>
 
-  <div class="modal fade" id="newSurveyModal" tabindex="-1" aria-labelledby="newSurveyModalTitle" aria-hidden="true">
+  <div class="modal fade" id="newCategoryModal" tabindex="-1" aria-labelledby="newCategoryModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <form class="modal-content" novalidate data-toast="Survey #4150 created as a draft.">
+      <form class="modal-content" novalidate data-toast="Category #9 created as a draft.">
         <div class="modal-header">
           <div>
-            <h5 class="modal-title" id="newSurveyModalTitle">New profiling survey</h5>
+            <h5 class="modal-title" id="newCategoryModalTitle">New profiling category</h5>
             <p class="panel-subtitle">Gavenze · Netherlands</p>
           </div>
           <div class="modal-head-extra"></div>
@@ -669,50 +653,50 @@
         <div class="modal-body">
           <div class="prf-qform">
             <div class="prf-qform-id">
-              <span class="prf-no lg">#4150</span>
-              <span class="field-help m-0">The next free survey number, given when you create it. Respondents see the survey under this number once it's live.</span>
+              <span class="prf-no lg">#9</span>
+              <span class="field-help m-0">The next free category number, given when you create it. Respondents see the category under this number once it's live.</span>
             </div>
             <div>
-              <label class="form-label" for="nsName">Name</label>
-              <input class="form-control" id="nsName" name="name" maxlength="80" required placeholder="e.g. Food &amp; drink">
-              <div class="invalid-feedback">Give the survey a name.</div>
+              <label class="form-label" for="ncName">Name</label>
+              <input class="form-control" id="ncName" name="name" maxlength="80" required placeholder="e.g. Food &amp; drink">
+              <div class="invalid-feedback">Give the category a name.</div>
             </div>
             <div class="prf-form-pair">
               <div>
-                <label class="form-label" for="nsPanel">Panel</label>
-                <select class="form-select" id="nsPanel" name="panel"><option selected>Gavenze</option><option>Jafenzi</option><option>Encuestat</option><option>Sondage Direct</option><option>Mening Vandaag</option><option>Opinion Today</option><option>Sondaggi &amp; premi</option></select>
+                <label class="form-label" for="ncPanel">Panel</label>
+                <select class="form-select" id="ncPanel" name="panel"><option selected>Gavenze</option><option>Jafenzi</option><option>Encuestat</option><option>Sondage Direct</option><option>Mening Vandaag</option><option>Opinion Today</option><option>Sondaggi &amp; premi</option></select>
               </div>
               <div>
-                <label class="form-label" for="nsCountry">Country</label>
-                <select class="form-select" id="nsCountry" name="country"><option selected>Netherlands</option><option>Belgium</option><option>Germany</option><option>Austria</option><option>Poland</option></select>
+                <label class="form-label" for="ncCountry">Country</label>
+                <select class="form-select" id="ncCountry" name="country"><option selected>Netherlands</option><option>Belgium</option><option>Germany</option><option>Austria</option><option>Poland</option></select>
               </div>
             </div>
             <div class="prf-form-pair">
               <div>
-                <label class="form-label" for="nsFrom">Start from</label>
-                <select class="form-select" id="nsFrom" name="from"><option selected>An empty survey</option><option>Copy of #4143 Travel &amp; holidays</option><option>Copy of #4136 Shopping &amp; brands</option><option>Copy of #4129 Mobile &amp; technology</option><option>Copy of #4122 Health &amp; lifestyle</option><option>Copy of #4115 Work &amp; income</option><option>Copy of #4108 Household &amp; family</option><option>Copy of #4101 Basics</option></select>
+                <label class="form-label" for="ncFrom">Start from</label>
+                <select class="form-select" id="ncFrom" name="from"><option selected>An empty category</option><option>Copy of #2 Basics</option><option>Copy of #3 Household &amp; family</option><option>Copy of #4 Work &amp; income</option><option>Copy of #5 Health &amp; lifestyle</option><option>Copy of #6 Mobile &amp; technology</option><option>Copy of #7 Shopping &amp; brands</option><option>Copy of #8 Travel &amp; holidays</option></select>
               </div>
               <div>
-                <label class="form-label" for="nsPoints">Reward points</label>
-                <input class="form-control" id="nsPoints" name="points" type="number" min="0" max="100" value="5" required>
+                <label class="form-label" for="ncPoints">Reward points</label>
+                <input class="form-control" id="ncPoints" name="points" type="number" min="0" max="100" value="5" required>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Create survey</button>
+          <button type="submit" class="btn btn-primary-grad"><i class="bi bi-plus-lg"></i> Create category</button>
         </div>
       </form>
     </div>
   </div>
   <div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <form class="modal-content" novalidate data-toast="Q45 saved.">
+      <form class="modal-content" novalidate data-toast="Q64 saved.">
         <div class="modal-header">
           <div>
-            <h5 class="modal-title" id="questionModalTitle">Question Q45</h5>
-            <p class="panel-subtitle">Gavenze · Netherlands · in #4108 Household &amp; family</p>
+            <h5 class="modal-title" id="questionModalTitle">Question Q64</h5>
+            <p class="panel-subtitle">Gavenze · Netherlands · in #3 Household &amp; family</p>
           </div>
           <div class="modal-head-extra"></div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -720,22 +704,22 @@
         <div class="modal-body">
           <div class="prf-qform">
             <div class="prf-qform-id">
-              <span class="prf-qid lg">Q45</span>
-              <span class="field-help m-0">Used in #4108. Answers are numbered Q45_1, Q45_2… and keep their IDs once a survey is live.</span>
+              <span class="prf-qid lg">Q64</span>
+              <span class="field-help m-0">In #3 Household &amp; family. Answers are numbered Q64_1, Q64_2… and keep their IDs once a category is live.</span>
             </div>
             <div>
               <label class="form-label" for="qmText">Question</label>
-              <textarea class="form-control" id="qmText" name="text" rows="2" maxlength="300" required placeholder="Type the question">Do you own or rent your home?</textarea>
+              <textarea class="form-control" id="qmText" name="text" rows="2" maxlength="300" required placeholder="Type the question">How old are the children living at home?</textarea>
               <div class="invalid-feedback">Enter the question.</div>
             </div>
             <div class="prf-form-pair">
               <div>
                 <label class="form-label" for="qmType">Type</label>
-                <select class="form-select" id="qmType" name="type" data-answers="#qmAnswers"><option selected>Single choice</option><option>Multiple choice</option><option>Dropdown</option><option>Numeric</option><option>Open text</option></select>
+                <select class="form-select" id="qmType" name="type" data-answers="#qmAnswers"><option>Single choice</option><option selected>Multiple choice</option><option>Dropdown</option><option>Numeric</option><option>Open text</option></select>
               </div>
               <div>
                 <label class="form-label" for="qmShow">Ask this question</label>
-                <select class="form-select" id="qmShow" name="showIf"><option selected>Always</option><option>Only if Q42 = Q42_1 (Yes)</option><option>Only if Q41 = Q41_2 – Q41_5 (2 or more people)</option></select>
+                <select class="form-select" id="qmShow" name="showIf"><option>Always</option><option selected>Only if Q63 = Q63_1 (Yes)</option><option>Only if Q62 = Q62_2 – Q62_5 (2 or more people)</option></select>
               </div>
             </div>
             <div class="prf-ans-edit" id="qmAnswers">
@@ -745,29 +729,34 @@
               </div>
               <div class="prf-ans-rows">
                 <div class="prf-ans-row">
-                  <span class="prf-aid" data-seq>Q45_1</span>
-                  <input class="form-control" name="answer" value="Own" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_1" required>
-                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_1"><i class="bi bi-trash3"></i></button>
+                  <span class="prf-aid" data-seq>Q64_1</span>
+                  <input class="form-control" name="answer" value="Under 2" maxlength="200" placeholder="Answer text" aria-label="Answer Q64_1" required>
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q64_1"><i class="bi bi-trash3"></i></button>
                 </div>
                 <div class="prf-ans-row">
-                  <span class="prf-aid" data-seq>Q45_2</span>
-                  <input class="form-control" name="answer" value="Rent – social housing" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_2" required>
-                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_2"><i class="bi bi-trash3"></i></button>
+                  <span class="prf-aid" data-seq>Q64_2</span>
+                  <input class="form-control" name="answer" value="2–4" maxlength="200" placeholder="Answer text" aria-label="Answer Q64_2" required>
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q64_2"><i class="bi bi-trash3"></i></button>
                 </div>
                 <div class="prf-ans-row">
-                  <span class="prf-aid" data-seq>Q45_3</span>
-                  <input class="form-control" name="answer" value="Rent – private" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_3">
-                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_3"><i class="bi bi-trash3"></i></button>
+                  <span class="prf-aid" data-seq>Q64_3</span>
+                  <input class="form-control" name="answer" value="5–11" maxlength="200" placeholder="Answer text" aria-label="Answer Q64_3">
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q64_3"><i class="bi bi-trash3"></i></button>
                 </div>
                 <div class="prf-ans-row">
-                  <span class="prf-aid" data-seq>Q45_4</span>
-                  <input class="form-control" name="answer" value="Live with my parents" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_4">
-                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_4"><i class="bi bi-trash3"></i></button>
+                  <span class="prf-aid" data-seq>Q64_4</span>
+                  <input class="form-control" name="answer" value="12–17" maxlength="200" placeholder="Answer text" aria-label="Answer Q64_4">
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q64_4"><i class="bi bi-trash3"></i></button>
                 </div>
                 <div class="prf-ans-row">
-                  <span class="prf-aid" data-seq>Q45_5</span>
-                  <input class="form-control" name="answer" value="Other" maxlength="200" placeholder="Answer text" aria-label="Answer Q45_5">
-                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q45_5"><i class="bi bi-trash3"></i></button>
+                  <span class="prf-aid" data-seq>Q64_5</span>
+                  <input class="form-control" name="answer" value="18 or older" maxlength="200" placeholder="Answer text" aria-label="Answer Q64_5">
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q64_5"><i class="bi bi-trash3"></i></button>
+                </div>
+                <div class="prf-ans-row">
+                  <span class="prf-aid" data-seq>Q64_6</span>
+                  <input class="form-control" name="answer" value="Prefer not to say" maxlength="200" placeholder="Answer text" aria-label="Answer Q64_6">
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q64_6"><i class="bi bi-trash3"></i></button>
                 </div>
               </div>
             </div>
@@ -782,11 +771,11 @@
   </div>
   <div class="modal fade" id="newQuestionModal" tabindex="-1" aria-labelledby="newQuestionModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <form class="modal-content" novalidate data-toast="Q54 added to the question bank.">
+      <form class="modal-content" novalidate data-toast="Q75 added to the question bank.">
         <div class="modal-header">
           <div>
             <h5 class="modal-title" id="newQuestionModalTitle">New question</h5>
-            <p class="panel-subtitle">Gavenze · Netherlands · goes into the question bank</p>
+            <p class="panel-subtitle">Goes into the question bank</p>
           </div>
           <div class="modal-head-extra"></div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -794,8 +783,8 @@
         <div class="modal-body">
           <div class="prf-qform">
             <div class="prf-qform-id">
-              <span class="prf-qid lg">Q54</span>
-              <span class="field-help m-0">The ID is given when the question is created. Answers are numbered Q54_1, Q54_2… and keep their IDs once a survey is live.</span>
+              <span class="prf-qid lg">Q75</span>
+              <span class="field-help m-0">The ID is given when the question is created. Answers are numbered Q75_1, Q75_2… and keep their IDs once a category is live.</span>
             </div>
             <div>
               <label class="form-label" for="nqText">Question</label>
@@ -809,7 +798,7 @@
               </div>
               <div>
                 <label class="form-label" for="nqShow">Ask this question</label>
-                <select class="form-select" id="nqShow" name="showIf"><option selected>Always</option><option>Only if Q42 = Q42_1 (Yes)</option><option>Only if Q41 = Q41_2 – Q41_5 (2 or more people)</option></select>
+                <select class="form-select" id="nqShow" name="showIf"><option selected>Always</option><option>Only if Q63 = Q63_1 (Yes)</option><option>Only if Q62 = Q62_2 – Q62_5 (2 or more people)</option></select>
               </div>
             </div>
             <div class="prf-ans-edit" id="nqAnswers">
@@ -819,14 +808,14 @@
               </div>
               <div class="prf-ans-rows">
                 <div class="prf-ans-row">
-                  <span class="prf-aid" data-seq>Q54_1</span>
-                  <input class="form-control" name="answer" value="" maxlength="200" placeholder="Answer text" aria-label="Answer Q54_1" required>
-                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q54_1"><i class="bi bi-trash3"></i></button>
+                  <span class="prf-aid" data-seq>Q75_1</span>
+                  <input class="form-control" name="answer" value="" maxlength="200" placeholder="Answer text" aria-label="Answer Q75_1" required>
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q75_1"><i class="bi bi-trash3"></i></button>
                 </div>
                 <div class="prf-ans-row">
-                  <span class="prf-aid" data-seq>Q54_2</span>
-                  <input class="form-control" name="answer" value="" maxlength="200" placeholder="Answer text" aria-label="Answer Q54_2" required>
-                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q54_2"><i class="bi bi-trash3"></i></button>
+                  <span class="prf-aid" data-seq>Q75_2</span>
+                  <input class="form-control" name="answer" value="" maxlength="200" placeholder="Answer text" aria-label="Answer Q75_2" required>
+                  <button type="button" class="icon-btn-sm danger" data-remove-row=".prf-ans-row" title="Remove answer" aria-label="Remove answer Q75_2"><i class="bi bi-trash3"></i></button>
                 </div>
               </div>
             </div>

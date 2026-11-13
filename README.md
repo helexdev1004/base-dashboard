@@ -31,8 +31,8 @@ screener-library.html       Screener Library     screener-question.html, screene
 first-surveys.html          First surveys
 panels.html                 Panels               panel.html, panelist.html
 rewards.html  redeem.html  translations.html  survey-points.html
-profiling.html              Profiling: panel > country > surveys, and the question bank (#questions)
-profiling-survey.html       a profiling survey: its questions, the bank, preview, publish (#settings)
+profiling.html              Profiling: profiling categories, and the question bank (#questions)
+profiling-category.html     a profiling category: its questions, the bank, preview, publish (#settings)
 recruiters.html             Recruiters           recruiter.html, recruiter-new.html
 fw-accounts.html            FW - Accounts        fw-account.html, fw-account-new.html
 fw-projects.html            FW - Active/Closed   fw-project.html (#targets for the Targets tab)
@@ -62,10 +62,10 @@ docs/design/                screenshots of the dashboard
 
 - Every page repeats the same sidebar and top bar. When you add or rename a menu item, change it in every HTML file. The current page's link has `active` and `aria-current="page"`, and its menu group is open.
 - Detail pages show one sample record each: every project row opens `project.html`, every vendor opens `vendor.html`, and so on.
-- Profiling: every profiling survey has its own survey number (#4108), which respondents see once it's live. Questions live in a bank per panel and country with their own ID (Q45), and each answer has one too (Q45_1, Q45_2…). A survey combines questions from the bank; a question can be in several surveys and keeps its IDs. The sample is Gavenze · Netherlands.
+- Profiling: every profiling category has its own number (#1, #2…), which respondents see once it's live. Questions sit in a question bank with their own ID (Q64), and each answer has one too (Q64_1, Q64_2…). A category combines questions from the bank.
 - Modals, dropdowns and the More filters panel are plain Bootstrap markup in the page, opened with `data-bs-toggle`.
 - `ui.js` reads a few `data-*` hooks in the markup:
-  - `data-variant-of` / `data-variant`: blocks that replace each other in place (Live/Closed lists, Chart/Table, Hourly/Daily, a profiling survey's Draft/Live/Closed). The buttons that swap them have `data-variant-target="group:key"`; a form with it swaps them when it's submitted (Publish to live).
+  - `data-variant-of` / `data-variant`: blocks that replace each other in place (Live/Closed lists, Chart/Table, Hourly/Daily, a profiling category's Draft/Live/Closed). The buttons that swap them have `data-variant-target="group:key"`; a form with it swaps them when it's submitted (Publish to live).
   - `data-hash`: a tab or button the address can open, e.g. `project.html#campaigns`.
   - `data-toast`, `data-toast-tone`: the message shown when the button is clicked or the form is saved.
   - `data-confirm`: a delete button that asks once, with `data-confirm-remove` (what to remove) or `data-confirm-href` (where to go).
