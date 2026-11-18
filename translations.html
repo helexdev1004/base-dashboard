@@ -270,19 +270,299 @@
             </select>
           </section>
           <div id="trBody">
-            <div class="tr-note" role="note">
+            <div class="tr-note" id="trNote" role="note">
               <i class="bi bi-info-circle"></i>
               <span>To edit translations please select a <strong>panel</strong>, <strong>category</strong> and <strong>language</strong>.</span>
-            </div></div></div>
+            </div>
+            <!-- The texts of every category; assets/js/translations.js shows the picked one in the picked language. -->
+            <form id="trForm" class="vendor-form" novalidate data-toast="Translations saved." hidden>
+              <section class="pv-card flush">
+                <div class="pv-toolbar">
+                  <span class="pv-toolbar-title" id="trTitle"></span>
+                  <span class="pv-toolbar-note" id="trDone"></span>
+                  <span class="dirty-flag ms-auto" id="trDirty" hidden><i class="bi bi-circle-fill"></i> Unsaved changes</span>
+                </div>
+              <div class="tr-list" data-category="Portal" hidden>
+                <div class="tr-row tr-head"><span>English</span><span class="tr-lang">Translation</span></div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-0">No</label>
+                  <textarea class="form-control tr-text" id="tr-0-0" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-1">FAQ</label>
+                  <textarea class="form-control tr-text" id="tr-0-1" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-2">Yes</label>
+                  <textarea class="form-control tr-text" id="tr-0-2" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-3">Code</label>
+                  <textarea class="form-control tr-text" id="tr-0-3" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-4">Copy</label>
+                  <textarea class="form-control tr-text" id="tr-0-4" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-5">Date</label>
+                  <textarea class="form-control tr-text" id="tr-0-5" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-6">Points</label>
+                  <textarea class="form-control tr-text" id="tr-0-6" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-7">My points</label>
+                  <textarea class="form-control tr-text" id="tr-0-7" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-8">Rewards</label>
+                  <textarea class="form-control tr-text" id="tr-0-8" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-9">Redeem</label>
+                  <textarea class="form-control tr-text" id="tr-0-9" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-10">My account</label>
+                  <textarea class="form-control tr-text" id="tr-0-10" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-11">Profile</label>
+                  <textarea class="form-control tr-text" id="tr-0-11" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-12">Sign in</label>
+                  <textarea class="form-control tr-text" id="tr-0-12" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-13">Sign out</label>
+                  <textarea class="form-control tr-text" id="tr-0-13" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-14">Email address</label>
+                  <textarea class="form-control tr-text" id="tr-0-14" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-15">Password</label>
+                  <textarea class="form-control tr-text" id="tr-0-15" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-16">Forgot your password?</label>
+                  <textarea class="form-control tr-text" id="tr-0-16" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-17">Start survey</label>
+                  <textarea class="form-control tr-text" id="tr-0-17" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-18">Available surveys</label>
+                  <textarea class="form-control tr-text" id="tr-0-18" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-19">Survey history</label>
+                  <textarea class="form-control tr-text" id="tr-0-19" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-20">Contact us</label>
+                  <textarea class="form-control tr-text" id="tr-0-20" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-21">Privacy policy</label>
+                  <textarea class="form-control tr-text" id="tr-0-21" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-22">Terms and conditions</label>
+                  <textarea class="form-control tr-text" id="tr-0-22" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-23">Save</label>
+                  <textarea class="form-control tr-text" id="tr-0-23" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-0-24">Cancel</label>
+                  <textarea class="form-control tr-text" id="tr-0-24" rows="1" maxlength="1000"></textarea>
+                </div>
+              </div>
+              <div class="tr-list" data-category="Invite Email" hidden>
+                <div class="tr-row tr-head"><span>English</span><span class="tr-lang">Translation</span></div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-1-0">A new survey is waiting for you</label>
+                  <textarea class="form-control tr-text" id="tr-1-0" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-1-1">Hi {FIRST_NAME},</label>
+                  <textarea class="form-control tr-text" id="tr-1-1" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-1-2">We have a new survey that matches your profile.</label>
+                  <textarea class="form-control tr-text" id="tr-1-2" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-1-3">It takes about {LOI} minutes.</label>
+                  <textarea class="form-control tr-text" id="tr-1-3" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-1-4">You will earn {POINTS} points when you complete it.</label>
+                  <textarea class="form-control tr-text" id="tr-1-4" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-1-5">Start the survey</label>
+                  <textarea class="form-control tr-text" id="tr-1-5" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-1-6">If the button doesn&#x27;t work, copy this link into your browser:</label>
+                  <textarea class="form-control tr-text" id="tr-1-6" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-1-7">Thank you for taking part!</label>
+                  <textarea class="form-control tr-text" id="tr-1-7" rows="1" maxlength="1000"></textarea>
+                </div>
+              </div>
+              <div class="tr-list" data-category="Reminder Email" hidden>
+                <div class="tr-row tr-head"><span>English</span><span class="tr-lang">Translation</span></div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-2-0">Reminder: your survey is still open</label>
+                  <textarea class="form-control tr-text" id="tr-2-0" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-2-1">Hi {FIRST_NAME},</label>
+                  <textarea class="form-control tr-text" id="tr-2-1" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-2-2">You still have a survey waiting for you.</label>
+                  <textarea class="form-control tr-text" id="tr-2-2" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-2-3">It closes soon, so don&#x27;t miss your {POINTS} points.</label>
+                  <textarea class="form-control tr-text" id="tr-2-3" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-2-4">Continue the survey</label>
+                  <textarea class="form-control tr-text" id="tr-2-4" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-2-5">Thank you!</label>
+                  <textarea class="form-control tr-text" id="tr-2-5" rows="1" maxlength="1000"></textarea>
+                </div>
+              </div>
+              <div class="tr-list" data-category="Forgot Password Email" hidden>
+                <div class="tr-row tr-head"><span>English</span><span class="tr-lang">Translation</span></div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-3-0">Reset your password</label>
+                  <textarea class="form-control tr-text" id="tr-3-0" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-3-1">Hi {FIRST_NAME},</label>
+                  <textarea class="form-control tr-text" id="tr-3-1" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-3-2">We received a request to reset your password.</label>
+                  <textarea class="form-control tr-text" id="tr-3-2" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-3-3">Choose a new password</label>
+                  <textarea class="form-control tr-text" id="tr-3-3" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-3-4">If you didn&#x27;t ask for this, you can ignore this email.</label>
+                  <textarea class="form-control tr-text" id="tr-3-4" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-3-5">This link expires in 24 hours.</label>
+                  <textarea class="form-control tr-text" id="tr-3-5" rows="1" maxlength="1000"></textarea>
+                </div>
+              </div>
+              <div class="tr-list" data-category="Registration Email" hidden>
+                <div class="tr-row tr-head"><span>English</span><span class="tr-lang">Translation</span></div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-4-0">Please confirm your email address</label>
+                  <textarea class="form-control tr-text" id="tr-4-0" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-4-1">Welcome to {PANEL}!</label>
+                  <textarea class="form-control tr-text" id="tr-4-1" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-4-2">Please confirm your email address to activate your account.</label>
+                  <textarea class="form-control tr-text" id="tr-4-2" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-4-3">Confirm my email</label>
+                  <textarea class="form-control tr-text" id="tr-4-3" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-4-4">You will get {POINTS} points as a welcome bonus.</label>
+                  <textarea class="form-control tr-text" id="tr-4-4" rows="1" maxlength="1000"></textarea>
+                </div>
+              </div>
+              <div class="tr-list" data-category="Reward request Email" hidden>
+                <div class="tr-row tr-head"><span>English</span><span class="tr-lang">Translation</span></div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-5-0">We received your reward request</label>
+                  <textarea class="form-control tr-text" id="tr-5-0" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-5-1">Hi {FIRST_NAME},</label>
+                  <textarea class="form-control tr-text" id="tr-5-1" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-5-2">Thank you for your reward request: {REWARD}.</label>
+                  <textarea class="form-control tr-text" id="tr-5-2" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-5-3">{POINTS} points have been taken from your balance.</label>
+                  <textarea class="form-control tr-text" id="tr-5-3" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-5-4">Your reward will be sent within 10 working days.</label>
+                  <textarea class="form-control tr-text" id="tr-5-4" rows="1" maxlength="1000"></textarea>
+                </div>
+              </div>
+              <div class="tr-list" data-category="Import registration Email" hidden>
+                <div class="tr-row tr-head"><span>English</span><span class="tr-lang">Translation</span></div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-6-0">Your account is ready</label>
+                  <textarea class="form-control tr-text" id="tr-6-0" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-6-1">Hi {FIRST_NAME},</label>
+                  <textarea class="form-control tr-text" id="tr-6-1" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-6-2">An account has been created for you on {PANEL}.</label>
+                  <textarea class="form-control tr-text" id="tr-6-2" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-6-3">Set your password to sign in.</label>
+                  <textarea class="form-control tr-text" id="tr-6-3" rows="1" maxlength="1000"></textarea>
+                </div>
+                <div class="tr-row">
+                  <label class="tr-source" for="tr-6-4">Set my password</label>
+                  <textarea class="form-control tr-text" id="tr-6-4" rows="1" maxlength="1000"></textarea>
+                </div>
+              </div>
+              </section>
+              <div class="form-actions-bar">
+                <button type="submit" class="btn btn-primary-grad"><i class="bi bi-check2"></i> Save translations</button>
+                <button type="button" class="btn btn-ghost" data-tr-action="cancel">Cancel</button>
+              </div>
+            </form>
+          </div></div>
 
       </main>
     </div>
   </div>
+
+  <!-- Translations that are already filled in, by category and language (assets/js/translations.js) -->
+  <script type="application/json" id="trData">{"Portal": {"Danish": ["Nej", "Ofte stillede spørgsmål (FAQ)", "Ja", "Kode", "Kopier", "Dato", "Point", "Mine point", "Belønninger", "Indløs", "Min konto", "Profil", "Log ind", "Log ud", "E-mailadresse", "Adgangskode", "Glemt din adgangskode?", "Start undersøgelse", "Tilgængelige undersøgelser", "Undersøgelseshistorik", "Kontakt os", "Privatlivspolitik", "Vilkår og betingelser", "Gem", "Annuller"], "German": ["Nein", "Häufige Fragen (FAQ)", "Ja", "Code", "Kopieren", "Datum", "Punkte", "Meine Punkte", "Prämien", "Einlösen", "Mein Konto", "Profil", "Anmelden", "Abmelden", "E-Mail-Adresse", "Passwort", "Passwort vergessen?", "Umfrage starten", "Verfügbare Umfragen", "Umfrageverlauf", "Kontakt", "Datenschutzerklärung", "Allgemeine Geschäftsbedingungen", "Speichern", "Abbrechen"], "Spanish": ["No", "Preguntas frecuentes (FAQ)", "Sí", "Código", "Copiar", "Fecha", "Puntos", "Mis puntos", "Recompensas", "Canjear", "Mi cuenta", "Perfil", "Iniciar sesión", "Cerrar sesión", "Correo electrónico", "Contraseña", "¿Olvidaste tu contraseña?", "Empezar encuesta", "Encuestas disponibles", "Historial de encuestas", "Contáctanos", "Política de privacidad", "Términos y condiciones", "Guardar", "Cancelar"], "French": ["Non", "Foire aux questions (FAQ)", "Oui", "Code", "Copier", "Date", "Points", "Mes points", "Récompenses", "Échanger", "Mon compte", "Profil", "Se connecter", "Se déconnecter", "Adresse e-mail", "Mot de passe", "Mot de passe oublié ?", "Commencer l'enquête", "Enquêtes disponibles", "Historique des enquêtes", "Nous contacter", "Politique de confidentialité", "Conditions générales", "Enregistrer", "Annuler"]}}</script>
 
   <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/layout.js"></script>
   <script src="assets/js/ui.js"></script>
+  <script src="assets/js/translations.js"></script>
 </body>
 </html>

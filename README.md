@@ -54,6 +54,8 @@ assets/
     ui.js                   every page: tabs, toggles, menus, folding rows, two-step delete, toasts
     projects.js             index.html: KPI count-up, Progress chart tooltip, My projects, More filters
     project-chart.js        project.html: the Progress over time chart, redrawn to fit its width
+    profiling.js            profiling.html: the Panel / Country filters (All, two rows of countries + Others)
+    translations.js         translations.html: opens the picked category's texts in the picked language
   images/                   logos and favicon
 docs/design/                screenshots of the dashboard
 ```
