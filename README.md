@@ -29,6 +29,7 @@ vendor-groups.html          Vendor groups
 blacklist.html              Blacklisted RESPIDs
 screener-library.html       Screener Library     screener-question.html, screener-question-new.html
 first-surveys.html          First surveys
+response-rates.html         Response rates (registered vs active members by country, gender and age)
 panels.html                 Panels               panel.html, panelist.html
 rewards.html  redeem.html  translations.html  survey-points.html
 profiling.html              Profiling: profiling categories, and the question bank (#questions)
@@ -57,6 +58,7 @@ assets/
     project-chart.js        project.html: the Progress over time chart, redrawn to fit its width
     profiling.js            profiling.html: the Panel / Country filters (All, two rows of countries + Others)
     translations.js         translations.html: opens the picked category's texts in the picked language
+    response-rates.js       response-rates.html: the "select a country" note when no country is picked
   images/                   logos and favicon
 docs/design/                screenshots of the dashboard
 ```
@@ -74,7 +76,7 @@ docs/design/                screenshots of the dashboard
   - `data-hash`: a tab or button the address can open, e.g. `project.html#campaigns`.
   - `data-toast`, `data-toast-tone`: the message shown when the button is clicked or the form is saved.
   - `data-confirm`: a delete button that asks once, with `data-confirm-remove` (what to remove) or `data-confirm-href` (where to go).
-  - `data-add-row` / `data-remove-row`: buttons that add a blank copy of the last row, or remove their own row. A `data-seq` label in the copy counts up by one (answer Q64_6 → Q64_7), ids get a new suffix that the row's labels and buttons follow, and switches start off.
+  - `data-add-row` / `data-remove-row`: buttons that add a blank copy of the last row, or remove their own row. Cells marked `data-blank` show a dash in the copy. A `data-seq` label in the copy counts up by one (answer Q64_6 → Q64_7), ids get a new suffix that the row's labels and buttons follow, and switches start off.
   - `data-move="up|down"`: moves its `[data-move-item]` past the next one; `[data-order]` numbers follow.
   - `data-href` on a table row: the whole row is a link.
   - `data-exclusive` on a checkbox: ticking it clears the other boxes with the same name, and ticking one of those clears it ("None of these").

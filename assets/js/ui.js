@@ -112,6 +112,7 @@ function addRow(btn) {
   });
   $$('input:not([type="checkbox"]):not([type="radio"]), textarea', row).forEach((el) => { el.value = ''; el.removeAttribute('value'); });
   $$('[role="switch"]', row).forEach((el) => { el.checked = false; el.removeAttribute('checked'); }); // a new answer isn't exclusive
+  $$('[data-blank]', row).forEach((el) => { el.innerHTML = '<span class="zero">—</span>'; }); // numbers that don't exist yet
   $$('[aria-expanded="true"][aria-controls]', row).forEach((btn) => {
     btn.setAttribute('aria-expanded', 'false');
     const panel = $(`#${CSS.escape(btn.getAttribute('aria-controls'))}`, row);

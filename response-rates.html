@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Response rates · Base</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <meta name="theme-color" content="#06070f">
+
+  <!-- Set the saved theme before first paint, otherwise Midnight flashes up first. -->
+  <script>
+    (function () {
+      var modes = {
+        midnight: 'dark', ocean: 'dark', forest: 'dark', sunset: 'dark',
+        daylight: 'light', arctic: 'light', sand: 'light', rose: 'light'
+      };
+      var theme = 'midnight';
+      try { theme = localStorage.getItem('base.theme') || theme; } catch (e) { /* storage unavailable */ }
+      if (!modes[theme]) theme = 'midnight';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', modes[theme]);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="no-transition">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <a class="brand" href="index.html" aria-label="Base home">
+          <!-- White-text logo for dark sidebars, black-text for light ones. Collapsed, only the "b" mark shows. -->
+          <span class="brand-logo">
+            <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+            <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+          </span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-controls="sidebar">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column" id="sideNav">
+          <li><a class="nav-link" href="index.html"><i class="bi bi-folder2-open"></i><span>Projects</span></a></li>
+          <li><a class="nav-link" href="feasibility.html"><i class="bi bi-sliders"></i><span>MF+A Feasibility</span></a></li>
+          <li><a class="nav-link" href="exports.html"><i class="bi bi-download"></i><span>Exports</span><span class="nav-badge" id="exportsBadge" title="3 files ready to download">3</span></a></li>
+          <li><a class="nav-link" href="clients.html"><i class="bi bi-people"></i><span>Clients</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="true" aria-controls="navVendors">
+              <i class="bi bi-stack"></i><span>Vendors</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navVendors">
+              <li><a class="nav-link" href="vendors.html"><i class="bi bi-list-ul"></i><span>Vendors list</span></a></li>
+              <li><a class="nav-link" href="vendor-groups.html"><i class="bi bi-folder2"></i><span>Vendor groups</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="blacklist.html"><i class="bi bi-slash-circle"></i><span>Blacklisted RESPIDs</span></a></li>
+          <li><a class="nav-link" href="screener-library.html"><i class="bi bi-shield-check"></i><span>Screener Library</span></a></li>
+          <li><a class="nav-link" href="first-surveys.html"><i class="bi bi-globe2"></i><span>First surveys</span></a></li>
+          <li><a class="nav-link active" href="response-rates.html" aria-current="page"><i class="bi bi-percent"></i><span>Response rates</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navPanels">
+              <i class="bi bi-person-gear"></i><span>Panel management</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navPanels" hidden>
+              <li><a class="nav-link" href="panels.html"><i class="bi bi-people-fill"></i><span>Panels</span></a></li>
+              <li><a class="nav-link" href="rewards.html"><i class="bi bi-gift"></i><span>Rewards</span></a></li>
+              <li><a class="nav-link" href="redeem.html"><i class="bi bi-cart3"></i><span>Redeem</span></a></li>
+              <li><a class="nav-link" href="translations.html"><i class="bi bi-translate"></i><span>Translations</span></a></li>
+              <li><a class="nav-link" href="survey-points.html"><i class="bi bi-arrow-down-up"></i><span>Survey points</span></a></li>
+              <li><a class="nav-link" href="profiling.html"><i class="bi bi-window-sidebar"></i><span>Profiling</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="recruiters.html"><i class="bi bi-person-badge"></i><span>Recruiters</span></a></li>
+          <li class="nav-group">
+            <button type="button" class="nav-link nav-toggle" aria-expanded="false" aria-controls="navFramework">
+              <i class="bi bi-asterisk"></i><span>Framework</span><i class="bi bi-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav flex-column nav-sub" id="navFramework" hidden>
+              <li><a class="nav-link" href="fw-accounts.html"><i class="bi bi-person-gear"></i><span>FW - Accounts</span></a></li>
+              <li><a class="nav-link" href="fw-projects.html"><i class="bi bi-card-checklist"></i><span>FW - Active/Closed</span></a></li>
+              <li><a class="nav-link" href="fw-ratecards.html"><i class="bi bi-currency-euro"></i><span>FW - Ratecard</span></a></li>
+              <li><a class="nav-link" href="fw-feasibilities.html"><i class="bi bi-question-circle-fill"></i><span>FW - Feasibilities</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link" href="external-surveys.html"><i class="bi bi-diagram-3"></i><span>External surveys</span><i class="bi bi-chevron-right nav-caret" aria-hidden="true"></i></a></li>
+          <li><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart-line"></i><span>Statistics</span></a></li>
+          <li><a class="nav-link" href="users.html"><i class="bi bi-person-lines-fill"></i><span>Users</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="mobileMenuBtn" type="button" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
+        <a class="topbar-brand d-lg-none" href="index.html" aria-label="Base home">
+          <img class="logo-on-dark" src="assets/images/logos/base-dark.png" alt="" width="999" height="296">
+          <img class="logo-on-light" src="assets/images/logos/base-light.png" alt="" width="999" height="296">
+        </a>
+
+        <div class="topbar-actions">
+          <!-- Theme picker -->
+          <div class="dropdown">
+            <button class="theme-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Change theme" title="Change theme">
+              <i class="bi bi-palette2"></i>
+              <span class="theme-btn-label" id="themeLabel">Midnight</span>
+              <i class="bi bi-chevron-down theme-caret"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end theme-menu" role="menu" aria-labelledby="themeMenuHead">
+              <div class="theme-menu-head" id="themeMenuHead" role="presentation">Theme</div>
+              <div class="theme-grid" id="themeOptions" role="group" aria-labelledby="themeMenuHead">
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="true"
+                        data-theme-id="midnight" data-mode="dark" data-color="#06070f" data-name="Midnight" title="Deep navy with a violet glow">
+                  <span class="theme-preview" style="--p-bg:#06070f;--p-side:#0b0d1b;--p-top:#121638;--p-card:#1f234c;--p-accent:#6d5cff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Midnight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="ocean" data-mode="dark" data-color="#071a26" data-name="Ocean" title="Deep sea blues with cyan">
+                  <span class="theme-preview" style="--p-bg:#071a26;--p-side:#0a2738;--p-top:#0b2f45;--p-card:#0e3b54;--p-accent:#06b6d4" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Ocean<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="forest" data-mode="dark" data-color="#08140f" data-name="Forest" title="Deep greens with emerald">
+                  <span class="theme-preview" style="--p-bg:#08140f;--p-side:#0d2018;--p-top:#0f2a1f;--p-card:#163a2b;--p-accent:#10b981" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Forest<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sunset" data-mode="dark" data-color="#1a0b1f" data-name="Sunset" title="Plum with pink-to-orange">
+                  <span class="theme-preview" style="--p-bg:#1a0b1f;--p-side:#2a1030;--p-top:#3a1238;--p-card:#4a1848;--p-accent:linear-gradient(90deg, #ec4899, #f97316)" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sunset<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="daylight" data-mode="light" data-color="#f3f5fb" data-name="Daylight" title="Clean white with indigo">
+                  <span class="theme-preview" style="--p-bg:#f3f5fb;--p-side:#ffffff;--p-top:#ffffff;--p-card:#dfe3f3;--p-accent:#5b4bff" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Daylight<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="arctic" data-mode="light" data-color="#edf3f7" data-name="Arctic" title="Ice blue with a teal sidebar">
+                  <span class="theme-preview" style="--p-bg:#edf3f7;--p-side:#0e2a3b;--p-top:#ffffff;--p-card:#d5e3ea;--p-accent:#0891b2" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Arctic<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="sand" data-mode="light" data-color="#f6f1e9" data-name="Sand" title="Warm cream with terracotta">
+                  <span class="theme-preview" style="--p-bg:#f6f1e9;--p-side:#fbf7f1;--p-top:#fffdf9;--p-card:#e8dccb;--p-accent:#c2410c" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Sand<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="dropdown-item theme-tile" role="menuitemradio" aria-checked="false"
+                        data-theme-id="rose" data-mode="light" data-color="#fdf2f6" data-name="Rose" title="Soft blush with magenta">
+                  <span class="theme-preview" style="--p-bg:#fdf2f6;--p-side:#fff7fa;--p-top:#ffffff;--p-card:#f6d5e2;--p-accent:#db2777" aria-hidden="true">
+                    <span class="tp-side"></span>
+                    <span class="tp-top"></span>
+                    <span class="tp-body">
+                      <span class="tp-cards"><span></span><span></span></span>
+                      <span class="tp-accent"></span>
+                    </span>
+                  </span>
+                  <span class="theme-tile-name">Rose<i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar">RA</span>
+              <span class="profile-meta">
+                <span class="profile-name">Ray</span>
+                <span class="profile-role">Administrator</span>
+              </span>
+              <i class="bi bi-chevron-down profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-menu">
+              <li class="profile-menu-head">
+                <span class="avatar avatar-sm">RA</span>
+                <div>
+                  <div class="fw-semibold">Ray</div>
+                  <div class="small text-muted-2">Administrator</div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-statistics.html"><i class="bi bi-graph-up"></i>Personal statistics</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger-soft" href="#"><i class="bi bi-box-arrow-right"></i>Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="page-view" id="responseRatesView">
+          <header class="page-head">
+            <h1 class="page-title">Response rates</h1>
+            <p class="page-sub">How many registered members took part in the time period, by country, gender and age. RR % is active ÷ registered.</p>
+          </header>
+          <section class="pv-card rr-filters" aria-label="Panels, countries and time period">
+            <div>
+              <label class="form-label" for="rrPanel">Main Frame panels</label>
+              <select class="form-select" id="rrPanel"><option selected>All panels</option><option>Gavenze</option><option>Jafenzi</option><option>Encuestat</option><option>Sondage Direct</option><option>Mening Vandaag</option><option>Opinion Today</option><option>Sondaggi &amp; premi</option></select>
+            </div>
+            <div>
+              <label class="form-label" for="rrCountries">Country</label>
+              <div class="ms" id="rrCountriesBox">
+                <div class="ms-control"><span class="ms-chips"><span class="ms-chip">Netherlands<button type="button" data-remove="nl" aria-label="Remove Netherlands"><i class="bi bi-x"></i></button></span><span class="ms-chip">Belgium<button type="button" data-remove="be" aria-label="Remove Belgium"><i class="bi bi-x"></i></button></span><span class="ms-chip">Germany<button type="button" data-remove="de" aria-label="Remove Germany"><i class="bi bi-x"></i></button></span></span><input type="text" class="ms-input" id="rrCountries" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="rrCountries-list" autocomplete="off" spellcheck="false"></div>
+                <button type="button" class="ms-clear" aria-label="Clear all"><i class="bi bi-x-lg"></i></button>
+                <i class="bi bi-chevron-down ms-caret" aria-hidden="true"></i>
+                <ul class="ms-menu" id="rrCountries-list" role="listbox" aria-multiselectable="true" hidden><li role="option" data-value="gb" aria-selected="false">United Kingdom</li><li role="option" data-value="fr" aria-selected="false">France</li><li role="option" data-value="es" aria-selected="false">Spain</li><li role="option" data-value="it" aria-selected="false">Italy</li><li role="option" data-value="br" aria-selected="false">Brazil</li><li role="option" data-value="mx" aria-selected="false">Mexico</li><li role="option" data-value="sa" aria-selected="false">Saudi Arabia</li><li role="option" data-value="ie" aria-selected="false">Ireland</li><li role="option" data-value="ae" aria-selected="false">United Arab Emirates</li><li role="option" data-value="pl" aria-selected="false">Poland</li><li role="option" data-value="at" aria-selected="false">Austria</li><li role="option" data-value="ch" aria-selected="false">Switzerland</li><li role="option" data-value="eg" aria-selected="false">Egypt</li><li role="option" data-value="ar" aria-selected="false">Argentina</li><li role="option" data-value="co" aria-selected="false">Colombia</li><li role="option" data-value="ma" aria-selected="false">Morocco</li></ul>
+              </div>
+            </div>
+            <div>
+              <label class="form-label" for="rrPeriod">Time period</label>
+              <select class="form-select" id="rrPeriod"><option selected>Past 1 week</option><option>Past 2 weeks</option><option>Past 3 weeks</option><option>Past 4 weeks</option></select>
+            </div>
+          </section>
+          <!-- Without a country there's nothing to show (assets/js/response-rates.js) -->
+          <div class="rr-note" id="rrNote" role="note" hidden>
+            <i class="bi bi-globe2"></i>
+            <span>Select at least one <strong>country</strong> to see its response rates.</span>
+          </div>
+          <section class="pv-card flush rr-card" id="rrQuotas" aria-labelledby="rrQuotasTitle">
+            <div class="pv-toolbar">
+              <span class="pv-toolbar-title" id="rrQuotasTitle">Quotas</span>
+              <span class="pv-toolbar-note">All panels · past 1 week</span>
+              <span class="rr-legend ms-auto" aria-hidden="true">
+                <span class="rr-chip is-reg">Registered N</span><span class="rr-chip is-act">Active N</span><span class="rr-pill is-high">RR %</span>
+              </span>
+            </div>
+            <div class="table-responsive">
+              <table class="pv-table rr-table">
+                <thead>
+                  <tr>
+                    <th rowspan="2" scope="col">Gender</th>
+                    <th rowspan="2" scope="col">Age</th>
+                    <th rowspan="2"><span class="visually-hidden">Refresh</span></th>
+                    <th colspan="3" class="rr-country rr-first" scope="colgroup">
+                      <span class="rr-country-name"><span class="fi fi-nl"></span>Netherlands</span>
+                      <span class="rr-country-sub">31,240 active members</span>
+                    </th>
+                    <th colspan="3" class="rr-country rr-first" scope="colgroup">
+                      <span class="rr-country-name"><span class="fi fi-be"></span>Belgium</span>
+                      <span class="rr-country-sub">16,205 active members</span>
+                    </th>
+                    <th colspan="3" class="rr-country rr-first" scope="colgroup">
+                      <span class="rr-country-name"><span class="fi fi-de"></span>Germany</span>
+                      <span class="rr-country-sub">19,632 active members</span>
+                    </th>
+                    <th rowspan="2"><span class="visually-hidden">Remove</span></th>
+                  </tr>
+                  <tr>
+                    <th class="rr-first" scope="col">Registered N</th>
+                    <th scope="col">Active N</th>
+                    <th scope="col" title="Response rate: active ÷ registered">RR %</th>
+                    <th class="rr-first" scope="col">Registered N</th>
+                    <th scope="col">Active N</th>
+                    <th scope="col" title="Response rate: active ÷ registered">RR %</th>
+                    <th class="rr-first" scope="col">Registered N</th>
+                    <th scope="col">Active N</th>
+                    <th scope="col" title="Response rate: active ÷ registered">RR %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><select class="form-select form-select-sm rr-gender" aria-label="Gender"><option>Total</option><option selected>Males</option><option>Females</option></select></td>
+                    <td>
+                      <div class="input-group input-group-sm rr-age">
+                        <input class="form-control" type="number" min="16" max="99" value="18" placeholder="Start" aria-label="Age from">
+                        <span class="input-group-text">–</span>
+                        <input class="form-control" type="number" min="16" max="99" value="34" placeholder="End" aria-label="Age to">
+                      </div>
+                    </td>
+                    <td><button type="button" class="icon-btn-sm" data-toast="Response rates for this row are up to date." data-toast-tone="info" title="Refresh this row" aria-label="Refresh this row"><i class="bi bi-arrow-clockwise"></i></button></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">4,812</span></td>
+                    <td data-blank><span class="rr-chip is-act">312</span></td>
+                    <td data-blank><span class="rr-pill is-high" title="312 of 4,812 registered members took part">6.5%</span></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">2,105</span></td>
+                    <td data-blank><span class="rr-chip is-act">118</span></td>
+                    <td data-blank><span class="rr-pill is-mid" title="118 of 2,105 registered members took part">5.6%</span></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">3,540</span></td>
+                    <td data-blank><span class="rr-chip is-act">201</span></td>
+                    <td data-blank><span class="rr-pill is-mid" title="201 of 3,540 registered members took part">5.7%</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-remove-row="tr" title="Remove this row" aria-label="Remove this row"><i class="bi bi-dash-lg"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><select class="form-select form-select-sm rr-gender" aria-label="Gender"><option>Total</option><option>Males</option><option selected>Females</option></select></td>
+                    <td>
+                      <div class="input-group input-group-sm rr-age">
+                        <input class="form-control" type="number" min="16" max="99" value="18" placeholder="Start" aria-label="Age from">
+                        <span class="input-group-text">–</span>
+                        <input class="form-control" type="number" min="16" max="99" value="34" placeholder="End" aria-label="Age to">
+                      </div>
+                    </td>
+                    <td><button type="button" class="icon-btn-sm" data-toast="Response rates for this row are up to date." data-toast-tone="info" title="Refresh this row" aria-label="Refresh this row"><i class="bi bi-arrow-clockwise"></i></button></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">5,105</span></td>
+                    <td data-blank><span class="rr-chip is-act">356</span></td>
+                    <td data-blank><span class="rr-pill is-high" title="356 of 5,105 registered members took part">7.0%</span></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">2,240</span></td>
+                    <td data-blank><span class="rr-chip is-act">131</span></td>
+                    <td data-blank><span class="rr-pill is-mid" title="131 of 2,240 registered members took part">5.8%</span></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">3,712</span></td>
+                    <td data-blank><span class="rr-chip is-act">236</span></td>
+                    <td data-blank><span class="rr-pill is-high" title="236 of 3,712 registered members took part">6.4%</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-remove-row="tr" title="Remove this row" aria-label="Remove this row"><i class="bi bi-dash-lg"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><select class="form-select form-select-sm rr-gender" aria-label="Gender"><option>Total</option><option selected>Males</option><option>Females</option></select></td>
+                    <td>
+                      <div class="input-group input-group-sm rr-age">
+                        <input class="form-control" type="number" min="16" max="99" value="35" placeholder="Start" aria-label="Age from">
+                        <span class="input-group-text">–</span>
+                        <input class="form-control" type="number" min="16" max="99" value="54" placeholder="End" aria-label="Age to">
+                      </div>
+                    </td>
+                    <td><button type="button" class="icon-btn-sm" data-toast="Response rates for this row are up to date." data-toast-tone="info" title="Refresh this row" aria-label="Refresh this row"><i class="bi bi-arrow-clockwise"></i></button></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">3,967</span></td>
+                    <td data-blank><span class="rr-chip is-act">178</span></td>
+                    <td data-blank><span class="rr-pill is-mid" title="178 of 3,967 registered members took part">4.5%</span></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">1,688</span></td>
+                    <td data-blank><span class="rr-chip is-act">64</span></td>
+                    <td data-blank><span class="rr-pill is-low" title="64 of 1,688 registered members took part">3.8%</span></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">3,105</span></td>
+                    <td data-blank><span class="rr-chip is-act">119</span></td>
+                    <td data-blank><span class="rr-pill is-low" title="119 of 3,105 registered members took part">3.8%</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-remove-row="tr" title="Remove this row" aria-label="Remove this row"><i class="bi bi-dash-lg"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><select class="form-select form-select-sm rr-gender" aria-label="Gender"><option>Total</option><option>Males</option><option selected>Females</option></select></td>
+                    <td>
+                      <div class="input-group input-group-sm rr-age">
+                        <input class="form-control" type="number" min="16" max="99" value="35" placeholder="Start" aria-label="Age from">
+                        <span class="input-group-text">–</span>
+                        <input class="form-control" type="number" min="16" max="99" value="54" placeholder="End" aria-label="Age to">
+                      </div>
+                    </td>
+                    <td><button type="button" class="icon-btn-sm" data-toast="Response rates for this row are up to date." data-toast-tone="info" title="Refresh this row" aria-label="Refresh this row"><i class="bi bi-arrow-clockwise"></i></button></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">4,233</span></td>
+                    <td data-blank><span class="rr-chip is-act">201</span></td>
+                    <td data-blank><span class="rr-pill is-mid" title="201 of 4,233 registered members took part">4.7%</span></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">1,802</span></td>
+                    <td data-blank><span class="rr-chip is-act">77</span></td>
+                    <td data-blank><span class="rr-pill is-mid" title="77 of 1,802 registered members took part">4.3%</span></td>
+                    <td class="rr-first" data-blank><span class="rr-chip is-reg">3,288</span></td>
+                    <td data-blank><span class="rr-chip is-act">142</span></td>
+                    <td data-blank><span class="rr-pill is-mid" title="142 of 3,288 registered members took part">4.3%</span></td>
+                    <td><button type="button" class="icon-btn-sm danger" data-remove-row="tr" title="Remove this row" aria-label="Remove this row"><i class="bi bi-dash-lg"></i></button></td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" class="rr-total-label">Total</td>
+                    <td class="rr-first"><span class="rr-chip is-reg is-total">18,117</span></td>
+                    <td><span class="rr-chip is-act is-total">1,047</span></td>
+                    <td><span class="rr-pill is-total is-mid" title="1,047 of 18,117 registered members took part">5.8%</span></td>
+                    <td class="rr-first"><span class="rr-chip is-reg is-total">7,835</span></td>
+                    <td><span class="rr-chip is-act is-total">390</span></td>
+                    <td><span class="rr-pill is-total is-mid" title="390 of 7,835 registered members took part">5.0%</span></td>
+                    <td class="rr-first"><span class="rr-chip is-reg is-total">13,645</span></td>
+                    <td><span class="rr-chip is-act is-total">698</span></td>
+                    <td><span class="rr-pill is-total is-mid" title="698 of 13,645 registered members took part">5.1%</span></td>
+                    <td><button type="button" class="icon-btn-sm rr-add" data-add-row="table|tbody" title="Add a row for gender and age" aria-label="Add a row for gender and age"><i class="bi bi-plus-lg"></i></button></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </section>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastStack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/response-rates.js"></script>
+</body>
+</html>
