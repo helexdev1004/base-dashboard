@@ -17,6 +17,7 @@
 @import url("layout/nav-groups.css");
 @import url("components/list-page.css");
 @import url("pages/vendors.css");
+@import url("pages/clients.css");
 @import url("pages/blacklist.css");
 @import url("pages/screener-library.css");
 @import url("pages/panel-management/panels.css");

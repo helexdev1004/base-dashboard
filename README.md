@@ -40,7 +40,8 @@ fw-ratecards.html           FW - Ratecard        fw-ratecard.html, fw-ratecard-n
 fw-feasibilities.html       FW - Feasibilities
 statistics.html             Statistics           user-statistics.html, my-statistics.html
 users.html                  Users                user.html, user-new.html
-clients.html  external-surveys.html                    "Coming soon" pages
+clients.html                Clients              client.html, client-new.html
+external-surveys.html       "Coming soon" page
 
 assets/
   css/

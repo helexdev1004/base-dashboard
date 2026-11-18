@@ -253,16 +253,125 @@
 
       <main class="content">
 
-        <div class="page-view" id="soonView">
+        <div class="page-view" id="clientsView">
           <header class="page-head">
             <h1 class="page-title">Clients</h1>
+            <p class="page-sub">The clients projects are run for, and how each one is priced: by a ratecard or dynamically.</p>
           </header>
-          <section class="pv-card soon-card">
-            <span class="soon-icon" aria-hidden="true"><i class="bi bi-people"></i></span>
-            <h2 class="soon-title">Coming soon</h2>
-            <p class="soon-text">This section isn't available yet. It will open here once it's built.</p>
-            <a class="btn btn-ghost" href="index.html"><i class="bi bi-arrow-left"></i> Back to projects</a>
-          </section></div>
+          <section class="pv-card flush">
+            <div class="pv-toolbar">
+              <a class="btn btn-ghost btn-sm-h" href="client-new.html"><i class="bi bi-plus-circle"></i> New Client</a>
+              <button type="button" class="btn btn-export btn-sm-h ms-auto" data-toast="Client stats exported."><i class="bi bi-download"></i> Export stats</button>
+            </div>
+            <div class="list-filters">
+              <div class="input-group search-group" role="search">
+                <input class="form-control" type="search" placeholder="Search clients…" aria-label="Search clients…" autocomplete="off">
+                <button type="button" class="btn btn-ghost" data-search-go title="Search" aria-label="Search"><i class="bi bi-search"></i></button>
+                <button type="button" class="btn btn-ghost" data-search-clear title="Clear search" aria-label="Clear search"><i class="bi bi-x-circle"></i></button>
+              </div>
+              <select class="form-select pv-filter" aria-label="Filter on pricing">
+                <option selected>All pricing</option><option>Ratecard</option><option>Dynamic</option>
+              </select>
+            </div>
+            <div class="table-responsive">
+              <table class="pv-table list-table cl-table">
+                <thead>
+                  <tr>
+                    <th aria-sort="ascending"><button type="button" class="th-sort">ID <i class="bi bi-caret-up-fill"></i></button></th>
+                    <th aria-sort="none"><button type="button" class="th-sort">Client name</button></th>
+                    <th aria-sort="none"><button type="button" class="th-sort">Pricing</button></th>
+                    <th aria-sort="none"><button type="button" class="th-sort">Currency</button></th>
+                    <th aria-sort="none"><button type="button" class="th-sort">Ratecard</button></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">1</td>
+                    <td><a class="cell-link" href="client.html">Kestrel Analytics</a></td>
+                    <td><span class="cl-pricing is-ratecard">Ratecard</span></td>
+                    <td>EUR</td>
+                    <td>Ratecard01</td>
+                  </tr>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">2</td>
+                    <td><a class="cell-link" href="client.html">Cobalt Strategy</a></td>
+                    <td><span class="cl-pricing is-ratecard">Ratecard</span></td>
+                    <td>EUR</td>
+                    <td>Ratecard07</td>
+                  </tr>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">3</td>
+                    <td><a class="cell-link" href="client.html">Meridian Panels</a></td>
+                    <td><span class="cl-pricing is-ratecard">Ratecard</span></td>
+                    <td>EUR</td>
+                    <td>Ratecard01</td>
+                  </tr>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">4</td>
+                    <td><a class="cell-link" href="client.html">Bluepeak Insights</a></td>
+                    <td><span class="cl-pricing is-dynamic">Dynamic</span></td>
+                    <td>GBP</td>
+                    <td><span class="zero">—</span></td>
+                  </tr>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">5</td>
+                    <td><a class="cell-link" href="client.html">Northwind Research</a></td>
+                    <td><span class="cl-pricing is-ratecard">Ratecard</span></td>
+                    <td>EUR</td>
+                    <td>Ratecard01</td>
+                  </tr>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">6</td>
+                    <td><a class="cell-link" href="client.html">Orbit Consumer Lab</a></td>
+                    <td><span class="cl-pricing is-ratecard">Ratecard</span></td>
+                    <td>EUR</td>
+                    <td>Ratecard01</td>
+                  </tr>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">7</td>
+                    <td><a class="cell-link" href="client.html">Vantage Media Group</a></td>
+                    <td><span class="cl-pricing is-ratecard">Ratecard</span></td>
+                    <td>EUR</td>
+                    <td>Ratecard02</td>
+                  </tr>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">8</td>
+                    <td><a class="cell-link" href="client.html">Main Frame</a></td>
+                    <td><span class="cl-pricing is-dynamic">Dynamic</span></td>
+                    <td>EUR</td>
+                    <td><span class="zero">—</span></td>
+                  </tr>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">9</td>
+                    <td><a class="cell-link" href="client.html">Main Frame Turkey</a></td>
+                    <td><span class="cl-pricing is-ratecard">Ratecard</span></td>
+                    <td>EUR</td>
+                    <td>Ratecard07</td>
+                  </tr>
+                  <tr class="row-link" data-href="client.html">
+                    <td class="col-id">10</td>
+                    <td><a class="cell-link" href="client.html">Atlas Market Research</a></td>
+                    <td><span class="cl-pricing is-ratecard">Ratecard</span></td>
+                    <td>GBP</td>
+                    <td>Ratecard05</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-footer">
+              <span class="page-info">Showing <strong>1–10</strong> of <strong>57</strong> clients</span>
+              <nav aria-label="Client pages">
+                <ul class="pagination-dark">
+                  <li><button type="button" disabled aria-label="First page">«</button></li>
+                  <li><button type="button" disabled aria-label="Previous page">‹</button></li>
+                  <li><button type="button" class="active" aria-current="page">1</button></li><li><button type="button">2</button></li><li><button type="button">3</button></li><li><button type="button">4</button></li><li><button type="button">5</button></li><li><button type="button">6</button></li>
+                  <li><button type="button" aria-label="Next page">›</button></li>
+                  <li><button type="button" aria-label="Last page">»</button></li>
+                </ul>
+              </nav>
+            </div>
+          </section>
+        </div>
 
       </main>
     </div>

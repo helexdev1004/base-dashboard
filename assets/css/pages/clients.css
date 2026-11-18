@@ -1,0 +1,15 @@
+/* Clients: the pricing badge in the list. */
+
+.cl-pricing {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 9px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+}
+.cl-pricing::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.cl-pricing.is-ratecard { color: var(--text-2); background: color-mix(in srgb, var(--overlay) 6%, transparent); border: 1px solid var(--border); }
+.cl-pricing.is-dynamic { color: var(--primary-soft); background: color-mix(in srgb, var(--primary) 14%, transparent); border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent); }
